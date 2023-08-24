@@ -1,0 +1,37 @@
+.travelForm-container {
+  width: 250px; height: 100px;
+  display: grid;
+  grid-template-columns: 100px 150px;
+  position: relative;
+  margin: 10px;
+}
+
+.travelForm-img {
+  width: 100px; height: 100px;
+  object-fit: cover;
+}
+
+.travelForm-etc {
+  margin-left: 10px;
+}
+
+.travelForm-title {
+  margin-top : 5px;
+  font-size: small;
+  font-weight: bold;
+}
+
+.travelForm-region {
+  font-size: small;
+  margin-top: 10px;
+}
+
+.travelForm-btn {
+  position: absolute;
+  bottom: 5px; right: 0px;
+  width: 100px;
+  color: orange; border: orange 2px solid;
+  border-radius: 10px;
+  background-color: white;
+  font-weight: 650;
+}

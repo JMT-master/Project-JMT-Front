@@ -1,0 +1,102 @@
+.curatorContainer {
+  margin-top: 2%;
+  margin-left: 2%;
+  height: 800px;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.curatorForm {
+  margin: 15%;
+  height: 60%;
+  border: 2px solid orange;
+  border-radius: 10px;
+}
+
+.curatorForm-select {
+  width: 150px; height: 35px;
+  margin: 5%;
+  font-size: large; font-weight: bold;
+  color: #3498DA;
+}
+
+.curatorForm-tag {
+  margin: 5%; height: 380px;
+  overflow: scroll;
+}
+
+.curatorForm-tag::-webkit-scrollbar {
+  display: none;
+}
+
+.tagBtn {
+  background-color: white;
+  border-style: none;
+  font-size: medium;
+  cursor: pointer;
+}
+
+.curatorForm-submit {
+  width: 45%;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  background-color: orange;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.curatorContent-ul {
+  display: flex;
+}
+
+.curatorContent-li {
+  width: 250px; height: 40px;
+  background-color: black;
+  color: white;
+  text-align: center; line-height: 40px;
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+
+.curatorResult-img {
+  margin-top: 2%;
+}
+
+.curatorResult-img-ul {
+  width: 850px; height: 600px;
+  display: grid;
+  grid-template-columns: 270px 270px 270px;
+  overflow: scroll;
+}
+
+.curatorResult-img-ul::-webkit-scrollbar {
+  display: none;
+}
+
+.curatorResult-img-li {
+  width: 250px; height: 250px;
+  background-color: #E0E0E0;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+.curatorResult-img-li > img {
+  width: 250px; height: 250px;
+  object-fit: cover;
+}
+
+.curatorResult-paging-ul {
+  display: flex;
+}
+
+.curatorResult-paging-li {
+  margin-top: 5%;
+  margin-right: 20px;
+  width: 10%; height: 30px;
+  text-align: center;
+  line-height: 30px;
+  background-color: #3498DA;
+  color: white;
+}

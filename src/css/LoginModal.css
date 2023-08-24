@@ -1,0 +1,70 @@
+.modal-id{
+  position: absolute;
+  top: 25%;
+}
+.modal-id button{
+  width: 300px;
+  height: 80px;
+  background-color: white;
+}
+.modal-pwd{
+  position: absolute;
+  top: 65%;
+}
+.modal-pwd button{
+  width: 300px;
+  height: 80px;
+  background-color: white;
+}
+.moid-name{
+  position: absolute;
+  top: 25%;
+  padding: 10px;
+  left: 20px;
+  width: 300px;
+  height: 80px;
+}
+.moid-tel{
+  position: absolute;
+  top: 65%;
+  padding: 10px;
+  left: 20px;
+  width: 300px;
+  height: 80px;
+}
+.moid-submit button{
+  position: absolute;
+  padding: 10px;
+  width: 100px;
+  height: 50px;
+  top: 45%;
+  right: 15%;
+  background-color: white;
+  border: 1px solid black;
+}
+.mopwd-id{
+  position: absolute;
+  top: 25%;
+  padding: 10px;
+  left: 20px;
+  width: 300px;
+  height: 80px;
+}
+.mopwd-email{
+  position: absolute;
+  top: 65%;
+  padding: 10px;
+  left: 20px;
+  width: 300px;
+  height: 80px;
+}
+.mopwd-submit button{
+  position: absolute;
+  padding: 10px;
+  width: 150px;
+  height: 50px;
+  top: 45%;
+  right: 15%;
+  background-color: white;
+  border: 1px solid black;
+}

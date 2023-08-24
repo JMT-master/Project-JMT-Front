@@ -1,0 +1,103 @@
+.myPageContainer {
+  margin-top: 2%;
+  margin-left: 2%;
+  height: 800px;
+}
+
+.myPageHeader {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  height: 150px;
+}
+
+.myPageHeader-profile {
+  text-align: center;
+}
+
+.myPageHeader-profile-img {
+  width: 100px; height: 100px;
+  margin: 0 auto;
+}
+
+.myPageHeader-profile-name {
+  margin-top: 15px;
+  font-size: large; font-weight: bold;
+}
+
+.myPageHeader-ul {
+  display: flex;
+}
+
+.myPageHeader-li {
+  display: inline-block;
+  width: 20%; height: 75px;
+  border: 1px solid black;
+  text-align: center;
+  color: white;
+  background-color: black;
+}
+
+.myPageHeader-li-count {
+  margin: 5%;
+}
+
+.myPageChap1 {
+  margin-left: 3%;
+}
+
+.myPageBtn {
+  width: 180px; height: 35px;
+  margin-right: 20px;
+  background-color: #404040;
+  color: white;
+  border: 1px solid #404040;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.myPageChap2 {
+  margin-left: 3%;
+}
+
+.myPageChap2-ul {
+  display: flex;
+}
+
+.myPageChap2-li {
+  margin-top: 20px;
+  margin-right: 70px;
+  width: 100px; height: 100px;
+  background-color: #E0E0E0;
+  font-size: 75px;
+  text-align: center;
+  line-height: 75px;
+  border-radius: 100px;
+}
+
+.myPageChap2-title {
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+.myPageImage {
+  margin-top: 20px;
+  width: 50%;
+  height: 450px;
+  overflow: scroll;
+}
+
+.myPageImage::-webkit-scrollbar {
+  display: none;
+}
+
+.myPageImage-ul {
+  display: grid;
+  grid-template-columns: 150px 150px 150px;
+}
+
+.myPageImage-ul-li {
+  width: 150px; height: 150px;
+  background-color: #E0E0E0;
+  border: 1px solid black;
+}
+

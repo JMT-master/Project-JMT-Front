@@ -1,0 +1,55 @@
+.modal-container {
+  width: 800px;
+  height: 500px;
+  z-index: 999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 236, 179, 1);
+  border: 1px solid black;
+  border-radius: 8px;
+  clear: both;
+}
+.modal-container div {
+  width: 100%;
+}
+.modal-close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.modal-container button {
+  width: 20px;
+  height: 10px;
+  background-color: rgba(255, 236, 179, 1);
+  border: none;
+}
+.answer-content textarea {
+  resize: none;
+  position: absolute;
+  left: 20px;
+  top: 100px;
+}
+
+.answer-writer {
+  margin: 20px;
+  position: relative;
+  clear: both;
+}
+
+.answer-writer .date {
+  position: absolute;
+  right: 50px;
+}
+
+.answer-protect{
+  position: absolute;
+  bottom: 50px;
+  left: 10px;
+}
+.answer-submit{
+  margin: 0 10px;
+  background-color: beige;
+}

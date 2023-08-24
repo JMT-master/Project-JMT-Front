@@ -1,0 +1,10 @@
+.Header-ul {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.Header-ul > li {
+  text-decoration: none;
+  list-style-type: none;
+}
+

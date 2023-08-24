@@ -1,0 +1,77 @@
+.qnaDetail-content{
+  margin: 10px 30px;
+}
+.qnaDetail-title{
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+.qnaDetail-title h1{
+  text-align: left;
+  width: 85vw;
+  margin-left: 20px;
+}
+.qnaDetail-title span{
+  text-align: right;
+  line-height: 86px;
+  margin-right: 10px;
+}
+.qnaDetail-box{
+  text-align: left;
+  margin: 30px auto;
+  height: 500px;
+  border-top: 2px solid black;
+  border-bottom: 1px solid #ccc;
+  padding: 20px 30px;
+}
+.qnaDetail-box > div{
+  display: flex;
+  padding: 10px;
+}
+.qnaDetail-img img{
+  margin-right: 20px;
+  width: 120px;
+  height: 120px;
+}
+.qnaDetail-img p{
+  width: 240px;
+  text-align: center;
+  font-size: x-large;
+  height: 120px;
+  line-height: 120px;
+}
+.qnaDetail-boxTitle{
+  border-top: 1px solid black;
+  border-bottom: 1px solid gray;
+  margin: 10px auto;
+  position: relative;
+}
+.qnaDetail-boxTitle h3{
+  margin-right: 20px;
+  width: 80vw;
+  text-align: center;
+}
+.qnaDetail-boxTitle .no{
+  margin-left: 3px;
+  font-size: large;
+  margin-right: 10px;
+}
+.qnaDetail-boxTitle .date{
+  position: absolute;
+  right: 5px;
+}
+.qnaDetail-inside textarea{
+  width: 100%;
+  margin-bottom: 20px;
+  border: none;
+  resize: none;
+}
+.qnaDetail-inside textarea:focus{
+  outline: none;
+}
+@media screen and (max-width:1024px) {
+  .qnaDetail-title h1{
+    text-align: left;
+    width: 75vw;
+    margin-left: 20px;
+  }
+}

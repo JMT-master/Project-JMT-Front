@@ -1,0 +1,223 @@
+@mixin centerCotent($align: center) {
+  justify-content: $align;
+}
+
+.list {
+  height: 100%;
+
+  &-head {
+    height: 200px;
+    margin: 5px 10px;
+
+    h1 {
+      height: 40px;
+    }
+
+    &-intro {
+      margin: 5px;
+      padding: 5px;
+    }
+  }
+
+  .tagBtn {
+    background-color: white;
+    border: 0px solid;
+    border-radius: 4px;
+    padding: 2px 5px;
+    margin: 0 5px;
+
+    &:hover {
+      background-color: cornflowerblue;
+      color: white;
+    }
+  }
+
+  .Focused {
+    color: rgb(235, 152, 0);
+    border: 1px solid;
+  }
+
+  &-content {
+    height: auto;
+    display: grid;
+    grid-template-columns: minmax(600px, 50%) 50%;
+
+    &List {
+      background-color: antiquewhite;
+      cursor: pointer;
+
+      &-ul {
+        height: 600px;
+        margin: 0;
+        padding: 0 10px;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      &-paging {
+        display: flex;
+        height: 40px;
+        align-items: center;
+        justify-content: space-around;
+
+        a {
+          color: black;
+
+          &.currentPage {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+
+  &-itemGrid {
+    display: grid;
+    grid-template-columns: minmax(190px, 30%) 70%;
+    gap: 5px;
+    
+    &-img {
+      margin-top: 5px;
+      width: 190px;
+      height: auto;
+      
+      img {
+        width: 190px;
+        height: 120px;
+        
+      }
+    }
+
+    &-content {
+      text-align: left;
+    }
+  }
+}
+
+
+.grid {
+  height: 100%;
+  text-align: center;
+
+  &-head {
+    height: 200px;
+    margin: 5px 10px;
+
+    h1 {
+      height: 40px;
+    }
+
+    &-intro {
+      margin: 5px;
+      padding: 5px;
+    }
+  }
+
+  .tagBtn {
+    background-color: white;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 2px 5px;
+    margin: 0 5px;
+
+    &:hover {
+      background-color: cornflowerblue;
+      color: white;
+    }
+  }
+
+  .Focused {
+    color: rgb(235, 152, 0);
+    border: 1px solid;
+    
+  }
+
+  &-content {
+    height: auto;
+    display: grid;
+    grid-template-columns: 100%;
+
+    &List {
+      background-color: rgb(130, 130, 243);
+      display: grid;
+      grid-template-rows: 1468px 40px;
+      gap : 20px;
+      cursor: pointer;
+
+      &-ul {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(360px, 1fr));
+        grid-template-rows: repeat(4, 1fr);
+        gap: 5px 5px;
+        padding: 0 5px;
+
+      }
+
+      &-paging {
+        // display: flex;
+        height: 40px;
+        align-items: center;
+        justify-content: space-around;
+
+        a {
+          color: black;
+
+          &.currentPage {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+
+  &-itemGrid {
+    display: grid;
+    grid-template-rows: minmax(210px, 50%) minmax(140px,40%);
+    gap: 5px;
+    background-color: bisque;
+
+    &-img {
+      margin-top: 5px;
+      width: 100%;
+      height: 100%;
+      img {
+        width: 100%;
+        height: 210px;
+      }
+    }
+
+  }
+
+  &-content-map {
+    display: none;
+  }
+}
+
+.loading{
+  
+  height: 600px;
+  text-align: center;
+
+  &Icon{
+    width: 30px;
+    height: 30px;
+    top: 50%;
+    position: fixed;
+    animation: spinCircle 2s infinite linear;
+  }
+}
+
+@keyframes spinCircle {
+  from {
+      transform:rotate(0);
+  }
+  to {
+      transform:rotate(360deg);
+  }
+}

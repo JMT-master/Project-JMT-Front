@@ -1,0 +1,71 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 3fr;
+  margin-top: 2%;
+  margin-left: 2%;
+  height: 650px;
+}
+
+.Step {
+  text-align: center;
+  margin-top: 30%;
+  cursor: pointer;
+  color: darkgray;
+}
+
+.SelectBtn {
+  width: 75px;
+  height: 75px;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  top: 350px;
+}
+
+.selectDate {
+  margin-bottom: 30px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.ScheduleForm {
+  border: 2px solid orange;
+  width: 80%;
+  height: 40%;
+}
+
+.selectItem {
+  margin: 5%;
+}
+
+.inputTime {
+  width: 130px;
+}
+
+.selectItem input {
+  margin-left: 3%;
+}
+
+.scheduleBtn {
+  color: white;
+  background-color: #3498DA;
+  border: 1px solid #3498DA;
+  border-radius: 10px;
+  width: 100px;
+  height: 30px;
+}
+
+.SelectText {
+  color : orange;
+}
+
+.SelectBG {
+  border: 1px solid orange;
+  background-color : orange;
+}
+
+.Calendar {
+  margin-top: 30px;
+
+}

@@ -1,0 +1,128 @@
+@import url("reset.css");
+@import '~slick-carousel/slick/slick.css';
+@import '~slick-carousel/slick/slick-theme.css';
+.header-main-position{
+  background-size: cover;
+  width: 100%;
+  height: 150px;
+  position: relative;
+  z-index: 999;
+}
+.main-slider{
+  visibility: visible;
+  z-index: 1;
+}
+.header-slider {
+  position: absolute;
+  width: 100%; height: 800px;
+  top: 0;
+  z-index: 1;
+}
+.header-main{
+  width: 100%;
+  height: 200px;
+  position: absolute;
+  z-index: 100;
+}
+.header-slider-divs {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 800px;
+}
+.header-slider-img1 {
+  width: 100%;
+  height: 770px;
+  background-image: url(../images/001.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.header-slider-img2 {
+  width: 100%;
+  height: 770px;
+  background-image: url(../images/002.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.header-slider-img3 {
+  width: 100%;
+  height: 770px;
+  background-image: url(../images/003.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.header-slider-img4 {
+  width: 100%;
+  height: 770px;
+  background-image: url(../images/004.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.header-container{
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 120px 1fr; 
+  grid-template-rows: 70px;
+}
+.headerTop{
+  text-align: right;
+  font-size: 20px;
+  height: 30px;
+  line-height: 30px;
+}
+.headerSell{
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  display: grid;
+  font-size: 24px;
+  text-align: center;
+  line-height: 60px;
+  font-weight: bold;
+}
+.header-image{
+  text-align: center;
+}
+#jeju-image{
+  width: 70px;
+  height: 70px;
+}
+/* Header MouseOver Event */
+.destination-list{
+  display: none;
+}
+.myTrableInfo-list{
+  display: none;
+}
+.notice-list{
+  display: none;
+}
+.footer-main{
+  width: 100%;
+  position : absolute;  
+  height: 150px;
+  background: no-repeat;
+  background-image: url(https://media.discordapp.net/attachments/1127767279715749978/1143555123793113129/--001.jpg?width=1260&height=315);
+  background-size: cover;
+  bottom : 0;
+}
+.footer-container{
+  margin: 30px;
+  display: grid;
+  grid-template-columns: 180px 1fr auto;
+  grid-template-rows: 50px 50px;
+  
+}
+.footer-Grid1{
+  grid-template-columns: 200px 200px 200px 200px 200px;
+  display: inline-grid;
+  text-align: left;
+}
+.footer-Grid2{
+  margin-top: 20px;
+  grid-template-columns: 1000px;
+  display: grid;
+  text-align: left;
+  font-size: small;
+}
+
+
+

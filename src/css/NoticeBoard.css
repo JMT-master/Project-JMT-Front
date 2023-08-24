@@ -1,0 +1,70 @@
+.content{
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+.content h1{
+  margin-left: 10px;
+  text-align: left;
+}
+.searchNotice-box{
+  position: relative;
+  margin: 0 10px;
+  display: flex;
+  background-color: #3c3cb4;
+  padding: 20px;
+  color: white;
+}
+.searchNotice-box > h2{
+  margin-left: 20px;
+}
+.searchNotice{
+  position: absolute;
+  right: 2px;
+  bottom: 10px;
+}
+.searchNotice > input{
+  margin: 0;
+  padding: 10px;
+  border: none;
+}
+.searchNotice > input:focus{
+  outline: none;
+}
+.searchNotice > button{
+  padding: 10px;
+  background-color: #3c3cb4;
+  color: white;
+  border: none;
+  font-size: large;
+}
+.content table{
+  border-collapse: collapse;
+  width: 95%;
+  margin-left: 30px;
+  margin-top: 10px;
+}
+.content table tr,.content table th,.content table td{
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 10px;
+}
+.notice-table{
+  clear: both;
+  width: 100%;
+  text-align: center;
+}
+.page{
+  margin: 30px;
+  text-align: center;
+}
+.page-choice{
+  position: relative;
+  width: 100%;
+  height: 30px;
+}
+.page-choice select{
+  margin-bottom: 10px;
+  right: 10vw;
+  position: absolute;
+}

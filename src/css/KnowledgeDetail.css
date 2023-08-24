@@ -1,0 +1,109 @@
+.knowledgeDetail-content{
+  margin: 10px 30px;
+}
+.knowledgeDetail-title{
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+.knowledgeDetail-title h1{
+  text-align: left;
+  width: 85vw;
+  margin-left: 20px;
+  line-height: 85px;
+}
+.knowledgeDetail-title span{
+  text-align: right;
+  line-height: 85px;
+  margin-right: 10px;
+
+}
+.knowledgeDetail-box{
+  text-align: left;
+  margin: 30px auto;
+  height: 500px;
+  border-top: 2px solid black;
+  border-bottom: 1px solid #ccc;
+  padding: 20px 30px;
+}
+.knowledgeDetail-box div{
+  display: flex;
+  padding: 10px;
+}
+.knowledgeDetail-img img{
+  margin-right: 20px;
+}
+.knowledgeDetail-img p{
+  width: 240px;
+  text-align: center;
+  font-size: x-large;
+  height: 120px;
+  line-height: 120px;
+}
+.knowledgeDetail-question {
+  border-top: 1px solid black;
+  border-bottom: 1px solid gray;
+  margin: 10px auto;
+  position: relative;
+}
+.knowledgeDetail-question h3{
+  margin-right: 20px;
+  position: center;
+  text-align: center;
+}
+.knowledgeDetail-question .no{
+  margin-left: 3px;
+  font-size: large;
+  margin-right: 10px;
+  width: 20vw;
+}
+.knowledgeDetail-question .date{
+  position: absolute;
+  right: 5px;
+}
+.knowledgeDetail-inside textarea{
+  width: 90vw;
+  margin-bottom: 20px;
+  border: none;
+  resize: none;
+}
+.knowledgeDetail-inside textarea:focus{
+  outline: none;
+}
+.knowledgeDetail-answer-btn{
+  width: 100vw;
+  justify-content: center;
+}
+.knowledgeDetail-answer-btn > button{
+  width: 150px;
+  height: 50px;
+  background-color: rgb(242, 207, 141);
+  border: none;
+  border-radius: 20px;
+}
+.knowledgeDetail-answer-box{
+  text-align: left;
+  margin: 10px 20px;
+  border: 0.5px solid gold;
+  background-color: rgb(244, 238, 205);
+}
+.knowledgeDetail-answer-box p{
+  margin: 10px;
+  font-size: small;
+}
+.knowledgeDetail-answer-box textarea{
+  width: 90%;
+  margin: 10px;
+  background-color: rgb(244, 238, 205);
+  border: none;
+  resize: none;
+}
+.knowledgeDetail-answer-box textarea:focus{
+  outline: none;
+}
+@media screen and (max-width:1260px) {
+  .knowledgeDetail-title h1{
+    text-align: left;
+    width: 75vw;
+    margin-left: 20px;
+  }
+}
