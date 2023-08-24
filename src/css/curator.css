@@ -80,11 +80,26 @@
   background-color: #E0E0E0;
   margin-top: 20px;
   margin-right: 20px;
+  position: relative;
 }
 
 .curatorResult-img-li > img {
   width: 250px; height: 250px;
   object-fit: cover;
+}
+.curatorResult-img-li > .img-tag-hover {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  color: white;
+  font-weight: bold;
+  font-size: large;
+  display: none;
+  z-index: 99;
+}
+
+.curatorResult-img-li > img:hover + .img-tag-hover{
+  display: block;
 }
 
 .curatorResult-paging-ul {

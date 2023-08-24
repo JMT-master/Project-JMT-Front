@@ -1,9 +1,8 @@
 .content{
   width: 100%;
-  display: flex;
   position: relative;
 }
-.content h1{
+.content > h1{
   margin-left: 10px;
   text-align: left;
 }

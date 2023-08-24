@@ -11,9 +11,9 @@
   margin: 0 10px;
   height: 400px;
   position: relative;
+  text-align: center;
 }
 .knowledge-title h1{
-  text-align: center;
   color: rgb(227, 122, 122);
   line-height: 200px;
 }
