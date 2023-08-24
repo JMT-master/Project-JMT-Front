@@ -19,6 +19,7 @@ import KnowledgeDetail from './trableinfo/KnowledgeDetail';
 import KnowledgeWrite from './trableinfo/KnowledgeWrite';
 import TourList from './destination/TourList';
 import DetailInfo from './destination/DetailInfo';
+import Traffic from './trableinfo/Traffic';
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
   const [newQnaData, setNewQnaData] = useState(qnaData);
@@ -37,6 +38,7 @@ function App() {
         <Route path="/qnABoard" element={<QnABoard></QnABoard>}></Route>
         <Route path="/qnABoard/:id?" element={<QnaBoardDetail data={newQnaData}></QnaBoardDetail>}></Route>
         <Route path="/festival?" element={<Festival></Festival>}></Route>
+        <Route path="/traffic" element={<Traffic></Traffic>}></Route>
         <Route path="/knowledge?" element={<Knowledge></Knowledge>}></Route>
         <Route path="/knowledgeDetail/:id?" element={<KnowledgeDetail data={newKnowledgeData}></KnowledgeDetail>}></Route>
         <Route path="/knowledgeWrite" element={<KnowledgeWrite></KnowledgeWrite>}></Route>
@@ -94,7 +96,7 @@ function HeaderTop(props) {
           <ul id="myTrableInfo" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
             <a>여행정보</a>
             <div className='myTrableInfo-list'>
-              <li>교통 혼잡도</li>
+              <li><Link to="/traffic">교통 혼잡도</Link></li>
               <li><Link to="/festival">축제 및 행사</Link></li>
               <li><Link to="/knowledge">관광 지식in</Link></li>
             </div>
