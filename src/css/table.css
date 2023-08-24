@@ -1,4 +1,4 @@
-table {
+/* table {
   width: 90%;
 
 }
@@ -11,10 +11,10 @@ th, td {
   border: 1px solid black;
   width: 30%;
   height: 50px;
-}
+} */
 
 .firstRow {
-  width: 10%;
+  width: 75px;
   text-align: center;
   line-height: 50px;
 }
