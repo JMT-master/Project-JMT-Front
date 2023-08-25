@@ -10,8 +10,7 @@ import axios from 'axios';
 import { AiOutlineLoading } from 'react-icons/ai';
 import { BsGridFill } from 'react-icons/bs';
 import { FaThList } from 'react-icons/fa';
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from 'react-icons/md'
-
+import NaverMapView from '../common/NaverMapView';
 
 
 const TourList = () => {
@@ -114,7 +113,9 @@ const TourList = () => {
             <ListPaging page={page} setPage={setPage} lastPage={lastPage.current}></ListPaging>
           </div>
           {/* 맵 영역,  */}
-          <div className={`${pageType}-content-map`}>맵</div>
+          <div className={`${pageType}-content-map`}>
+            <NaverMapView></NaverMapView>
+          </div>
         </div>
       </div>
     )

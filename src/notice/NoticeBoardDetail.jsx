@@ -1,12 +1,10 @@
 import React from 'react';
 import style from '../css/NoticeBoardDetail.css'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const NoticeBoardDetail = ({data}) => {
+  const navigate = useNavigate();
   const params = useParams();
-  // console.log(params);
-  // console.log(parseInt(params.id)-1);
-  // console.log(data[params.id-1])
   const detail = data[params.id-1];
   
   return (
@@ -28,6 +26,7 @@ const NoticeBoardDetail = ({data}) => {
           <div className='noticeDetail-inside'>
             <textarea cols="30" rows="10" readOnly placeholder='공지사항 내용' value={detail.content}></textarea>
           </div>
+          <button className='back-to-notice'  onClick={()=>navigate(-1)}>목록으로 가기</button>
         </div>
     </div>
   );

@@ -53,7 +53,7 @@ const NoticeBoard = () => {
             <option value="10개씩">20개씩</option>
           </select>
         </div>
-        <table>
+        <table cl>
           <thead>
             <tr>
               <th>No.</th>
@@ -62,7 +62,7 @@ const NoticeBoard = () => {
               <th>작성일자</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className='cursor'>
             {currentItems.map((item, index)=>{
               return (
                 <TestTr data={item} key={item.id}></TestTr>

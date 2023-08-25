@@ -1,16 +1,15 @@
 .content{
   width: 100%;
-  display: flex;
   position: relative;
 }
-.content h1{
+.content > h1{
   margin-left: 10px;
   text-align: left;
 }
 .QnA-box{
   position: relative;
   display: flex;
-  background-color: #3c3cb4;
+  background-color: #f3a344;
   padding: 20px;
   color: white;
   margin: 0 10px;
@@ -33,7 +32,7 @@ outline: none;
 }
 .QnA button{
   padding: 10px;
-  background-color: #3c3cb4;
+  background-color: #f3a344;
   color: white;
   border: none;
   font-size: large;

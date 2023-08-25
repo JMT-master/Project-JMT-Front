@@ -62,7 +62,7 @@ const QnABoard = () => {
               <th>작성일자</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className='cursor'>
             {currentItems.map((item, index) => {
                 return (
                   <Tr data={item} key={item.id}></Tr>
