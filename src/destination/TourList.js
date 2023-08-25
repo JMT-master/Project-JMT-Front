@@ -8,15 +8,17 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import TagBtn from './TagBtn';
 import axios from 'axios';
 import { AiOutlineLoading } from 'react-icons/ai';
+import { BsGridFill } from 'react-icons/bs';
+import { FaThList } from 'react-icons/fa';
 import NaverMapView from '../common/NaverMapView';
 
 
 const TourList = () => {
   //데이터
-  const [rawData, setRawData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [dataList, setDataList] = useState(rawData);
-  
+  const [rawData, setRawData] = useState([]);
+  const [dataList, setDataList] = useState([]);
+
   //Nav용
   const nav = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -47,48 +49,38 @@ const TourList = () => {
     }
   }
   const category = checkCategory(pageId);
-  // console.log('pageId: ', category);
-  // console.log('category: ', category);
-  //param grid일때 list일때 css 변경
   //데이터 받아오기
-  useLayoutEffect(() => {
+
+  useEffect(() => {
     setLoading(true);
     const testData = async () => {
-      const res = await axios.get(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=${category}&page=3`)
-      setRawData(res.data.items);
+      let rawDatas = [];
+      for (let i = 1; i < 3; i++) {
+        const res = await axios.get(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=${category}&page=${i}`)
+        rawDatas = rawDatas.concat(res.data.items);
+      }
+      setRawData(rawDatas);
       setTagFilter('');
-      setPage(1)
     }
-
     testData();
-
-    // setRawData(testData);
-    // fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=${category}&page=2`)
-    //   .then(res => {
-    //     return res.json();
-    //   })
-    //   .then(data => {
-    //     setRawData(data.items);
-    //   });
   }, [category]);
 
   //카테고리 변경으로 데이터 변경시 사용할 데이터 리스트 새로 셋
-  useLayoutEffect(() => {
+  useEffect(() => {
     setDataList(rawData.filter(item => item.tag.includes(tagFilter)));
-    lastPage.current = Math.floor(dataList.length % offset > 0 ? (dataList.length / offset) + 1 : dataList.length / offset);
-    // console.log('lastPage.current: ', lastPage.current);
+    lastPage.current = Math.floor(dataList.length % offset > 0 ? (dataList.length / offset) + 1 : dataList.length / offset)
     let tag = [];
+
     rawData.map((item) => {
       tag = tag.concat(item.tag.replace(/, /gi, ',').split(','));
     })
     setTagList(tag)
     setLoading(false);
-  }, [rawData])
+  }, [rawData,tagFilter,dataList.length])
 
-
-  if (loading === true || !rawData[0]) {
+  if (loading === true || !dataList[0]) {
     return <div className='loading'><AiOutlineLoading className='loadingIcon'></AiOutlineLoading></div>
-  } else if(rawData[0]){
+  } else if (dataList[0]) {
     return (
 
       <div className={pageType}>
@@ -99,16 +91,17 @@ const TourList = () => {
           <p className={`${pageType}-head-intro`}>{dataList[0] && dataList[0].contentscd.label === '관광지' ?
             '내가 가본 제주는 어디까지일까? 수많은 제주의 아름다운 여행지를 취향에 맞게 선택해보자. 360여 개의 크고 작은 오름을 비롯하여 눈 돌리면 어디에서나 마주치는 한라산 그리고 푸른 바다…. 제주의 보석 같은 여행지가 여러분의 선택을 기다린다.'
             : ''}</p>
-          {/* {rawData.map((item) => item.tag.map(tag => (<button key={tag} value={tag} onClick={clickFilter}>#{tag}</button>)))} */}
-          {<TagBtn tagFilter={tagFilter} setTagFilter={setTagFilter} tagList={tagList} />}
+          {<TagBtn tagFilter={tagFilter} setTagFilter={setTagFilter} tagList={tagList} setPage={setPage} />}
           <br />
-          <button onClick={() => { nav(`/test1/${pageId}?type=list`) }}>리스트</button>
-          <button onClick={() => { nav(`/test1/${pageId}?type=grid`) }}>그리드</button>
+          <div className={`${pageType}-head-typeBtn`}>
+            <button className='oBtn' onClick={() => { nav(`/destination/${pageId}?type=list`) }}><FaThList></FaThList></button>
+            <button className='oBtn' onClick={() => { nav(`/destination/${pageId}?type=grid`) }}><BsGridFill></BsGridFill></button>
+          </div>
         </div>
         <div className={`${pageType}-content`}>
-          {/*todo - 버튼 선택시 list-content-listGrid와 list-content-Grid 변경, map삭제*/}
-          <div className={`${pageType}-contentList`}>
-            <ul className={`${pageType}-contentList-ul`}>
+          {/*버튼 선택시 list-content-listGrid와 list-content-Grid 변경*/}
+          <div className={`${pageType}-content-list`}>
+            <ul className={`${pageType}-content-list-ul`}>
               {
                 dataList.slice(pageNum, offset * page).map((item) => {
                   if (item.tag.includes(tagFilter)) {

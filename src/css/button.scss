@@ -1,0 +1,43 @@
+$jOrange: #f3a344;
+// $jOrange: #fc8c03;
+//버튼
+@mixin btnSet ($width:auto, $height:auto){
+  width: $width;
+  height: $height;
+  background-color: #ffffff;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 3px 5px;
+  margin: 0 5px;
+  color: $jOrange;
+  font-size: 0.95rem;
+  font-weight: bold;
+  
+
+  &:hover {
+    background-color: $jOrange;
+    color: white;
+  }
+}
+
+@mixin sizeSet($width:auto, $height:auto){
+  width: $width;
+  height: $height;
+  line-height: 30px;
+  display: flex;
+}
+
+.oBtn {
+  @include btnSet;
+  // @include btnSet(30px,50px);
+}
+
+.twentySize{
+  @include sizeSet(20px, 20px)
+}
+
+.Focused {
+  background-color: $jOrange;
+  border: 1px solid;
+  color: white;
+}

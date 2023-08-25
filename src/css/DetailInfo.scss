@@ -1,9 +1,9 @@
-@mixin contentHeight($height : auto, $tabFontSize : 20px) {
-  
-  margin-bottom: 5px;
+$jOrange: #f3a444;
 
+@mixin contentHeight($height : auto, $tabFontSize : 20px) {
   &-tab {
-    padding: 5px;
+    padding : 10px;
+    margin : 0;
     height: auto;
     line-height: 20px;
     font-size: $tabFontSize;
@@ -11,7 +11,7 @@
 
   &-content {
     height: auto;
-
+    
     div {
       height: auto;
 
@@ -26,25 +26,21 @@
   display: grid;
   grid-template-rows: 480px auto;
 
+  //헤더
   &-header {
     height: 100%;
-
-    // img {
-    //   position: absolute;
-    //   top: 0px;
-    //   z-index: -100;
-
-    // }
 
     &Photo {
       position: absolute;
       top: 0px;
-      height: 570px;
+      height: 630px;
       width: 100%;
       background-repeat: no-repeat;
       background-size: cover;
       z-index: -100;
       width: 100vw;
+
+
     }
 
     &Info {
@@ -56,10 +52,12 @@
       display: grid;
       grid-template-rows: 140px 100px 100px;
 
-      h1,
-      p,
-      div {
-        padding: 10px;
+      h1{
+        padding :20px
+      }
+
+      p,div {
+        padding: 15px;
       }
 
       &-baseInfo {
@@ -71,40 +69,50 @@
 
   }
 
+  //콘텐츠
   &-content {
 
     // border: 1px solid;
-    div {
-      border: 0.5px solid;
-    }
 
     &Info {
       @include contentHeight(200px);
+      margin: 0;
+      
+
+      &-content{
+        p, div {
+          padding: 15px;
+        }
+      }
     }
 
     &Photo {
-
+      margin-bottom: 0;
+      display: grid;
+      
       @include contentHeight(200px);
 
       &-content {
         width: 100%;
+        margin : 0 auto;
+        grid-template-columns: repeat(3,1fr);
+        grid-template-rows: 300px;
         div {
-          float: left;
-          height: 100%;
-          width: 49%;
           padding: 0;
-          margin: 0.5% 0.5%;
-          img{
-            
+
+          img {
             width: 100%;
-            height: 250px
+            height: 300px;
+            object-fit: cover;
           }
         }
-        .reviewListBox{
+
+        .reviewListBox {
           height: 100%;
           padding: 0;
           margin: 0;
-          &.testimg{
+
+          &.testimg {
             width: 100%;
             height: 100%
           }
@@ -113,6 +121,7 @@
     }
 
     &Review {
+      margin: 0;
       @include contentHeight(200px);
     }
   }
@@ -125,15 +134,14 @@
 }
 
 .gray {
-  margin-left: 0;
+  // margin-left: 0;
   color: #ccc;
 }
 
 .sf {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
 
 img {
   object-fit: cover;
 }
-
