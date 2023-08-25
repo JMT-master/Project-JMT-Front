@@ -1,7 +1,6 @@
 .festival-title{
   width: 100vw;
-  height: 1
-  20px;
+  text-align: center;
 }
 .festival-title h1, .festival-title p {
   padding: 10px;
@@ -9,12 +8,18 @@
 }
 .festival-category{
   width: 100vw;
-  height: 50px;
+  margin: 10px;
+  text-align: center;
 }
 .festival-category label{
   margin: 10px;
-  padding: 10px;
+  padding: 2px;
+  width: 60px;
+  height: 40px;
   background-color: skyblue;
+  display: inline-block;
+  line-height: 40px;
+  border-radius: 25px;
 }
 .festival-list{
   padding: 10px;
@@ -22,11 +27,13 @@
 .festival-list h3{
   padding: 10px;
   margin: 10px;
+  text-align: center;
 }
 .on-festival{
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-right: 20px;
+  text-align: center;
 }
 .on-festival ul{
   text-decoration: none;
@@ -40,6 +47,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-right: 20px;
+  text-align: center;
 }
 .off-festival ul{
   text-decoration: none;

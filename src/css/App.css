@@ -102,7 +102,6 @@
   background: no-repeat;
   background-image: url(https://media.discordapp.net/attachments/1127767279715749978/1143555123793113129/--001.jpg?width=1260&height=315);
   background-size: cover;
-  bottom : 0;
 }
 .footer-container{
   margin: 30px;
@@ -123,6 +122,8 @@
   text-align: left;
   font-size: small;
 }
-
+.cursor{
+  cursor: pointer;
+}
 
 
