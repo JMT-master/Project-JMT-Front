@@ -4,7 +4,7 @@ import Tables from './Tables';
 import { Link } from 'react-router-dom';
 import TravelForm from './TravelForm';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
-
+import NaverMapView from '../common/NaverMapView';
 const TravelSchedule = (props) => {
   const [visit, setVisit] = useState();
   const [list, setList] = useState([]);
@@ -269,7 +269,7 @@ const TravelSchedule = (props) => {
 
       </div>
       <div>
-        지도
+        <NaverMapView></NaverMapView>
       </div>
     </div>
   )

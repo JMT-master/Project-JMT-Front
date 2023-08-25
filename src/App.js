@@ -72,7 +72,7 @@ function HeaderTop(props) {
         <Link to="/login">로그인</Link>
       </div>
       <div class="header-container">
-        <Link to="/"><a class="header-image" href=""><img id="jeju-image" src="images/JMT.jpg" alt="" /></a></Link>
+        <Link to="/"><a class="header-image" href=""><img id="jeju-image" src="../images/JMT.jpg" alt="" /></a></Link>
         <div class="headerSell">
           <ul id="destination" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
             <a>여행지</a>
@@ -160,7 +160,7 @@ function Footer() {
     <>
       <div className='footer-main'>
         <div className='footer-container'>
-          <a href=""><img id="jeju-image" src="images/JMT.jpg" alt="" /></a>
+          <a href=""><img id="jeju-image" src="../images/JMT.jpg" alt="" /></a>
           <ul className='footer-Grid1'>
             <li>개인정보 처리방침</li>
             <li>이용약관</li>
