@@ -29,7 +29,7 @@ const OnModal = ({setModalOpen, id, title, content, writer}) => {
         </div>
         <div className='answer-protect'>
           <p><CheckBox checked={protect} onChange={setProtect}></CheckBox>(필수)정보 제공 동의</p>
-          <p><input type="button" value="작성완료" className='answer-submit' disabled={!protect} /></p>
+          <p><input type="button" value="작성완료" className='answer-submit' disabled={!protect} onClick={closeModal} /></p>
         </div>
     </div>
   );

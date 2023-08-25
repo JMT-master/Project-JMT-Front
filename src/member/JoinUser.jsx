@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import '../css/JoinUser.css';
 import DaumPostcode from 'react-daum-postcode';
 import Post from './Post';
+import { useNavigate } from 'react-router';
 const JoinUser = () => {
   const [enroll_company, setEnroll_company] = useState({
     address:'',
   });
+  const navigate = useNavigate();
+  const [pwdPop, setPwdPop] = useState('');
   const [popup, setPopup] = useState(false);
   const handleInput = (e) => {
     setEnroll_company({
@@ -15,6 +18,15 @@ const JoinUser = () => {
   }
   const handleComplete = (data) => {
     setPopup(!popup);
+  }
+  const checkPwd = (e) => {
+    const pwdVal = document.getElementById('LoginPwd').value;
+    console.log(e.target.value === pwdVal);
+    if(e.target.value === pwdVal){
+      return setPwdPop('비밀번호가 일치합니다');
+    }else {
+      return setPwdPop('비밀번호가 일치하지 않습니다.');
+    }
   }
 
   function onSubmitHandler() {
@@ -34,7 +46,7 @@ const JoinUser = () => {
   }
   return (
     <div className='join-container'>
-      <form>
+      <form >
         <div className='item-title'>
           <h2>JMT로의 회원가입을 통해<br /> 더 다양한 서비스를 만나보세요</h2>
         </div>
@@ -50,7 +62,7 @@ const JoinUser = () => {
                   <th><strong>아이디</strong></th>
                   <td>
                     <div className='brd'><input type="id" id='LoginId' name='LoginId'
-                      maxLength='12' className='brd-ipt' /> </div>
+                      maxLength='12' className='brd-ipt' required /> </div>
                     <div className='brd-txt'><span id='LoginIdMsg'>영문 또는 숫자로 4자~12자로 입력해주세요.</span></div>
                   </td>
                 </tr>
@@ -65,9 +77,9 @@ const JoinUser = () => {
                 <tr>
                   <th><strong>비밀번호 확인</strong></th>
                   <td>
-                    <div className='brd'><input type="text" id='LoginId' name='LoginId'
-                      maxLength='12' className='brd-ipt' /> </div>
-                    <div className='brd-txt'><span id='LoginIdMsg'>영문, 숫자 혼합하여 8자~15자로 입력해주세요.</span></div>
+                    <div className='brd'><input type="password" id='LoginId' name='LoginId'
+                      maxLength='12' className='brd-ipt' onChange={checkPwd} /> </div>
+                    <div className='brd-txt'><span className={pwdPop === '비밀번호가 일치합니다' ? 'successPwd' : 'failPwd'} >{pwdPop}</span></div>
                   </td>
                 </tr>
                 <tr>
@@ -113,8 +125,8 @@ const JoinUser = () => {
           </div>
           <div className='joinUser-btn'>
             <ul className='type2'>
-              <li className='lt' id=''><button><span>가입완료</span></button></li>
-              <li className='rt'><button><span>취소</span></button></li>
+              <li className='lt'><button><span>가입완료</span></button></li>
+              <li className='rt' onClick={()=>navigate('/')} ><button><span>취소</span></button></li>
             </ul>
           </div>
         </div>

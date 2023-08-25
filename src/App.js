@@ -57,16 +57,24 @@ function App() {
 function HeaderTop(props) {
   const {pathname} = useLocation();
 
-  const handleMouseOver = () => {
+  const handleMouseOverDes = () => {
     $(".destination-list").show();
+  };
+  const handleMouseOutDes = () => {
+    $(".destination-list").hide();
+  };
+  const handleMouseOverInfo = () => {
     $(".myTrableInfo-list").show();
+
+  };
+  const handleMouseOutInfo = () => {
+    $(".myTrableInfo-list").hide();
+  };
+  const handleMouseOverNoti = () => {
     $(".notice-list").show();
 
   };
-
-  const handleMouseOut = () => {
-    $(".destination-list").hide();
-    $(".myTrableInfo-list").hide();
+  const handleMouseOutNoti = () => {
     $(".notice-list").hide();
   };
   
@@ -80,7 +88,7 @@ function HeaderTop(props) {
       <div class="header-container">
         <Link to="/"><a class="header-image" href=""><img id="jeju-image" src="../images/JMT.jpg" alt="" /></a></Link>
         <div class="headerSell">
-          <ul id="destination" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+          <ul id="destination" onMouseOver={handleMouseOverDes} onMouseOut={handleMouseOutDes}>
             <a>여행지</a>
             <div className='destination-list'>
               <li><Link to='/destination/tour'>관광지</Link></li>
@@ -98,7 +106,7 @@ function HeaderTop(props) {
               <a><Link to="/selectSchedule">여행일정</Link></a>
             </div>
           </ul>
-          <ul id="myTrableInfo" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+          <ul id="myTrableInfo" onMouseOver={handleMouseOverInfo} onMouseOut={handleMouseOutInfo}>
             <a>여행정보</a>
             <div className='myTrableInfo-list'>
               <li><Link to="/traffic">교통 혼잡도</Link></li>
@@ -106,7 +114,7 @@ function HeaderTop(props) {
               <li><Link to="/knowledge">관광 지식in</Link></li>
             </div>
           </ul>
-          <ul id="notice" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+          <ul id="notice" onMouseOver={handleMouseOverNoti} onMouseOut={handleMouseOutNoti}>
             <a>공지사항</a>
             <div className='notice-list'>
               <li><Link to="/noticeBoard">공지사항</Link></li>
