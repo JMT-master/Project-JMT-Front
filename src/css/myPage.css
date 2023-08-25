@@ -93,11 +93,12 @@
 .myPageImage-ul {
   display: grid;
   grid-template-columns: 150px 150px 150px;
+  gap: 10px 10px;
 }
 
 .myPageImage-ul-li {
   width: 150px; height: 150px;
   background-color: #E0E0E0;
-  border: 1px solid black;
+  border-radius: 10px;
 }
 
