@@ -122,6 +122,8 @@
   text-align: left;
   font-size: small;
 }
-
+.cursor{
+  cursor: pointer;
+}
 
 

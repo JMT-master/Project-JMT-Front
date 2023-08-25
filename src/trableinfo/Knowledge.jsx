@@ -39,9 +39,9 @@ const Knowledge = () => {
         <h1>Jhat JPT 지식in</h1>
         <p>제주도 여행에 관해서라면 관광지, 숙박, 음식, 축제, 교통 정보 등등 지식in을 이용해주세요</p>
         <p>전문가를 비롯한 제주도민, 제주도를 잘 아는 사람이라면 누구든지 답변 받을 수 있습니다.</p>
-        <button className='question' onClick={() => navigate('/knowledgeWrite')}></button>
+        <button className='question cursor' onClick={() => navigate('/knowledgeWrite')}></button>
       </div>
-      <div className='knowledge-content'>
+      <div className='knowledge-content cursor'>
         <div className='most-qna1' onClick={() => navigate('/knowledgeDetail/1')}>
           <img src="../images/qna-icon.png" alt="이미지1" style={{ width: '120px', height: '120px' }} />
           <p>가장 많이 본 qna1</p>
@@ -85,7 +85,7 @@ const Knowledge = () => {
                 <th>작성일자</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className='cursor'>
               {currentItems.map((item, index) => {
                 return (
                   <Trkn data={item} key={item.id}></Trkn>

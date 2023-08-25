@@ -68,7 +68,6 @@ function HeaderTop(props) {
   return (
     <div class="header-main-position">
       <div class="headerTop">
-        <Link to="/joinUser">회원가입</Link>
         <Link to="/mypage">마이페이지</Link>
         <Link to="/login">로그인</Link>
       </div>

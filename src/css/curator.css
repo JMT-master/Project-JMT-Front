@@ -97,7 +97,6 @@
   display: none;
   z-index: 99;
 }
-
 .curatorResult-img-li > img:hover + .img-tag-hover{
   display: block;
 }

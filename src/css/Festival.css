@@ -14,11 +14,12 @@
 .festival-category label{
   margin: 10px;
   padding: 2px;
-  width: 40px;
+  width: 60px;
   height: 40px;
   background-color: skyblue;
   display: inline-block;
   line-height: 40px;
+  border-radius: 25px;
 }
 .festival-list{
   padding: 10px;
