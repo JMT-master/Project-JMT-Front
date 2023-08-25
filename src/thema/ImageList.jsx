@@ -7,7 +7,7 @@ const ImageList = (props) => {
     style={{borderRadius : "20px"}}>
       <img src={props.data !== null ? props.data : ""} alt={props.number} style={{borderRadius : "20px"}}>
       </img>
-        <p className='img-tag-hover'>이미지 이름</p>
+        <p className='img-tag-hover'>{props.title}</p>
     </li>
   )
 }
