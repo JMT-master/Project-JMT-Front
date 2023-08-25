@@ -57,7 +57,7 @@ const Curator = () => {
         visitTag = visitTag.concat(item.tag.replace(/, /gi, ',').split(','));
         // if(i <= 10){
           return <ImageList key={i} number={i} className='curatorResult-img-li' 
-          data={item.repPhoto !== null ? item.repPhoto.photoid.imgpath : null}></ImageList>
+          data={item.repPhoto !== null ? item.repPhoto.photoid.imgpath : null} title={item.title}></ImageList>
         // }
       }));
 
@@ -94,7 +94,7 @@ const Curator = () => {
     if(selectTag.length === 0) {
       setList(copyVisit.items.map((item,i) => {
           return <ImageList key={i} number={i} className='curatorResult-img-li' 
-          data={item.repPhoto !== null ? item.repPhoto.photoid.imgpath : null}></ImageList>
+          data={item.repPhoto !== null ? item.repPhoto.photoid.imgpath : null} title={item.title}></ImageList>
       }));
 
       return 0;
@@ -108,7 +108,7 @@ const Curator = () => {
 
       if(tagValue.length !== 0){
         return <ImageList key={i} number={i} className='curatorResult-img-li' 
-        data={item.repPhoto !== null ? item.repPhoto.photoid.imgpath : null}></ImageList>
+        data={item.repPhoto !== null ? item.repPhoto.photoid.imgpath : null} title={item.title}></ImageList>
       }
     }));
   };
