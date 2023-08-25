@@ -101,6 +101,20 @@
   display: block;
 }
 
+.curatorResult-paging-ul {
+  display: flex;
+}
+
+.curatorResult-paging-li {
+  margin-top: 5%;
+  margin-right: 20px;
+  width: 10%; height: 30px;
+  text-align: center;
+  line-height: 30px;
+  background-color: #3498DA;
+  color: white;
+}
+
 .curatorResult-paging {
   margin-top: 25px;
   text-align: center;

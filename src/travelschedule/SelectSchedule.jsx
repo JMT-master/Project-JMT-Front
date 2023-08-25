@@ -2,16 +2,55 @@ import React, { useState } from 'react'
 import '../css/schedule.css'
 import RadioGroup from './RadioGroup'
 import Radio from './Radio'
-import Calendar from 'react-calendar'
-import 'react-calendar/dist/Calendar.css';
 import { Link } from 'react-router-dom'
+import { DateRange, DateRangePicker } from 'react-date-range'
+import {addDays} from 'date-fns'
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { format } from 'date-fns/esm'
+
 
 const SelectSchedule = () => {
   const [value, setValue] = useState(new Date());
+  const [peopleNum, setPeopleNum] = useState(1);
+  const [startTime, setStartTime] = useState("00:00");
+  const [endTime, setEndTime] = useState("00:00");
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 1),
+      key: "selection",
+    },
+  ]);
+
+  const numberChange = (e) => {
+    setPeopleNum(e.target.value);
+  }
+
+  const onStartTime = (e) => {
+    setStartTime(e.target.value);
+  }
+
+  const onEndTime = (e) => {
+    setEndTime(e.target.value);
+  }
+
+  const dateChange = (item) => {
+    console.log(state);
+    console.log(state);
+
+    let diff = item.selection.startDate - item.selection.endDate;
+    diff = Math.abs(diff / (1000 * 60 * 60 * 24));
+
+    if(diff <= 10) setState([item.selection]);
+    
+    // if()
+  }
+
   return (
     <div className='container'>
-      <div>
-        <Link to="/"><h1 className='Logo'>JMT</h1></Link>
+      <div className='selectContainer-menu'>
+        {/* <Link to="/"><h1 className='Logo'>JMT</h1></Link> */}
         <Link to="/select">
           <div className='Step SelectText'>
             <h3>Step1</h3>
@@ -24,10 +63,10 @@ const SelectSchedule = () => {
             <h3>여행지 선택</h3>
           </div>
         </Link>
-        <button className='SelectBtn'>다음</button>
+        <Link to="/travel"><button className='SelectBtn'>다음</button></Link>
       </div>
-      <div>
-        <h3 className='selectDate'>2023.00.00(월) ~ 2023.00.00(월)</h3>
+      <div className='selectContainer-Form'>
+        <h3 className='selectDate'>{`${format(state[0].startDate, 'yyyy년 MM월 dd일')} ~ ${format(state[0].endDate, 'yyyy년 MM월 dd일')}`}</h3>
         <form className='ScheduleForm'>
           <div className='selectItem'>
             <button className='scheduleBtn SelectBG'>새일정</button>
@@ -38,16 +77,16 @@ const SelectSchedule = () => {
             <input placeholder='내용을 입력해주세요.'></input>
           </div>
           <div className='selectItem'>
-            <label >인원</label>
-            <input type='number' value="1"></input>
+            <label>인원</label>
+            <input type='number' value={peopleNum} onChange={numberChange}></input>
           </div>
           <div className='selectItem'>
             <label >출발시간</label>
-            <input className='inputTime' type='time' value="00:00:00"></input>
+            <input className='inputTime' type='time' value={startTime} onChange={onStartTime}></input>
           </div>
           <div className='selectItem'>
             <label >도착시간</label>
-            <input className='inputTime' type='time' value="00:00:00"></input>
+            <input className='inputTime' type='time' value={endTime} onChange={onEndTime}></input>
           </div>
           <div className='selectItem'>
             <RadioGroup>
@@ -57,7 +96,15 @@ const SelectSchedule = () => {
           </div>
         </form>
         <div className='Calendar'>
-          <Calendar onChange={setValue} value={value}></Calendar>
+          {/* <Calendar onChange={setValue} value={value}></Calendar> */}
+          <DateRange
+            editableDateInputs={true}
+            onChange={(item) => dateChange(item)}
+            moveRangeOnFirstSelection={false}
+            ranges={state}
+            months={2}
+            direction="horizontal"
+          />
         </div>
       </div>
       <div>지도 넣을 곳</div>

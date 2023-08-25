@@ -6,9 +6,13 @@
   height: 650px;
 }
 
+.rdrDateDisplayWrapper {
+  display: none;
+}
+
 .travelSelect {
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr;
+  grid-template-columns: 1fr 2fr;
 }
 
 .travelStepBox {
@@ -141,5 +145,50 @@
 }
 
 .tableTr {
-  width: 150px;
+  width: 150px; height: 50px;
+  line-height: 50px;
+  overflow: scroll;
+}
+
+.travelSchedule-table-td {
+  width: 150px; max-width: 150px;
+  font-size: small;
+  line-height: 20px;
+  color: white;
+  border: 1px solid black;
+  overflow: scroll;
+  flex-grow: 1; flex-basis: 0;
+}
+
+.travelSchedule-table-td::-webkit-scrollbar {
+  display: none;
+}
+
+.travelSchedule-thead {
+  text-align: center;
+}
+
+.travelSchedule-table-td-black {
+  font-weight: bold;
+  color: black;
+}
+
+.travelSchedule-table-btn {
+  /* background-color: red;
+  color: white; font-weight: bold;
+  border: 1px solid red; */
+  color: red;
+  width: 20px; height: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.travelSchedule-table-body {
+  opacity: 0.3;
+  background-color: orange;
+  border: 1px solid orange;
+}
+
+.Calendar {
+  width: 100%;
 }
