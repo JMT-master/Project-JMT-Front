@@ -53,6 +53,8 @@ const Curator = () => {
       setCopyVisit(visit);
       visitTag = []; tagSet = [];
 
+      console.log("visit : ",visit);
+
       setList(visit.items.map((item,i) => {
         visitTag = visitTag.concat(item.tag.replace(/, /gi, ',').split(','));
         // if(i <= 10){

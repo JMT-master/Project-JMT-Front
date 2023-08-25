@@ -20,6 +20,7 @@ import KnowledgeWrite from './trableinfo/KnowledgeWrite';
 import TourList from './destination/TourList';
 import DetailInfo from './destination/DetailInfo';
 import Traffic from './trableinfo/Traffic';
+import SelectSchedule from './travelschedule/SelectSchedule';
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
   const [newQnaData, setNewQnaData] = useState(qnaData);
@@ -44,6 +45,7 @@ function App() {
         <Route path="/knowledgeWrite" element={<KnowledgeWrite></KnowledgeWrite>}></Route>
         <Route path='/destination/:pageId' element={<TourList />}></Route>
         <Route path='/destination/detail/:id' element={<DetailInfo />}></Route>
+        <Route path='/selectSchedule' element={<SelectSchedule></SelectSchedule>}></Route>
 
       </Routes>
     </>
@@ -89,7 +91,7 @@ function HeaderTop(props) {
           </ul>
           <ul id="myTrab">
             <div>
-              <a><Link to="/travelSchedule">여행일정</Link></a>
+              <a><Link to="/selectSchedule">여행일정</Link></a>
             </div>
           </ul>
           <ul id="myTrableInfo" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>

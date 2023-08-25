@@ -4,55 +4,178 @@ import Tables from './Tables';
 import { Link } from 'react-router-dom';
 import TravelForm from './TravelForm';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
-import NaverMapView from '../common/NaverMapView';
+import ListPaging from '../destination/ListPaging'
+import {TiDeleteOutline} from 'react-icons/ti'
+
 const TravelSchedule = (props) => {
   const [visit, setVisit] = useState();
   const [list, setList] = useState([]);
-  // const [table1Data1, setTableData1] = useState([' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']);
-  const [table1Data1, setTableData1] = useState([0,1,2,3,4,5,6,7,8,9,10,
-  11,12,13,14,15,16,17,18,19,20, 21,22,23]);
-  const testData = [0,"a","b","c",4,5,6,7,8,9,10,
-                    11,12,13,14,15,16,17,18,19,20, 21,22,23];
-  // const [testData, setTestData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [table1FontColor, setTable1FontColor] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const [table2FontColor, setTable2FontColor] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const [tableData1, setTableData1] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
+  const [tableData2, setTableData2] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
 
   useEffect(() => {
-    fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=c1&page=2`)
+    fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=c1&page=${currentPage}`)
       .then(res => {
         return res.json();
       })
       .then(data => {
         setVisit(data);
       });
-  }, []);
+  }, [currentPage]);
 
   // data가 변경되었을 때, tag와 List 변경
   useEffect(() => {
-    if(visit != null && visit !== undefined) {
+    if (visit != null && visit !== undefined) {
       setList(visit.items.map(item => {
-          return ({item})
-      }));  
+        return ({ item })
+      }));
     }
   }, [visit]);
 
   const onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
+    let dragIndex = 0;
 
-    console.log(result);
+    console.log("result : ", result);
 
-    // const data = list !== undefined ? list.map((item,i) => {
-    //   if(i === destination.index) {
-    //     return item;
-    //   }
-    // }) : null;
-    const data = list !== undefined ? list.filter((item,i) => i === destination.index) : null;
-    console.log("data:", data);
-    
+
+    // drop이 List일 경우
+    if (destination.droppableId === "Lists") return;
+
+    // flag : 0 : List Data, 1 : table Data
+    let data = null, flag = 0;
+    if (source.droppableId === "Lists") {
+      data = list !== undefined ? list.filter((item, i) => i === source.index) : null;
+    } else if (source.droppableId === "table1") {
+      data = tableData1.filter((item, i) => i === source.index);
+      flag = 1;
+    }
+
+    // table1일 경우
     if (destination.droppableId === "table1") {
-      setTableData1(table1Data1.map((item,i) => {
-        console.log(i);
-        return (destination.index === i ? data[0].item.title : "실패");
+      const table1FontColorChn = [];
+
+      if(flag===0){
+        if(tableData1.find(item => item === data[0].item.title)) return;
+      } else {
+        dragIndex = source.index;
+      }
+
+      setTableData1(flag === 0 ? tableData1.map((item, i) => {
+        if (destination.index === i) {
+          table1FontColorChn.push(1);
+          return data[0].item.title;
+        } else if (Number.isInteger(item)) {
+          table1FontColorChn.push(0);
+          return i;
+        } else {
+          table1FontColorChn.push(1);
+          return item;
+        }
+      }) : tableData1.map((item, i) => {
+        if (destination.index === i) {
+          table1FontColorChn.push(1);
+          return data;
+        } else if (Number.isInteger(item)) {
+          table1FontColorChn.push(0);
+          return i;
+        } else if(dragIndex !== 0 && dragIndex === i) {
+          table1FontColorChn.push(0);
+          return i;
+        } else {
+          table1FontColorChn.push(1);
+          return item;
+        }
       })
       )
+
+      setTable1FontColor(table1FontColorChn);
+    } else if (destination.droppableId === "table2") {
+      const table2FontColorChn = [];
+
+      if(flag===0){
+        if(tableData2.find(item => item === data[0].item.title)) return;
+      } else {
+        dragIndex = source.index;
+      }
+
+      setTableData2(flag === 0 ? tableData2.map((item, i) => {
+        if (destination.index === i) {
+          table2FontColorChn.push(1);
+          return data[0].item.title;
+        } else if (Number.isInteger(item)) {
+          table2FontColorChn.push(0);
+          return i;
+        } else {
+          table2FontColorChn.push(1);
+          return item;
+        }
+      }) : tableData2.map((item, i) => {
+        if (destination.index === i) {
+          table2FontColorChn.push(1);
+          return data;
+        } else if (Number.isInteger(item)) {
+          table2FontColorChn.push(0);
+          return i;
+        } else if(dragIndex !== 0 && dragIndex === i) {
+          table2FontColorChn.push(0);
+          return i;
+        } else {
+          table2FontColorChn.push(1);
+          return item;
+        }
+      })
+      )
+
+      setTable2FontColor(table2FontColorChn);
+    }
+  };
+
+  const deleteValue= (e,index) => {
+    console.log("gg");
+    console.log(typeof(e.target.id));
+    // table1의 요소 삭제
+    if(index === 0){
+      const table1FontColorChn = [];
+
+      let data = [...tableData1];
+      data = data.map((item,i) => {
+        if(parseInt(e.target.id) === i) {
+          table1FontColorChn.push(0);
+          return i;
+        } else if(Number.isInteger(item)) {
+          table1FontColorChn.push(0);
+          return item;
+        } else {
+          table1FontColorChn.push(1);
+          return item;
+        }
+      });
+
+      setTable1FontColor(table1FontColorChn);
+      setTableData1(data);
+    } else if(index === 1){
+      const table2FontColorChn = [];
+
+      let data = [...tableData2];
+      data = data.map((item,i) => {
+        if(parseInt(e.target.id) === i) {
+          table2FontColorChn.push(0);
+          return i;
+        } else if(Number.isInteger(item)) {
+          table2FontColorChn.push(0);
+          return item;
+        } else {
+          table2FontColorChn.push(1);
+          return item;
+        }
+      });
+
+      setTable1FontColor(table2FontColorChn);
+      setTableData1(data);
     }
   };
 
@@ -60,7 +183,7 @@ const TravelSchedule = (props) => {
     <div className='travelContainer'>
       <div>
         <div className='travelSelect'>
-          <Link to="/"><h1 className='travelLogo'>JMT</h1></Link>          
+          {/* <Link to="/"><h1 className='travelLogo'>JMT</h1></Link> */}
           <div className='travelStepBox'>
             <Link to="/select">
               <div className='travelStep'>
@@ -80,7 +203,7 @@ const TravelSchedule = (props) => {
 
         <DragDropContext
           onDragEnd={onDragEnd}
-        // onDragStart={handleDragStart}
+          onDragStart={() => document.body.style.overflow = 'hidden'}
         >
           <div className='travelInfo'>
             <div className='searchSchedule'>
@@ -93,6 +216,7 @@ const TravelSchedule = (props) => {
                 <input type='text' placeholder='내용을 입력하세요.'></input>
                 <button className='searchSchedule-input-btn'>검색</button>
               </div>
+              {/* Img List */}
               <Droppable droppableId='Lists' key="Lists">
                 {(provided) => (
                   <div className='searchSchedule-data'
@@ -102,25 +226,25 @@ const TravelSchedule = (props) => {
                     {
                       visit !== undefined
                         ? visit.items.map((item, i) => {
-                          if (i <= 10) {
-                            return (
-                              <Draggable
-                                key={i}
-                                draggableId={"List" + i.toString()} // 드래그 가능한 항목마다 고유한 문자열로 설정
-                                index={i}
-                              >
-                                {(provided) => (
-                                  <div
-                                    ref={provided.innerRef} // provided.innerRef를 여기서 사용
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                  >
-                                    <TravelForm key={i} data={item}></TravelForm>
-                                  </div>
-                                )}
-                              </Draggable>
-                            );
-                          }
+                          // if (i <= 10) {
+                          return (
+                            <Draggable
+                              key={i}
+                              draggableId={"List" + i.toString()} // 드래그 가능한 항목마다 고유한 문자열로 설정
+                              index={i}
+                            >
+                              {(provided, snapshot) => (
+                                <div
+                                  ref={provided.innerRef} // provided.innerRef를 여기서 사용
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                >
+                                  <TravelForm key={i} data={item}></TravelForm>
+                                </div>
+                              )}
+                            </Draggable>
+                          );
+                          // }
                           return null; // 일치하지 않는 항목에 대해 무언가 반환하도록 수정
                         })
                         : null // <></> 대신 null을 사용하세요.
@@ -130,71 +254,59 @@ const TravelSchedule = (props) => {
                 )}
               </Droppable>
               <div className='searchSchedule-paging'>
-                <ul>
-                  <li>1</li>
-                  <li>2</li>
-                  <li>3</li>
-                  <li>4</li>
-                </ul>
+              <ListPaging lastPage={visit ? visit.pageCount : 1} page={currentPage} setPage={setCurrentPage}></ListPaging>
               </div>
             </div>
             <div className='tableForm' >
               <Tables></Tables>
+              {/* Day1 */}
               <table>
                 <thead>
-                  <tr>
-                    <td>Day1</td>
+                  <tr className='tableTr'>
+                    <td className='travelSchedule-thead'>Day1</td>
                   </tr>
                 </thead>
                 <Droppable droppableId='table1' key="table1">
-                  {(provided) => (
+                  {(provided,snapshot) => (
                     <tbody
                       ref={provided.innerRef}
                       {...provided.droppableProps}
                     >
                       {
                         // (table1Data1 !== undefined && table1Data1 !== null) ?
-                        table1Data1.map((data,i) => {
-                          console.log("table1Data1",i);
+                        tableData1.map((data, i) => {
                           return (
                             <Draggable
                               key={data}
                               draggableId={"table1" + data.toString()} // 드래그 가능한 항목마다 고유한 문자열로 설정
-                              index={i}>
-                              {(provided) => (
+                              index={i}
+                              isDragDisabled={false}
+                              >
+                              {(provided, snapshot) => (
                                 <tr
                                   ref={provided.innerRef} // provided.innerRef를 여기서 사용
                                   {...provided.draggableProps}
                                   {...provided.dragHandleProps}
+                                  style={{  
+                                    backgroundColor: snapshot.isDragging ? 'blue' : 'white',
+                                      ...provided.draggableProps.style,
+                                    }}
                                   className='tableTr'
                                 >
-                                  <td>{data}</td>
+                                  <td className={table1FontColor[i] === 1 ? 'travelSchedule-table-td travelSchedule-table-td-black' : 'travelSchedule-table-td'}>
+                                    {data}
+                                    {table1FontColor[i] === 1 ? 
+                                    <TiDeleteOutline className='travelSchedule-table-btn'
+                                            id={i}
+                                    onClick={(e) => deleteValue(e,0)}
+                                    ></TiDeleteOutline> : null}
+                                  </td>
                                 </tr>
                               )
                               }
                             </Draggable>
                           )
-                        }) 
-                      //   : .testData.map((data,i) => {
-                      //     return (
-                      //       <Draggable
-                      //         key={data}
-                      //         draggableId={"table2" + data.toString()} // 드래그 가능한 항목마다 고유한 문자열로 설정
-                      //         index={i}>
-                      //         {(provided) => (
-                      //           <tr
-                      //             ref={provided.innerRef} // provided.innerRef를 여기서 사용
-                      //             {...provided.draggableProps}
-                      //             {...provided.dragHandleProps}
-                      //             className='tableTr'
-                      //           >
-                      //             <td>{data}</td>
-                      //           </tr>
-                      //         )
-                      //         }
-                      //       </Draggable>
-                      //     )
-                      //   })
+                        })
                       }
                       {provided.placeholder}
                     </tbody>
@@ -202,10 +314,11 @@ const TravelSchedule = (props) => {
                   }
                 </Droppable>
               </table>
+              {/* Day2 */}
               <table>
                 <thead>
-                  <tr>
-                    <td>Day2</td>
+                  <tr className='tableTr'>
+                    <td className='travelSchedule-thead'>Day2</td>
                   </tr>
                 </thead>
                 <Droppable droppableId='table2' key="table2">
@@ -215,13 +328,12 @@ const TravelSchedule = (props) => {
                       {...provided.droppableProps}
                     >
                       {
-                        // (table1Data1 !== undefined && table1Data1 !== null) ?
-                        table1Data1.map(data => {
+                        tableData2.map((data, i) => {
                           return (
                             <Draggable
                               key={data}
                               draggableId={"table2" + data.toString()} // 드래그 가능한 항목마다 고유한 문자열로 설정
-                              index={data}>
+                              index={i}>
                               {(provided) => (
                                 <tr
                                   ref={provided.innerRef} // provided.innerRef를 여기서 사용
@@ -229,33 +341,20 @@ const TravelSchedule = (props) => {
                                   {...provided.dragHandleProps}
                                   className='tableTr'
                                 >
-                                  <td>{data}</td>
+                                  <td className={table2FontColor[i] === 1 ? 'travelSchedule-table-td travelSchedule-table-td-black' : 'travelSchedule-table-td'}>
+                                    {data}
+                                    {table2FontColor[i] === 1 ? 
+                                    <button className='travelSchedule-table-btn'
+                                            id={i}
+                                    onClick={(e) => deleteValue(e,1)}
+                                    > X </button> : null}
+                                  </td>
                                 </tr>
                               )
                               }
                             </Draggable>
                           )
                         })
-                        // : testData.map(data => {
-                        //   return (
-                        //     <Draggable
-                        //       key={data}
-                        //       draggableId={"table2" + data.toString()} // 드래그 가능한 항목마다 고유한 문자열로 설정
-                        //       index={data}>
-                        //       {(provided) => (
-                        //         <tr
-                        //           ref={provided.innerRef} // provided.innerRef를 여기서 사용
-                        //           {...provided.draggableProps}
-                        //           {...provided.dragHandleProps}
-                        //           className='tableTr'
-                        //         >
-                        //           <td>{data}</td>
-                        //         </tr>
-                        //       )
-                        //       }
-                        //     </Draggable>
-                        //   )
-                        // })
                       }
                       {provided.placeholder}
                     </tbody>
@@ -269,7 +368,7 @@ const TravelSchedule = (props) => {
 
       </div>
       <div>
-        <NaverMapView></NaverMapView>
+        지도
       </div>
     </div>
   )
