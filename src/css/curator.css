@@ -37,10 +37,10 @@
 }
 
 .curatorForm-submit {
-  width: 45%;
+  width: 45%; height: 20px;
   margin-left: 2.5%;
   margin-right: 2.5%;
-  background-color: orange;
+  color: orange;
   border: none;
   border-radius: 5px;
   text-align: center;

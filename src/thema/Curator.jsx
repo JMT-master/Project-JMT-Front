@@ -4,7 +4,8 @@ import '../css/TourList.scss'
 import ImageList from './ImageList';
 import TagBtn from './TagBtn';
 import ListPaging from '../destination/ListPaging';
-import {AiOutlineLoading} from 'react-icons/ai'
+import {AiOutlineLoading} from 'react-icons/ai';
+import {GrClearOption} from 'react-icons/gr';
 
 const Curator = () => {
   const [categoryNum, setCategoryNum] = useState("c1");
@@ -140,7 +141,7 @@ const Curator = () => {
               {tagBtn}
             </div>
             <button className='curatorForm-submit' onClick={checkTag}>적용하기</button>
-            <button className='curatorForm-submit' onClick={clearTag}>선택삭제</button>
+            <GrClearOption className='curatorForm-submit' onClick={clearTag}>선택삭제</GrClearOption>
           </form>
         </div>
         <div className='curatorResult'>

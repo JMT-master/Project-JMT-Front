@@ -57,13 +57,13 @@ const SelectSchedule = () => {
             <h3>일정 선택</h3>
           </div>
         </Link>
-        <Link to="/travel">
+        <Link to="/travelSchedule">
           <div className='Step'>
             <h3>Step2</h3>
             <h3>여행지 선택</h3>
           </div>
         </Link>
-        <Link to="/travel"><button className='SelectBtn'>다음</button></Link>
+        <Link to="/travelSchedule"><button className='SelectBtn'>다음</button></Link>
       </div>
       <div className='selectContainer-Form'>
         <h3 className='selectDate'>{`${format(state[0].startDate, 'yyyy년 MM월 dd일')} ~ ${format(state[0].endDate, 'yyyy년 MM월 dd일')}`}</h3>
