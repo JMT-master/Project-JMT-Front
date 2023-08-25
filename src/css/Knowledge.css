@@ -11,9 +11,9 @@
   margin: 0 10px;
   height: 400px;
   position: relative;
+  text-align: center;
 }
 .knowledge-title h1{
-  text-align: center;
   color: rgb(227, 122, 122);
   line-height: 200px;
 }
@@ -48,7 +48,7 @@
   position: relative;
   margin: 0 10px;
   display: flex;
-  background-color: #3c3cb4;
+  background-color: #f3a344;
   padding: 20px;
   color: white;
 }
@@ -70,7 +70,7 @@
 }
 .searchKnowledge button{
   padding: 10px;
-  background-color: #3c3cb4;
+  background-color: #f3a344;
   color: white;
   border: none;
   font-size: large;
