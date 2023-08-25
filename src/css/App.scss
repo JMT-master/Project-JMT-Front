@@ -2,6 +2,7 @@
 @import '~slick-carousel/slick/slick.css';
 @import '~slick-carousel/slick/slick-theme.css';
 @import './button.scss';
+
 *{
   font-family: 'Nanum Pen Script', cursive;
 }
@@ -78,7 +79,7 @@
 .headerSell{
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   display: grid;
-  font-size: 24px;
+  font-size: 1.5rem;
   text-align: center;
   line-height: 60px;
   font-weight: bold;
@@ -106,6 +107,7 @@
   background: no-repeat;
   background-image: url(https://media.discordapp.net/attachments/1127767279715749978/1143555123793113129/--001.jpg?width=1260&height=315);
   background-size: cover;
+  bottom : 0;
 }
 .footer-container{
   margin: 30px;
@@ -126,8 +128,12 @@
   text-align: left;
   font-size: small;
 }
+
 .cursor{
   cursor: pointer;
 }
 
-
+.max{
+  height: 100%;
+  width: 100%;
+}

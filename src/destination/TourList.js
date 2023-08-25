@@ -35,6 +35,8 @@ const TourList = () => {
   const pageNum = (page - 1) * offset;
   const lastPage = useRef(1);
 
+  const [latitude, setLatitude] = useState();
+  const [longitude, setLongitude] = useState();
 
   function checkCategory(cate) {
     switch (cate) {
