@@ -70,18 +70,18 @@ const DetailInfo = () => {
 
       <div className='detail-content'>
         <div className='detail-contentInfo'>
-          <div className='detail-contentInfo-tab' onClick={() => { toggleTab('contentVisible') }}>상세정보 탭</div>
+          <h2 className='detail-contentInfo-tab' onClick={() => { toggleTab('contentVisible') }}>상세정보 탭</h2>
           <div className='detail-contentInfo-content' id='content' style={{ display: tabState.contentVisible ? 'block' : 'none' }}>
             <p>{content}</p>
           </div>
         </div>
 
         <div className='detail-contentPhoto'>
-          <div className='detail-contentPhoto-tab' onClick={() => { toggleTab('photoVisible') }}>사진({review.current.filter(item => item.contentsid === id).length})</div>
-          <div className='detail-contentPhoto-content' id='photo' style={{ display: tabState.photoVisible ? 'inline-block' : 'none' }}>
+          <h2 className='detail-contentPhoto-tab' onClick={() => { toggleTab('photoVisible') }}>사진({review.current.filter(item => item.contentsid === id).length})</h2>
+          <div className='detail-contentPhoto-content' id='photo' style={{ display: tabState.photoVisible ? 'grid' : 'none' }}>
             {
               review.current.filter(item => item.contentsid === id).map(item =>
-                <div>
+                <div className='reset'>
                   <img src={item.img} alt="" />
                 </div>
               )
@@ -90,7 +90,7 @@ const DetailInfo = () => {
         </div>
 
         <div className='detail-contentReview'>
-          <div className='detail-contentReview-tab' onClick={() => { toggleTab('reviewVisible') }}>리뷰({review.current.filter(item => item.contentsid === id).length})</div>
+          <h2 className='detail-contentReview-tab' onClick={() => { toggleTab('reviewVisible') }}>리뷰({review.current.filter(item => item.contentsid === id).length})</h2>
           <div className='detail-contentReview-content' id='review' style={{ display: tabState.reviewVisible ? 'grid' : 'none' }}>
             {
               review.current.filter(item => item.contentsid === id).slice(pageNum, offset * page).map(item =>(

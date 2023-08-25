@@ -1,7 +1,7 @@
-import './css/App.css';
-import $, { data } from 'jquery';
+import './css/App.scss';
+import $ from 'jquery';
 import Slider from 'react-slick';
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes, Link } from 'react-router-dom';
 import JoinUser from './member/JoinUser';
 import Curator from './thema/Curator';
 import Mypage from './member/Mypage';

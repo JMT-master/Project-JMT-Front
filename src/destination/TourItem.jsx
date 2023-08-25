@@ -1,17 +1,17 @@
 import React from 'react'
 
-const TourItem = ({spot,pageType,navigate}) => {
+const TourItem = ({ spot, pageType, navigate }) => {
   const photo = spot.repPhoto;
-  
-  const onNav = () =>{
-    navigate(`/destination/detail/${spot.contentsid}`,{
-      state : {
-        title : spot.title,
-        img : photo.photoid.imgpath,
-        tag : spot.tag,
-        address : spot.address,
-        phoneno : spot.phoneno,
-        content : spot.introduction,
+
+  const onNav = () => {
+    navigate(`/destination/detail/${spot.contentsid}`, {
+      state: {
+        title: spot.title,
+        img: photo.photoid.imgpath,
+        tag: spot.tag,
+        address: spot.address,
+        phoneno: spot.phoneno,
+        content: spot.introduction,
       }
     })
   }
@@ -19,12 +19,16 @@ const TourItem = ({spot,pageType,navigate}) => {
   return (
     <li className={`${pageType}-itemGrid`} onClick={onNav}>
       <div className={`${pageType}-itemGrid-img`}>
-        <img src={photo.photoid.thumbnailpath} alt={photo.descseo} width={'200px'} height={'100px'}/>
+        <img src={photo.photoid.thumbnailpath} alt={photo.descseo} width={'200px'} height={'100px'} />
       </div>
       <div className={`${pageType}-itemGrid-content`}>
-        <h4>{spot.title}</h4>
-        <p>{spot.region1cd.label} > {spot.region2cd.label}</p>
-        <p>{spot.tag.replace(/, /gi, ',').split(',').map(tag => ('#' + tag + ' '))}</p>
+        <h3>{spot.title}</h3>
+        <div className={`${pageType}-itemGrid-contentText`}>
+          <p className='sf'>{spot.region1cd.label} > {spot.region2cd.label}</p>
+          <p className={`${pageType}-itemGrid-contentText-tag sf`}>{spot.tag.replace(/, /gi, ',').split(',').map(tag => ('#' + tag + ' '))}</p>
+          <p className={`${pageType}-itemGrid-contentText-text`}>{spot.introduction}</p>
+        </div>
+
       </div>
     </li>
   )

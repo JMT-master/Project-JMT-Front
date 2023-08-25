@@ -74,7 +74,7 @@ const JoinUser = () => {
                   <th><strong>집 주소</strong></th>
                   <td>
                     <div className='brd'><input type="text"  id='LoginAddress' name='LoginAddress'
-                      maxLength='12' className='brd-ipt' placeholder='주소' required={true}
+                      maxLength='12' className='brd-ipt' required={true}
                       onChange={handleInput} value={enroll_company.address} /></div>
                     <div className='brd-txt'><span id='LoginIdMsg'></span></div>
                     <div className='phone-chk'><button className='phone-btn' onClick={handleComplete} ><span>집 주소 검색하기</span></button></div>
