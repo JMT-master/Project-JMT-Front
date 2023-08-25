@@ -1,7 +1,7 @@
 import './css/App.scss';
 import $ from 'jquery';
 import Slider from 'react-slick';
-import { Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes, Link, useParams, useLocation } from 'react-router-dom';
 import JoinUser from './member/JoinUser';
 import Curator from './thema/Curator';
 import Mypage from './member/Mypage';
@@ -25,6 +25,8 @@ function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
   const [newQnaData, setNewQnaData] = useState(qnaData);
   const [newKnowledgeData, setNewKnowledgeData] = useState(knowledgeData);
+  const {params} = useParams(null,[]);
+
   return (
     <>
       <Routes>
@@ -53,6 +55,7 @@ function App() {
 }
 
 function HeaderTop(props) {
+  const {pathname} = useLocation();
 
   const handleMouseOver = () => {
     $(".destination-list").show();
@@ -66,9 +69,10 @@ function HeaderTop(props) {
     $(".myTrableInfo-list").hide();
     $(".notice-list").hide();
   };
-
+  
+  
   return (
-    <div class="header-main-position">
+    <div class={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`} >
       <div class="headerTop">
         <Link to="/mypage">마이페이지</Link>
         <Link to="/login">로그인</Link>

@@ -69,6 +69,17 @@
   grid-template-columns: 120px 1fr; 
   grid-template-rows: 70px;
 }
+.header-main-position:hover{
+  background-color: white;
+  filter: opacity(0.6);
+  & a{
+    color: black;
+  }
+}
+.header-container:hover > div > ul > div{
+  background-color: white;
+  filter: opacity(0.9);
+}
 .headerTop{
   text-align: right;
   font-size: 20px;
@@ -109,10 +120,6 @@
 }
 .footer-container{
   margin: 30px;
-  display: grid;
-  grid-template-columns: 180px 1fr auto;
-  grid-template-rows: 50px 50px;
-  
 }
 .footer-Grid1{
   grid-template-columns: 200px 200px 200px 200px 200px;
@@ -131,3 +138,9 @@
 }
 
 
+.headerCh{
+  color: black;
+}
+.headernoCh a{
+  color: rgb(245, 245, 245);
+}
