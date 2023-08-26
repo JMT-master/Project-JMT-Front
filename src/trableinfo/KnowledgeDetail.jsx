@@ -18,10 +18,10 @@ const KnowledgeDetail = ({ data }) => {
     <div className='knowledgeDetail-content'>
       <div className='knowledgeDetail-title'>
         <h1 onClick={() => navigate('/info/knowledge')}>Jhat JPT 지식in</h1>
-        <span><AiFillPrinter></AiFillPrinter> </span>
-        <span><AiFillFilePdf></AiFillFilePdf> </span>
-        <span> <AiFillYoutube></AiFillYoutube> </span>
-        <span><AiFillFacebook></AiFillFacebook> </span>
+        <span><AiFillPrinter style={{width:'50px', height:'30px'}}></AiFillPrinter> </span>
+        <span><AiFillFilePdf style={{width:'50px', height:'30px'}}></AiFillFilePdf> </span>
+        <span> <AiFillYoutube style={{width:'50px', height:'30px'}}></AiFillYoutube> </span>
+        <span><AiFillFacebook style={{width:'50px', height:'30px'}}></AiFillFacebook> </span>
       </div>
       <div className='knowledgeDetail-box'>
         <div className='knowledgeDetail-img'>

@@ -11,10 +11,10 @@ const QnaBoardDetail = ({ data }) => {
     <div className='qnaDetail-content'>
       <div className='qnaDetail-title'>
         <h1>Q & A</h1>
-        <span><AiFillPrinter></AiFillPrinter> </span>
-        <span><AiFillFilePdf></AiFillFilePdf> </span>
-        <span> <AiFillYoutube></AiFillYoutube> </span>
-        <span><AiFillFacebook></AiFillFacebook> </span>
+        <span><AiFillPrinter style={{width:'50px', height:'30px'}}></AiFillPrinter> </span>
+        <span><AiFillFilePdf style={{width:'50px', height:'30px'}}></AiFillFilePdf> </span>
+        <span> <AiFillYoutube style={{width:'50px', height:'30px'}}></AiFillYoutube> </span>
+        <span><AiFillFacebook style={{width:'50px', height:'30px'}}></AiFillFacebook> </span>
       </div>
       <div className='qnaDetail-box'>
         <div className='qnaDetail-img'>
