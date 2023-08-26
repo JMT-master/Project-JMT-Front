@@ -11,24 +11,24 @@ function NaverMapView(props) {
     const [infoWindow, setInfoWindow] = useState(null);
     const [mapTypeId, setMapTypeId] = useState(window.naver.maps.MapTypeId.NORMAL);
 
-    const buttons = [
-        {
-            typeId: window.naver.maps.MapTypeId.NORMAL,
-            text: '일반지도',
-        },
-        {
-            typeId: window.naver.maps.MapTypeId.TERRAIN,
-            text: '지형도',
-        },
-        {
-            typeId: window.naver.maps.MapTypeId.SATELLITE,
-            text: '위성지도',
-        },
-        {
-            typeId: window.naver.maps.MapTypeId.HYBRID,
-            text: '겹쳐보기',
-        },
-    ];
+    // const buttons = [
+    //     {
+    //         typeId: window.naver.maps.MapTypeId.NORMAL,
+    //         text: '일반지도',
+    //     },
+    //     {
+    //         typeId: window.naver.maps.MapTypeId.TERRAIN,
+    //         text: '지형도',
+    //     },
+    //     {
+    //         typeId: window.naver.maps.MapTypeId.SATELLITE,
+    //         text: '위성지도',
+    //     },
+    //     {
+    //         typeId: window.naver.maps.MapTypeId.HYBRID,
+    //         text: '겹쳐보기',
+    //     },
+    // ];
 
     useEffect(() => {
         if (!map) {
