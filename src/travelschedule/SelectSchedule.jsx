@@ -8,10 +8,10 @@ import {addDays} from 'date-fns'
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { format } from 'date-fns/esm'
+import Swal from 'sweetalert2'
 
 
 const SelectSchedule = () => {
-  const [value, setValue] = useState(new Date());
   const [peopleNum, setPeopleNum] = useState(1);
   const [startTime, setStartTime] = useState("00:00");
   const [endTime, setEndTime] = useState("00:00");
@@ -42,7 +42,18 @@ const SelectSchedule = () => {
     let diff = item.selection.startDate - item.selection.endDate;
     diff = Math.abs(diff / (1000 * 60 * 60 * 24));
 
-    if(diff <= 10) setState([item.selection]);
+    if(diff <= 10) {
+      setState([item.selection]);
+    } else {
+      Swal.fire(
+        {
+          icon : 'warning',
+          title : '경고',
+          text : '날짜는 10일까지만 선택 가능.',
+          confirmButtonText : 'OK'
+        }
+      );
+    }
     
     // if()
   }
@@ -104,6 +115,8 @@ const SelectSchedule = () => {
             ranges={state}
             months={2}
             direction="horizontal"
+            minDate={new Date()}
+            
           />
         </div>
       </div>
