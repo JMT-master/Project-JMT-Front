@@ -1,83 +1,96 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { Container as MapDiv, NaverMap, Marker, useNavermaps, InfoWindow } from 'react-naver-maps'
+import { useNavermaps } from 'react-naver-maps';
 
 function NaverMapView(props) {
-
-    const navermaps = useNavermaps();
-
-    //좌표값
     const { lat, lng } = props.gps;
-    const center = new navermaps.LatLng(lat, lng);
+    const center = new window.naver.maps.LatLng(lat, lng);
 
-    //지도 타입 변경용 state와 변수
-    const [mapTypeId, setMapTypeId] = useState(navermaps.MapTypeId.NORMAL)
+    const [map, setMap] = useState(null);
+    const zoom = useRef(10);
+    const [marker, setMarker] = useState(null);
+    const [infoWindow, setInfoWindow] = useState(null);
+    const [mapTypeId, setMapTypeId] = useState(window.naver.maps.MapTypeId.NORMAL);
+
     const buttons = [
         {
-            typeId: navermaps.MapTypeId.NORMAL,
+            typeId: window.naver.maps.MapTypeId.NORMAL,
             text: '일반지도',
         },
         {
-            typeId: navermaps.MapTypeId.TERRAIN,
+            typeId: window.naver.maps.MapTypeId.TERRAIN,
             text: '지형도',
         },
         {
-            typeId: navermaps.MapTypeId.SATELLITE,
+            typeId: window.naver.maps.MapTypeId.SATELLITE,
             text: '위성지도',
         },
         {
-            typeId: navermaps.MapTypeId.HYBRID,
+            typeId: window.naver.maps.MapTypeId.HYBRID,
             text: '겹쳐보기',
         },
-    ]
-    //NaverMap에 뿌려주는 지도 정보
-    const [map, setMap] = useState(null)
-    //줌 수치
-    const zoom = useRef(10);
-    //줌 변경시 반영, 다른 항목 이동시 줌 상태 유지를 위해 필요
-    const handleZoomChanged = useCallback((val) => {
-        console.log({ val })
-        zoom.current = val;
-    }, [])
+    ];
 
-    //맵 렌더링시마다 좌표 이동(부드럽게)과 줌 수치 정해줌
-    if (map) {
-        map.panTo(center)
-        map.setZoom(zoom.current, true)
-    }
+    useEffect(() => {
+        if (!map) {
+            const newMap = new window.naver.maps.Map('map', {
+                center: center,
+                zoom: zoom.current,
+                mapTypeControl: true,
+                mapTypeControlOptions: {
+                    style: window.naver.maps.MapTypeControlStyle.BUTTON,
+                    position: window.naver.maps.Position.TOP_RIGHT,
+                },
+            });
 
+            setMap(newMap);
+
+            window.naver.maps.Event.addListener(newMap, 'zoom_changed', () => {
+                handleZoomChanged(newMap.getZoom());
+            });
+            window.naver.maps.Event.addListener(newMap, 'center_changed', () => {
+                newInfoWindow.open(newMap, newMarker);
+            });
+            const newMarker = new window.naver.maps.Marker({
+                position: new window.naver.maps.LatLng(lat, lng),
+                map: newMap,
+            });
+
+            setMarker(newMarker);
+
+            const newInfoWindow = new window.naver.maps.InfoWindow({
+                content: 'InfoWindow 내용',
+                pixelOffset: new window.naver.maps.Point(0, -30)
+            });
+
+            setInfoWindow(newInfoWindow);
+
+        } else {
+            marker.setPosition(new window.naver.maps.LatLng(lat, lng));
+            map.panTo(new window.naver.maps.LatLng(lat, lng));
+            infoWindow.setPosition(new window.naver.maps.LatLng(lat, lng));
+        }
+    }, [map, marker, mapTypeId, lat, lng]);
+
+    const handleZoomChanged = (newZoom) => {
+        zoom.current = newZoom;
+    };
 
     return (
-        <MapDiv style={{ height: '100%', position:'relative' }}>
-           { buttons.map((btn) => (
-            <button className='oBtn onMapBtn' onClick={(()=>{
-                setMapTypeId(btn.typeId)
-            })}>{btn.text}</button>
-           ))}
-            
-            <NaverMap
-                defaultZoom={zoom.current}
-                onZoomChanged={handleZoomChanged}
-                animation={2}
-                minZoom={10}
-                ref={setMap}
-                mapTypeId={mapTypeId}
-                tileTransition={true}>
-                    
-                <InfoWindow
-                    position={center}
-                    zIndex={1}
-                    content='asdfasdf'
-                ></InfoWindow>
-                <Marker
-                    style={{ position: 'relative' }}
-                    position={center} >
-                    {/* <div className='likeModal'></div> */}
-                </Marker>
-            </NaverMap>
-        </MapDiv >
-    )
+        <div id="map" style={{ width: '100%', height: '100%' }}>
+            {/* <div style={{ height: '100%', position: 'relative' }}>
+                {buttons.map((btn) => (
+                    <button
+                        key={btn.typeId}
+                        className='oBtn onMapBtn'
+                        onClick={() => {
+                            setMapTypeId(btn.typeId);
+                        }}>
+                        {btn.text}
+                    </button>
+                ))}
+            </div> */}
+        </div>
+    );
 }
 
-
-export default NaverMapView
-
+export default NaverMapView;
