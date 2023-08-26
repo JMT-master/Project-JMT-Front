@@ -39,7 +39,7 @@ const KnowledgeWrite = () => {
         </div>
         <div className='file-attach'>
           <h4>파일 첨부</h4>
-          <input type="file"/>
+          <input type="file" multiple/>
         </div>
       </div>
       <div className='button-box'>
