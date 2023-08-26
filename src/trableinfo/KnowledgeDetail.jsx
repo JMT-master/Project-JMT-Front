@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import style from '../css/KnowledgeDetail.css'
 import { useNavigate, useParams } from 'react-router-dom';
 import OnModal from '../common/OnModal';
+import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'react-icons/ai';
 
 const KnowledgeDetail = ({ data }) => {
   const navigate = useNavigate();
@@ -17,7 +18,10 @@ const KnowledgeDetail = ({ data }) => {
     <div className='knowledgeDetail-content'>
       <div className='knowledgeDetail-title'>
         <h1 onClick={() => navigate('/info/knowledge')}>Jhat JPT 지식in</h1>
-        <span>아이콘 모음집</span>
+        <span><AiFillPrinter></AiFillPrinter> </span>
+        <span><AiFillFilePdf></AiFillFilePdf> </span>
+        <span> <AiFillYoutube></AiFillYoutube> </span>
+        <span><AiFillFacebook></AiFillFacebook> </span>
       </div>
       <div className='knowledgeDetail-box'>
         <div className='knowledgeDetail-img'>
@@ -35,6 +39,7 @@ const KnowledgeDetail = ({ data }) => {
           }} >{detail.content}</textarea>
         </div>
         <div className='knowledgeDetail-answer-btn'>
+          <button className='back-to-knin'  onClick={()=>navigate(-1)}>목록으로 가기</button>
           <button onClick={showModal}>답변하기</button>
           {modalOpen && <OnModal setModalOpen={setModalOpen}></OnModal>}
         </div>

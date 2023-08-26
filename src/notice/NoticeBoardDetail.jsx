@@ -1,6 +1,7 @@
 import React from 'react';
 import style from '../css/NoticeBoardDetail.css'
 import { useNavigate, useParams } from 'react-router-dom';
+import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from "react-icons/ai";
 
 const NoticeBoardDetail = ({data}) => {
   const navigate = useNavigate();
@@ -11,7 +12,10 @@ const NoticeBoardDetail = ({data}) => {
     <div className='noticeDetail-content'>
       <div className='noticeDetail-title'>
         <h1>공지사항</h1>
-        <span>아이콘 모음집</span>
+        <span><AiFillPrinter></AiFillPrinter> </span>
+        <span><AiFillFilePdf></AiFillFilePdf> </span>
+        <span> <AiFillYoutube></AiFillYoutube> </span>
+        <span><AiFillFacebook></AiFillFacebook> </span>
       </div>
         <div className='noticeDetail-box'>
           <div className='noticeDetail-img'>

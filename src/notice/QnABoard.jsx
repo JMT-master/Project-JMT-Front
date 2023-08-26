@@ -48,9 +48,10 @@ const QnABoard = () => {
       <div className='qna-table'>
         <div className='page-choice'>
           <select >
-            <option value="10">10개씩</option>
-            <option value="15">15개씩</option>
-            <option value="20">20개씩</option>
+            <option value="5개씩">5개씩</option>
+            <option value="10개씩" selected>10개씩</option>
+            <option value="15개씩">15개씩</option>
+            <option value="20개씩">20개씩</option>
           </select>
         </div>
         <table>

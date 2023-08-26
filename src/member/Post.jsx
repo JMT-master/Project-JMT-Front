@@ -5,7 +5,9 @@ import '../css/Post.css'
 const Post = (props) => {
   const complete = (data) => {
     let fullAddress = data.address;
+    console.log(data);
     let extraAddress = '';
+    let zonecode = '';
 
     if(data.addressType === 'R'){
       if(data.bname !== ''){
@@ -23,6 +25,7 @@ const Post = (props) => {
     props.setcompany({
       ...props.company,
       address:fullAddress,
+      zonecode:data.zonecode,
     })
   }
   return (

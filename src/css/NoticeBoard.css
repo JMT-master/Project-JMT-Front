@@ -66,4 +66,11 @@
   margin-bottom: 10px;
   right: 10vw;
   position: absolute;
+  outline: none;
+  background-color: #f3a344;
+  color: whitesmoke;
+  border: 1px solid #f3a344;
+  padding: 2px;
+  border-radius: 5px;
 }
+

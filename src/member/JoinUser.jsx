@@ -86,8 +86,14 @@ const JoinUser = () => {
                   <th><strong>집 주소</strong></th>
                   <td>
                     <div className='brd'><input type="text"  id='LoginAddress' name='LoginAddress'
-                      maxLength='12' className='brd-ipt' required={true}
+                      maxLength='12' className={popup ? 'brd-ipt' : 'input-hidden'}
+                      onChange={handleInput} value={enroll_company.zonecode} /></div>
+                    <div className='brd'><input type="text"  id='LoginAddress' name='LoginAddress'
+                      maxLength='12' className='brd-ipt'
                       onChange={handleInput} value={enroll_company.address} /></div>
+                    <div className='brd'><input type="text"  id='LoginAddress' name='LoginAddress'
+                      maxLength='12' className={popup ? 'brd-ipt' : 'input-hidden'}
+                      onChange={handleInput} placeholder='상세주소를 입력해주세요'/></div>
                     <div className='brd-txt'><span id='LoginIdMsg'></span></div>
                     <div className='phone-chk'><button className='phone-btn' onClick={handleComplete} ><span>집 주소 검색하기</span></button></div>
                     <div>{popup && <Post company={enroll_company} setcompany={setEnroll_company}></Post>}</div>
@@ -126,7 +132,7 @@ const JoinUser = () => {
           <div className='joinUser-btn'>
             <ul className='type2'>
               <li className='lt'><button><span>가입완료</span></button></li>
-              <li className='rt' onClick={()=>navigate('/')} ><button><span>취소</span></button></li>
+              <li className='rt' onClick={()=>navigate(-1)} ><button><span>취소</span></button></li>
             </ul>
           </div>
         </div>

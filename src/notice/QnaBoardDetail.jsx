@@ -1,15 +1,20 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import style from '../css/QnaBoardDetail.css'
+import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'react-icons/ai';
 
 const QnaBoardDetail = ({ data }) => {
   const params = useParams();
+  const navigate = useNavigate();
   const detail = data[params.id-1]
   return (
     <div className='qnaDetail-content'>
       <div className='qnaDetail-title'>
         <h1>Q & A</h1>
-        <span>아이콘 모음집</span>
+        <span><AiFillPrinter></AiFillPrinter> </span>
+        <span><AiFillFilePdf></AiFillFilePdf> </span>
+        <span> <AiFillYoutube></AiFillYoutube> </span>
+        <span><AiFillFacebook></AiFillFacebook> </span>
       </div>
       <div className='qnaDetail-box'>
         <div className='qnaDetail-img'>
@@ -24,6 +29,7 @@ const QnaBoardDetail = ({ data }) => {
         <div className='qnaDetail-inside'>
           <textarea cols="30" rows="10" readOnly placeholder='qna 내용' value={detail.content}></textarea>
         </div>
+        <button className='back-to-qna'  onClick={()=>navigate(-1)}>목록으로 가기</button>
       </div>
     </div>
   );
