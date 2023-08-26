@@ -1,5 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
-import { useNavermaps } from 'react-naver-maps';
+import { useEffect, useState, useRef } from 'react';
 
 function NaverMapView(props) {
     const { lat, lng } = props.gps;
@@ -69,7 +68,7 @@ function NaverMapView(props) {
             map.panTo(new window.naver.maps.LatLng(lat, lng));
             infoWindow.setPosition(new window.naver.maps.LatLng(lat, lng));
         }
-    }, [map, marker, mapTypeId, lat, lng]);
+    }, [map, marker, mapTypeId, lat, lng, infoWindow]);
 
     const handleZoomChanged = (newZoom) => {
         zoom.current = newZoom;
