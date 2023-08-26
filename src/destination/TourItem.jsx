@@ -1,7 +1,15 @@
 import React from 'react'
+import {MdOutlineFindInPage} from 'react-icons/md'
 
-const TourItem = ({ spot, pageType, navigate }) => {
+const TourItem = ({ spot, pageType, navigate, setGps }) => {
   const photo = spot.repPhoto;
+  console.log(setGps)
+  const onSetGps = () =>{
+    setGps({
+      lat : spot.latitude,
+      lng : spot.longitude
+    })
+  }
 
   const onNav = () => {
     navigate(`/destination/detail/${spot.contentsid}`, {
@@ -17,12 +25,15 @@ const TourItem = ({ spot, pageType, navigate }) => {
   }
 
   return (
-    <li className={`${pageType}-itemGrid`} onClick={onNav}>
+    <li className={`${pageType}-itemGrid`} onClick={()=>{
+      // onNav();
+      onSetGps();
+      }}>
       <div className={`${pageType}-itemGrid-img`}>
         <img src={photo.photoid.thumbnailpath} alt={photo.descseo} width={'200px'} height={'100px'} />
       </div>
       <div className={`${pageType}-itemGrid-content`}>
-        <h3>{spot.title}</h3>
+        <h3>{spot.title}<button className='oBtn sf ra' onClick={onNav}><MdOutlineFindInPage/></button></h3>
         <div className={`${pageType}-itemGrid-contentText`}>
           <p className='sf'>{spot.region1cd.label} > {spot.region2cd.label}</p>
           <p className={`${pageType}-itemGrid-contentText-tag sf`}>{spot.tag.replace(/, /gi, ',').split(',').map(tag => ('#' + tag + ' '))}</p>

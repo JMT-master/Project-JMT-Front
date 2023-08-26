@@ -90,6 +90,7 @@ $jOrange: #f3a444;
         p,
         div {
           padding: 15px;
+          line-height: 30px;
         }
       }
     }
@@ -101,11 +102,11 @@ $jOrange: #f3a444;
       @include contentHeight(200px);
 
       &-content {
-        width: 100%;
+        width: 80%;
         margin: 0 auto;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: 300px;
-        gap: 3px;
+        gap: 10px;
 
         div {
           padding: 0;
@@ -140,19 +141,30 @@ $jOrange: #f3a444;
         .reviewBox {
           display: grid;
           grid-template-columns: 150px 80%;
-          height: 200px;
+          height: 160px;
+          align-items: center;
 
           &-header {
-            align-items: center;
-            /* 수직 중앙 정렬 */
             justify-items: center;
             /* 수평 중앙 정렬 */
             display: grid;
-            grid-template-rows: 100px 10% 10%;
-
+            // grid-template-rows: 100px 10% 10%;
+            
+            img,div{
+              margin-bottom: 5px;
+            }
+            
             img {
               width: 100px;
               height: 100px;
+            }
+          }
+          &-content{
+            padding: 10px;
+            line-height: 1.4rem;
+            img{
+              float: right;
+
             }
           }
         }
@@ -165,15 +177,6 @@ $jOrange: #f3a444;
     width: 102px;
     height: 100px;
   }
-}
-
-.gray {
-  // margin-left: 0;
-  color: #ccc;
-}
-
-.sf {
-  font-size: 0.85rem;
 }
 
 img {

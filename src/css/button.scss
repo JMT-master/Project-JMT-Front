@@ -41,3 +41,14 @@ $jOrange: #f3a344;
   border: 1px solid;
   color: white;
 }
+
+.noBorder{
+  border: 0;
+  font-weight: normal;
+}
+
+.onMapBtn{
+  position: relative;
+  margin: 3px 5px;
+  background-color: rgba($color: white, $alpha: 0.7);
+}

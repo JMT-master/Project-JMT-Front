@@ -30,17 +30,6 @@ const DetailInfo = () => {
     review.current[i].contentsid = id;
   }
 
-  const user = useRef([{
-    id: 'pkw',
-    name: '박기웅',
-    profileImg: '../../images/img_non_profile.png'
-  },
-  {
-    id: 'pkw',
-    name: '박기웅',
-    profileImg: ''
-  },
-  ]);
 
   const [page, setPage] = useState(1);
   const offset = 12;
@@ -95,9 +84,10 @@ const DetailInfo = () => {
             <hr />
 
             {
-              review.current.slice(pageNum, offset * page).map(item => (
+              review.current.sort((a,b)=>b.gettime - a.gettime).slice(pageNum, offset * page).map(item => (
                 <div className='reviewListBox'>
-                  <ReviewBox item={item} user={user} />
+                  <ReviewBox item={item} />
+                  <hr/>
                 </div>)
               )
             }

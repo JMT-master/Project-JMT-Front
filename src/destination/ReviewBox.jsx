@@ -1,16 +1,23 @@
 import React from 'react'
 
-const ReviewBox = ({ item, user }) => {
+const ReviewBox = ({ item }) => {
   console.log('item: ', item);
+  const date = new Date(item.date);
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDay();
   return (
     <div className='reviewBox'>
       <div className='reviewBox-header'>
-        <img src={user.current[0].profileImg} alt="" />
+        <img src={item.profileImg} alt="" />
         <div>{item.id}</div>
-        <div>{item.date}</div>
+        <div>{`${year}/${month}/${day}`}</div>
       </div>
-      <div className='reviewBox=content'>{item.content}</div>
-    </div>
+      <div className='reviewBox-content'>
+        <img src={item.img} alt="" />
+        <p>{item.content}</p>
+      </div>
+    </div >
   )
 }
 
