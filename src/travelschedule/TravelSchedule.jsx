@@ -6,7 +6,7 @@ import TravelForm from './TravelForm';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import ListPaging from '../destination/ListPaging'
 import { TiDeleteOutline } from 'react-icons/ti'
-import {AiOutlineLoading} from 'react-icons/ai'
+import { AiOutlineLoading } from 'react-icons/ai'
 
 const TravelSchedule = (props) => {
   const [visit, setVisit] = useState();
@@ -21,7 +21,7 @@ const TravelSchedule = (props) => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=c1&page=${currentPage}`)
+    fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=c4&page=${currentPage}`)
       .then(res => {
         return res.json();
       })
@@ -36,40 +36,40 @@ const TravelSchedule = (props) => {
       setList(visit.items.map(item => {
         return ({ item })
       }));
+      setLoading(false);
     }
-    setLoading(false);
   }, [visit]);
 
   // Drag 도중
-  const onDragUpdate = (update) => {
-    const { destination } = update;
-  
-    if (destination) {
-      // 아이템이 특정 대상 영역 위로 드래그
-      const isDraggingOverTable1 = destination.droppableId === "table1";
-      const isDraggingOverTable2 = destination.droppableId === "table2";
-  
-      if (isDraggingOverTable1) {
-        const tableRows = document.querySelectorAll(".table1"); // 테이블의 모든 행 가져오기
+  // const onDragUpdate = (update) => {
+  //   const { destination } = update;
 
-        tableRows.forEach((row, index) => {
-          if(index === destination.index) {
-            row.style.backgroundColor = "orange";
-          }
-        });
-      } else if (isDraggingOverTable2) {
-        // table2 대상 영역에 드래그 중 CSS를 적용합니다.
-        // 마찬가지로, 배경색을 변경하거나 테두리를 추가할 수 있습니다.
-      }
-    }
-  };
+  //   if (destination) {
+  //     // 아이템이 특정 대상 영역 위로 드래그
+  //     const isDraggingOverTable1 = destination.droppableId === "table1";
+  //     const isDraggingOverTable2 = destination.droppableId === "table2";
+
+  //     if (isDraggingOverTable1) {
+  //       const tableRows = document.querySelectorAll(".table1"); // 테이블의 모든 행 가져오기
+
+  //       tableRows.forEach((row, index) => {
+  //         if(index === destination.index) {
+  //           row.style.backgroundColor = "orange";
+  //         }
+  //       });
+  //     } else if (isDraggingOverTable2) {
+  //       // table2 대상 영역에 드래그 중 CSS를 적용합니다.
+  //       // 마찬가지로, 배경색을 변경하거나 테두리를 추가할 수 있습니다.
+  //     }
+  //   }
+  // };
 
   // Drag가 끝났을 경우
   const onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
     let dragIndex = 0;
 
-    console.log("result : ", result);
+    // console.log("result : ", result);
 
     // drop이 List일 경우
     if (destination === null) return;
@@ -82,7 +82,7 @@ const TravelSchedule = (props) => {
     } else if (source.droppableId === "table1") {
       data = tableData1.filter((item, i) => i === source.index);
       flag = 1;
-    }else if (source.droppableId === "table2") {
+    } else if (source.droppableId === "table2") {
       data = tableData1.filter((item, i) => i === source.index);
       flag = 2;
     }
@@ -169,7 +169,6 @@ const TravelSchedule = (props) => {
 
   // 삭제 버튼
   const deleteValue = (e, index) => {
-    console.log("들어옴?");
     // table1의 요소 삭제
     if (index === 0) {
       const table1FontColorChn = [];
@@ -217,30 +216,39 @@ const TravelSchedule = (props) => {
     setScheduleBtn(e.target.value);
   };
 
+  // 일정 추가
   const addSchedule = (e) => {
     let flag = 0;
     const data = list !== undefined ? list.filter((item, i) => i === parseInt(e.target.value)) : null;
     let tableFontColorChn = [...table1FontColor];
 
-    setTableData1(tableData1.map((item,i) => {
-      if(flag===0 && Number.isInteger(item)) {
+    setTableData1(tableData1.map((item, i) => {
+      if (flag === 0 && Number.isInteger(item)) {
         flag = 1;
-        tableFontColorChn[i] = 1;
-        return data[0].item;
+        if (tableData1.includes(data[0].item))
+          return item;
+        else {
+          tableFontColorChn[i] = 1;
+          return data[0].item;
+        }
       } else {
         return item;
       }
     }));
 
-    if(flag === 0) {
+    if (flag === 0) {
       tableFontColorChn = [];
       tableFontColorChn = [...table2FontColor]
-      setTableData2(tableData2.map((item,i) => {
-        if(flag===0 && Number.isInteger(item)) {
+      setTableData2(tableData2.map((item, i) => {
+        if (flag === 0 && Number.isInteger(item)) {
           flag = 1;
-          tableFontColorChn[i] = 1;
-          return data[0].item;
-        } else{
+          if (tableData2.includes(data[0].item))
+            return item;
+          else {
+            tableFontColorChn[i] = 1;
+            return data[0].item;
+          }
+        } else {
           return item;
         }
       }));
@@ -279,20 +287,20 @@ const TravelSchedule = (props) => {
 
           <DragDropContext
             onDragEnd={onDragEnd}
-            onDragUpdate={onDragUpdate}
+          // onDragUpdate={onDragUpdate}
           >
             <div className='travelInfo'>
               <div className='searchSchedule'>
                 <div className='searchSchedule-btns'>
-                  <button className={`searchSchedule-btns-travel${scheduleBtn === "0" ? ' searchSchedule-btns-select' : ''}` }
-                  onClick={searchScheduleChange}
-                  value='0'>찜한여행지</button>
-                  <button className={`searchSchedule-btns-search${scheduleBtn === "1" ? ' searchSchedule-btns-select' : ''}` }
-                  onClick={searchScheduleChange}
-                  value='1'>검색</button>
-                  <button className={`searchSchedule-btns-thema${scheduleBtn === "2" ? ' searchSchedule-btns-select' : ''}` }
-                  onClick={searchScheduleChange}
-                  value='2'>테마</button>
+                  <button className={`searchSchedule-btns-travel${scheduleBtn === "0" ? ' searchSchedule-btns-select' : ''}`}
+                    onClick={searchScheduleChange}
+                    value='0'>찜한여행지</button>
+                  <button className={`searchSchedule-btns-search${scheduleBtn === "1" ? ' searchSchedule-btns-select' : ''}`}
+                    onClick={searchScheduleChange}
+                    value='1'>검색</button>
+                  <button className={`searchSchedule-btns-thema${scheduleBtn === "2" ? ' searchSchedule-btns-select' : ''}`}
+                    onClick={searchScheduleChange}
+                    value='2'>테마</button>
                 </div>
                 <div className='searchSchedule-input'>
                   <input type='text' placeholder='내용을 입력하세요.'></input>
@@ -321,7 +329,7 @@ const TravelSchedule = (props) => {
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                   >
-                                    <TravelForm key={i} data={item} tableArea = {0} addSchedule = {addSchedule} index={i}></TravelForm>
+                                    <TravelForm key={i} data={item} tableArea={0} addSchedule={addSchedule} index={i}></TravelForm>
                                   </div>
                                 )}
                               </Draggable>
@@ -370,15 +378,15 @@ const TravelSchedule = (props) => {
                                     ref={provided.innerRef} // provided.innerRef를 여기서 사용
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
-                                    style={{
-                                      backgroundColor: snapshot.isDragging ? 'orange' : 'white',
-                                      ...provided.draggableProps.style,
-                                    }}
+                                    // style={{
+                                    //   backgroundColor: snapshot.isDragging ? 'orange' : 'white',
+                                    //   ...provided.draggableProps.style,
+                                    // }}
                                     className='tableTr'
                                   >
                                     <td className={table1FontColor[i] === 1 ? 'travelSchedule-table-td travelSchedule-table-td-black' : 'travelSchedule-table-td'}>
                                       {/* {data} */}
-                                      <TravelForm key={i} data={data} tableArea = {1} addSchedule = {addSchedule} index={i}></TravelForm>
+                                      <TravelForm key={i} data={data} tableArea={1} addSchedule={addSchedule} index={i}></TravelForm>
                                       {table1FontColor[i] === 1 ?
                                         <TiDeleteOutline className='travelSchedule-table-btn'
                                           id={i}
@@ -427,15 +435,15 @@ const TravelSchedule = (props) => {
                                     ref={provided.innerRef} // provided.innerRef를 여기서 사용
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
-                                    style={{
-                                      backgroundColor: snapshot.isDragging ? 'orange' : 'white',
-                                      ...provided.draggableProps.style,
-                                    }}
+                                    // style={{
+                                    //   backgroundColor: snapshot.isDragging ? 'orange' : 'white',
+                                    //   ...provided.draggableProps.style,
+                                    // }}
                                     className='tableTr'
                                   >
                                     <td className={table2FontColor[i] === 1 ? 'travelSchedule-table-td travelSchedule-table-td-black' : 'travelSchedule-table-td'}>
                                       {/* {data} */}
-                                      <TravelForm key={i} data={data} tableArea = {1} addSchedule = {addSchedule} index={i}></TravelForm>
+                                      <TravelForm key={i} data={data} tableArea={1} addSchedule={addSchedule} index={i}></TravelForm>
                                       {table2FontColor[i] === 1 ?
                                         <TiDeleteOutline className='travelSchedule-table-btn'
                                           id={i}

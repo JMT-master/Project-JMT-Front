@@ -2,7 +2,6 @@ import React from 'react';
 import style from '../css/Paging.css'
 
 const Paging = ({totalPages, currentPage, onPageChange}) => {
-
   return (
     <div>
       <button onClick={()=>onPageChange(1)} className='paging-btn cursor'>첫 페이지</button>

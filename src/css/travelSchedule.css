@@ -47,7 +47,7 @@
 }
 
 .searchSchedule {
-  width: 100%; height: 450px;
+  width: 100%; height: 800px;
   border: 3px solid orange;
   margin-right: 10px;
   border-radius: 20px;
@@ -99,7 +99,7 @@
 }
 
 .searchSchedule-data {
-  height: 300px;
+  height: 630px;
   margin: 10px 10px auto;
   overflow: scroll;
 }
@@ -142,7 +142,7 @@
 }
 
 .tableTr {
-  width: 300px; height: 150px;
+  width: 300px; height: 180px;
   line-height: 50px;
 }
 
@@ -162,6 +162,8 @@
 
 .travelSchedule-thead {
   text-align: center;
+  font-size: large;
+  font-weight: bold;
 }
 
 .travelSchedule-table-td-black {
@@ -174,7 +176,7 @@
   color: white; font-weight: bold;
   border: 1px solid red; */
   color: red;
-  width: 20px; height: 20px;
+  width: 35px; height: 35px;
   text-align: center;
   cursor: pointer;
 }

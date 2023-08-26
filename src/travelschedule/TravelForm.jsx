@@ -2,7 +2,8 @@ import React from 'react'
 import "../css/travelForm.css"
 
 const TravelForm = (props) => {
-  if(Number.isInteger(props.data)) {
+  console.log(props.data);
+  if(Number.isInteger(props.data) || Number.isInteger(props.data[0])) {
     <article className='travelForm-container'>
         <img className='travelForm-img' alt=''></img>
         <div className='travelForm-etc'>
@@ -12,7 +13,6 @@ const TravelForm = (props) => {
         </div>
     </article>
   } else {
-    if(props.tableArea) console.log("TravelForm : ", props.data.title);
     return (
       <article className='travelForm-container'>
         <img className='travelForm-img' 

@@ -1,17 +1,19 @@
 .container {
   display: grid;
-  grid-template-columns: 1fr 2fr 3fr;
+  grid-template-columns: 1fr 12fr;
   margin-top: 2%;
   margin-left: 2%;
-  height: 750px;
+  height: 600px;
 }
 
 .selectContainer-menu {
-  height: 750px;
+  height: 600px;
 }
 
 .selectContainer-Form {
-  height: 750px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: 600px;
 }
 
 .Step {
@@ -28,7 +30,7 @@
   color: white;
   cursor: pointer;
   position: relative;
-  top: 450px;
+  top: 350px;
 }
 
 .selectDate {
@@ -41,8 +43,8 @@
   margin-left: 3%;
   border: 2px solid orange;
   border-radius: 15px;
-  width:  40%;
-  height: 40%;
+  width:  90%;
+  height: 50%;
 }
 
 .selectItem {
@@ -50,21 +52,45 @@
   margin-top: 20px;
 }
 
+.selectItem-label {
+  font-weight: bold;
+}
+
+.selectItem-input {
+  width: 60%; height: 25px;
+  border: none;
+}
+
+.selectItem-input-people {
+  width: 40%;
+}
+
+.selectItem-radio {
+  margin-left: 5%;
+}
+
 .inputTime {
-  width: 130px;
+  width: 30%;
+  border: none;
 }
 
 .selectItem input {
   margin-left: 3%;
 }
 
+.selectItem-icon {
+  width: 20px; height: 20px;
+  margin-right: 10px;
+  color: orange;
+}
+
 .scheduleBtn {
-  color: white;
-  background-color: #3498DA;
-  border: 1px solid #3498DA;
+  width: 100px; height: 30px;
+  color: orange;
+  border: none;
   border-radius: 10px;
-  width: 100px;
-  height: 30px;
+  background-color: white;  
+  font-size: large; font-weight: bold;
 }
 
 .SelectText {
@@ -72,11 +98,92 @@
 }
 
 .SelectBG {
-  border: 1px solid orange;
   background-color : orange;
+  color: white;
 }
 
 .Calendar {
   margin-top: 30px;
+  color: orange', '#3ecf8e', '#fed14c;
 
+}
+
+.date-range {
+  height: 90%;
+}
+
+.Data-List-ul {
+  display: grid;
+  grid-template-columns: repeat(3, 150px);
+  height: 600px;
+  gap: 10px;
+  overflow: scroll;
+}
+
+.Data-List-ul::-webkit-scrollbar {
+  display: none;
+}
+
+.selectImage-li {
+  width: 150px; height: 150px;
+  border-radius: 10%;
+  box-shadow : 2px 3px 5px 0px;
+}
+
+.selectImage-li-img {
+  width: 150px; height: 150px;
+  border-radius: 10%;
+  object-fit: cover;
+}
+
+.selectImage-li-img-hover {
+  display: none;
+}
+
+@media screen and (max-width : 1700px) {
+  .container, .selectContainer-menu {
+    height: 1200px;
+  }
+
+  .selectContainer-Form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows   : 1fr 2fr;
+    height: 1200px;
+  }
+
+  .SelectBtn {
+    top: 950px;
+  }
+
+  .ScheduleForm {
+    height: 80%;
+  }
+
+  .selectDate {
+    margin-left: 4%;
+  }
+
+  .Data-List {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .Data-List-ul {
+    grid-template-columns: repeat(6, 200px);
+    height: 800px;
+    gap: 15px;
+  }
+  
+  .selectImage-li, .selectImage-li-img {
+    width: 200px; height: 200px;
+  }
+}
+
+@media screen and (max-width : 1450px) {
+  .Data-List-ul {
+    grid-template-columns: repeat(4, 200px);
+  }
 }

@@ -114,6 +114,7 @@
   object-fit: cover;
   transform: scale(1);
   transition: 0.3s;
+  box-shadow : 2px 3px 5px 0px;
   z-index: 66;
 }
 .curatorResult-img-li > .img-tag-hover {

@@ -21,12 +21,22 @@ import TourList from './destination/TourList';
 import DetailInfo from './destination/DetailInfo';
 import Traffic from './trableinfo/Traffic';
 import SelectSchedule from './travelschedule/SelectSchedule';
+import { ThemeProvider } from 'styled-components';
+import { darkTheme, lightTheme } from './common/Themes';
+import { GlobalStyles } from './common/GlobalStyles';
+import { useDarkMode } from './common/useDarkMode';
+import Toggle from './common/Toggle';
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
   const [newQnaData, setNewQnaData] = useState(qnaData);
   const [newKnowledgeData, setNewKnowledgeData] = useState(knowledgeData);
+  const [theme, themeToggler] = useDarkMode();
+  const themeMode = theme === 'light' ? lightTheme : darkTheme;
+
   return (
-    <>
+    <ThemeProvider theme={themeMode}>
+      <GlobalStyles/>
+      <HeaderTop theme={theme} themeToggler={themeToggler}/>
       <Routes>
         <Route path='/' element={<Header></Header>}></Route>
         <Route path="/joinUser" element={<JoinUser></JoinUser>}></Route>
@@ -46,14 +56,12 @@ function App() {
         <Route path='/destination/:pageId' element={<TourList />}></Route>
         <Route path='/destination/detail/:id' element={<DetailInfo />}></Route>
         <Route path='/selectSchedule' element={<SelectSchedule></SelectSchedule>}></Route>
-
       </Routes>
-    </>
+    </ThemeProvider>
   );
 }
 
 function HeaderTop(props) {
-
   const handleMouseOver = () => {
     $(".destination-list").show();
     $(".myTrableInfo-list").show();
@@ -70,43 +78,44 @@ function HeaderTop(props) {
   return (
     <div class="header-main-position">
       <div class="headerTop">
-        <Link to="/mypage">마이페이지</Link>
-        <Link to="/login">로그인</Link>
+        <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
+        <Link to="/login" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>로그인</Link>
+        <Toggle theme={props.theme} toggleTheme={props.themeToggler}/>
       </div>
       <div class="header-container">
         <Link to="/"><a class="header-image" href=""><img id="jeju-image" src="../images/JMT.jpg" alt="" /></a></Link>
         <div class="headerSell">
           <ul id="destination" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-            <a>여행지</a>
+            <a className={`${props.theme === 'light'} : 'blackText' : 'whiteText'`}>여행지</a>
             <div className='destination-list'>
-              <li><Link to='/destination/tour'>관광지</Link></li>
-              <li><Link to='/destination/restaurant'>음식</Link></li>
-              <li><Link to='/destination/lodge'>숙박</Link></li>
+              <li><Link to='/destination/tour' className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광지</Link></li>
+              <li><Link to='/destination/restaurant' className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>음식</Link></li>
+              <li><Link to='/destination/lodge' className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>숙박</Link></li>
             </div>
           </ul>
           <ul id="tema">
             <div>
-              <a><Link to="/curator">테마</Link></a>
+              <a><Link to="/curator" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>테마</Link></a>
             </div>
           </ul>
           <ul id="myTrab">
             <div>
-              <a><Link to="/selectSchedule">여행일정</Link></a>
+              <a><Link to="/selectSchedule" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행일정</Link></a>
             </div>
           </ul>
           <ul id="myTrableInfo" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-            <a>여행정보</a>
+            <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행정보</a>
             <div className='myTrableInfo-list'>
-              <li><Link to="/traffic">교통 혼잡도</Link></li>
-              <li><Link to="/festival">축제 및 행사</Link></li>
-              <li><Link to="/knowledge">관광 지식in</Link></li>
+              <li><Link to="/traffic" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통 혼잡도</Link></li>
+              <li><Link to="/festival" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>축제 및 행사</Link></li>
+              <li><Link to="/knowledge" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광 지식in</Link></li>
             </div>
           </ul>
           <ul id="notice" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-            <a>공지사항</a>
+            <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</a>
             <div className='notice-list'>
-              <li><Link to="/noticeBoard">공지사항</Link></li>
-              <li><Link to="/qnABoard">Q&A</Link></li>
+              <li><Link to="/noticeBoard" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</Link></li>
+              <li><Link to="/qnABoard" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>Q&A</Link></li>
             </div>
           </ul>
         </div>

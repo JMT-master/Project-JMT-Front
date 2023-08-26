@@ -7,6 +7,7 @@ import ListPaging from '../destination/ListPaging';
 import {AiOutlineLoading, AiOutlineCheck, AiFillCamera} from 'react-icons/ai';
 import {BsFillCalendarCheckFill} from 'react-icons/bs';
 import {GrClearOption} from 'react-icons/gr';
+import { useTheme } from 'styled-components';
 
 const Curator = () => {
   const [categoryNum, setCategoryNum] = useState("c1");
@@ -18,18 +19,25 @@ const Curator = () => {
   const [selectBoxName, setSelectBoxName] = useState("c1");
   const [selectContent, setSelectContent] = useState(0);
   let   visitTag = [], tagSet = [];
-  const tagStyle = {
-    color:"black",
-    fontWeight : "500"
-  };
-
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const theme = useTheme();
+  const [onChnTheme, setChnTheme] = useState(theme.body);
 
-  // const checkStyled = styled.button`
-  // color : "blue",
-  // font : 
-  // `;
+  let tagStyle = null;
+  tagStyle = theme.body === "#FFF" ? {
+    color : "black",
+    backgroundColor : "white",
+    fontWeight : "500",
+    transition : "all 1s linear"
+  } : {
+    color : "white",
+    backgroundColor : "#333",
+    fontWeight : "500",
+    transition : "all 1s linear"
+  };
+
+  if(theme.body !== onChnTheme) setChnTheme(theme.body);
   
   const categoryList = (e) => {
     setCategoryNum(e.target.value);
@@ -71,21 +79,23 @@ const Curator = () => {
       setTagBtn(tagSet.map((tag,i) => {
         return <TagBtn className='tagBtn' name={"tag"+i} key={i} data={tag} tagAdd={tagAdd} style={tagStyle}></TagBtn>
       }));
-
+      setLoading(false);
     }
-    setLoading(false);
-  }, [visit]);
+
+  }, [visit,onChnTheme]);
 
   // tag 클릭했을 때 색상 변경 및 배열에 값 대입
   const tagAdd = (e) => {
+    const colorFlag = theme.body === "#FFF" ? "black" : "white";
+
     e.preventDefault();
-    if(e.target.style.color === "black") { // 태그 클릭시
+    if(e.target.style.color === colorFlag) { // 태그 클릭시
       e.target.style.fontWeight = "bold";
       e.target.style.color = "red";
       setSelectTag(selectTag => [e.target.value, ...selectTag]);
     } else {  // 태그 unClick시
       e.target.style.fontWeight = "500";
-      e.target.style.color = "black";
+      e.target.style.color = colorFlag;
       setSelectTag(selectTag => selectTag.filter(select => select !== e.target.value));
     }
   }
@@ -119,11 +129,12 @@ const Curator = () => {
 
   // 선택 삭제
   function clearTag (e) {
+    const colorFlag = theme.body === "#FFF" ? "black" : "white";
     e.preventDefault();
     setSelectTag([]);
 
     for(let i=0; i < tagBtn.length; i++){
-      document.getElementsByName("tag"+i)[0].style.color = "black";
+      document.getElementsByName("tag"+i)[0].style.color = colorFlag;
       document.getElementsByName("tag"+i)[0].style.fontWeight = "500";
     }    
   };
@@ -149,8 +160,8 @@ const Curator = () => {
             <div className='curatorForm-tag'>
               {tagBtn}
             </div>
-            <AiOutlineCheck className='curatorForm-submit' onClick={checkTag}>적용하기</AiOutlineCheck>
-            <GrClearOption  className='curatorForm-submit' onClick={clearTag}>선택삭제</GrClearOption>
+            <AiOutlineCheck className={`curatorForm-submit ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`} onClick={checkTag}>적용하기</AiOutlineCheck>
+            <GrClearOption  className={`curatorForm-submit ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`} onClick={clearTag}>선택삭제</GrClearOption>
           </form>
         </div>
         <div className='curatorResult'>
