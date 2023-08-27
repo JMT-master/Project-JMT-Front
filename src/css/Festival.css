@@ -1,5 +1,5 @@
 .festival-content{
-  height: 14800px;
+  height: 7800px;
 }
 .festival-title{
   width: 100vw;
@@ -97,7 +97,7 @@
 
 @media screen and (min-width:1024px) and (max-width:1580px) {
   .festival-content{
-    height: 28800px;
+    height: 14800px;
   }
   .festival-category{
     width: 70%;
@@ -132,7 +132,7 @@
 }
 @media screen and (max-width:1024px) {
   .festival-content{
-    height: 14800px;
+    height: 7800px;
   }
   .festival-category{
     width: 70%;

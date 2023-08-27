@@ -169,10 +169,11 @@ function Header() {
 }
 
 function Footer() {
+  const {pathname} = useLocation();
 
   return (
     <>
-      <div className='footer-main'>
+      <div class={`footer-main ${pathname === '/' ? 'footernoCh' : 'footerCh'}`}>
         <div className='footer-container'>
           <a href=""><img id="jeju-image" src="../images/JMT.jpg" alt="" /></a>
           <ul className='footer-Grid1'>
