@@ -2,7 +2,7 @@ import React from 'react'
 import "../css/travelForm.css"
 
 const TravelForm = (props) => {
-  console.log(props.data);
+  // console.log(props);
   if(Number.isInteger(props.data) || Number.isInteger(props.data[0])) {
     <article className='travelForm-container'>
         <img className='travelForm-img' alt=''></img>

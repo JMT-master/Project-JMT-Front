@@ -86,7 +86,7 @@ function HeaderTop(props) {
         <Link to="/"><a class="header-image" href=""><img id="jeju-image" src="../images/JMT.jpg" alt="" /></a></Link>
         <div class="headerSell">
           <ul id="destination" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-            <a className={`${props.theme === 'light'} : 'blackText' : 'whiteText'`}>여행지</a>
+            <a className={`${props.theme === 'light'? 'blackText' : 'whiteText'}`}>여행지</a>
             <div className='destination-list'>
               <li><Link to='/destination/tour' className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광지</Link></li>
               <li><Link to='/destination/restaurant' className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>음식</Link></li>

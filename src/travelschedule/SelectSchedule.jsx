@@ -9,21 +9,22 @@ import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { format } from 'date-fns/esm'
 import Swal from 'sweetalert2'
+import SelectpageList from './SelectpageList'
 import { PiSubtitlesBold } from 'react-icons/pi'
 import { BsPeopleFill } from 'react-icons/bs'
 import { BiTime } from 'react-icons/bi'
 import { AiOutlineLoading } from 'react-icons/ai'
-import SelectpageList from './SelectpageList'
+import {MdNavigateNext} from 'react-icons/md'
 
 
 const SelectSchedule = () => {
   const [peopleNum, setPeopleNum] = useState(1);
   const [startTime, setStartTime] = useState("00:00");
   const [endTime, setEndTime] = useState("00:00");
-  const [index, setIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [visit, setVisit] = useState(null);
   const [list, setList] = useState();
+  const [selectIndex, setSelectIndex] = useState(0);
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -36,9 +37,9 @@ const SelectSchedule = () => {
   useEffect(() => {
     setLoading(true);
     let num = 0;
-    if(index === 0) num = 1;
-    else if(index === 1) num = 4;
-    else if(index === 2) num = 3;
+    if(selectIndex === 0) num = 1;
+    else if(selectIndex === 1) num = 4;
+    else if(selectIndex === 2) num = 3;
 
     fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=c${num}&page=1`)
       .then(res => {
@@ -47,7 +48,7 @@ const SelectSchedule = () => {
       .then(data => {
         setVisit(data);
       });
-  }, []);
+  }, [selectIndex]);
 
   // data가 변경되었을 때, tag와 List 변경
   useEffect(() => {
@@ -91,6 +92,11 @@ const SelectSchedule = () => {
     }
   }
 
+  // 일정 선택
+  const changeSchedule = (index) => {
+    setSelectIndex(index);
+  };
+
   if(loading) {
     return <div className='loading'><AiOutlineLoading className='loadingIcon'></AiOutlineLoading></div>
   } else {
@@ -99,27 +105,30 @@ const SelectSchedule = () => {
         <div className='selectContainer-menu'>
           {/* <Link to="/"><h1 className='Logo'>JMT</h1></Link> */}
           <Link to="/select">
-            <div className='Step SelectText'>
-              <h3>Step1</h3>
-              <h3>일정 선택</h3>
+            <div className='schedule-Step SelectText'>
+              <p className='schedule-Step-num'>Step1</p>
+              <p>일정 선택</p>
             </div>
           </Link>
           <Link to="/travelSchedule">
-            <div className='Step'>
-              <h3>Step2</h3>
-              <h3>여행지 선택</h3>
+            <div className='schedule-Step'>
+              <p className='schedule-Step-num'>Step2</p>
+              <p>여행지 선택</p>
             </div>
           </Link>
-          <Link to="/travelSchedule"><button className='SelectBtn'>다음</button></Link>
+          <Link to="/travelSchedule"><MdNavigateNext className='SelectBtn'>다음</MdNavigateNext></Link>
         </div>
         <div className='selectContainer-Form'>
           <div className='selectInfo-Form'>
             <h3 className='selectDate'>{`${format(state[0].startDate, 'yyyy년 MM월 dd일')} ~ ${format(state[0].endDate, 'yyyy년 MM월 dd일')}`}</h3>
-            <form className='ScheduleForm'>
+            <div className='ScheduleForm'>
               <div className='selectItem'>
-                <button className='scheduleBtn SelectBG'>새 일정</button>
-                <button className='scheduleBtn'>나의 일정</button>
-                <button className='scheduleBtn'>찜한 일정</button>
+                <button className={`scheduleBtn ${selectIndex === 0 ? 'SelectBG' : ''}`} 
+                onClick={() => changeSchedule(0)}>새 일정</button>
+                <button className={`scheduleBtn ${selectIndex === 1 ? 'SelectBG' : ''}`} 
+                onClick={() => changeSchedule(1)}>나의 일정</button>
+                <button className={`scheduleBtn ${selectIndex === 2 ? 'SelectBG' : ''}`} 
+                onClick={() => changeSchedule(2)}>찜한 일정</button>
               </div>
               <div className='selectItem'>
                 <PiSubtitlesBold className='selectItem-icon'></PiSubtitlesBold>
@@ -147,7 +156,7 @@ const SelectSchedule = () => {
                   <Radio name="public" defaultChecked="true">비공개</Radio>
                 </RadioGroup>
               </div>
-            </form>
+            </div>
           </div>
           <div className='Calendar'>
             {/* <Calendar onChange={setValue} value={value}></Calendar> */}

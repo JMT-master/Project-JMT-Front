@@ -7,6 +7,10 @@ import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautif
 import ListPaging from '../destination/ListPaging'
 import { TiDeleteOutline } from 'react-icons/ti'
 import { AiOutlineLoading } from 'react-icons/ai'
+import { BiSolidSave, BiTrash, BiFileFind } from 'react-icons/bi'
+import NaverMapView from '../common/NaverMapView';
+import { useTheme } from 'styled-components';
+import TravelScheduleModal from './TravelScheduleModal';
 
 const TravelSchedule = (props) => {
   const [visit, setVisit] = useState();
@@ -18,6 +22,8 @@ const TravelSchedule = (props) => {
   const [tableData2, setTableData2] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
   const [loading, setLoading] = useState(true);
   const [scheduleBtn, setScheduleBtn] = useState("2");
+  const [mapModal, setMapModal] = useState(false);
+  const theme = useTheme();
 
   useEffect(() => {
     setLoading(true);
@@ -259,6 +265,13 @@ const TravelSchedule = (props) => {
     }
   };
 
+  // 지도 확대 Modal
+  const showMapModal = () => {
+    setMapModal(!mapModal);
+  }
+
+  console.log("mapModal : " ,mapModal);
+
   // Loading 화면
   if (loading === true) {
     return <div className='loading'><AiOutlineLoading className='loadingIcon'></AiOutlineLoading></div>
@@ -282,7 +295,21 @@ const TravelSchedule = (props) => {
                 </div>
               </Link>
             </div>
-            <button className='travelBtn'>저장</button>
+            <div className='travelSchedule-icons'>
+              <div onClick={showMapModal}>
+                <BiFileFind className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>저장</BiFileFind>
+                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>지도확대</p>
+                {mapModal && <TravelScheduleModal mapModalsend={mapModal} setMapModalsend={setMapModal}></TravelScheduleModal>}
+              </div>
+              <div>
+                <BiTrash className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>저장</BiTrash>
+                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>일정삭제</p>
+              </div>
+              <div>
+                <BiSolidSave className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>저장</BiSolidSave>
+                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>저장</p>
+              </div>
+            </div>
           </div>
 
           <DragDropContext
@@ -468,8 +495,8 @@ const TravelSchedule = (props) => {
           </DragDropContext>
 
         </div>
-        <div>
-          지도
+        <div className='travelSchedule-naverMap'>
+          {/* <NaverMapView></NaverMapView> */}
         </div>
       </div>
     )

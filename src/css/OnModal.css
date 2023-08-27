@@ -53,3 +53,28 @@
   margin: 0 10px;
   background-color: beige;
 }
+
+/* map 관련 Container */
+.modal-Map-container {
+  width: 85vw;
+  height: 85vh;
+  z-index: 999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  border: 1px solid black;
+  clear: both;
+}
+
+.modal-Map-close {
+  width: 30px; height: 30px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.modal-Map-show {
+  width: 95%; height: 95%;
+  margin: 0 auto;
+}
