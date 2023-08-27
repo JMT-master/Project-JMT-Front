@@ -22,7 +22,7 @@ const Tr = (props) => {
 const QnABoard = () => {
   const [newQnaData, setNewQnaData] = useState(qnaData);
   const [currentPage , setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentItems = newQnaData.slice(startIndex, endIndex);
@@ -31,6 +31,10 @@ const QnABoard = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
+  const handleSelect = (e) =>{
+    setItemsPerPage(e.target.value);
+  }
 
   return (
     <div className='content'>
@@ -47,11 +51,11 @@ const QnABoard = () => {
       </div>
       <div className='qna-table'>
         <div className='page-choice'>
-          <select >
-            <option value="5개씩">5개씩</option>
-            <option value="10개씩" selected>10개씩</option>
-            <option value="15개씩">15개씩</option>
-            <option value="20개씩">20개씩</option>
+          <select onChange={handleSelect}>
+            <option value={5}>5개씩</option>
+            <option value={10} selected>10개씩</option>
+            <option value={15}>15개씩</option>
+            <option value={20}>20개씩</option>
           </select>
         </div>
         <table>

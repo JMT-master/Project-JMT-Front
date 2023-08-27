@@ -52,6 +52,10 @@
 .location-search input{
   margin: 10px 0 10px 10px;
 }
+.location-search button{
+  background-color: #f3a344;
+  color: white;
+}
 .ask-textarea h4{
   margin: 20px 10px;
 }
@@ -65,6 +69,7 @@
   width: 90vw;
   margin: 20px 10px;
   font-size: large;
+  resize: none;
 }
 .ask-textarea textarea:focus{
   resize: none;
@@ -77,10 +82,11 @@
 }
 .submit-knowledge{
   padding: 10px 20px;
-  background-color: rgb(75, 220, 164);
+  background-color: #f3a344;
   color: white;
   font-size: larger;
   border: none;
+  border-radius: 10px;
 }
 .button-box{
   width: 100%;
@@ -89,9 +95,10 @@
 }
 .back-to-knlist{
   padding: 10px 20px;
-  background-color: rgb(75, 220, 164);
+  background-color: #f3a344;
   color: white;
   font-size: larger;
   border: none;
+  border-radius: 10px;
   margin-left: 20px;
 }

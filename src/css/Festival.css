@@ -1,5 +1,5 @@
 .festival-content{
-  height: 7800px;
+  height: 14800px;
 }
 .festival-title{
   width: 100vw;
@@ -78,7 +78,7 @@
 }
 .on-festival li {
   float: left;
-  width: 590px;
+  width: 40%;
   height: 200px;
   margin: 15px 50px;
   padding: 20px;
@@ -87,7 +87,7 @@
 }
 .off-festival li {
   float: left;
-  width: 590px;
+  width: 40%;
   height: 200px;
   margin: 15px 50px;
   padding: 20px;
@@ -95,9 +95,9 @@
   box-shadow: 3px 4px 5px 0 rgba(2, 2, 2, 0.2);
 }
 
-@media screen and (min-width:1024px) and (max-width:1320px) {
+@media screen and (min-width:1024px) and (max-width:1580px) {
   .festival-content{
-    height: 14800px;
+    height: 28800px;
   }
   .festival-category{
     width: 70%;
@@ -108,13 +108,31 @@
     padding: 10px;
   }
   .festival-list ul{
-    width: 50%;
+    width: 90%;
     margin: 30px auto;
+  }
+  .on-festival li {
+    float: left;
+    width: 70%;
+    height: 200px;
+    margin: 15px 50px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 3px 4px 5px 0 rgba(2, 2, 2, 0.2);
+  }
+  .off-festival li {
+    float: left;
+    width: 70%;
+    height: 200px;
+    margin: 15px 50px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 3px 4px 5px 0 rgba(2, 2, 2, 0.2);
   }
 }
 @media screen and (max-width:1024px) {
   .festival-content{
-    height: 7800px;
+    height: 14800px;
   }
   .festival-category{
     width: 70%;
@@ -153,7 +171,7 @@
     height: 60px;
   }
   .on-festival li{
-    width: 300px;
+    width: 40%;
     height: 200px;
     margin: 15px;
     padding: 20px;
@@ -161,7 +179,7 @@
     box-shadow: 3px 4px 5px 0 rgba(2, 2, 2, 0.2);
   }
   .off-festival li{
-    width: 300px;
+    width: 40%;
     height: 200px;
     margin: 15px;
     padding: 20px;

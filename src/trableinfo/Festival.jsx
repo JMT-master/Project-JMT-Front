@@ -68,7 +68,7 @@ const Festival = () => {
       <div className="festival-list">
         <h3><span>진행중이거나 예정된 축제 및 행사</span></h3>
         <ul className="on-festival">{onFestival}</ul>
-        <h3>종료된 축제 및 행사</h3>
+        <h3><span>종료된 축제 및 행사</span></h3>
         <ul className="off-festival">{offFestival}</ul>
       </div>
     </div>
