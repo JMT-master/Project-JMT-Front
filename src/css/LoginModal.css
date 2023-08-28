@@ -1,70 +1,99 @@
-.modal-id{
+.modal-container{
+  width: 400px;
+  height: 300px;
+  z-index: 999;
   position: absolute;
-  top: 25%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(246, 161, 67, 1);
+  border: 1px solid black;
+  border-radius: 25px;
+}
+.modal-container .modal-close{
+  background-color: rgba(246, 161, 67, 1);
+}
+.modal-container input:focus{
+  outline: none;
+}
+.modal-id{
+  position: relative;
+  top: 15%;
 }
 .modal-id button{
   width: 300px;
   height: 80px;
-  background-color: white;
+  background-color: antiquewhite;
+  border-radius: 25px;
+
 }
 .modal-pwd{
-  position: absolute;
-  top: 65%;
+  position: relative;
+  top: 35%;
 }
 .modal-pwd button{
   width: 300px;
   height: 80px;
-  background-color: white;
+  background-color: antiquewhite;
+  border-radius: 25px;
 }
 .moid-name{
-  position: absolute;
-  top: 25%;
+  position: relative;
+  top: 15%;
   padding: 10px;
-  left: 20px;
-  width: 300px;
-  height: 80px;
+  width: 200px;
+  height: 40px;
+  border: none;
+  border-radius: 15px;
 }
 .moid-tel{
-  position: absolute;
-  top: 65%;
+  position: relative;
+  top: 25%;
   padding: 10px;
-  left: 20px;
-  width: 300px;
-  height: 80px;
+  width: 200px;
+  height: 40px;
+  border: none;
+  border-radius: 15px;
 }
 .moid-submit button{
   position: absolute;
   padding: 10px;
   width: 100px;
   height: 50px;
-  top: 45%;
-  right: 15%;
+  bottom: 10px;
+  right: 10px;
   background-color: white;
   border: 1px solid black;
+  border: none;
+  border-radius: 15px;
 }
 .mopwd-id{
-  position: absolute;
-  top: 25%;
+  position: relative;
+  top: 15%;
   padding: 10px;
-  left: 20px;
-  width: 300px;
-  height: 80px;
+  width: 200px;
+  height: 40px;
+  border: none;
+  border-radius: 15px;
 }
 .mopwd-email{
-  position: absolute;
-  top: 65%;
+  position: relative;
+  top: 25%;
   padding: 10px;
-  left: 20px;
-  width: 300px;
-  height: 80px;
+  width: 200px;
+  height: 40px;
+  border: none;
+  border-radius: 15px;
 }
 .mopwd-submit button{
   position: absolute;
   padding: 10px;
-  width: 150px;
+  width: 100px;
   height: 50px;
-  top: 45%;
-  right: 15%;
+  bottom: 10px;
+  right: 10px;
   background-color: white;
   border: 1px solid black;
+  border: none;
+  border-radius: 15px;
 }

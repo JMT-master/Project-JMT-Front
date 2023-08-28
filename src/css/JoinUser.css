@@ -173,3 +173,12 @@
   font-weight: bold;
   font-size: 16px;
 }
+.failPwd{
+  color: red;
+}
+.successPwd{
+  color: green;
+}
+.input-hidden{
+  display: none;
+}
