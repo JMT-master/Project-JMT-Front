@@ -158,10 +158,10 @@ function Header() {
   const settings = {
     dots: false, //지정콘텐츠로 이동하는 버튼 true / false
     infinite: true, //콘텐츠의 끝까지 갔을때 처음 콘텐츠로 돌아와서 반복
-    speed: 1000, // 콘텐츠 넘어가는 속도
+    speed: 1500, // 콘텐츠 넘어가는 속도
     autoplay: true,
     fade: true, //사라지는 애니메이션 없으면 slide애니메이션
-    autoplaySpeed: 5000,
+    autoplaySpeed: 3000,
     slidesToShow: 1, //한 화면에 보이는 콘텐츠 개수
     slidesToScroll: 1 //한번에 넘어가는 콘텐츠 수 ex)2로 지정시 2개씩 넘어감
   };
@@ -195,34 +195,34 @@ function Header() {
               onClick={onChnImage}>
             <div className=
             {`header-travel-Image-li-title ${changeImage === 0 ? 
-              'header-travel-Image-li-info' : ''}`}>관광지</div>
-            <div  className=
-            {`header-travel-Image-li-title ${changeImage === 0 ? 
-              'header-travel-Image-li-content' : ''}`}>원하는 관광지를 찾아보세요</div>
+              'header-travel-Image-li-info' : 'header-travel-Image-li-info-vertical'}`}>관광지</div>
+            <div 
+            className={`header-travel-Image-li-content ${changeImage === 0 ? 
+              'header-travel-Image-li-info' : 'header-travel-Image-li-info-title-none'}`}>원하는 관광지를 찾아보세요</div>
           </li>
           <li className=
           {`header-travel-Image-li header-travel-Image-li-background2 ${changeImage === 1 ? 
             'header-travel-Image-li-width' : ''}`}
               value = {1}
               onClick={onChnImage}>
-            <div  className=
+            <div className=
             {`header-travel-Image-li-title ${changeImage === 1 ? 
-              'header-travel-Image-li-info' : ''}`}>음식</div>
-            <div  className=
-            {`header-travel-Image-li-title ${changeImage === 1 ? 
-              'header-travel-Image-li-content' : ''}`}>원하는 음식점을 찾아보세요</div>
+              'header-travel-Image-li-info' : 'header-travel-Image-li-info-vertical'}`}>음식</div>
+            <div 
+            className={`header-travel-Image-li-content ${changeImage === 1 ? 
+              'header-travel-Image-li-info' : 'header-travel-Image-li-info-title-none'}`}>원하는 음식를 찾아보세요</div>
           </li>
           <li className=
           {`header-travel-Image-li header-travel-Image-li-background3 ${changeImage === 2 ? 
             'header-travel-Image-li-width' : ''}`}
               value = {2}
               onClick={onChnImage}>
-            <div  className=
+            <div className=
             {`header-travel-Image-li-title ${changeImage === 2 ? 
-              'header-travel-Image-li-info' : ''}`}>숙박</div>
-            <div  className=
-            {`header-travel-Image-li-title ${changeImage === 2 ? 
-              'header-travel-Image-li-content' : ''}`}>원하는 숙박지를 찾아보세요</div>
+              'header-travel-Image-li-info' : 'header-travel-Image-li-info-vertical'}`}>숙박</div>
+            <div 
+            className={`header-travel-Image-li-content ${changeImage === 2 ? 
+              'header-travel-Image-li-info' : 'header-travel-Image-li-info-title-none'}`}>원하는 숙박를 찾아보세요</div>
           </li>
         </ul>
 
