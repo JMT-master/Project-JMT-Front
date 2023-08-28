@@ -57,12 +57,12 @@
 .curatorContent-li {
   width: 10%; height: 80px;
   /* background-color: #f3a344; */
-  background-color: orange;
-  color: white;
+  color: orange;
   text-align: center; line-height: 40px;
-  border: 1px solid white;
+  /* border: 1px solid orange; */
   border-collapse: collapse;
   border-radius: 15px;
+  line-height: 25px;
   cursor: pointer;
 }
 
@@ -81,6 +81,7 @@
 }
 
 .curatorContent-title {
+  margin-top: 0;
   height: 20px;
   font-weight: bold;
 }
