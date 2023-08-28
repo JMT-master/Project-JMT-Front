@@ -21,7 +21,7 @@ const TourList = () => {
 
   //Nav용
   const nav = useNavigate();
-  
+
   const [searchParams, setSearchParams] = useSearchParams();
   const { pageId } = useParams();
   const pageType = searchParams.get('type') === null ? 'list' : searchParams.get('type');
@@ -108,6 +108,16 @@ useEffect(() => {
   setLoading(false);
 }, [rawData, tagFilter, dataList.length])
 
+const makeItemList = ()=>{
+  const itemList = []
+  dataList.slice(pageNum, offset * page).map((item) => {
+    if (item.tag.includes(tagFilter)) {
+      itemList.push(<TourItem spot={item} key={item.contentsid} pageType={pageType} setGps={setGps} onNav={onNav} />);
+    }
+  })
+  return itemList;
+}
+
 if (loading === true || !dataList[0]) {
   return <div className='loading'><AiOutlineLoading className='loadingIcon'></AiOutlineLoading></div>
 } else if (dataList[0]) {
@@ -133,23 +143,7 @@ if (loading === true || !dataList[0]) {
         <div className={`${pageType}-content-list`}>
           <ul className={`${pageType}-content-list-ul`}>
             {
-              dataList.slice(pageNum, offset * page).map((item) => {
-                if (item.tag.includes(tagFilter)) {
-                  // onNav = () => {
-                  //   nav(`/destination/detail/${item.contentsid}`, {
-                  //     state: {
-                  //       title: item.title,
-                  //       img: item.repPhoto.photoid.imgpath,
-                  //       tag: item.tag,
-                  //       address: item.address,
-                  //       phoneno: item.phoneno,
-                  //       content: item.introduction,
-                  //     }
-                  //   })
-                  // }
-                  return <TourItem spot={item} key={item.contentsid} pageType={pageType} setGps={setGps} onNav={onNav} />
-                }
-              })
+              makeItemList()
             }
           </ul>
           <ListPaging page={page} setPage={setPage} lastPage={lastPage.current}></ListPaging>

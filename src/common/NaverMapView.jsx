@@ -1,8 +1,11 @@
-import { func } from 'prop-types';
 import { useEffect, useState, useRef } from 'react';
+import { MdOutlineFindInPage } from 'react-icons/md';
+import { renderToString } from 'react-dom/server';
+// import '../css/button.scss';
 
 function NaverMapView({ gps, onNav }) {
     const { lat, lng, title, img } = gps;
+    console.log('gps: ', gps);
 
     const center = new window.naver.maps.LatLng(lat, lng);
 
@@ -11,7 +14,6 @@ function NaverMapView({ gps, onNav }) {
     const [marker, setMarker] = useState(null);
     const [infoWindow, setInfoWindow] = useState(null);
     const [mapTypeId, setMapTypeId] = useState(window.naver.maps.MapTypeId.NORMAL);
-    const flag = useRef(true);
 
     // const buttons = [
     //     {
@@ -33,21 +35,26 @@ function NaverMapView({ gps, onNav }) {
     // ];
 
     let contentStr = [
-        '<div class="iw_inner">',
-        '   <h3>' + title + '</h3>',
+        '<div class="iw_outter">',
+        '   <h2>' + title + '</h2>',
         '       <img src=' + img + ' width="55" height="55" alt="서울시청" class="thumb" /><br>',
-        ' <button id="infoWinBtn">상세정보</button>',
+        '<button id="infoWinBtn" class="oBtn iwBtn">' + renderToString(<MdOutlineFindInPage />) + '</button>',
         '</div>'
     ].join('');
 
     let newInfoWindow = new window.naver.maps.InfoWindow({
         content: contentStr,
-        pixelOffset: new window.naver.maps.Point(0, -30)
+        pixelOffset: new window.naver.maps.Point(0, -10),
+        maxWidth: 200,
+        borderWidth: 0,
+        backgroundColor: 'transparent',
+        anchorSize: (0, 0)
     });
 
 
 
     useEffect(() => {
+        let centerChangedListener = null;
         if (!map) {
             const newMap = new window.naver.maps.Map('map', {
                 center: center,
@@ -66,7 +73,7 @@ function NaverMapView({ gps, onNav }) {
             });
 
             const newMarker = new window.naver.maps.Marker({
-                position: new window.naver.maps.LatLng(lat, lng),
+                position: center,
                 map: newMap,
             });
 
@@ -79,21 +86,34 @@ function NaverMapView({ gps, onNav }) {
             }));
 
         } else {
-            marker.setPosition(new window.naver.maps.LatLng(lat, lng));
-            map.panTo(new window.naver.maps.LatLng(lat, lng));
+            marker.setPosition(center);
+            setTimeout(() => {
+                map.panTo(center);
+                // map.setCenter(center, false);
+            }, 1);
 
-            window.naver.maps.Event.addListener(map, 'center_changed', () => {
+            if (centerChangedListener) {
+                window.naver.maps.Event.removeListener(centerChangedListener);
+            }
+
+            centerChangedListener = window.naver.maps.Event.addListener(map, 'center_changed', () => {
                 newInfoWindow.open(map, marker);
-                
                 const infoBtn = document.getElementById('infoWinBtn');
                 if (infoBtn) {
                     infoBtn.addEventListener('click', onNav);
                 }
             });
-
-            infoWindow.setPosition(new window.naver.maps.LatLng(lat, lng));
+            infoWindow.setPosition(center);
         }
-    }, [map, marker, mapTypeId, lat, lng, title]);
+
+    }, [lat, lng]);
+
+
+    // useEffect(() => {
+    //     if (map) {
+    //         map.panTo(center);
+    //     }
+    // }, [center, map]);
 
     // const onNav = () => {
     //     navigate(`/destination/detail/${spot.contentsid}`, {

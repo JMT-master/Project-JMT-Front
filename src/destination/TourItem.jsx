@@ -39,7 +39,7 @@ const TourItem = ({ spot, pageType, onNav, setGps }) => {
         <img src={photo.photoid.thumbnailpath} alt={photo.descseo} width={'200px'} height={'100px'} />
       </div>
       <div className={`${pageType}-itemGrid-content`}>
-        <h3>{spot.title}<button className='oBtn sf ra' onClick={()=>{onNav()}}><MdOutlineFindInPage/></button></h3>
+        <h3><span>{spot.title}</span><button className='oBtn sf ra' onClick={()=>{onNav()}}><MdOutlineFindInPage/></button></h3>
         <div className={`${pageType}-itemGrid-contentText`}>
           <p className='sf'>{spot.region1cd.label} > {spot.region2cd.label}</p>
           <p className={`${pageType}-itemGrid-contentText-tag sf`}>{spot.tag.replace(/, /gi, ',').split(',').map(tag => ('#' + tag + ' '))}</p>
