@@ -161,9 +161,9 @@ const SelectSchedule = () => {
           <div className='Calendar'>
             {/* <Calendar onChange={setValue} value={value}></Calendar> */}
             <DateRange
-              editableDateInputs={true}
+              editableDateInputs={true}              // 직접 날짜 지정
               onChange={(item) => dateChange(item)}
-              moveRangeOnFirstSelection={false}
+              moveRangeOnFirstSelection={false}      // Start
               ranges={state}
               months={2}
               direction="horizontal"
