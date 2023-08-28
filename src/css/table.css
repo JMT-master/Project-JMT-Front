@@ -1,5 +1,12 @@
 .firstRow {
-  width: 75px;
+  width: 75px; height: 180px;
   text-align: center;
+  line-height: 180px;
+  font-weight: bold;
+}
+
+.firstRowHead {
+  height: 50px;
   line-height: 50px;
+  font-size: large;
 }

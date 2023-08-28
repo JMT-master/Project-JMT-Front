@@ -14,14 +14,15 @@
 }
 
 .curatorForm-select {
-  width: 150px; height: 35px;
+  width: 50%; height: 35px;
   margin: 5%;
   font-size: large; font-weight: bold;
   color: #3498DA;
+  border: none;
 }
 
 .curatorForm-tag {
-  margin: 5%; height: 380px;
+  margin: 5%; height: 370px;
   overflow: scroll;
 }
 
@@ -37,12 +38,10 @@
 }
 
 .curatorForm-submit {
-  width: 45%;
+  width: 45%; height: 20px;
   margin-left: 2.5%;
   margin-right: 2.5%;
-  background-color: orange;
   border: none;
-  border-radius: 5px;
   text-align: center;
   cursor: pointer;
 }
@@ -51,14 +50,39 @@
   display: flex;
 }
 
+.curatorResult {
+  width: 100%;
+}
+
 .curatorContent-li {
-  width: 42%; height: 40px;
-  background-color: #f3a344;
+  width: 10%; height: 80px;
+  /* background-color: #f3a344; */
+  background-color: orange;
   color: white;
   text-align: center; line-height: 40px;
   border: 1px solid white;
   border-collapse: collapse;
   border-radius: 15px;
+  cursor: pointer;
+}
+
+.curatorContent-li:hover {
+  background-color: orange;
+  color: white;
+}
+
+.curatorContent-li-unCheck {
+  background-color: white;
+  color: orange;
+}
+
+.curatorContent-icon {
+  width: 30px; height: 30px;
+}
+
+.curatorContent-title {
+  height: 20px;
+  font-weight: bold;
 }
 
 .curatorResult-img {
@@ -89,6 +113,8 @@
   width: 250px; height: 250px;
   object-fit: cover;
   transform: scale(1);
+  transition: 0.3s;
+  box-shadow : 2px 3px 5px 0px;
   z-index: 66;
 }
 .curatorResult-img-li > .img-tag-hover {
@@ -102,9 +128,9 @@
   z-index: 99;
 }
 .curatorResult-img-li > img:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
   z-index: 950;
-  filter: opacity(0.6);
+  filter: opacity(0.5);
 }
 .curatorResult-img-li > img:hover + .img-tag-hover{
   display: block;
@@ -113,5 +139,75 @@
 .curatorResult-paging {
   margin-top: 25px;
   text-align: center;
-  /* width: 100%; */
+  width: 820px;
+}
+
+@media screen and (max-width : 1100px) {
+  .curatorContainer {
+    display: block;
+    height: 1600px;
+  }
+
+  .curatorForm {
+    margin: 5%;
+    width: 80%; height: 300px;
+    border: 2px solid orange;
+    border-radius: 10px;
+  }
+
+  .curatorForm-select {
+    width: 25%;
+    margin-top: 2%; margin-bottom: 2%;
+  }
+
+  .curatorForm-tag {
+    margin-top: 1%;
+    height: 50%;
+  }
+
+  .curatorResult-Content {
+    height: 150px;
+  }
+
+  .curatorContent-ul {
+    margin-left: 4%;
+  }
+
+  .curatorContent-li  {
+    margin-right: 2%;
+    height: 120px;
+  }
+
+  .curatorContent-icon {
+    width: 75px; height: 75px;
+  }
+
+  .curatorResult-img {
+    margin-left: 2%;
+    height: 1000px;
+  }
+
+  .curatorResult-img-ul {
+    height: 1000px;
+  }
+
+  @media screen and (max-width : 850px) {
+    .curatorResult-img-ul {
+      grid-template-columns: 270px 270px;
+    }
+
+    .curatorContent-li  {
+      height: 100px;
+    }
+
+    .curatorContent-icon {
+      width: 50px; height: 50px;
+    }
+
+    .curatorResult-paging {
+      margin-top: 25px;
+      text-align: center;
+      width: 550px;
+    }
+  }
 }
