@@ -28,6 +28,7 @@ import { useDarkMode } from './common/useDarkMode';
 import Toggle from './common/Toggle';
 import YouTube from 'react-youtube'
 import data from "./data/festival.json";
+import { MdFestival } from 'react-icons/md';
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -176,6 +177,7 @@ function Header() {
       </div>
       <div className='header-body'>
         <div className='festival-send-content'>
+          <h1><span><MdFestival></MdFestival></span>JMT의 최신 소식을 알아보세요</h1>
           <ul onClick={()=>navigate('/festival')} className='main-fest'>
             <FesListNoImg data={data.data[0]}></FesListNoImg>
             <FesListNoImg data={data.data[1]}></FesListNoImg>
