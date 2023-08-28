@@ -1,8 +1,15 @@
-import { Container as MapDiv, NaverMap, Marker } from 'react-naver-maps'
+import { 
+    Container as MapDiv,
+    NaverMap,
+    Marker
+  } from 'react-naver-maps';
+
+
 
 function NaverMapView(props) {
 
     // const {lat,lng} = props.data;
+    //'bg.ol.ts.ctt.lko'
 
     return (
         <MapDiv style={{height: "100%", width: "100%"}}>
@@ -11,7 +18,6 @@ function NaverMapView(props) {
             </NaverMap>
         </MapDiv>
     )
-
 }
 
 
