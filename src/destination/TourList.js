@@ -21,6 +21,7 @@ const TourList = () => {
 
   //Nav용
   const nav = useNavigate();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const { pageId } = useParams();
   const pageType = searchParams.get('type') === null ? 'list' : searchParams.get('type');
@@ -36,101 +37,125 @@ const TourList = () => {
   const lastPage = useRef(1);
 
   const [gps, setGps] = useState({
-    lat: 33.3764981, 
+    lat: 33.3764981,
     lng: 126.5193789,
-    title : '',
-    img : ''
+    contentsid : '',
+    title: '',
+    img: '',
+    tag: '',
+    address: '',
+    phoneno: '',
+    content: '',
   });
 
 
-
-  // const [latitude, setLatitude] = useState();
-  // const [longitude, setLongitude] = useState();
-
-  function checkCategory(cate) {
-    switch (cate) {
-      case 'tour':
-        return 'c1';
-      case 'restaurant':
-        return 'c4';
-      case 'lodge':
-        return 'c3';
-      default:
-        return 'c1';
+const onNav = () => {
+  console.log(gps);
+  nav(`/destination/detail/${gps.contentsid}`, {
+    state: {
+      title: gps.title,
+      img: gps.img,
+      tag: gps.tag,
+      address: gps.address,
+      phoneno: gps.phoneno,
+      content: gps.introduction,
     }
+  })
+}
+
+// const [latitude, setLatitude] = useState();
+// const [longitude, setLongitude] = useState();
+
+function checkCategory(cate) {
+  switch (cate) {
+    case 'tour':
+      return 'c1';
+    case 'restaurant':
+      return 'c4';
+    case 'lodge':
+      return 'c3';
+    default:
+      return 'c1';
   }
-  const category = checkCategory(pageId);
-  //데이터 받아오기
+}
+const category = checkCategory(pageId);
+//데이터 받아오기
 
-  useEffect(() => {
-    setLoading(true);
-    const testData = async () => {
-      let rawDatas = [];
-      for (let i = 1; i < 3; i++) {
-        const res = await axios.get(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=${category}&page=${i}`)
-        rawDatas = rawDatas.concat(res.data.items);
-      }
-      setRawData(rawDatas);
-      setTagFilter('');
+useEffect(() => {
+  setLoading(true);
+  const testData = async () => {
+    let rawDatas = [];
+    for (let i = 1; i < 3; i++) {
+      const res = await axios.get(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=${category}&page=${i}`)
+      rawDatas = rawDatas.concat(res.data.items);
     }
-    testData();
-  }, [category]);
+    setRawData(rawDatas);
+    setTagFilter('');
+  }
+  testData();
+}, [category]);
 
-  //카테고리 변경으로 데이터 변경시 사용할 데이터 리스트 새로 셋
-  useEffect(() => {
-    setDataList(rawData.filter(item => item.tag.includes(tagFilter)));
-    lastPage.current = Math.floor(dataList.length % offset > 0 ? (dataList.length / offset) + 1 : dataList.length / offset)
-    let tag = [];
+//카테고리 변경으로 데이터 변경시 사용할 데이터 리스트 새로 셋
+useEffect(() => {
+  setDataList(rawData.filter(item => item.tag.includes(tagFilter)));
+  lastPage.current = Math.floor(dataList.length % offset > 0 ? (dataList.length / offset) + 1 : dataList.length / offset)
+  let tag = [];
 
-    rawData.map((item) => {
-      tag = tag.concat(item.tag.replace(/, /gi, ',').split(','));
-    })
-    setTagList(tag)
-    setLoading(false);
-  }, [rawData, tagFilter, dataList.length])
+  rawData.map((item) => {
+    tag = tag.concat(item.tag.replace(/, /gi, ',').split(','));
+  })
+  setTagList(tag)
+  setLoading(false);
+}, [rawData, tagFilter, dataList.length])
 
-  if (loading === true || !dataList[0]) {
-    return <div className='loading'><AiOutlineLoading className='loadingIcon'></AiOutlineLoading></div>
-  } else if (dataList[0]) {
-    return (
+const makeItemList = ()=>{
+  const itemList = []
+  dataList.slice(pageNum, offset * page).map((item) => {
+    if (item.tag.includes(tagFilter)) {
+      itemList.push(<TourItem spot={item} key={item.contentsid} pageType={pageType} setGps={setGps} onNav={onNav} />);
+    }
+  })
+  return itemList;
+}
 
-      <div className={pageType}>
-        {/* 관광지 리스트 화면 헤더, 리스트, 그리드 형태 변경시에도 그대로 유지 */}
-        <div className={`${pageType}-head`}>
-          <h1>{dataList[0] && dataList[0].contentscd.label}</h1>
-          <hr />
-          <p className={`${pageType}-head-intro`}>{dataList[0] && dataList[0].contentscd.label === '관광지' ?
-            '내가 가본 제주는 어디까지일까? 수많은 제주의 아름다운 여행지를 취향에 맞게 선택해보자. 360여 개의 크고 작은 오름을 비롯하여 눈 돌리면 어디에서나 마주치는 한라산 그리고 푸른 바다…. 제주의 보석 같은 여행지가 여러분의 선택을 기다린다.'
-            : ''}</p>
-          {<TagBtn tagFilter={tagFilter} setTagFilter={setTagFilter} tagList={tagList} setPage={setPage} />}
-          <br />
-          <div className={`${pageType}-head-typeBtn`}>
-            <button className='oBtn' onClick={() => { nav(`/destination/${pageId}?type=list`) }}><FaThList></FaThList></button>
-            <button className='oBtn' onClick={() => { nav(`/destination/${pageId}?type=grid`) }}><BsGridFill></BsGridFill></button>
-          </div>
-        </div>
-        <div className={`${pageType}-content`}>
-          {/*버튼 선택시 list-content-listGrid와 list-content-Grid 변경*/}
-          <div className={`${pageType}-content-list`}>
-            <ul className={`${pageType}-content-list-ul`}>
-              {
-                dataList.slice(pageNum, offset * page).map((item) => {
-                  if (item.tag.includes(tagFilter)) {
-                    return <TourItem spot={item} key={item.contentsid} pageType={pageType} navigate={nav} setGps={setGps} />
-                  }
-                })
-              }
-            </ul>
-            <ListPaging page={page} setPage={setPage} lastPage={lastPage.current}></ListPaging>
-          </div>
-          {/* 맵 영역,  */}
-          <div className={`${pageType}-content-map`}> 
-            <NaverMapView gps={gps} nav={nav}></NaverMapView>
-          </div>
+if (loading === true || !dataList[0]) {
+  return <div className='loading'><AiOutlineLoading className='loadingIcon'></AiOutlineLoading></div>
+} else if (dataList[0]) {
+  return (
+
+    <div className={pageType}>
+      {/* 관광지 리스트 화면 헤더, 리스트, 그리드 형태 변경시에도 그대로 유지 */}
+      <div className={`${pageType}-head`}>
+        <h1>{dataList[0] && dataList[0].contentscd.label}</h1>
+        <hr />
+        <p className={`${pageType}-head-intro`}>{dataList[0] && dataList[0].contentscd.label === '관광지' ?
+          '내가 가본 제주는 어디까지일까? 수많은 제주의 아름다운 여행지를 취향에 맞게 선택해보자. 360여 개의 크고 작은 오름을 비롯하여 눈 돌리면 어디에서나 마주치는 한라산 그리고 푸른 바다…. 제주의 보석 같은 여행지가 여러분의 선택을 기다린다.'
+          : ''}</p>
+        {<TagBtn tagFilter={tagFilter} setTagFilter={setTagFilter} tagList={tagList} setPage={setPage} />}
+        <br />
+        <div className={`${pageType}-head-typeBtn`}>
+          <button className='oBtn' onClick={() => { nav(`/destination/${pageId}?type=list`) }}><FaThList></FaThList></button>
+          <button className='oBtn' onClick={() => { nav(`/destination/${pageId}?type=grid`) }}><BsGridFill></BsGridFill></button>
         </div>
       </div>
-    )
-  }
+      <div className={`${pageType}-content`}>
+        {/*버튼 선택시 list-content-listGrid와 list-content-Grid 변경*/}
+        <div className={`${pageType}-content-list`}>
+          <ul className={`${pageType}-content-list-ul`}>
+            {
+              makeItemList()
+            }
+          </ul>
+          <ListPaging page={page} setPage={setPage} lastPage={lastPage.current}></ListPaging>
+        </div>
+        {/* 맵 영역,  */}
+        <div className={`${pageType}-content-map`}>
+          <NaverMapView gps={gps} onNav={onNav}></NaverMapView>
+        </div>
+      </div>
+    </div>
+  )
+}
 }
 
 export default TourList
