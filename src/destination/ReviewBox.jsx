@@ -1,7 +1,6 @@
 import React from 'react'
 
 const ReviewBox = ({ item }) => {
-  console.log('item: ', item);
   const date = new Date(item.date);
   const year = date.getFullYear();
   const month = date.getMonth();
