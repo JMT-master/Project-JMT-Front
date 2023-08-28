@@ -54,7 +54,7 @@ const SelectSchedule = () => {
   useEffect(() => {
     if(visit != null) {
       setList(visit.items.map((item,i) => {
-          return (<SelectpageList data={item}></SelectpageList>)
+          return (<SelectpageList data={item} key={i}></SelectpageList>)
       }));
 
       setLoading(false);
