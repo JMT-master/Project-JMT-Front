@@ -27,6 +27,25 @@ const FesList = (props) => {
     </li>
   );
 };
+const FesListNoImg = (props) => {
+  const navigate = useNavigate();
+  const { 시작일, 종료일, 콘텐츠명, imgUrl } = props.data;
+  return (
+    <li className="festival-list-item"
+      key={콘텐츠명}
+      // onClick={() => navigate("/info/festival/detail/" + props.data.id)}
+    >
+      <a>
+        <div className="festival-item-content">
+          <p className="festival-item-title">{콘텐츠명}</p>
+          <p className="festival-item-start">시작일 : {시작일}</p>
+          <p className="festival-item-end">종료일 : {종료일}</p>
+        </div>
+      </a>
+    </li>
+  );
+};
+export {FesListNoImg};
 
 const Festival = () => {
   const navigate = useNavigate();
@@ -76,3 +95,4 @@ const Festival = () => {
 };
 
 export default Festival;
+

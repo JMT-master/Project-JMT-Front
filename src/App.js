@@ -1,7 +1,7 @@
 import './css/App.scss';
 import $ from 'jquery';
 import Slider from 'react-slick';
-import { Route, Routes, Link, useParams, useLocation } from 'react-router-dom';
+import { Route, Routes, Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import JoinUser from './member/JoinUser';
 import Curator from './thema/Curator';
 import Mypage from './member/Mypage';
@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { knowledgeData, noticeData, qnaData } from './data/Data';
 import QnABoard from './notice/QnABoard';
 import QnaBoardDetail from './notice/QnaBoardDetail';
-import Festival from './trableinfo/Festival';
+import Festival, { FesListNoImg } from './trableinfo/Festival';
 import Knowledge from './trableinfo/Knowledge';
 import KnowledgeDetail from './trableinfo/KnowledgeDetail';
 import KnowledgeWrite from './trableinfo/KnowledgeWrite';
@@ -27,6 +27,7 @@ import { GlobalStyles } from './common/GlobalStyles';
 import { useDarkMode } from './common/useDarkMode';
 import Toggle from './common/Toggle';
 import YouTube from 'react-youtube'
+import data from "./data/festival.json";
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -138,7 +139,7 @@ function HeaderTop(props) {
 }
 
 function Header() {
-
+  const navigate = useNavigate();
   // const handleMouseOver = () => {
   //   $(".destination-list").show();
   //   $(".myTrableInfo-list").show();
@@ -174,6 +175,12 @@ function Header() {
         </Slider>
       </div>
       <div className='header-body'>
+        <div className='festival-send-content'>
+          <ul onClick={()=>navigate('/festival')} className='main-fest'>
+            <FesListNoImg data={data.data[0]}></FesListNoImg>
+            <FesListNoImg data={data.data[1]}></FesListNoImg>
+          </ul>
+        </div>
         <div className='header-Youtube-container'>
           <YouTube className='header-Youtube-content1'
             videoId="auAQ_A--c5I" //동영상 주소
