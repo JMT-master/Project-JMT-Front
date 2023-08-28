@@ -1,9 +1,9 @@
+import { func } from 'prop-types';
 import { useEffect, useState, useRef } from 'react';
 
-function NaverMapView(props) {
-    console.log('props: ', props);
-    const { lat, lng, title, img } = props.gps;
-    const {nav} = props.nav;
+function NaverMapView({ gps, onNav }) {
+    const { lat, lng, title, img } = gps;
+
     const center = new window.naver.maps.LatLng(lat, lng);
 
     const [map, setMap] = useState(null);
@@ -11,6 +11,7 @@ function NaverMapView(props) {
     const [marker, setMarker] = useState(null);
     const [infoWindow, setInfoWindow] = useState(null);
     const [mapTypeId, setMapTypeId] = useState(window.naver.maps.MapTypeId.NORMAL);
+    const flag = useRef(true);
 
     // const buttons = [
     //     {
@@ -34,8 +35,8 @@ function NaverMapView(props) {
     let contentStr = [
         '<div class="iw_inner">',
         '   <h3>' + title + '</h3>',
-        '       <img src='+ img +' width="55" height="55" alt="서울시청" class="thumb" /><br>',
-        ' <button>상세정보</button>',
+        '       <img src=' + img + ' width="55" height="55" alt="서울시청" class="thumb" /><br>',
+        ' <button id="infoWinBtn">상세정보</button>',
         '</div>'
     ].join('');
 
@@ -43,7 +44,6 @@ function NaverMapView(props) {
         content: contentStr,
         pixelOffset: new window.naver.maps.Point(0, -30)
     });
-
 
 
 
@@ -72,7 +72,7 @@ function NaverMapView(props) {
 
             setMarker(newMarker);
 
-            console.log('nomap')
+
             setInfoWindow(new window.naver.maps.InfoWindow({
                 content: '',
                 pixelOffset: new window.naver.maps.Point(0, -30)
@@ -84,6 +84,11 @@ function NaverMapView(props) {
 
             window.naver.maps.Event.addListener(map, 'center_changed', () => {
                 newInfoWindow.open(map, marker);
+                
+                const infoBtn = document.getElementById('infoWinBtn');
+                if (infoBtn) {
+                    infoBtn.addEventListener('click', onNav);
+                }
             });
 
             infoWindow.setPosition(new window.naver.maps.LatLng(lat, lng));
@@ -109,20 +114,7 @@ function NaverMapView(props) {
 
 
     return (
-        <div id="map" style={{ width: '100%', height: '100%' }}>
-            {/* <div style={{ height: '100%', position: 'relative' }}>
-                {buttons.map((btn) => (
-                    <button
-                        key={btn.typeId}
-                        className='oBtn onMapBtn'
-                        onClick={() => {
-                            setMapTypeId(btn.typeId);
-                        }}>
-                        {btn.text}
-                    </button>
-                ))}
-            </div> */}
-        </div>
+        <div id="map" style={{ width: '100%', height: '100%' }}></div>
     );
 }
 

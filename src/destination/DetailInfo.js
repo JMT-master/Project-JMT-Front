@@ -7,7 +7,6 @@ import ListPaging from './ListPaging'
 
 
 const DetailInfo = () => {
-  console.log(ReveiwList)
   const location = useLocation();
   const [tabState, setTabState] = useState({
     contentVisible: true,
