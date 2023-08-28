@@ -64,7 +64,7 @@
   width: 210px;
   border: none;
   border-radius: 20px;
-  background-color: beige;
+  background-color: #f3a344;
   font-size: large;
   padding: 15px 30px;
 }
@@ -75,9 +75,13 @@
 .login-active .memberCheck > button{
   border: none;
   border-radius: 20px;
-  background-color: beige;
+  background-color: #f3a344;
   font-size: large;
   padding: 15px 35px;
+}
+
+.membership > button, .memberCheck > button {
+  background-color: #f3a344; opacity: 0.7;
 }
 
 .sns-login {
