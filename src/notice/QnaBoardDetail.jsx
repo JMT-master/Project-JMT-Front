@@ -22,7 +22,7 @@ const QnaBoardDetail = ({ data }) => {
           <p>{detail.category}</p>
         </div>
         <div className='qnaDetail-boxTitle'>
-          <p className='no'>No . {detail.no}</p>
+          <p className='no'>{detail.Q}</p>
           <h3>{detail.title}</h3>
           <p className='date'>{detail.createDate}</p>
         </div>
