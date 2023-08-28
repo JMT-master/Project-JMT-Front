@@ -205,13 +205,14 @@
   pointer-events: none;
 }
 
-.myPage-Big-Image-li:hover {
+.myPage-Big-Image-li:hover .myPage-Big-Image-li-img{
   opacity: 0.3;
   transition: all 0.5s;
 }
 
 .myPage-Big-Image-li:hover .myPage-Big-Image-li-img-hover {
   display: block;
+  /* opacity: 1; */
 }
 
 @media screen and (max-width: 1700px) {
