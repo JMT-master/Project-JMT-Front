@@ -197,10 +197,10 @@ function Header() {
               onClick={onChnImage}>
             <div className=
             {`header-travel-Image-li-title ${changeImage === 0 ? 
-              'header-travel-Image-li-info' : 'header-travel-Image-li-info-vertical'}`}>관광지</div>
+              'header-travel-Image-li-info' : 'header-travel-Image-li-info-vertical'}`} >관광지</div>
             <div 
             className={`header-travel-Image-li-content ${changeImage === 0 ? 
-              'header-travel-Image-li-info' : 'header-travel-Image-li-info-title-none'}`}>원하는 관광지를 찾아보세요</div>
+              'header-travel-Image-li-info header-travel-Image-li-info-cursor' : 'header-travel-Image-li-info-title-none'}`} onClick={()=> navigate('/destination/tour')}>원하는 관광지를 찾아보세요</div>
           </li>
           <li className=
           {`header-travel-Image-li header-travel-Image-li-background2 ${changeImage === 1 ? 
@@ -209,10 +209,10 @@ function Header() {
               onClick={onChnImage}>
             <div className=
             {`header-travel-Image-li-title ${changeImage === 1 ? 
-              'header-travel-Image-li-info' : 'header-travel-Image-li-info-vertical'}`}>음식</div>
+              'header-travel-Image-li-info' : 'header-travel-Image-li-info-vertical'}`} >음식</div>
             <div 
             className={`header-travel-Image-li-content ${changeImage === 1 ? 
-              'header-travel-Image-li-info' : 'header-travel-Image-li-info-title-none'}`}>원하는 음식를 찾아보세요</div>
+              'header-travel-Image-li-info header-travel-Image-li-info-cursor' : 'header-travel-Image-li-info-title-none'}`} onClick={()=>navigate('/destination/restaurant')}>원하는 음식를 찾아보세요</div>
           </li>
           <li className=
           {`header-travel-Image-li header-travel-Image-li-background3 ${changeImage === 2 ? 
@@ -221,10 +221,10 @@ function Header() {
               onClick={onChnImage}>
             <div className=
             {`header-travel-Image-li-title ${changeImage === 2 ? 
-              'header-travel-Image-li-info' : 'header-travel-Image-li-info-vertical'}`}>숙박</div>
+              'header-travel-Image-li-info' : 'header-travel-Image-li-info-vertical'}`} >숙박</div>
             <div 
             className={`header-travel-Image-li-content ${changeImage === 2 ? 
-              'header-travel-Image-li-info' : 'header-travel-Image-li-info-title-none'}`}>원하는 숙박를 찾아보세요</div>
+              'header-travel-Image-li-info header-travel-Image-li-info-cursor' : 'header-travel-Image-li-info-title-none'}`} onClick={()=>navigate('/destination/lodge')}>원하는 숙박를 찾아보세요</div>
           </li>
         </ul>
 
