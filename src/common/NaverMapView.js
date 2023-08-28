@@ -13,7 +13,7 @@ function NaverMapView(props) {
 
     return (
         <MapDiv style={{height: 400,}}>
-            <NaverMap mapTypes={{arguments: 'bg.ol.ts.ctt.lko'}}>
+            <NaverMap>
                 <Marker defaultPosition={{ lat: 37.5666103, lng: 126.9783882 }} />
             </NaverMap>
         </MapDiv>
