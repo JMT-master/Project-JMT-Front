@@ -37,8 +37,8 @@ const Login = () => {
           {modalOpen && <LoginModal setModalOpen={setModalOpen}></LoginModal>}
         </p>
         <div className='sns-login'>
-          <Link to='/kakao'><img src="../images/kakao-icon.png" alt="" /></Link>
-          <Link to='/google'><img src="../images/google-icon.png" alt="" /></Link>
+          <Link to='/'><img src="../images/kakao-icon.png" alt="" /></Link>
+          <Link to='/'><img src="../images/google-icon.png" alt="" /></Link>
         </div>
       </div>
     </div>
