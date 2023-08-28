@@ -80,14 +80,17 @@ function NaverMapView({ gps, onNav }) {
 
         } else {
             marker.setPosition(new window.naver.maps.LatLng(lat, lng));
-            map.panTo(new window.naver.maps.LatLng(lat, lng));
+            // map.panTo(new window.naver.maps.LatLng(lat, lng));
+            setTimeout(()=>{
+                map.setCenter(new window.naver.maps.LatLng(lat, lng), false);
 
+            },1);
             window.naver.maps.Event.addListener(map, 'center_changed', () => {
                 newInfoWindow.open(map, marker);
-                
                 const infoBtn = document.getElementById('infoWinBtn');
                 if (infoBtn) {
                     infoBtn.addEventListener('click', onNav);
+                    
                 }
             });
 
