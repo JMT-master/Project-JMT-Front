@@ -86,6 +86,7 @@ function NaverMapView({ gps, onNav }) {
             }));
 
         } else {
+<<<<<<< HEAD
             marker.setPosition(center);
             setTimeout(() => {
                 // map.panTo(center);
@@ -97,10 +98,20 @@ function NaverMapView({ gps, onNav }) {
             }
 
             centerChangedListener = window.naver.maps.Event.addListener(map, 'center_changed', () => {
+=======
+            marker.setPosition(new window.naver.maps.LatLng(lat, lng));
+            // map.panTo(new window.naver.maps.LatLng(lat, lng));
+            setTimeout(()=>{
+                map.setCenter(new window.naver.maps.LatLng(lat, lng), false);
+
+            },1);
+            window.naver.maps.Event.addListener(map, 'center_changed', () => {
+>>>>>>> cd2bc246219e4506b3e39fccbf2fa61b2678f3c5
                 newInfoWindow.open(map, marker);
                 const infoBtn = document.getElementById('infoWinBtn');
                 if (infoBtn) {
                     infoBtn.addEventListener('click', onNav);
+                    
                 }
             });
             infoWindow.setPosition(center);

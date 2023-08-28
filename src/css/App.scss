@@ -330,6 +330,7 @@
   margin-top: 0;
   height: 180px;
 }
+<<<<<<< HEAD
 .festival-send-content{
   width: 90%;
   height: 400px;
@@ -357,4 +358,17 @@
 .main-fest div{
   width: 100%;
   padding: 10px 20px;
+=======
+.custom-marker {
+  width: 25px;
+  height: 25px;
+  position: relative;
+}
+.custom-marker-text{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-20%, -50%);
+  color: white;
+>>>>>>> cd2bc246219e4506b3e39fccbf2fa61b2678f3c5
 }
