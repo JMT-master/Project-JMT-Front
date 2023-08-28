@@ -35,6 +35,17 @@ const TourList = () => {
   const pageNum = (page - 1) * offset;
   const lastPage = useRef(1);
 
+  const [gps, setGps] = useState({
+    lat: 33.3764981, 
+    lng: 126.5193789,
+    title : '',
+    img : ''
+  });
+
+
+
+  // const [latitude, setLatitude] = useState();
+  // const [longitude, setLongitude] = useState();
 
   function checkCategory(cate) {
     switch (cate) {
@@ -76,7 +87,7 @@ const TourList = () => {
     })
     setTagList(tag)
     setLoading(false);
-  }, [rawData,tagFilter,dataList.length])
+  }, [rawData, tagFilter, dataList.length])
 
   if (loading === true || !dataList[0]) {
     return <div className='loading'><AiOutlineLoading className='loadingIcon'></AiOutlineLoading></div>
@@ -105,7 +116,7 @@ const TourList = () => {
               {
                 dataList.slice(pageNum, offset * page).map((item) => {
                   if (item.tag.includes(tagFilter)) {
-                    return <TourItem spot={item} key={item.contentsid} pageType={pageType} navigate={nav} />
+                    return <TourItem spot={item} key={item.contentsid} pageType={pageType} navigate={nav} setGps={setGps} />
                   }
                 })
               }
@@ -113,8 +124,8 @@ const TourList = () => {
             <ListPaging page={page} setPage={setPage} lastPage={lastPage.current}></ListPaging>
           </div>
           {/* 맵 영역,  */}
-          <div className={`${pageType}-content-map`}>
-            <NaverMapView></NaverMapView>
+          <div className={`${pageType}-content-map`}> 
+            <NaverMapView gps={gps} nav={nav}></NaverMapView>
           </div>
         </div>
       </div>

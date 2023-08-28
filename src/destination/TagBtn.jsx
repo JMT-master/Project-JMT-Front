@@ -37,8 +37,6 @@ const TagBtn = (tag) => {
     // console.log('tagSet: ', tagSet);
 
     for (let i = 0; i < 40; i += num) {
-      console.log('1 : '+i/num);
-      console.log('btn: ', btn);
       btnList.push(<button key={i / num} className={`oBtn ${btn.includes(i / num) ? 'Focused' : ''}`} value={tagSet[i]}
         onClick={(e) => {
           setPage(1);
