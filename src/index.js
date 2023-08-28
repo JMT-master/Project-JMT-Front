@@ -8,13 +8,12 @@ import { NavermapsProvider } from 'react-naver-maps';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <BrowserRouter>
-      <HeaderTop />
-      <NavermapsProvider ncpClientId='fsw3l45l8v' submodules={['panorama']}>
-        <App />
-      </NavermapsProvider>
-      <Footer />
-    </BrowserRouter>
+  <BrowserRouter>   
+    <NavermapsProvider ncpClientId='fsw3l45l8v' submodules={['panorama']}>
+      <App />
+    </NavermapsProvider>
+    <Footer />
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

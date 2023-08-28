@@ -1,9 +1,10 @@
 .myPageContainer {
   margin-top: 2%;
   margin-left: 2%;
-  height: 800px;
+  height: 900px;
 }
 
+/* Screen small Size */
 .myPageHeader {
   display: grid;
   grid-template-columns: 1fr 5fr;
@@ -22,19 +23,21 @@
 .myPageHeader-profile-name {
   margin-top: 15px;
   font-size: large; font-weight: bold;
+  color: orange;
 }
 
 .myPageHeader-ul {
+  width: 60%;
   display: flex;
 }
 
 .myPageHeader-li {
   display: inline-block;
-  width: 20%; height: 75px;
-  border: 1px solid black;
+  width: 33%; height: 75px;
   text-align: center;
-  color: white;
-  background-color: black;
+  color: orange;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .myPageHeader-li-count {
@@ -46,42 +49,61 @@
 }
 
 .myPageBtn {
-  width: 180px; height: 35px;
+  width: 200px; height: 45px;
   margin-right: 20px;
-  background-color: #404040;
+  background-color: orange;
   color: white;
-  border: 1px solid #404040;
+  border: none;
   border-radius: 10px;
   font-weight: bold;
+  font-size: large;
 }
 
 .myPageChap2 {
+  width: 100%;
   margin-left: 3%;
 }
 
 .myPageChap2-ul {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 130px);
+  gap: 10px;
+  height: 180px;
 }
 
 .myPageChap2-li {
   margin-top: 20px;
   margin-right: 70px;
-  width: 100px; height: 100px;
-  background-color: #E0E0E0;
+  width: 130px; height: 130px;
   font-size: 75px;
   text-align: center;
   line-height: 75px;
   border-radius: 100px;
 }
 
+.myPageChap2-button {
+  width: 100%; height: 100%;
+  border: 1px solid white;
+  border-radius: 50%;
+  font-size: 50px;
+  background-color: orange;
+  color: white;
+}
+
+.myPageChap2-img {
+  width: 100%; height: 100%;
+  background-size: cover;
+  border-radius: 50%;
+}
+
 .myPageChap2-title {
-  margin-top: 5px;
+  font-size: small;
   font-weight: bold;
+  display: none;
 }
 
 .myPageImage {
   margin-top: 20px;
-  width: 50%;
   height: 450px;
   overflow: scroll;
 }
@@ -92,6 +114,7 @@
 
 .myPageImage-ul {
   display: grid;
+  width: 100%;
   grid-template-columns: 150px 150px 150px;
   gap: 10px 10px;
 }
@@ -101,4 +124,203 @@
   background-color: #E0E0E0;
   border-radius: 10px;
 }
+
+/* Screen Big Size */
+.myPageBigContainer {
+  margin-top: 2%;
+  margin-left: 2%;
+  height: 1500px;
+}
+
+.myPage-tagList-ul {
+  width: 80%; height: 120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 200px);
+  text-align: center;
+}
+
+.myPage-tagList-li {
+  cursor: pointer;
+}
+
+.myPage-tagList-li-profile-img {
+  width: 65px; height: 65px;
+  margin-bottom: 15px;
+  border-radius: 50%;
+}
+
+.myPage-tagList-li-icon {
+  width: 65px; height: 65px;
+  color: orange;
+  margin-bottom: 15px;
+}
+
+.myPage-tagList-li-name {
+  font-size: large;
+  font-weight: bold;
+  color: orange;
+}
+
+.myPage-h1-title {
+  margin: 2%;
+  color: orange;
+}
+
+.myPage-Big-Image-ul {
+  display: grid;
+  grid-template-columns: repeat(8, 200px);
+  height: 1250px;
+  gap: 10px;
+  overflow: scroll;
+}
+
+.myPage-Big-Image-ul::-webkit-scrollbar{
+  display: none;
+}
+
+.myPage-Big-Image-li{
+  width: 200px; height: 200px;
+  position: relative;
+  z-index: 33;
+}
+
+.myPage-Big-Image-li-img {
+  position: absolute;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow : 2px 3px 5px 0px;
+  z-index: 66;
+}
+
+.myPage-Big-Image-li-img-hover {
+  position: absolute;
+  top: 20%; left: 5%;
+  color: black;
+  font-weight: bold;
+  font-size: x-large;
+  display: none;
+  z-index: 99;
+  pointer-events: none;
+}
+
+.myPage-Big-Image-li:hover {
+  opacity: 0.3;
+  transition: all 0.5s;
+}
+
+.myPage-Big-Image-li:hover .myPage-Big-Image-li-img-hover {
+  display: block;
+}
+
+@media screen and (max-width: 1700px) {
+  .myPage-tagList-ul {
+    grid-template-columns: repeat(4, 190px);
+    transition: all 1s;
+  }
+
+  .myPage-Big-Image-ul {
+    grid-template-columns: repeat(7, 200px);
+    transition: all 1s;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .myPage-tagList-ul {
+    grid-template-columns: repeat(4, 180px);
+    transition: all 1s;
+  }
+
+  .myPage-tagList-li-profile-img {
+    width: 55px; height: 55px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    transition: all 1s;
+  }
+  
+  .myPage-tagList-li-icon {
+    width: 55px; height: 55px;
+    color: orange;
+    margin-bottom: 10px;
+    transition: all 1s;
+  }
+
+  .myPage-Big-Image-ul {
+    grid-template-columns: repeat(6, 200px);
+    transition: all 1s;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .myPage-tagList-ul {
+    grid-template-columns: repeat(4, 170px);
+    transition: all 1s;
+  }
+
+  .myPage-Big-Image-ul {
+    grid-template-columns: repeat(5, 200px);
+    transition: all 1s;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .myPage-tagList-ul {
+    grid-template-columns: repeat(4, 160px);
+    transition: all 1s;
+  }
+
+  .myPage-tagList-li-profile-img {
+    width: 45px; height: 45px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    transition: all 1s;
+  }
+  
+  .myPage-tagList-li-icon {
+    width: 45px; height: 45px;
+    color: orange;
+    margin-bottom: 10px;
+    transition: all 1s;
+  }
+
+  .myPage-Big-Image-ul {
+    grid-template-columns: repeat(4, 200px);
+    transition: all 1s;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .myPage-tagList-ul {
+    grid-template-columns: repeat(4, 150px);
+    transition: all 1s;
+  }
+
+  .myPage-Big-Image-ul {
+    grid-template-columns: repeat(3, 200px);
+    transition: all 1s;
+  }
+}
+
+@media screen and (max-width : 720px) {
+  .myPage-Big-Image-li{
+    width: 150px; height: 150px;
+    transition: all 1s;
+  }
+}
+
+@media screen and (max-width : 600px) {
+  .myPageChap2-ul {
+    grid-template-columns: repeat(4, 90px);
+    height: 150px;
+    transition: all 1s;
+  }
+  
+  .myPageChap2-li {
+    width: 90px; height: 90px;
+    text-align: center;
+    transition: all 1s;
+  }
+}
+
 

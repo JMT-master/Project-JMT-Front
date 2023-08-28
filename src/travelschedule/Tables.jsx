@@ -15,7 +15,7 @@ const Tables = ({ rows, columns }) => {
     <table>
       <thead>
         <tr>
-          <th className='firstRow'>Time</th>
+          <th className='firstRow firstRowHead'>Time</th>
         </tr>
       </thead>
       <tbody>
