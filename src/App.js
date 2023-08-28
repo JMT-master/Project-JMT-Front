@@ -27,6 +27,8 @@ import { GlobalStyles } from './common/GlobalStyles';
 import { useDarkMode } from './common/useDarkMode';
 import Toggle from './common/Toggle';
 import YouTube from 'react-youtube'
+import { AiFillYoutube } from 'react-icons/ai';
+import { MdCardTravel } from 'react-icons/md';
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -138,6 +140,7 @@ function HeaderTop(props) {
 }
 
 function Header() {
+  const [changeImage, setChangeImage] = useState(0);
 
   // const handleMouseOver = () => {
   //   $(".destination-list").show();
@@ -163,6 +166,10 @@ function Header() {
     slidesToScroll: 1 //한번에 넘어가는 콘텐츠 수 ex)2로 지정시 2개씩 넘어감
   };
 
+  const onChnImage = (e) => {
+    setChangeImage(Number(e.target.value));
+  };
+
   return (
     <>
       <div className='header-slider'>
@@ -174,26 +181,115 @@ function Header() {
           <div className='header-slider-img4'></div>
         </Slider>
       </div>
-      <div className='header-body'>
-        <div className='header-Youtube-container'>
-          <YouTube className='header-Youtube-content1'
-            videoId="auAQ_A--c5I" //동영상 주소
-            opts={{
-              width: "100%",
-              height: "350px",
-              playerVars: {
-                autoplay: 0, //자동 재생 여부 
-                modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부
-                loop: 0, //반복 재생
-                // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트
-              },
-            }}
-            onReady={(e) => {
-              e.target.mute(); //소리 끔
-            }}
-          />
+      <div className='header-body'></div>
+      <div className='header-travel-Image'>
+        <div className='header-travel-Image-title'>
+          <MdCardTravel className='header-travel-Image-icon'></MdCardTravel>
+          <p className='header-travel-Image-text'>여행지 확인</p>
         </div>
+        <ul className='header-travel-Image-ul'>
+          <li className=
+          {`header-travel-Image-li header-travel-Image-li-background1 ${changeImage === 0 ? 
+            'header-travel-Image-li-width' : ''}`}
+              value = {0}
+              onClick={onChnImage}>
+            <div className=
+            {`header-travel-Image-li-title ${changeImage === 0 ? 
+              'header-travel-Image-li-info' : ''}`}>관광지</div>
+            <div  className=
+            {`header-travel-Image-li-title ${changeImage === 0 ? 
+              'header-travel-Image-li-content' : ''}`}>원하는 관광지를 찾아보세요</div>
+          </li>
+          <li className=
+          {`header-travel-Image-li header-travel-Image-li-background2 ${changeImage === 1 ? 
+            'header-travel-Image-li-width' : ''}`}
+              value = {1}
+              onClick={onChnImage}>
+            <div  className=
+            {`header-travel-Image-li-title ${changeImage === 1 ? 
+              'header-travel-Image-li-info' : ''}`}>음식</div>
+            <div  className=
+            {`header-travel-Image-li-title ${changeImage === 1 ? 
+              'header-travel-Image-li-content' : ''}`}>원하는 음식점을 찾아보세요</div>
+          </li>
+          <li className=
+          {`header-travel-Image-li header-travel-Image-li-background3 ${changeImage === 2 ? 
+            'header-travel-Image-li-width' : ''}`}
+              value = {2}
+              onClick={onChnImage}>
+            <div  className=
+            {`header-travel-Image-li-title ${changeImage === 2 ? 
+              'header-travel-Image-li-info' : ''}`}>숙박</div>
+            <div  className=
+            {`header-travel-Image-li-title ${changeImage === 2 ? 
+              'header-travel-Image-li-content' : ''}`}>원하는 숙박지를 찾아보세요</div>
+          </li>
+        </ul>
+
       </div>
+      <div className='header-Youtube-container'>
+        <div className='header-Youtube-title'>
+          <AiFillYoutube className='header-Youtube-title-icon'></AiFillYoutube>
+          <p className='header-Youtube-title-text'>영상으로 만나는 제주</p>
+        </div>
+        <ul className='header-Youtube-ul'>
+          <li className='header-Youtube-li'>
+            <YouTube className='header-Youtube-content'
+              videoId="nPuJ9QXGB8E" //동영상 주소
+              opts={{
+                width: "500px",
+                height: "300px",
+                playerVars: {
+                  autoplay: 0, //자동 재생 여부 
+                  modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부
+                  loop: 0, //반복 재생
+                  // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트
+                },
+              }}
+              onReady={(e) => {
+                e.target.mute(); //소리 끔
+              }}
+            />
+          </li>
+          <li className='header-Youtube-li'>
+            <YouTube className='header-Youtube-content'
+              videoId="ESF7SDWBtH0" //동영상 주소
+              opts={{
+                width: "500px",
+                height: "300px",
+                playerVars: {
+                  autoplay: 0, //자동 재생 여부 
+                  modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부
+                  loop: 0, //반복 재생
+                  // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트
+                },
+              }}
+              onReady={(e) => {
+                e.target.mute(); //소리 끔
+              }}
+            />
+          </li>
+          <li className='header-Youtube-li'>
+            <YouTube className='header-Youtube-content'
+              videoId="PMBa2F44jxU" //동영상 주소
+              opts={{
+                width: "500px",
+                height: "300px",
+                playerVars: {
+                  autoplay: 0, //자동 재생 여부 
+                  modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부
+                  loop: 0, //반복 재생
+                  // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트
+                },
+              }}
+              onReady={(e) => {
+                e.target.mute(); //소리 끔
+              }}
+            />
+          </li>
+        </ul>
+      </div>
+
     </>
   );
 }
