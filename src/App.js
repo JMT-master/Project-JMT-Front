@@ -164,7 +164,6 @@ function Header() {
   return (
     <>
       <div className='header-slider'>
-
         <Slider {...settings} className='header-slider-divs'>
           <div className='header-slider-img1'></div>
           <div className='header-slider-img2'></div>
