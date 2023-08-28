@@ -246,8 +246,8 @@ function Header() {
             <YouTube className='header-Youtube-content'
               videoId="nPuJ9QXGB8E" //동영상 주소
               opts={{
-                width: "500px",
-                height: "300px",
+                width: "400px",
+                height: "250px",
                 playerVars: {
                   autoplay: 0, //자동 재생 여부 
                   modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부
@@ -264,8 +264,8 @@ function Header() {
             <YouTube className='header-Youtube-content'
               videoId="ESF7SDWBtH0" //동영상 주소
               opts={{
-                width: "500px",
-                height: "300px",
+                width: "400px",
+                height: "250px",
                 playerVars: {
                   autoplay: 0, //자동 재생 여부 
                   modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부
@@ -282,8 +282,8 @@ function Header() {
             <YouTube className='header-Youtube-content'
               videoId="PMBa2F44jxU" //동영상 주소
               opts={{
-                width: "500px",
-                height: "300px",
+                width: "400px",
+                height: "250px",
                 playerVars: {
                   autoplay: 0, //자동 재생 여부 
                   modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부
