@@ -69,7 +69,7 @@
   padding: 15px 30px;
 }
 .login-active .memberCheck {
-  grid-column: 4/7;
+  grid-column: 4/6;
   grid-row: 5/6;
 }
 .login-active .memberCheck > button{

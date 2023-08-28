@@ -69,6 +69,17 @@
   grid-template-columns: 120px 1fr; 
   grid-template-rows: 70px;
 }
+.header-main-position:hover{
+  background-color: white;
+  filter: opacity(0.8);
+  & a{
+    color: black;
+  }
+}
+.header-container:hover > div > ul > div{
+  background-color: white;
+  filter: opacity(0.9);
+}
 .headerTop{
   text-align: right;
   font-size: 20px;
@@ -102,17 +113,19 @@
 }
 .footer-main{
   width: 100%;
-  height: 150px;
+  height: 200px;
   background: no-repeat;
   background-image: url(https://media.discordapp.net/attachments/1127767279715749978/1143555123793113129/--001.jpg?width=1260&height=315);
   background-size: cover;
 }
 .footer-container{
-  margin: 30px;
+  margin: 30px auto;
+}
+.footer-main > div{
+  padding-top: 50px;
+  padding-bottom: 50px;
   display: grid;
-  grid-template-columns: 180px 1fr auto;
-  grid-template-rows: 50px 50px;
-  
+  grid-template-columns: 20% 80%;
 }
 .footer-Grid1{
   grid-template-columns: 200px 200px 200px 200px 200px;
@@ -131,3 +144,19 @@
 }
 
 
+.headerCh{
+  color: black;
+}
+.headernoCh a{
+  color: rgb(245, 245, 245);
+}
+.headerTop a{
+  margin: 0 10px;
+}
+.footernoCh{
+  margin-top: 620px;
+}
+.footerCh{
+  margin-top: 0;
+  height: 180px;
+}

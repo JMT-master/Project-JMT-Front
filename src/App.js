@@ -1,7 +1,7 @@
 import './css/App.scss';
 import $ from 'jquery';
 import Slider from 'react-slick';
-import { Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes, Link, useParams, useLocation } from 'react-router-dom';
 import JoinUser from './member/JoinUser';
 import Curator from './thema/Curator';
 import Mypage from './member/Mypage';
@@ -25,6 +25,8 @@ function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
   const [newQnaData, setNewQnaData] = useState(qnaData);
   const [newKnowledgeData, setNewKnowledgeData] = useState(knowledgeData);
+  const {params} = useParams(null,[]);
+
   return (
     <>
       <Routes>
@@ -53,22 +55,32 @@ function App() {
 }
 
 function HeaderTop(props) {
+  const {pathname} = useLocation();
 
-  const handleMouseOver = () => {
+  const handleMouseOverDes = () => {
     $(".destination-list").show();
+  };
+  const handleMouseOutDes = () => {
+    $(".destination-list").hide();
+  };
+  const handleMouseOverInfo = () => {
     $(".myTrableInfo-list").show();
+
+  };
+  const handleMouseOutInfo = () => {
+    $(".myTrableInfo-list").hide();
+  };
+  const handleMouseOverNoti = () => {
     $(".notice-list").show();
 
   };
-
-  const handleMouseOut = () => {
-    $(".destination-list").hide();
-    $(".myTrableInfo-list").hide();
+  const handleMouseOutNoti = () => {
     $(".notice-list").hide();
   };
-
+  
+  
   return (
-    <div class="header-main-position">
+    <div class={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`} >
       <div class="headerTop">
         <Link to="/mypage">마이페이지</Link>
         <Link to="/login">로그인</Link>
@@ -76,7 +88,7 @@ function HeaderTop(props) {
       <div class="header-container">
         <Link to="/"><a class="header-image" href=""><img id="jeju-image" src="../images/JMT.jpg" alt="" /></a></Link>
         <div class="headerSell">
-          <ul id="destination" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+          <ul id="destination" onMouseOver={handleMouseOverDes} onMouseOut={handleMouseOutDes}>
             <a>여행지</a>
             <div className='destination-list'>
               <li><Link to='/destination/tour'>관광지</Link></li>
@@ -94,7 +106,7 @@ function HeaderTop(props) {
               <a><Link to="/selectSchedule">여행일정</Link></a>
             </div>
           </ul>
-          <ul id="myTrableInfo" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+          <ul id="myTrableInfo" onMouseOver={handleMouseOverInfo} onMouseOut={handleMouseOutInfo}>
             <a>여행정보</a>
             <div className='myTrableInfo-list'>
               <li><Link to="/traffic">교통 혼잡도</Link></li>
@@ -102,7 +114,7 @@ function HeaderTop(props) {
               <li><Link to="/knowledge">관광 지식in</Link></li>
             </div>
           </ul>
-          <ul id="notice" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+          <ul id="notice" onMouseOver={handleMouseOverNoti} onMouseOut={handleMouseOutNoti}>
             <a>공지사항</a>
             <div className='notice-list'>
               <li><Link to="/noticeBoard">공지사항</Link></li>
@@ -157,10 +169,11 @@ function Header() {
 }
 
 function Footer() {
+  const {pathname} = useLocation();
 
   return (
     <>
-      <div className='footer-main'>
+      <div class={`footer-main ${pathname === '/' ? 'footernoCh' : 'footerCh'}`}>
         <div className='footer-container'>
           <a href=""><img id="jeju-image" src="../images/JMT.jpg" alt="" /></a>
           <ul className='footer-Grid1'>
