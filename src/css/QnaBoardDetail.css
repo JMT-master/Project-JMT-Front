@@ -21,7 +21,7 @@
   height: 500px;
   border-top: 2px solid black;
   border-bottom: 1px solid #ccc;
-  padding: 20px 30px;
+  padding: 30px;
 }
 .qnaDetail-box > div{
   display: flex;
@@ -67,6 +67,18 @@
 }
 .qnaDetail-inside textarea:focus{
   outline: none;
+}
+.qnaDetail-box button{
+  position: absolute;
+  right: 5vw;
+  margin-bottom: 10px;
+}
+.back-to-qna{
+  width: 120px;
+  height: 50px;
+  background-color: rgb(242, 207, 141);
+  border: none;
+  border-radius: 20px;
 }
 @media screen and (max-width:1024px) {
   .qnaDetail-title h1{

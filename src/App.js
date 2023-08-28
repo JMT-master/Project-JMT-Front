@@ -1,7 +1,7 @@
-import './css/App.css';
-import $, { data } from 'jquery';
+import './css/App.scss';
+import $ from 'jquery';
 import Slider from 'react-slick';
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes, Link, useParams, useLocation } from 'react-router-dom';
 import JoinUser from './member/JoinUser';
 import Curator from './thema/Curator';
 import Mypage from './member/Mypage';
@@ -20,12 +20,23 @@ import KnowledgeWrite from './trableinfo/KnowledgeWrite';
 import TourList from './destination/TourList';
 import DetailInfo from './destination/DetailInfo';
 import Traffic from './trableinfo/Traffic';
+import SelectSchedule from './travelschedule/SelectSchedule';
+import { ThemeProvider } from 'styled-components';
+import { darkTheme, lightTheme } from './common/Themes';
+import { GlobalStyles } from './common/GlobalStyles';
+import { useDarkMode } from './common/useDarkMode';
+import Toggle from './common/Toggle';
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
   const [newQnaData, setNewQnaData] = useState(qnaData);
   const [newKnowledgeData, setNewKnowledgeData] = useState(knowledgeData);
+  const [theme, themeToggler] = useDarkMode();
+  const themeMode = theme === 'light' ? lightTheme : darkTheme;
+
   return (
-    <>
+    <ThemeProvider theme={themeMode}>
+      <GlobalStyles/>
+      <HeaderTop theme={theme} themeToggler={themeToggler}/>
       <Routes>
         <Route path='/' element={<Header></Header>}></Route>
         <Route path="/joinUser" element={<JoinUser></JoinUser>}></Route>
@@ -44,67 +55,78 @@ function App() {
         <Route path="/knowledgeWrite" element={<KnowledgeWrite></KnowledgeWrite>}></Route>
         <Route path='/destination/:pageId' element={<TourList />}></Route>
         <Route path='/destination/detail/:id' element={<DetailInfo />}></Route>
-
+        <Route path='/selectSchedule' element={<SelectSchedule></SelectSchedule>}></Route>
       </Routes>
-    </>
+    </ThemeProvider>
   );
 }
 
 function HeaderTop(props) {
+  const {pathname} = useLocation();
 
-  const handleMouseOver = () => {
+  const handleMouseOverDes = () => {
     $(".destination-list").show();
+  };
+  const handleMouseOutDes = () => {
+    $(".destination-list").hide();
+  };
+  const handleMouseOverInfo = () => {
     $(".myTrableInfo-list").show();
+
+  };
+  const handleMouseOutInfo = () => {
+    $(".myTrableInfo-list").hide();
+  };
+  const handleMouseOverNoti = () => {
     $(".notice-list").show();
 
   };
-
-  const handleMouseOut = () => {
-    $(".destination-list").hide();
-    $(".myTrableInfo-list").hide();
+  const handleMouseOutNoti = () => {
     $(".notice-list").hide();
   };
-
+  
+  
   return (
-    <div class="header-main-position">
-      <div class="headerTop">
-        <Link to="/mypage">마이페이지</Link>
-        <Link to="/login">로그인</Link>
+    <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`} >
+      <div className="headerTop">
+        <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
+        <Link to="/login" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>로그인</Link>
+        <Toggle theme={props.theme} toggleTheme={props.themeToggler}/>
       </div>
-      <div class="header-container">
-        <Link to="/"><a class="header-image" href=""><img id="jeju-image" src="../images/JMT.jpg" alt="" /></a></Link>
-        <div class="headerSell">
-          <ul id="destination" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-            <a>여행지</a>
+      <div className="header-container">
+        <Link to="/"><div className="header-image"><img id="jeju-image" src="../images/JMT.jpg" alt="" /></div></Link>
+        <div className="headerSell">
+          <ul id="destination" onMouseOver={handleMouseOverDes} onMouseOut={handleMouseOutDes}>
+            <div className={`${props.theme === 'light'? 'blackText' : 'whiteText'}`}><a>여행지</a></div>
             <div className='destination-list'>
-              <li><Link to='/destination/tour'>관광지</Link></li>
-              <li><Link to='/destination/restaurant'>음식</Link></li>
-              <li><Link to='/destination/lodge'>숙박</Link></li>
+              <li><Link to='/destination/tour' className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광지</Link></li>
+              <li><Link to='/destination/restaurant' className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>음식</Link></li>
+              <li><Link to='/destination/lodge' className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>숙박</Link></li>
             </div>
           </ul>
           <ul id="tema">
             <div>
-              <a><Link to="/curator">테마</Link></a>
+              <a><Link to="/curator" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>테마</Link></a>
             </div>
           </ul>
           <ul id="myTrab">
             <div>
-              <a><Link to="/travelSchedule">여행일정</Link></a>
+              <span><Link to="/selectSchedule" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행일정</Link></span>
             </div>
           </ul>
-          <ul id="myTrableInfo" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-            <a>여행정보</a>
+          <ul id="myTrableInfo" onMouseOver={handleMouseOverInfo} onMouseOut={handleMouseOutInfo}>
+            <div className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}><a>여행정보</a></div>
             <div className='myTrableInfo-list'>
-              <li><Link to="/traffic">교통 혼잡도</Link></li>
-              <li><Link to="/festival">축제 및 행사</Link></li>
-              <li><Link to="/knowledge">관광 지식in</Link></li>
+              <li><Link to="/traffic" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통 혼잡도</Link></li>
+              <li><Link to="/festival" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>축제 및 행사</Link></li>
+              <li><Link to="/knowledge" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광 지식in</Link></li>
             </div>
           </ul>
-          <ul id="notice" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-            <a>공지사항</a>
+          <ul id="notice" onMouseOver={handleMouseOverNoti} onMouseOut={handleMouseOutNoti}>
+            <div className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}><a>공지사항</a></div>
             <div className='notice-list'>
-              <li><Link to="/noticeBoard">공지사항</Link></li>
-              <li><Link to="/qnABoard">Q&A</Link></li>
+              <li><Link to="/noticeBoard" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</Link></li>
+              <li><Link to="/qnABoard" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>Q&A</Link></li>
             </div>
           </ul>
         </div>
@@ -155,12 +177,13 @@ function Header() {
 }
 
 function Footer() {
+  const {pathname} = useLocation();
 
   return (
     <>
-      <div className='footer-main'>
+      <div class={`footer-main ${pathname === '/' ? 'footernoCh' : 'footerCh'}`}>
         <div className='footer-container'>
-          <a href=""><img id="jeju-image" src="../images/JMT.jpg" alt="" /></a>
+          <img id="jeju-image" src="../images/JMT.jpg" alt="" />
           <ul className='footer-Grid1'>
             <li>개인정보 처리방침</li>
             <li>이용약관</li>

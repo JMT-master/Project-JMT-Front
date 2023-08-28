@@ -52,19 +52,24 @@
 .location-search input{
   margin: 10px 0 10px 10px;
 }
+.location-search button{
+  background-color: #f3a344;
+  color: white;
+}
 .ask-textarea h4{
   margin: 20px 10px;
 }
 .ask-textarea input{
   display: flex;
   margin: 20px 10px;
-  width: 90vw;
+  width: 95%;
   font-size: large;
 }
 .ask-textarea textarea{
-  width: 90vw;
+  width: 95%;
   margin: 20px 10px;
   font-size: large;
+  resize: none;
 }
 .ask-textarea textarea:focus{
   resize: none;
@@ -75,12 +80,35 @@
   grid-template-columns: 1fr 4fr;
   gap: 10px 20px;
 }
+.file-attach div{
+  border-bottom: 1px solid #f3a344;
+}
+.btn-upload {
+  width: 150px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid #f3a344;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-upload:hover{
+    background: #f3a344;
+    color: #fff;
+}
+#file {
+  display: none;
+}
 .submit-knowledge{
   padding: 10px 20px;
-  background-color: rgb(75, 220, 164);
+  background-color: #f3a344;
   color: white;
   font-size: larger;
   border: none;
+  border-radius: 10px;
 }
 .button-box{
   width: 100%;
@@ -89,9 +117,10 @@
 }
 .back-to-knlist{
   padding: 10px 20px;
-  background-color: rgb(75, 220, 164);
+  background-color: #f3a344;
   color: white;
   font-size: larger;
   border: none;
+  border-radius: 10px;
   margin-left: 20px;
 }

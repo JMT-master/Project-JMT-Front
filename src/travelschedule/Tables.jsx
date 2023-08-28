@@ -12,58 +12,17 @@ const Tables = ({ rows, columns }) => {
   ];
 
   return (
-    // <table>
-    //   <thead>
-    //     <tr>
-    //       <th className='firstRow'>Time</th>
-    //       <th>Day1</th>
-    //       <th>Day2</th>
-    //     </tr>
-    //   </thead>
-    //   <Droppable droppableId='Tables' key="tables">
-    //     {(provided) => (
-    //       <tbody
-    //       ref={provided.innerRef}
-    //       {...provided.droppableProps}
-    //       >
-    //         {
-    //           timeDate.map((data, i) => {
-    //             return (
-    //             <Draggable 
-    //             key={i} 
-    //             draggableId={i.toString()} 
-    //             index={i}>
-    //               {
-    //                 (provided) => (
-    //                     <tr key={i} data={data}
-    //                     ref={provided.innerRef}
-    //                     {...provided.draggableProps}
-    //                     {...provided.dragHandleProps}>
-    //                       <td className='firstRow'>{data}</td>
-    //                       <td></td>
-    //                       <td></td>
-    //                     </tr>
-    //                 )
-    //               }
-    //             </Draggable>)
-
-    //           })}
-    //       {provided.placeholder}
-    //       </tbody>
-    //     )}
-    //   </Droppable>
-
-    // </table>
     <table>
       <thead>
         <tr>
-          <th className='firstRow'>Time</th>
+          <th className='firstRow firstRowHead'>Time</th>
         </tr>
       </thead>
       <tbody>
         {
           timeDate.map((data, i) => {
-            return (<tr>
+            return (<tr key={i}>
+              
               <td className='firstRow'>{data}</td>
             </tr>
             )

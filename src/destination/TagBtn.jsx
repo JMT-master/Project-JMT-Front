@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 
 const TagBtn = (tag) => {
-  const {tagFilter, setTagFilter, tagList} = tag
+  const {tagFilter, setTagFilter, tagList, setPage} = tag
   // console.log('tag: ', tag);
   // console.log('tagFilter, setTagFilter, tagList: ', tagFilter, setTagFilter, tagList);
   
   const [btn, setBtn] = useState([]);
-  useEffect(()=>{
-    setBtn('');
-  },[tagList])
+
   //필터 버튼
   const clickFilter = (e) => {
     if (e.target.value !== tagFilter) setTagFilter(e.target.value);
@@ -27,7 +25,7 @@ const TagBtn = (tag) => {
       }
     });
     if (e.target.id === i)
-      setBtn('');
+      setBtn([]);
   }
 
 
@@ -39,8 +37,9 @@ const TagBtn = (tag) => {
     // console.log('tagSet: ', tagSet);
 
     for (let i = 0; i < 40; i += num) {
-      btnList.push(<button key={i / num} className={`tagBtn ${btn.includes(i / num) ? 'Focused' : ''}`} value={tagSet[i]}
+      btnList.push(<button key={i / num} className={`oBtn ${btn.includes(i / num) ? 'Focused' : ''}`} value={tagSet[i]}
         onClick={(e) => {
+          setPage(1);
           clickFilter(e);
           focusHandler(e, i / num);
         }} >#{tagSet[i]}</button>)

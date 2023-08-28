@@ -5,11 +5,11 @@ import App, { Footer, HeaderTop } from './App';
 // import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { NavermapsProvider } from 'react-naver-maps';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <HeaderTop />
-    <NavermapsProvider ncpClientId='fsw3l45l8v' submodules={['panorama']}>
+  <BrowserRouter>   
+    <NavermapsProvider>
       <App />
     </NavermapsProvider>
     <Footer />
