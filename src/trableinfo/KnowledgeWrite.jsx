@@ -42,8 +42,10 @@ const KnowledgeWrite = () => {
           <textarea cols="80" rows="10"></textarea>
         </div>
         <div className='file-attach'>
-          <h4>파일 첨부</h4>
-          <input type="file" multiple/>
+          <label for='file'>
+            <div className='btn-upload'>파일 업로드 하기</div>
+          </label>
+          <input type="file" name='file' id='file' multiple/>
         </div>
       </div>
       <div className='button-box'>

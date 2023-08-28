@@ -1,5 +1,5 @@
 @import './loading.scss';
-
+$jOrange: #f3a344;
 
 
 
@@ -11,7 +11,7 @@
 
   //메인 헤더
   &-head {
-    height: 200px;
+    height: minmax(200px, 10%);
     margin: 5px 10px;
 
     h1 {
@@ -20,7 +20,8 @@
 
     &-intro {
       margin: 5px;
-      padding: 5px;
+      padding: 5px 20px;
+      line-height: 20px;
     }
 
     &-typeBtn {
@@ -34,7 +35,7 @@
   &-content {
     height: auto;
     display: grid;
-    grid-template-columns: minmax(600px, 49%) 49%;
+    grid-template-columns: minmax(600px, 45%) 55%;
     gap: 5px;
 
     &-list {
@@ -53,11 +54,25 @@
     }
 
     &-map {
-      border: 1px solid;
+      height: 100%;
+      width: 90%;
+      border: 1px solid $jOrange;
+      // position: relative;
+    
     }
 
 
   }
+  // .likeModal{
+  //   position: absolute;
+  //   background-color: black;
+  //   width: 20%;
+  //   min-width: 250px;
+  //   height: 250px;
+  //   z-index: 10;
+  //   // transform: translateX(-30%);
+  //   border-radius: 30px;
+  // }
 
 
   //각 아이템
@@ -189,10 +204,17 @@
     &-content {
       align-items: center;
       display: grid;
-      grid-template-rows: 20% 80%;
+      grid-template-rows: 10% 80%;
       gap: 1px;
       padding: 0 5px;
+      align-content: center;
+      &Text{
+        display: grid;
+        grid-template-rows: 20% 40% 40%;
+      }
     }
+
+
   }
 
   &-content-map {
