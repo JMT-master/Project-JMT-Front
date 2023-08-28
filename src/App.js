@@ -26,6 +26,8 @@ import { darkTheme, lightTheme } from './common/Themes';
 import { GlobalStyles } from './common/GlobalStyles';
 import { useDarkMode } from './common/useDarkMode';
 import Toggle from './common/Toggle';
+import YouTube from 'react-youtube'
+
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
   const [newQnaData, setNewQnaData] = useState(qnaData);
@@ -35,8 +37,8 @@ function App() {
 
   return (
     <ThemeProvider theme={themeMode}>
-      <GlobalStyles/>
-      <HeaderTop theme={theme} themeToggler={themeToggler}/>
+      <GlobalStyles />
+      <HeaderTop theme={theme} themeToggler={themeToggler} />
       <Routes>
         <Route path='/' element={<Header></Header>}></Route>
         <Route path="/joinUser" element={<JoinUser></JoinUser>}></Route>
@@ -62,7 +64,7 @@ function App() {
 }
 
 function HeaderTop(props) {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   const handleMouseOverDes = () => {
     $(".destination-list").show();
@@ -84,20 +86,20 @@ function HeaderTop(props) {
   const handleMouseOutNoti = () => {
     $(".notice-list").hide();
   };
-  
-  
+
+
   return (
     <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`} >
       <div className="headerTop">
         <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
         <Link to="/login" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>로그인</Link>
-        <Toggle theme={props.theme} toggleTheme={props.themeToggler}/>
+        <Toggle theme={props.theme} toggleTheme={props.themeToggler} />
       </div>
       <div className="header-container">
         <Link to="/"><div className="header-image"><img id="jeju-image" src="../images/JMT.jpg" alt="" /></div></Link>
         <div className="headerSell">
           <ul id="destination" onMouseOver={handleMouseOverDes} onMouseOut={handleMouseOutDes}>
-            <div className={`${props.theme === 'light'? 'blackText' : 'whiteText'}`}><a>여행지</a></div>
+            <div className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}><a>여행지</a></div>
             <div className='destination-list'>
               <li><Link to='/destination/tour' className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광지</Link></li>
               <li><Link to='/destination/restaurant' className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>음식</Link></li>
@@ -172,16 +174,36 @@ function Header() {
           <div className='header-slider-img4'></div>
         </Slider>
       </div>
+      <div className='header-body'>
+        <div className='header-Youtube-container'>
+          <YouTube className='header-Youtube-content1'
+            videoId="auAQ_A--c5I" //동영상 주소
+            opts={{
+              width: "100%",
+              height: "350px",
+              playerVars: {
+                autoplay: 0, //자동 재생 여부 
+                modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부
+                loop: 0, //반복 재생
+                // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트
+              },
+            }}
+            onReady={(e) => {
+              e.target.mute(); //소리 끔
+            }}
+          />
+        </div>
+      </div>
     </>
   );
 }
 
 function Footer() {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   return (
     <>
-      <div class={`footer-main ${pathname === '/' ? 'footernoCh' : 'footerCh'}`}>
+      <div class={`footer-main`}>
         <div className='footer-container'>
           <img id="jeju-image" src="../images/JMT.jpg" alt="" />
           <ul className='footer-Grid1'>

@@ -64,6 +64,15 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+.header-body {
+  position: relative;
+  margin-top: 620px;
+}
+
+.header-Youtube-container {
+  width: 30%; height: 350px;
+  border: 1px solid black;
+}
 .header-container{
   margin-top: 20px;
   display: grid;
