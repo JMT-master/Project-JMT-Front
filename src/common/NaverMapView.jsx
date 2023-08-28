@@ -37,7 +37,7 @@ function NaverMapView({ gps, onNav }) {
     let contentStr = [
         '<div class="iw_outter">',
         '   <h2>' + title + '</h2>',
-        '       <img src=' + img + ' width="55" height="55" alt="서울시청" class="thumb" /><br>',
+        '       <img src=' + img + ' width="55" height="55" alt='+title+' class="thumb"/><br>',
         '<button id="infoWinBtn" class="oBtn iwBtn">' + renderToString(<MdOutlineFindInPage />) + '</button>',
         '</div>'
     ].join('');
@@ -88,8 +88,8 @@ function NaverMapView({ gps, onNav }) {
         } else {
             marker.setPosition(center);
             setTimeout(() => {
-                map.panTo(center);
-                // map.setCenter(center, false);
+                // map.panTo(center);
+                map.setCenter(center, false);
             }, 1);
 
             if (centerChangedListener) {
