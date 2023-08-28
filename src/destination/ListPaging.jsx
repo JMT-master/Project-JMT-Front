@@ -19,7 +19,7 @@ const ListPaging = (pageprops) => {
     for (let i = page<3 ? 1 : pages-2 ; pages+2>=lastPage ? i<=lastPage : i <= page+2; i++) {
       if(pages===i) cN='currentPage'
       else cN ='';
-      arr.push(<a id={i} className={`pagingNumBtn ${cN} ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`} key={i} href={i} onClick={onSetPage}>{i}</a>)
+      arr.push(<a id={i} className={`pagingNumBtn ${cN} ${theme.body === "#FFF" ? 'blackText' : 'whiteText'} oBtn noBorder`} key={i} href={i} onClick={onSetPage}>{i}</a>)
     } return arr;
   }
 

@@ -80,6 +80,28 @@
   grid-template-columns: 1fr 4fr;
   gap: 10px 20px;
 }
+.file-attach div{
+  border-bottom: 1px solid #f3a344;
+}
+.btn-upload {
+  width: 150px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid #f3a344;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-upload:hover{
+    background: #f3a344;
+    color: #fff;
+}
+#file {
+  display: none;
+}
 .submit-knowledge{
   padding: 10px 20px;
   background-color: #f3a344;

@@ -9,7 +9,7 @@ import { NavermapsProvider } from 'react-naver-maps';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>   
-    <NavermapsProvider ncpClientId='fsw3l45l8v' submodules={['panorama']}>
+    <NavermapsProvider>
       <App />
     </NavermapsProvider>
     <Footer />
