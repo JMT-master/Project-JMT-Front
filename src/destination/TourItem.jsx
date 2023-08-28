@@ -3,11 +3,12 @@ import {MdOutlineFindInPage} from 'react-icons/md'
 
 const TourItem = ({ spot, pageType, navigate, setGps }) => {
   const photo = spot.repPhoto;
-  console.log(setGps)
   const onSetGps = () =>{
     setGps({
       lat : spot.latitude,
-      lng : spot.longitude
+      lng : spot.longitude,
+      title : spot.title,
+      img: photo.photoid.thumbnailpath
     })
   }
 
@@ -39,7 +40,6 @@ const TourItem = ({ spot, pageType, navigate, setGps }) => {
           <p className={`${pageType}-itemGrid-contentText-tag sf`}>{spot.tag.replace(/, /gi, ',').split(',').map(tag => ('#' + tag + ' '))}</p>
           <p className={`${pageType}-itemGrid-contentText-text`}>{spot.introduction}</p>
         </div>
-
       </div>
     </li>
   )

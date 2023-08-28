@@ -37,7 +37,9 @@ const TourList = () => {
 
   const [gps, setGps] = useState({
     lat: 33.3764981, 
-    lng: 126.5193789
+    lng: 126.5193789,
+    title : '',
+    img : ''
   });
 
 
@@ -122,9 +124,8 @@ const TourList = () => {
             <ListPaging page={page} setPage={setPage} lastPage={lastPage.current}></ListPaging>
           </div>
           {/* 맵 영역,  */}
-          <div className={`${pageType}-content-map`}>
-            
-            <NaverMapView gps={gps}></NaverMapView>
+          <div className={`${pageType}-content-map`}> 
+            <NaverMapView gps={gps} nav={nav}></NaverMapView>
           </div>
         </div>
       </div>
