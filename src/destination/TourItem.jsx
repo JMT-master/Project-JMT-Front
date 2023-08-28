@@ -33,7 +33,7 @@ const TourItem = ({ spot, pageType, onNav, setGps }) => {
   return (
     <li className={`${pageType}-itemGrid`} onClick={()=>{
       // onNav();
-      onSetGps();
+      if(pageType !=='grid'){onSetGps()}
       }}>
       <div className={`${pageType}-itemGrid-img`}>
         <img src={photo.photoid.thumbnailpath} alt={photo.descseo} width={'200px'} height={'100px'} />
