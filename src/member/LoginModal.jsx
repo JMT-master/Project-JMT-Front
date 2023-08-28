@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import '../css/LoginModal.css'
+import {AiOutlineArrowLeft} from 'react-icons/ai'
 
 const LoginModal = ({setModalOpen, id, title, content, writer}) => {
   const [moid, setMoid] = useState(false);
   const [mopwd, setMopwd] = useState(false);
-  const [activeModal, setActiveModal] = useState(null);
+  const [activeModal, setActiveModal] = useState("id");
 
   const closeModal = () => {
     setModalOpen(false);
@@ -21,37 +22,37 @@ const LoginModal = ({setModalOpen, id, title, content, writer}) => {
   }
   const ModalId = () => {
     return (
-      <div className='modal-container'
-      style={{width:'400px' , height:'300px'}}>
-        <button className='modal-close' onClick={closeModal}>X</button>
+      <div className='modal-container-click'
+      style={{width:'400px' , height:'400px'}}>
         <input className='moid-name' type="text" placeholder='이름을 입력해주세요' />
         <input className='moid-tel' type="tel" placeholder='전화번호를 입력해주세요' />
-        {/* <button className='acmodal-close' onClick={setActiveModal(null)}>뒤로 가기</button> */}
-        <div className='moid-submit'><button>아이디 찾기</button></div>
+        <button className='moid-submit'>아이디 찾기</button>
       </div>
     )
   }
   const ModalPwd = () => {
     return (
-      <div className='modal-container'
-      style={{width:'400px' , height:'300px'}}>
-        <button className='modal-close' onClick={closeModal}>X</button>
+      <div className='modal-container-click'
+      style={{width:'400px' , height:'400px'}}>
         <input className='mopwd-id' type="id" placeholder='아이디를 입력해주세요' />
         <input className='mopwd-email' type="email" placeholder='이메일을 입력해주세요' />
-        {/* <button className='acmodal-close' onClick={setActiveModal(null)}>뒤로 가기</button> */}
-        <div className='mopwd-submit'><button>비밀번호 찾기</button></div>
+        <button className='mopwd-submit'>비밀번호 찾기</button>
       </div>
     )
   }
   return (
     <div className='modal-container'>
-      <button className='modal-close' onClick={closeModal}>X</button>
-      <div className='modal-id'>
-        <button style={{styledButton}} onClick={()=>openModalIdPwd('id')}>아이디를 찾으시겠습니까?</button>
+      <AiOutlineArrowLeft className='modal-close' onClick={closeModal}>X</AiOutlineArrowLeft>
+      <h2 className='modal-title'>아이디 / 비밀번호 찾기</h2>
+      <div className='modal-btn'>
+        <div>
+          <button className={`modal-btn-id ${activeModal === 'id' ? 'modal-btn-click' : ''}`} style={{styledButton}} onClick={()=>openModalIdPwd('id')}>아이디 찾기</button>
+        </div>
+        <div>
+        <button  className={`modal-btn-pwd ${activeModal === 'pwd' ? 'modal-btn-click' : ''}`} style={{styledButton}} onClick={()=>openModalIdPwd('pwd')}>비밀번호 찾기</button>
+        </div>
       </div>
-      <div className='modal-pwd'>
-      <button style={{styledButton}} onClick={()=>openModalIdPwd('pwd')}>비밀번호를 찾으시겠습니까?</button>
-      </div>
+      <div className='modal-container-etc'></div>
       {activeModal === 'id' && <ModalId />}
       {activeModal === 'pwd' && <ModalPwd />}
     </div>

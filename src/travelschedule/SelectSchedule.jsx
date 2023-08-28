@@ -161,11 +161,12 @@ const SelectSchedule = () => {
           <div className='Calendar'>
             {/* <Calendar onChange={setValue} value={value}></Calendar> */}
             <DateRange
-              editableDateInputs={true}
+              editableDateInputs={true}              // 직접 날짜 지정
               onChange={(item) => dateChange(item)}
-              moveRangeOnFirstSelection={false}
+              moveRangeOnFirstSelection={false}      // false일 경우 startDate, endDate 각자 지정
+                                                     // true일 경우 endDate가 Range만큼 지정
               ranges={state}
-              months={2}
+              months={2}                             // 2달 나오게끔 설정
               direction="horizontal"
               minDate={new Date()}
               rangeColors={['#FFA500', '#FFA500', '#FFA500']}

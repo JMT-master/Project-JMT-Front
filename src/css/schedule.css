@@ -33,7 +33,7 @@
 .SelectBtn {
   width: 75px;
   height: 75px;
-  color: orange;
+  color: #f3a344;
   cursor: pointer;
   position: relative;
   top: 350px;
@@ -47,7 +47,7 @@
 
 .ScheduleForm {
   margin-left: 3%;
-  border: 2px solid orange;
+  border: 2px solid #f3a344;
   border-radius: 15px;
   width:  90%;
   height: 50%;
@@ -87,12 +87,12 @@
 .selectItem-icon {
   width: 20px; height: 20px;
   margin-right: 10px;
-  color: orange;
+  color: #f3a344;
 }
 
 .scheduleBtn {
   width: 100px; height: 30px;
-  color: orange;
+  color: #f3a344;
   border: none;
   border-radius: 10px;
   background-color: white;  
@@ -100,18 +100,18 @@
 }
 
 .SelectText {
-  color : orange;
+  color : #f3a344;
 }
 
 .SelectBG {
-  background-color : orange;
+  background-color : #f3a344;
   color: white;
 }
 
 .Calendar {
   margin-top: 30px;
   margin-right: 30px;
-  color: orange', '#3ecf8e', '#fed14c;
+  color: #f3a344', '#3ecf8e', '#fed14c;
 
 }
 
