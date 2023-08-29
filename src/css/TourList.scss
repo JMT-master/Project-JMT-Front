@@ -1,12 +1,18 @@
-@mixin centerCotent($align: center) {
-  justify-content: $align;
-}
+@import './loading.scss';
+@import './button.scss';
+$jOrange: #f3a344;
 
+
+
+//리스트 그리드일때
 .list {
   height: 100%;
+  width: 95%;
+  margin: 0 auto;
 
+  //메인 헤더
   &-head {
-    height: 200px;
+    height: minmax(200px, 10%);
     margin: 5px 10px;
 
     h1 {
@@ -15,92 +21,115 @@
 
     &-intro {
       margin: 5px;
-      padding: 5px;
+      padding: 5px 20px;
+      line-height: 20px;
+    }
+
+    &-typeBtn {
+      display: flex;
+      justify-content: flex-end;
     }
   }
 
-  .tagBtn {
-    background-color: white;
-    border: 0px solid;
-    border-radius: 4px;
-    padding: 2px 5px;
-    margin: 0 5px;
 
-    &:hover {
-      background-color: cornflowerblue;
-      color: white;
-    }
-  }
-
-  .Focused {
-    color: rgb(235, 152, 0);
-    border: 1px solid;
-  }
-
+  //메인 컨텐츠
   &-content {
     height: auto;
     display: grid;
-    grid-template-columns: minmax(600px, 50%) 50%;
+    grid-template-columns: minmax(600px, 45%) 55%;
+    gap: 5px;
 
-    &List {
-      background-color: antiquewhite;
+    &-list {
       cursor: pointer;
 
       &-ul {
         height: 600px;
         margin: 0;
-        padding: 0 10px;
+        padding-left: 10px;
         overflow-y: auto;
 
         &::-webkit-scrollbar {
           display: none;
         }
       }
-
-      &-paging {
-        display: flex;
-        height: 40px;
-        align-items: center;
-        justify-content: space-around;
-
-        a {
-          color: black;
-
-          &.currentPage {
-            font-weight: bold;
-          }
-        }
-      }
     }
+
+    &-map {
+      height: 100%;
+      width: 90%;
+      border: 1px solid $jOrange;
+      // position: relative;
+
+    }
+
+
   }
 
+  //각 아이템
   &-itemGrid {
     display: grid;
-    grid-template-columns: minmax(190px, 30%) 70%;
+    margin-bottom: 10px;
+    grid-template-columns: 190px 66%;
     gap: 5px;
-    
+
     &-img {
       margin-top: 5px;
       width: 190px;
       height: auto;
-      
+
+
       img {
-        width: 190px;
-        height: 120px;
-        
+        width: 100%;
+        height: 130px;
+        border-radius: 10px;
+        object-fit: cover;
       }
     }
 
     &-content {
+      display: grid;
+      grid-template-rows: 20% 80%;
+      gap: 2px;
       text-align: left;
+      padding: 3px 5px;
+
+      h3 {
+        line-height: 26px;
+      }
+
+      &Text {
+        display: grid;
+        grid-template-rows: 19% 30% 51%;
+        padding: 3px 10px;
+        align-items: center;
+
+        &-tag {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        &-text {
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+      }
+
     }
+
+
   }
 }
 
-
+////////////////////////////////////////
+//그리드 화면
 .grid {
   height: 100%;
-  text-align: center;
+  width: 95%;
+  margin: 0 auto;
 
   &-head {
     height: 200px;
@@ -114,83 +143,95 @@
       margin: 5px;
       padding: 5px;
     }
-  }
 
-  .tagBtn {
-    background-color: white;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    padding: 2px 5px;
-    margin: 0 5px;
-
-    &:hover {
-      background-color: cornflowerblue;
-      color: white;
+    &-typeBtn {
+      display: flex;
+      justify-content: flex-end;
     }
   }
 
-  .Focused {
-    color: rgb(235, 152, 0);
-    border: 1px solid;
-    
-  }
 
   &-content {
     height: auto;
     display: grid;
-    grid-template-columns: 100%;
+    grid-template-rows: 100%;
 
-    &List {
-      background-color: rgb(130, 130, 243);
+    &-list {
+      gap: 10px;
       display: grid;
-      grid-template-rows: 1468px 40px;
-      gap : 20px;
-      cursor: pointer;
+      grid-template-rows: auto 40px;
 
       &-ul {
         width: 100%;
         margin: 0;
         padding: 0;
         display: grid;
-        grid-template-columns: repeat(3, minmax(360px, 1fr));
+        grid-template-columns: repeat(3, minmax(340px, 1fr));
         grid-template-rows: repeat(4, 1fr);
-        gap: 5px 5px;
-        padding: 0 5px;
-
-      }
-
-      &-paging {
-        // display: flex;
-        height: 40px;
-        align-items: center;
-        justify-content: space-around;
-
-        a {
-          color: black;
-
-          &.currentPage {
-            font-weight: bold;
-          }
-        }
+        gap: 10px 20px;
       }
     }
   }
 
   &-itemGrid {
+    height: 370px;
+    text-align: center;
     display: grid;
-    grid-template-rows: minmax(210px, 50%) minmax(140px,40%);
+    grid-template-rows: minmax(200px, 50%) minmax(165px, 45%);
     gap: 5px;
-    background-color: bisque;
 
     &-img {
-      margin-top: 5px;
       width: 100%;
       height: 100%;
+
       img {
+        border-radius: 10px;
         width: 100%;
-        height: 210px;
+        height: 200px;
       }
     }
+
+    &-content {
+      height: 100%;
+      align-items: center;
+      display: grid;
+      grid-template-rows: 20% 80%;
+      gap: 1px;
+      padding: 0 5px;
+      align-content: center;
+
+      h3 {
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        // span {
+        //   // display: flex;
+        //   // justify-content: center;
+        //   // align-items: center;
+        // }
+        button{
+          position: absolute;
+          right: 0px;
+        }
+      }
+
+
+      &Text {
+        height: 100%;
+        display: grid;
+        grid-template-rows: 18% 32% 47%;
+
+        * {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        &-tag{
+          line-height: 15px;
+        }
+      }
+    }
+
 
   }
 
@@ -199,25 +240,29 @@
   }
 }
 
-.loading{
-  
-  height: 600px;
+.iw_outter {
+  width: 200px;
+  height: 166px;
+  text-align: center;
+  border: 2px solid $jOrange;
+  border-radius: 15px;
+  background-color: transparent;
   text-align: center;
 
-  &Icon{
-    width: 30px;
-    height: 30px;
-    top: 50%;
-    position: fixed;
-    animation: spinCircle 2s infinite linear;
+  h2 {
+    display: block;
+    background: $jOrange;
+    color: #fff;
+    text-align: center;
+    height: 24px;
+    line-height: 22px;
+    border-radius: 10px 10px 0 0;
+    padding: 3px 10px;
   }
-}
 
-@keyframes spinCircle {
-  from {
-      transform:rotate(0);
-  }
-  to {
-      transform:rotate(360deg);
+  .thumb {
+    width: 100%;
+    height: 136px;
+    border-radius: 0 0 13px 13px;
   }
 }

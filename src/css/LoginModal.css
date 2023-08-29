@@ -1,70 +1,108 @@
-.modal-id{
+.modal-container{
+  width: 400px;
+  height: 600px;
+  z-index: 999;
   position: absolute;
-  top: 25%;
-}
-.modal-id button{
-  width: 300px;
-  height: 80px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
   background-color: white;
+  /* border: 1px solid black; */
+  border-radius: 25px;
 }
-.modal-pwd{
+
+.modal-container input:focus{
+  outline: none;
+}
+
+.modal-close {  
   position: absolute;
-  top: 65%;
+  left: 10px;
+  top: 10px;
+  width: 20px; height: 20px;
 }
-.modal-pwd button{
-  width: 300px;
-  height: 80px;
+
+.modal-title {
+  text-align: center;
+}
+
+.modal-btn {
+  display: grid;
+  margin-top: 10%;
+  width: 100%; height: 35px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.modal-btn-id, .modal-btn-pwd {
+  width: 100%; height: 100%;
+  text-align: center;
   background-color: white;
+  border: none;
+  font-size: 15px; font-weight: bold;
+  border-bottom: 2.5px solid #999;
+  color: #999;
+  cursor: pointer;
 }
+
+.modal-btn-click {
+  border-bottom: 2.5px solid #f3a344;
+  color: #f3a344;
+}
+
+.modal-container-etc {
+  position: relative;
+}
+
+.modal-container-click {
+  position: absolute;
+}
+
 .moid-name{
-  position: absolute;
-  top: 25%;
-  padding: 10px;
-  left: 20px;
-  width: 300px;
-  height: 80px;
+  margin-top: 100px;
+  width: 70%;
+  height: 45px;
+  border: none;
+  border-bottom: 2px solid #bbb;
 }
 .moid-tel{
-  position: absolute;
-  top: 65%;
-  padding: 10px;
-  left: 20px;
-  width: 300px;
-  height: 80px;
+  margin-top: 30px;
+  width: 70%;
+  height: 45px;
+  border: none;
+  border-bottom: 2px solid #bbb;
 }
-.moid-submit button{
-  position: absolute;
-  padding: 10px;
-  width: 100px;
-  height: 50px;
-  top: 45%;
-  right: 15%;
-  background-color: white;
-  border: 1px solid black;
+.moid-submit {
+  margin: 0 auto;
+  margin-top: 150px;
+  width: 70%; height: 40px;
+  background-color: #f3a344;
+  color: black; font-weight: bold; font-size: large;
+  opacity: 0.8;
+  border: none;
+  border-radius: 15px;
 }
-.mopwd-id{
-  position: absolute;
-  top: 25%;
-  padding: 10px;
-  left: 20px;
-  width: 300px;
-  height: 80px;
+
+.mopwd-id {
+  margin-top: 100px;
+  width: 70%;
+  height: 45px;
+  border: none;
+  border-bottom: 2px solid #bbb;
 }
-.mopwd-email{
-  position: absolute;
-  top: 65%;
-  padding: 10px;
-  left: 20px;
-  width: 300px;
-  height: 80px;
+.mopwd-email {
+  margin-top: 30px;
+  width: 70%;
+  height: 45px;
+  border: none;
+  border-bottom: 2px solid #bbb;
 }
-.mopwd-submit button{
-  position: absolute;
-  padding: 10px;
-  width: 150px;
-  height: 50px;
-  top: 45%;
-  right: 15%;
-  background-color: white;
-  border: 1px solid black;
+.mopwd-submit {
+  margin: 0 auto;
+  margin-top: 150px;
+  width: 70%; height: 40px;
+  background-color: #f3a344;
+  color: black; font-weight: bold; font-size: large;
+  opacity: 0.8;
+  border: none;
+  border-radius: 15px;
 }

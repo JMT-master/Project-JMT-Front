@@ -1,42 +1,46 @@
-import React, { useCallback } from 'react'
+import React from 'react'
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from 'react-icons/md'
+import { useTheme } from 'styled-components'
 
 const ListPaging = (pageprops) => {
   const {page, setPage, lastPage} = pageprops
+  const theme = useTheme();
+  
   // console.log(lastPage);
   const onSetPage = (e) => {
     e.preventDefault();
     setPage(parseInt(e.target.text));
   }
 
-  const pagingNumMake = useCallback((pages) => {
+  const pagingNumMake = (pages) => {
     let arr = [];
     let cN = '';
     // todo!! : 선택한 페이지 번호의 텍스트와 현재 페이지가 일치하면 bold가 주어진 스타일 주기
     for (let i = page<3 ? 1 : pages-2 ; pages+2>=lastPage ? i<=lastPage : i <= page+2; i++) {
       if(pages===i) cN='currentPage'
       else cN ='';
-      arr.push(<a className={`pagingNumBtn ${cN}`} href={i} onClick={onSetPage} >{i}</a>)
+      arr.push(<a id={i} className={`pagingNumBtn ${cN} ${theme.body === "#FFF" ? 'blackText' : 'whiteText'} oBtn noBorder`} key={i} href={i} onClick={onSetPage}>{i}</a>)
     } return arr;
-  },[page])
+  }
 
   return (
-    <div className='list-contentList-paging'>
-      <button
+    <div className='content-paging'>
+      <button className='oBtn'
         disabled={page === 1 && true}
-        onClick={() => { setPage(1) }}>첫페이지
+        onClick={() => { setPage(1) }}><MdKeyboardDoubleArrowLeft className='twentySize'/>
       </button>
-      <button
+      <button className='oBtn'
         disabled={page === 1 && true}
-        onClick={() => { setPage(page - 1) }}>이전 페이지
+        onClick={() => { setPage(page - 1) }}><MdKeyboardArrowLeft className='twentySize'/>
       </button>
       {pagingNumMake(page)}
-      <button
+      <button className='oBtn'
         disabled={page === lastPage && true}
-        onClick={() => { setPage(page + 1) }}>다음 페이지
+        onClick={() => { setPage(page + 1) }}><MdKeyboardArrowRight className='twentySize'/>
       </button>
-      <button
+      <button className='oBtn'
         disabled={page === lastPage && true}
-        onClick={() => { setPage(lastPage) }}>마지막페이지
+        onClick={() => { setPage(lastPage) }}><MdKeyboardDoubleArrowRight className='twentySize'/>
       </button>
     </div>
   )

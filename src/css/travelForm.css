@@ -1,7 +1,7 @@
 .travelForm-container {
-  width: 250px; height: 100px;
+  width: 1fr; height: 100px;
   display: grid;
-  grid-template-columns: 100px 150px;
+  grid-template-columns: 1fr 2fr;
   position: relative;
   margin: 10px;
 }
@@ -30,8 +30,9 @@
   position: absolute;
   bottom: 5px; right: 0px;
   width: 100px;
-  color: orange; border: orange 2px solid;
+  color: #f3a344; border: #f3a344 2px solid;
   border-radius: 10px;
-  background-color: white;
+  background-color: transparent;
   font-weight: 650;
+  cursor: pointer;
 }

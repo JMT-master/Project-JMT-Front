@@ -1,9 +1,8 @@
 .content{
   width: 100%;
-  display: flex;
   position: relative;
 }
-.content h1{
+.content > h1{
   margin-left: 10px;
   text-align: left;
 }
@@ -11,7 +10,7 @@
   position: relative;
   margin: 0 10px;
   display: flex;
-  background-color: #3c3cb4;
+  background-color: #f3a344;
   padding: 20px;
   color: white;
 }
@@ -33,7 +32,7 @@
 }
 .searchNotice > button{
   padding: 10px;
-  background-color: #3c3cb4;
+  background-color: #f6a143;
   color: white;
   border: none;
   font-size: large;
@@ -65,6 +64,13 @@
 }
 .page-choice select{
   margin-bottom: 10px;
-  right: 10vw;
   position: absolute;
+  outline: none;
+  right: 2vw;
+  background-color: #f3a344;
+  color: whitesmoke;
+  border: 1px solid #f3a344;
+  padding: 2px;
+  border-radius: 5px;
 }
+

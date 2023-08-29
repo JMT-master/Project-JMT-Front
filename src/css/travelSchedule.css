@@ -3,12 +3,19 @@
   grid-template-columns: 1fr 1fr;
   margin-top: 2%;
   margin-left: 2%;
-  height: 650px;
+  width: 100%; height: 1000px;
+  overflow: scroll;
+  min-width: 1050px;
+}
+
+.rdrDateDisplayWrapper {
+  display: none;
 }
 
 .travelSelect {
+  width: 95%;
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr;
+  grid-template-columns: 1fr 2fr;
 }
 
 .travelStepBox {
@@ -21,29 +28,57 @@
 }
 
 .travelSelectText {
-  color: orange;
+  color: #f3a344;
+}
+
+.travelSchedule-icons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-self: end;
+  align-items: end;
+}
+
+.travelSchedule-icon {
+  display: flex;
+}
+
+.travelSchedule-icons-title {
+  margin-right: 5px;
+  text-align: center;
+  font-size: large;
+  font-weight: 500;
+  height: 100%;
+  color: #f3a344; line-height: 30px;
+  cursor: pointer;
+}
+
+.travelSchedule-icons-title:hover {
+  font-weight: 900;
+  text-decoration: underline;
 }
 
 .travelBtn {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   margin-right: 20px;
-  background-color: black;
-  border-radius: 5px;
-  color: white;
+  /* border: 2px solid #f3a344; */
+  color: #f3a344;
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
-  justify-self: end;
+  margin: 0 5px auto;
 }
 
 .travelInfo {
   margin-top: 10px;
+  height: 950px;
   display: grid;
-  grid-template-columns: 315px 400px;
+  grid-template-columns: 300px 700px;
 }
 
 .searchSchedule {
-  width: 100%; height: 450px;
-  border: 3px solid orange;
+  width: 100%; height: 800px;
+  border: 3px solid #f3a344;
   margin-right: 10px;
   border-radius: 20px;
 }
@@ -54,23 +89,20 @@
   text-align: center;
 }
 
-.searchSchedule-btns  > button {
-  width: 32%;
-  color: white;
-  border-radius: 5px;
-  font-size: x-small;  
-  height: 35px;
+.searchSchedule-btns-travel, .searchSchedule-btns-search, .searchSchedule-btns-thema {
+  width: 32%; height: 35px;
+  background-color: transparent;
+  color: #f3a344;
+  font-size: small;  
+  font-weight: bold;  
+  border: none;
   cursor: pointer;
 }
 
-.searchSchedule-btns-thema {
-  background-color: #1ABC9B;
-  border: 1px solid rgb(26,188,155);
-}
-
-.searchSchedule-btns-travel, .searchSchedule-btns-search {
-  background-color: darkgray;
-  border: 1px solid darkgray;
+.searchSchedule-btns-select {
+  background-color: #f3a344;
+  border-radius: 10px;
+  color: white;
 }
 
 .searchSchedule-input {
@@ -88,8 +120,8 @@
 
 .searchSchedule-input > button {
   width : 50px; height: 35px;
-  background-color: orange;
-  border: 1px solid orange;
+  background-color: #f3a344;
+  border: 1px solid #f3a344;
   font-size: large;
   color: white;
   font-weight: bold;
@@ -97,8 +129,7 @@
 }
 
 .searchSchedule-data {
-  height: 300px;
-  border: 1px solid black;
+  height: 630px;
   margin: 10px 10px auto;
   overflow: scroll;
 }
@@ -130,10 +161,10 @@
 }
 
 .tableForm {
-  width: 90%; height: 500px;
+  width: 90%; height: 900px;
   justify-self: center;
-  overflow: scroll;
   display: flex;
+  overflow: scroll;
 }
 
 .tableForm::-webkit-scrollbar {
@@ -141,5 +172,80 @@
 }
 
 .tableTr {
-  width: 150px;
+  width: 300px; height: 180px;
+  line-height: 50px;
+}
+
+.travelSchedule-table-td {
+  width: 300px;
+  font-size: small;
+  line-height: 20px;
+  color: white;
+  border: 1px solid black;
+  overflow: scroll;
+  flex-grow: 1; flex-basis: 0;
+}
+
+.travelSchedule-table-td::-webkit-scrollbar {
+  display: none;
+}
+
+.travelSchedule-thead {
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+}
+
+.travelSchedule-table-td-black {
+  font-weight: bold;
+  color: black;
+}
+
+.travelSchedule-table-btn {
+  /* background-color: red;
+  color: white; font-weight: bold;
+  border: 1px solid red; */
+  color: red;
+  width: 35px; height: 35px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.travelSchedule-table-body {
+  opacity: 0.3;
+  background-color: #f3a344;
+  border: 1px solid #f3a344;
+}
+
+.Calendar {
+  width: 100%;
+}
+
+.travelSchedule-naverMap {
+  border: 1px solid black;
+  margin-top: 95px;
+  width: 600px; height: 600px;
+  transition: all 1s;
+}
+
+@media screen and (max-width : 1650px) {
+  .travelSchedule-naverMap {
+    width: 450px; height: 450px;
+    transition: all 1s;
+  }
+  
+}
+
+@media screen and (max-width : 1500px) {
+  .travelSchedule-naverMap {
+    width: 300px; height: 300px;
+    transition: all 1s;
+  }
+  
+}
+
+@media screen and (max-width : 1350px) {
+  .travelSchedule-naverMap {
+    display: none;
+  }  
 }

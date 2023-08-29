@@ -24,7 +24,7 @@ const Login = () => {
         <p style={{ fontSize: 'large' }}>로그인하시면 다양한 기능을 사용할 수 있습니다.</p>
       </div>
       <div className='login-active'>
-        <div className='img'><img src="../images/JMT-icon.jpg" alt="jmt아이콘" 
+        <div className='img'><img src="../images/JMT.jpg" alt="jmt아이콘" 
         style={{ marginTop: '50px', }} /></div>
         <div className='id-pw'>
           <p ><input type="id" className='id' placeholder='아이디를 입력해주세요' /></p>
@@ -37,8 +37,8 @@ const Login = () => {
           {modalOpen && <LoginModal setModalOpen={setModalOpen}></LoginModal>}
         </p>
         <div className='sns-login'>
-          <Link to='/kakao'><img src="../images/kakao-icon.png" alt="" /></Link>
-          <Link to='/google'><img src="../images/google-icon.png" alt="" /></Link>
+          <Link to='/'><img src="../images/kakao-icon.png" alt="" /></Link>
+          <Link to='/'><img src="../images/google-icon.png" alt="" /></Link>
         </div>
       </div>
     </div>

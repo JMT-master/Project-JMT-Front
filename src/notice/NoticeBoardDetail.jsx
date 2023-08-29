@@ -1,19 +1,21 @@
 import React from 'react';
 import style from '../css/NoticeBoardDetail.css'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from "react-icons/ai";
 
 const NoticeBoardDetail = ({data}) => {
+  const navigate = useNavigate();
   const params = useParams();
-  // console.log(params);
-  // console.log(parseInt(params.id)-1);
-  // console.log(data[params.id-1])
   const detail = data[params.id-1];
   
   return (
     <div className='noticeDetail-content'>
       <div className='noticeDetail-title'>
         <h1>공지사항</h1>
-        <span>아이콘 모음집</span>
+        <span><AiFillPrinter style={{width:'50px', height:'30px'}}></AiFillPrinter> </span>
+        <span><AiFillFilePdf style={{width:'50px', height:'30px'}}></AiFillFilePdf> </span>
+        <span> <AiFillYoutube style={{width:'50px', height:'30px'}}></AiFillYoutube> </span>
+        <span><AiFillFacebook style={{width:'50px', height:'30px'}}></AiFillFacebook> </span>
       </div>
         <div className='noticeDetail-box'>
           <div className='noticeDetail-img'>
@@ -28,6 +30,7 @@ const NoticeBoardDetail = ({data}) => {
           <div className='noticeDetail-inside'>
             <textarea cols="30" rows="10" readOnly placeholder='공지사항 내용' value={detail.content}></textarea>
           </div>
+          <button className='back-to-notice'  onClick={()=>navigate(-1)}>목록으로 가기</button>
         </div>
     </div>
   );

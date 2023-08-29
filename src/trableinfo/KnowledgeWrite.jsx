@@ -3,6 +3,7 @@ import style from '../css/KnowledgeWrite.css'
 import { VscSearch } from 'react-icons/vsc';
 // import { VscSearch } from 'react-icons/vsc';
 import { useNavigate } from 'react-router-dom';
+import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'react-icons/ai';
 
 
 const KnowledgeWrite = () => {
@@ -11,7 +12,10 @@ const KnowledgeWrite = () => {
     <div className='knowledge-content'>
       <div className='knowledge-write-title'>
         <h1>Jhat JPT 지식in</h1>
-        <span>오른쪽 아이콘</span>
+        <span><AiFillPrinter style={{width:'50px', height:'30px'}}></AiFillPrinter> </span>
+        <span><AiFillFilePdf style={{width:'50px', height:'30px'}}></AiFillFilePdf> </span>
+        <span> <AiFillYoutube style={{width:'50px', height:'30px'}}></AiFillYoutube> </span>
+        <span><AiFillFacebook style={{width:'50px', height:'30px'}}></AiFillFacebook> </span>
       </div>
       <div className='ask'>
         <h3>질문하기</h3>
@@ -38,8 +42,10 @@ const KnowledgeWrite = () => {
           <textarea cols="80" rows="10"></textarea>
         </div>
         <div className='file-attach'>
-          <h4>파일 첨부</h4>
-          <input type="file"/>
+          <label for='file'>
+            <div className='btn-upload'>파일 업로드 하기</div>
+          </label>
+          <input type="file" name='file' id='file' multiple/>
         </div>
       </div>
       <div className='button-box'>

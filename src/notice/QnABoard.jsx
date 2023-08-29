@@ -22,7 +22,7 @@ const Tr = (props) => {
 const QnABoard = () => {
   const [newQnaData, setNewQnaData] = useState(qnaData);
   const [currentPage , setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentItems = newQnaData.slice(startIndex, endIndex);
@@ -31,6 +31,10 @@ const QnABoard = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
+  const handleSelect = (e) =>{
+    setItemsPerPage(e.target.value);
+  }
 
   return (
     <div className='content'>
@@ -47,10 +51,11 @@ const QnABoard = () => {
       </div>
       <div className='qna-table'>
         <div className='page-choice'>
-          <select >
-            <option value="10">10개씩</option>
-            <option value="15">15개씩</option>
-            <option value="20">20개씩</option>
+          <select onChange={handleSelect}>
+            <option value={5}>5개씩</option>
+            <option value={10} selected>10개씩</option>
+            <option value={15}>15개씩</option>
+            <option value={20}>20개씩</option>
           </select>
         </div>
         <table>
@@ -62,7 +67,7 @@ const QnABoard = () => {
               <th>작성일자</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className='cursor'>
             {currentItems.map((item, index) => {
                 return (
                   <Tr data={item} key={item.id}></Tr>
