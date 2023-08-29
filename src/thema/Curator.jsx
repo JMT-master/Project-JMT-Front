@@ -90,7 +90,7 @@ const Curator = () => {
     e.preventDefault();
     if(e.target.style.color === colorFlag) { // 태그 클릭시
       e.target.style.fontWeight = "bold";
-      e.target.style.color = "red";
+      e.target.style.color = "#f3a344";
       setSelectTag(selectTag => [e.target.value, ...selectTag]);
     } else {  // 태그 unClick시
       e.target.style.fontWeight = "500";
