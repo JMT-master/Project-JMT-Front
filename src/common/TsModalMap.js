@@ -18,7 +18,7 @@ const TsModalMap = ({ markers }) => {
         position: new window.naver.maps.LatLng(...markerPosition),
         map: map,
         icon: {
-          content: `<img src="https://place-hold.it/25x25/467&text=${num}" style="width: 25px; height: 25px;" />`,
+          content: `<img src="https://place-hold.it/20x20/f3a344&text=${num}" style="width: 20px; height: 20px; border-radius:15px" />`,
         },
       });
       
