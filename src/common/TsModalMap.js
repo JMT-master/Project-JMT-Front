@@ -1,31 +1,40 @@
-
 import React, { useEffect } from 'react';
 
 const TsModalMap = ({ markers }) => {
-  console.log("markers : ",markers);
   useEffect(() => {
     const mapOptions = {
-      center: new window.naver.maps.LatLng(33.3764981, 126.5193789), // 지도의 초기 중심 좌표
-      zoom: 10, // 초기 줌 레벨
+      center: new window.naver.maps.LatLng(33.3764981, 126.5193789),
+      zoom: 10,
     };
 
     const map = new window.naver.maps.Map('map', mapOptions);
 
     let num = 1;
-    markers.forEach((markerInfo, index) => {
-      const markerPosition = [markerInfo.latitude, markerInfo.longitude];      
+    const polylinePath = [];
+    let prevMarkerPosition = null;
+    const createdMarkers = []; // 배열로 생성한 마커를 보관
+
+    markers.forEach((markerInfo) => {
+      const markerPosition = new window.naver.maps.LatLng(
+        markerInfo.latitude,
+        markerInfo.longitude
+      );
+
       const marker = new window.naver.maps.Marker({
-        position: new window.naver.maps.LatLng(...markerPosition),
+        position: markerPosition,
         map: map,
         icon: {
-          content: `<img src="https://place-hold.it/20x20/f3a344&text=${num}" style="width: 20px; height: 20px; border-radius:15px" />`,
+          content: `<img src="https://place-hold.it/25x25/467&text=${num}" style="width: 25px; height: 25px;" />`,
         },
       });
-      
+
+      createdMarkers.push(marker); // 생성한 마커 배열에 추가
+
       const infowindow = new window.naver.maps.InfoWindow({
         content: `<h4>${markerInfo.title}</h4>`,
       });
 
+      polylinePath.push(markerPosition);
       window.naver.maps.Event.addListener(marker, 'click', () => {
         if (infowindow.getMap()) {
           infowindow.close();
@@ -33,8 +42,20 @@ const TsModalMap = ({ markers }) => {
           infowindow.open(map, marker);
         }
       });
-      if(!Number.isInteger(markerInfo)) num++;
+
+      if (!Number.isNaN(markerInfo) && markerPosition !== prevMarkerPosition) {
+        num++;
+        prevMarkerPosition = markerPosition;
+      }
     });
+    console.log(polylinePath.length);
+      if (polylinePath.length > 1) {
+        const polyline = new window.naver.maps.Polyline({
+          path: polylinePath,
+          map: map,
+        });
+      }
+    
 
   }, [markers]);
 

@@ -26,9 +26,14 @@ const TravelSchedule = (props) => {
   const [mapModal, setMapModal] = useState(false);
   const theme = useTheme();
 
-  const markers = [
-    ...tableData1
-  ];
+  // const markers = [
+  //   ...tableData1
+  // ];
+
+  const markers = [];
+  tableData1.map((item) => {
+    if(!Number.isInteger(item)) markers.push(item);
+  })
 
   useEffect(() => {
     setLoading(true);
