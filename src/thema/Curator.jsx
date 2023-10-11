@@ -4,9 +4,8 @@ import '../css/TourList.scss'
 import ImageList from './ImageList';
 import TagBtn from './TagBtn';
 import ListPaging from '../destination/ListPaging';
-import {AiOutlineLoading, AiOutlineCheck, AiFillCamera} from 'react-icons/ai';
+import {AiOutlineLoading, AiOutlineCheck, AiFillCamera,AiOutlineClear} from 'react-icons/ai';
 import {BsFillCalendarCheckFill} from 'react-icons/bs';
-import {GrClearOption} from 'react-icons/gr';
 import { useTheme } from 'styled-components';
 
 const Curator = () => {
@@ -161,7 +160,7 @@ const Curator = () => {
               {tagBtn}
             </div>
             <AiOutlineCheck className={`curatorForm-submit ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`} onClick={checkTag}>적용하기</AiOutlineCheck>
-            <GrClearOption  className={`curatorForm-submit ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`} onClick={clearTag}>선택삭제</GrClearOption>
+            <AiOutlineClear  className={`curatorForm-submit ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`} onClick={clearTag}>선택삭제</AiOutlineClear>
           </form>
         </div>
         <div className='curatorResult'>

@@ -1,10 +1,8 @@
 import React from 'react';
 import style from '../css/KnowledgeWrite.css'
 import { VscSearch } from 'react-icons/vsc';
-// import { VscSearch } from 'react-icons/vsc';
 import { useNavigate } from 'react-router-dom';
 import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'react-icons/ai';
-
 
 const KnowledgeWrite = () => {
   const navigate = useNavigate();
@@ -55,5 +53,4 @@ const KnowledgeWrite = () => {
     </div>
   );
 };
-
 export default KnowledgeWrite;

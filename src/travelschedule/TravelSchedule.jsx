@@ -404,17 +404,17 @@ const TravelSchedule = (props) => {
               </Link>
             </div>
             <div className='travelSchedule-icons'>
-              <div onClick={showMapModal}>
-                <BiFileFind className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>지도확대</BiFileFind>
-                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>지도확대</p>
+              <div onClick={showMapModal} className='travelSchedule-icon'>
+                {/* <BiFileFind className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>확대</BiFileFind> */}
+                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>확대</p>
                 {mapModal && <TravelScheduleModal mapModalsend={mapModal} setMapModalsend={setMapModal} markers={markers}></TravelScheduleModal>}
               </div>
-              <div onClick={onScheduleReset}>
-                <BiTrash className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>전체삭제</BiTrash>
-                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>전체삭제</p>
+              <div onClick={onScheduleReset} className='travelSchedule-icon'>
+                {/* <BiTrash className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>삭제</BiTrash> */}
+                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>삭제</p>
               </div>
-              <div>
-                <BiSolidSave className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>저장</BiSolidSave>
+              <div className='travelSchedule-icon'>
+                {/* <BiSolidSave className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>저장</BiSolidSave> */}
                 <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>저장</p>
               </div>
             </div>

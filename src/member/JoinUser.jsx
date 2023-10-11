@@ -28,22 +28,6 @@ const JoinUser = () => {
       return setPwdPop('비밀번호가 일치하지 않습니다.');
     }
   }
-
-  function onSubmitHandler() {
-
-  }
-  function onEmailHandler() {
-
-  }
-  function onNameHandler() {
-
-  }
-  function onPasswordHandler() {
-
-  }
-  function onConfirmPasswordHandler() {
-
-  }
   return (
     <div className='join-container'>
       <form >
