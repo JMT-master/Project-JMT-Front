@@ -1,7 +1,7 @@
 import React from 'react'
 import {MdOutlineFindInPage} from 'react-icons/md'
 
-const TourItem = ({ spot, pageType, onNav, setGps }) => {
+const TourItem = ({ spot, pageType, nav, setGps }) => {
   const photo = spot.repPhoto;
   const onSetGps = () =>{
     setGps({
@@ -17,18 +17,18 @@ const TourItem = ({ spot, pageType, onNav, setGps }) => {
     })
   }
 
-  // const onNav = () => {
-  //   navigate(`/destination/detail/${spot.contentsid}`, {
-  //     state: {
-  //       title: spot.title,
-  //       img: photo.photoid.imgpath,
-  //       tag: spot.tag,
-  //       address: spot.address,
-  //       phoneno: spot.phoneno,
-  //       content: spot.introduction,
-  //     }
-  //   })
-  // }
+  const onNav = () => {
+    nav(`/destination/detail/${spot.contentsid}`, {
+      state: {
+        title: spot.title,
+        img: photo.photoid.imgpath,
+        tag: spot.tag,
+        address: spot.address,
+        phoneno: spot.phoneno,
+        content: spot.introduction,
+      }
+    })
+  }
 
   return (
     <li className={`${pageType}-itemGrid`} onClick={()=>{
