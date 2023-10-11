@@ -112,7 +112,7 @@ const makeItemList = ()=>{
   const itemList = []
   dataList.slice(pageNum, offset * page).map((item) => {
     if (item.tag.includes(tagFilter)) {
-      itemList.push(<TourItem spot={item} key={item.contentsid} pageType={pageType} setGps={setGps} onNav={onNav} />);
+      itemList.push(<TourItem spot={item} key={item.contentsid} pageType={pageType} setGps={setGps} nav={nav} />);
     }
   })
   return itemList;
