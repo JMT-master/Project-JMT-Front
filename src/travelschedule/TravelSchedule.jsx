@@ -33,11 +33,7 @@ const TravelSchedule = (props) => {
   const markers = [];
   tableData1.map((item) => {
     if(!Number.isInteger(item)) markers.push(item);
-<<<<<<< HEAD
-  })
-=======
   });
->>>>>>> 1d2cf79ebe5fc3d4855c2adceac29c049f905476
 
   useEffect(() => {
     setLoading(true);

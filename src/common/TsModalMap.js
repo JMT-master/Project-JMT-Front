@@ -24,11 +24,7 @@ const TsModalMap = ({ markers }) => {
         position: markerPosition,
         map: map,
         icon: {
-<<<<<<< HEAD
           content: `<img src="https://place-hold.it/25x25/467&text=${num}" style="width: 25px; height: 25px;" />`,
-=======
-          content: `<img src="https://place-hold.it/25x25/f3a344&text=${num}" style="width: 25px; height: 25px; border-radius:25px;" />`,
->>>>>>> 1d2cf79ebe5fc3d4855c2adceac29c049f905476
         },
       });
 
