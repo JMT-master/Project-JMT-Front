@@ -46,7 +46,8 @@ const Curator = () => {
   // 관광지, 음식, 숙박이 바뀔때마다 json fetch
   useEffect(() => {
     setLoading(true);
-    fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=${categoryNum}&page=${currentPage}`)
+    fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&
+    category=${categoryNum}&page=${currentPage}`)
     .then(res => {
       return res.json();
     })
