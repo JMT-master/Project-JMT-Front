@@ -1,5 +1,5 @@
 import { createGlobalStyle} from "styled-components"
-
+//ㅅㄷㄴㅅㅅ
 export const GlobalStyles = createGlobalStyle`
   body {
     background: ${({ theme }) => theme.body};
