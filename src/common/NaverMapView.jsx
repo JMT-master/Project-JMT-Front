@@ -31,7 +31,7 @@ function NaverMapView({ gps, onNav }) {
     //     {
     //         typeId: window.naver.maps.MapTypeId.HYBRID,
     //         text: '겹쳐보기',
-    //     },
+    //     },테스트추가
     // ];
 
     let contentStr = [
