@@ -14,8 +14,9 @@ const Button = styled.button`
 `;
 const Toggle = ({theme,  toggleTheme }) => {
     return (
-        <Button onClick={toggleTheme} >{theme === 'light' ? <BsMoon style={{color : "white", width : "30px", height : "30px"}}></BsMoon> : 
-                                                            <BsSun  style={{width : "30px", height : "30px"}}></BsSun>}</Button>
+        <Button style={{color:'#f3a344', backgroundColor:'transparent', border:'none', marginTop:'10px'}}
+        onClick={toggleTheme} >{theme === 'light' ? <BsMoon style={{ width : "25px", height : "25px" ,fontWeight:'900'}}></BsMoon> : 
+                                                            <BsSun  style={{width : "25px", height : "25px", fontWeight:'900'}}></BsSun>}</Button>
     );
 };
 Toggle.propTypes = {

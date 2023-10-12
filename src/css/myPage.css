@@ -23,7 +23,7 @@
 .myPageHeader-profile-name {
   margin-top: 15px;
   font-size: large; font-weight: bold;
-  color: orange;
+  color: #f3a344;
 }
 
 .myPageHeader-ul {
@@ -35,7 +35,7 @@
   display: inline-block;
   width: 33%; height: 75px;
   text-align: center;
-  color: orange;
+  color: #f3a344;
   font-weight: bold;
   cursor: pointer;
 }
@@ -51,7 +51,7 @@
 .myPageBtn {
   width: 200px; height: 45px;
   margin-right: 20px;
-  background-color: orange;
+  background-color: #f3a344;
   color: white;
   border: none;
   border-radius: 10px;
@@ -86,7 +86,7 @@
   border: 1px solid white;
   border-radius: 50%;
   font-size: 50px;
-  background-color: orange;
+  background-color: #f3a344;
   color: white;
 }
 
@@ -152,19 +152,19 @@
 
 .myPage-tagList-li-icon {
   width: 65px; height: 65px;
-  color: orange;
+  color: #f3a344;
   margin-bottom: 15px;
 }
 
 .myPage-tagList-li-name {
   font-size: large;
   font-weight: bold;
-  color: orange;
+  color: #f3a344;
 }
 
 .myPage-h1-title {
   margin: 2%;
-  color: orange;
+  color: #f3a344;
 }
 
 .myPage-Big-Image-ul {
@@ -205,13 +205,14 @@
   pointer-events: none;
 }
 
-.myPage-Big-Image-li:hover {
+.myPage-Big-Image-li:hover .myPage-Big-Image-li-img{
   opacity: 0.3;
   transition: all 0.5s;
 }
 
 .myPage-Big-Image-li:hover .myPage-Big-Image-li-img-hover {
   display: block;
+  /* opacity: 1; */
 }
 
 @media screen and (max-width: 1700px) {
@@ -241,7 +242,7 @@
   
   .myPage-tagList-li-icon {
     width: 55px; height: 55px;
-    color: orange;
+    color: #f3a344;
     margin-bottom: 10px;
     transition: all 1s;
   }
@@ -279,7 +280,7 @@
   
   .myPage-tagList-li-icon {
     width: 45px; height: 45px;
-    color: orange;
+    color: #f3a344;
     margin-bottom: 10px;
     transition: all 1s;
   }

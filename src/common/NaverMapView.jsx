@@ -101,6 +101,7 @@ function NaverMapView({ gps, onNav }) {
                 const infoBtn = document.getElementById('infoWinBtn');
                 if (infoBtn) {
                     infoBtn.addEventListener('click', onNav);
+                    
                 }
             });
             infoWindow.setPosition(center);

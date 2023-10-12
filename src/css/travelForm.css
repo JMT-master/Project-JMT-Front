@@ -30,9 +30,9 @@
   position: absolute;
   bottom: 5px; right: 0px;
   width: 100px;
-  color: orange; border: orange 2px solid;
+  color: #f3a344; border: #f3a344 2px solid;
   border-radius: 10px;
-  background-color: white;
+  background-color: transparent;
   font-weight: 650;
   cursor: pointer;
 }

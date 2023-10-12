@@ -1,76 +1,51 @@
 .modal-answer-container{
-  width: 1000px;
+  width: 500px;
   height: 700px;
   z-index: 999;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(255, 236, 179, 1);
+  background-color: white;
   border: 1px solid black;
   border-radius: 8px;
   clear: both;
+  display: none;
 }
-.modal-answer-container button{
-  width: 20px;
-  height: 10px;
-  background-color: rgba(255, 236, 179, 1);
-  border: none;
+.modal-answer-container div {
+  display: block !important;
+  
 }
-.modal-container {
-  width: 800px;
-  height: 500px;
-  z-index: 999;
+.modal-answer-close {  
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgba(255, 236, 179, 1);
-  border: 1px solid black;
-  border-radius: 8px;
-  clear: both;
-}
-.modal-container div {
-  width: 100%;
-}
-.modal-close {
-  position: absolute;
-  right: 10px;
+  left: 10px;
   top: 10px;
-}
-
-.modal-container button {
-  width: 20px;
-  height: 10px;
-  background-color: rgba(255, 236, 179, 1);
-  border: none;
-}
-.answer-content textarea {
-  resize: none;
-  position: absolute;
-  left: 20px;
-  top: 100px;
+  width: 20px; height: 20px;
 }
 
 .answer-writer {
-  margin: 20px;
-  position: relative;
-  clear: both;
+  margin-top: 15px; margin-left: 3%;
 }
 
-.answer-writer .date {
-  position: absolute;
-  right: 50px;
+.modal-answer-name {
+  width: 100%; height: 45px;
+  font-size: large;
 }
 
-.answer-protect{
-  position: absolute;
-  bottom: 50px;
-  left: 10px;
+.answer-inside {
+  width: 100%; height: 80%;
+  resize: none;
 }
-.answer-submit{
-  margin: 0 10px;
-  background-color: beige;
+
+.answer-submit {
+  margin-left: 20px;
+  width: 90%; height: 40px;
+  text-align: center;
+  margin-top: 80px;
+  border-radius: 15px;
+  font-size: large; font-weight: bold;
+  background-color: #f3a344;
+  border: none;
 }
 
 /* map 관련 Container */
@@ -82,19 +57,20 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -30%);
-  border: 1px solid black;
   clear: both;
 }
 
 .modal-Map-close {
   width: 30px; height: 30px;
   position: absolute;
-  right: 0;
+  right: 5%;
   top: 0;
   cursor: pointer;
 }
 
 .modal-Map-show {
   width: 95%; height: 95%;
+  position: absolute;
+  bottom: 0;
   margin: 0 auto;
 }

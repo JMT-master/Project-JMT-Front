@@ -13,6 +13,7 @@
 }
 
 .travelSelect {
+  width: 95%;
   display: grid;
   grid-template-columns: 1fr 2fr;
 }
@@ -27,26 +28,42 @@
 }
 
 .travelSelectText {
-  color: orange;
+  color: #f3a344;
 }
 
 .travelSchedule-icons {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   justify-self: end;
+  align-items: end;
+}
+
+.travelSchedule-icon {
+  display: flex;
 }
 
 .travelSchedule-icons-title {
+  margin-right: 5px;
   text-align: center;
-  font-weight: bold;
-  color: orange;
+  font-size: large;
+  font-weight: 500;
+  height: 100%;
+  color: #f3a344; line-height: 30px;
+  cursor: pointer;
+}
+
+.travelSchedule-icons-title:hover {
+  font-weight: 900;
+  text-decoration: underline;
 }
 
 .travelBtn {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   margin-right: 20px;
-  border: 2px solid orange;
+  /* border: 2px solid #f3a344; */
+  color: #f3a344;
+  border: none;
   border-radius: 10px;
   cursor: pointer;
   margin: 0 5px auto;
@@ -61,7 +78,7 @@
 
 .searchSchedule {
   width: 100%; height: 800px;
-  border: 3px solid orange;
+  border: 3px solid #f3a344;
   margin-right: 10px;
   border-radius: 20px;
 }
@@ -74,8 +91,8 @@
 
 .searchSchedule-btns-travel, .searchSchedule-btns-search, .searchSchedule-btns-thema {
   width: 32%; height: 35px;
-  background-color: white;
-  color: orange;
+  background-color: transparent;
+  color: #f3a344;
   font-size: small;  
   font-weight: bold;  
   border: none;
@@ -83,7 +100,7 @@
 }
 
 .searchSchedule-btns-select {
-  background-color: orange;
+  background-color: #f3a344;
   border-radius: 10px;
   color: white;
 }
@@ -103,8 +120,8 @@
 
 .searchSchedule-input > button {
   width : 50px; height: 35px;
-  background-color: orange;
-  border: 1px solid orange;
+  background-color: #f3a344;
+  border: 1px solid #f3a344;
   font-size: large;
   color: white;
   font-weight: bold;
@@ -196,8 +213,8 @@
 
 .travelSchedule-table-body {
   opacity: 0.3;
-  background-color: orange;
-  border: 1px solid orange;
+  background-color: #f3a344;
+  border: 1px solid #f3a344;
 }
 
 .Calendar {
@@ -206,6 +223,7 @@
 
 .travelSchedule-naverMap {
   border: 1px solid black;
+  margin-top: 95px;
   width: 600px; height: 600px;
   transition: all 1s;
 }

@@ -12,7 +12,7 @@ import NaverMapView from '../common/NaverMapView';
 import { useTheme } from 'styled-components';
 import TravelScheduleModal from './TravelScheduleModal';
 import Swal from 'sweetalert2'
-
+import TsModalMap from '../common/TsModalMap'
 const TravelSchedule = (props) => {
   const [visit, setVisit] = useState();
   const [list, setList] = useState([]);
@@ -25,6 +25,15 @@ const TravelSchedule = (props) => {
   const [scheduleBtn, setScheduleBtn] = useState("2");
   const [mapModal, setMapModal] = useState(false);
   const theme = useTheme();
+
+  // const markers = [
+  //   ...tableData1
+  // ];
+
+  const markers = [];
+  tableData1.map((item) => {
+    if(!Number.isInteger(item)) markers.push(item);
+  });
 
   useEffect(() => {
     setLoading(true);
@@ -400,17 +409,17 @@ const TravelSchedule = (props) => {
               </Link>
             </div>
             <div className='travelSchedule-icons'>
-              <div onClick={showMapModal}>
-                <BiFileFind className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>지도확대</BiFileFind>
-                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>지도확대</p>
-                {mapModal && <TravelScheduleModal mapModalsend={mapModal} setMapModalsend={setMapModal}></TravelScheduleModal>}
+              <div onClick={showMapModal} className='travelSchedule-icon'>
+                {/* <BiFileFind className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>확대</BiFileFind> */}
+                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>확대</p>
+                {mapModal && <TravelScheduleModal mapModalsend={mapModal} setMapModalsend={setMapModal} markers={markers}></TravelScheduleModal>}
               </div>
-              <div onClick={onScheduleReset}>
-                <BiTrash className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>전체삭제</BiTrash>
-                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>전체삭제</p>
+              <div onClick={onScheduleReset} className='travelSchedule-icon'>
+                {/* <BiTrash className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>삭제</BiTrash> */}
+                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>삭제</p>
               </div>
-              <div>
-                <BiSolidSave className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>저장</BiSolidSave>
+              <div className='travelSchedule-icon'>
+                {/* <BiSolidSave className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>저장</BiSolidSave> */}
                 <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>저장</p>
               </div>
             </div>
@@ -599,7 +608,7 @@ const TravelSchedule = (props) => {
 
         </div>
         <div className='travelSchedule-naverMap'>
-          {/* <NaverMapView></NaverMapView> */}
+          <TsModalMap markers={markers}></TsModalMap>
         </div>
       </div>
     )
