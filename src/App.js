@@ -31,6 +31,7 @@ import data from "./data/festival.json";
 import { MdFestival } from 'react-icons/md';
 import { AiFillYoutube } from 'react-icons/ai';
 import { MdCardTravel } from 'react-icons/md';
+import QnaWrite from './notice/QnaWrite';
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -50,10 +51,10 @@ function App() {
         <Route path="/travelSchedule" element={<TravelSchedule></TravelSchedule>}></Route>
         <Route path="/mypage" element={<Mypage></Mypage>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
-        <Route path="/noticeBoard" element={<NoticeBoard></NoticeBoard>}></Route>
-        <Route path="/noticeBoard/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
-        <Route path="/qnABoard" element={<QnABoard></QnABoard>}></Route>
-        <Route path="/qnABoard/:id?" element={<QnaBoardDetail data={newQnaData}></QnaBoardDetail>}></Route>
+        <Route path="/notice" element={<NoticeBoard></NoticeBoard>}></Route>
+        <Route path="/notice/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
+        <Route path="/qna" element={<QnABoard></QnABoard>}></Route>
+        <Route path="/qna/:id?" element={<QnaBoardDetail data={newQnaData}></QnaBoardDetail>}></Route>
         <Route path="/festival?" element={<Festival></Festival>}></Route>
         <Route path="/traffic" element={<Traffic></Traffic>}></Route>
         <Route path="/knowledge?" element={<Knowledge></Knowledge>}></Route>
@@ -62,6 +63,7 @@ function App() {
         <Route path='/destination/:pageId' element={<TourList />}></Route>
         <Route path='/destination/detail/:id' element={<DetailInfo />}></Route>
         <Route path='/selectSchedule' element={<SelectSchedule></SelectSchedule>}></Route>
+        <Route path='/qna/write' element={<QnaWrite />}></Route>
       </Routes>
     </ThemeProvider>
   );
@@ -131,8 +133,8 @@ function HeaderTop(props) {
           <ul id="notice" onMouseOver={handleMouseOverNoti} onMouseOut={handleMouseOutNoti}>
             <div className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}><a>공지사항</a></div>
             <div className='notice-list'>
-              <li><Link to="/noticeBoard" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</Link></li>
-              <li><Link to="/qnABoard" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>Q&A</Link></li>
+              <li><Link to="/notice" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</Link></li>
+              <li><Link to="/qna" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>Q&A</Link></li>
             </div>
           </ul>
         </div>
