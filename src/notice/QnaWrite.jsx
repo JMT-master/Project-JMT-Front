@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'react-icons/ai';
 
 const QnaWrite = () => {
+
+
+
     return (
         <form action="/qna/write" method="post">
             <div className='knowledge-content'>
@@ -29,11 +32,12 @@ const QnaWrite = () => {
                             <option value="유저">유저</option>
                             <option value="기타">기타</option>
                         </select>
+                        {/*<input type="hidden" id="qna_category" name="qna_category">*/}
                     </div>
                     <div className='ask-textarea'>
                         <h4>제목 작성</h4>
-                        <input type="text" placeholder='제목을 작성해주세요' />
-                        <textarea cols="80" rows="10"></textarea>
+                        <input type="text" placeholder='제목을 작성해주세요' id="qna_title" name="qna_title" />
+                        <textarea cols="80" rows="10" id="qna_content" name="qna_content"></textarea>
                     </div>
                     <div className='file-attach'>
                         <label htmlFor='file'>
@@ -43,7 +47,7 @@ const QnaWrite = () => {
                     </div>
                 </div>
                 <div className='button-box'>
-                    <button className='submit-knowledge' onSubmit="">작성완료</button>
+                    <button type="button" className='submit-knowledge' onSubmit="">작성완료</button>
                     {/*<button className='back-to-knlist'onClick={() => navigate(-1)}>목록으로 돌아가기</button>*/}
                 </div>
             </div>

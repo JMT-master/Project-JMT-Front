@@ -32,6 +32,8 @@ import { MdFestival } from 'react-icons/md';
 import { AiFillYoutube } from 'react-icons/ai';
 import { MdCardTravel } from 'react-icons/md';
 import QnaWrite from './notice/QnaWrite';
+import ChatRoom from './trableinfo/ChatRoom';
+import ChatRoomDetail from './trableinfo/ChatRoomDetail';
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -55,7 +57,6 @@ function App() {
         <Route path="/notice/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
         <Route path="/qna" element={<QnABoard></QnABoard>}></Route>
         <Route path="/qna/:id?" element={<QnaBoardDetail data={newQnaData}></QnaBoardDetail>}></Route>
-        <Route path="/festival?" element={<Festival></Festival>}></Route>
         <Route path="/traffic" element={<Traffic></Traffic>}></Route>
         <Route path="/knowledge?" element={<Knowledge></Knowledge>}></Route>
         <Route path="/knowledgeDetail/:id?" element={<KnowledgeDetail data={newKnowledgeData}></KnowledgeDetail>}></Route>
@@ -64,6 +65,9 @@ function App() {
         <Route path='/destination/detail/:id' element={<DetailInfo />}></Route>
         <Route path='/selectSchedule' element={<SelectSchedule></SelectSchedule>}></Route>
         <Route path='/qna/write' element={<QnaWrite />}></Route>
+        <Route path='/chat/room' element={<ChatRoom />}></Route>
+        <Route path='/chat/rooms' ></Route>
+        <Route path='/chat/room/:roomId?' element={<ChatRoomDetail />}></Route>
       </Routes>
     </ThemeProvider>
   );
@@ -126,8 +130,8 @@ function HeaderTop(props) {
             <div className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}><a>여행정보</a></div>
             <div className='myTrableInfo-list'>
               <li><Link to="/traffic" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통 혼잡도</Link></li>
-              <li><Link to="/festival" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>축제 및 행사</Link></li>
               <li><Link to="/knowledge" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광 지식in</Link></li>
+              <li><Link to="/chat/room" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅제주</Link></li>
             </div>
           </ul>
           <ul id="notice" onMouseOver={handleMouseOverNoti} onMouseOut={handleMouseOutNoti}>
@@ -233,7 +237,7 @@ function Header() {
       </div>
         <div className='festival-send-content'>
           <div className='festival-send-title'><h2><span><MdFestival style={{width:'45px', height:'45px'}}></MdFestival></span>JMT의 최신 소식을 알아보세요</h2></div>
-          <ul onClick={()=>navigate('/festival')} className='main-fest'>
+          <ul onClick={()=>navigate('/notice')} className='main-fest'>
             <FesListNoImg data={data.data[0]}></FesListNoImg>
             <FesListNoImg data={data.data[1]}></FesListNoImg>
           </ul>
