@@ -31,6 +31,7 @@ import data from "./data/festival.json";
 import { MdFestival } from 'react-icons/md';
 import { AiFillYoutube } from 'react-icons/ai';
 import { MdCardTravel } from 'react-icons/md';
+import NoticeWrite from './notice/NoticeWrite';
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -62,6 +63,7 @@ function App() {
         <Route path='/destination/:pageId' element={<TourList />}></Route>
         <Route path='/destination/detail/:id' element={<DetailInfo />}></Route>
         <Route path='/selectSchedule' element={<SelectSchedule></SelectSchedule>}></Route>
+        <Route path='/noticeWrite' element={<NoticeWrite></NoticeWrite>}></Route>
       </Routes>
     </ThemeProvider>
   );

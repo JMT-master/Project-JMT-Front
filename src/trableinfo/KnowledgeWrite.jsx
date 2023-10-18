@@ -45,7 +45,7 @@ const KnowledgeWrite = () => {
           <label for='file'>
             <div className='btn-upload'>파일 업로드 하기</div>
           </label>
-          <input type="file" name='file' id='file' multiple/>
+          <input type="file" name='file' id='file' />
         </div>
       </div>
       <div className='button-box'>
