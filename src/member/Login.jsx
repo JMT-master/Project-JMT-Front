@@ -36,10 +36,10 @@ const Login = () => {
         <p className='memberCheck'><button onClick={showModal}>아이디/비밀번호찾기</button>
           {modalOpen && <LoginModal setModalOpen={setModalOpen}></LoginModal>}
         </p>
-        <div className='sns-login'>
-          <Link to='/'><img src="../images/kakao-icon.png" alt="" /></Link>
-          <Link to='/'><img src="../images/google-icon.png" alt="" /></Link>
-        </div>
+        {/*<div className='sns-login'>*/}
+        {/*  <Link to='/'><img src="../images/kakao-icon.png" alt="" /></Link>*/}
+        {/*  <Link to='/'><img src="../images/google-icon.png" alt="" /></Link>*/}
+        {/*</div>*/}
       </div>
     </div>
   );

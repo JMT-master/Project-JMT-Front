@@ -1,19 +1,20 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { VscSearch } from 'react-icons/vsc';
 import style from '../css/QnABoard.css';
 import { useNavigate } from 'react-router-dom';
 import { qnaData } from '../data/Data';
 import Paging from '../common/Paging';
+import { call } from './../common/ApiService';
 
 
 const Tr = (props) => {
   const navigate = useNavigate();
   const { no, Q, category, title, content, createDate } = props.data;
   return (
-    <tr onClick={() => navigate('/qnaBoard/' + no)}>
+    <tr>
       <td>{Q}</td>
       <td>{category}</td>
-      <td>{title}</td>
+      <td onClick={() => navigate('/qna/' + no)}>{title}</td>
       <td>{createDate}</td>
     </tr>
   );
@@ -21,13 +22,35 @@ const Tr = (props) => {
 
 const QnABoard = () => {
   const [newQnaData, setNewQnaData] = useState(qnaData);
+  const [items, setItems] = useState([]);
   const [currentPage , setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentItems = newQnaData.slice(startIndex, endIndex);
   const totalPages = Math.ceil(newQnaData.length / itemsPerPage);
-  
+
+  useEffect(() => {
+    call("/qna", "GET", null)
+        .then((response) => {
+          setItems(response.data);
+        })}, []);
+
+  const addItem = (item) => {
+    call("/qna","POST", item)
+        .then((response) => setItems(response.data));
+  }
+
+  const editItem = (item) => {
+    call("/qna", "PUT", item)
+        .then((response) => setItems(response.data));
+  }
+
+  const deleteItem = (item) => {
+    call("/qna", "DELETE", item)
+        .then((response) => setItems(response.data));
+  }
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };

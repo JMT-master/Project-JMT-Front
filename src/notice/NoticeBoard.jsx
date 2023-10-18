@@ -10,7 +10,7 @@ const TestTr = (props) => {
   const {no, category, title, content, createDate} = props.data;
   
   return (
-    <tr onClick={()=>navigate('/noticeBoard/'+no)}>
+    <tr onClick={()=>navigate('/notice/'+no)}>
       <td>{no}</td>
       <td>{category}</td>
       <td>{title}</td>

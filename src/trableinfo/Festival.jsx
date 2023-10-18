@@ -53,7 +53,7 @@ const Festival = () => {
   const [onFestival, setOnFestival] = useState([]);
   const [offFestival, setOffFestival] = useState([]);
   let month = 8;
-  let now = new Date("2022-" + month + "-22");
+  let now = new Date("2023-" + month + "-22");
 
   newFestivalData.map((index) => {
     const fesDate = new Date(index.종료일);
