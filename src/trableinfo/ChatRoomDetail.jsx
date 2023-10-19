@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SockJS from 'sockjs-client';
-// import Stomp from 'stompjs';
 import axios from 'axios';
+import { Stomp } from '@stomp/stompjs';
 
 const ChatRoomDetail = () => {
     const [roomId, setRoomId] = useState(localStorage.getItem('wschat.roomId') || '');
@@ -13,7 +13,7 @@ const ChatRoomDetail = () => {
 
     useEffect(() => {
         findRoom();
-        // connect();
+        connect();
         // 컴포넌트 언마운트 시 웹소켓 연결 해제
         return () => {
             if (ws) {
@@ -54,19 +54,19 @@ const ChatRoomDetail = () => {
         ]);
     };
 
-    // const connect = () => {
-    //     const sock = new SockJS(`/ws/chat`);
-    //     const stompClient = Stomp.over(sock);
-    //     stompClient.connect({}, frame => {
-    //         stompClient.subscribe(`/topic/chat/room/${roomId}`, message => {
-    //             const recv = JSON.parse(message.body);
-    //             recvMessage(recv);
-    //         });
-    //         stompClient.send(`/app/chat/message`, {}, JSON.stringify({ type: 'ENTER', roomId: roomId, sender: sender }));
-    //         // ws 상태 업데이트
-    //         setWs(stompClient);
-    //     });
-    // };
+    const connect = () => {
+        const sock = new SockJS(`/ws/chat`);
+        const stompClient = Stomp.over(sock);
+        stompClient.connect({}, frame => {
+            stompClient.subscribe(`/topic/chat/room/${roomId}`, message => {
+                const recv = JSON.parse(message.body);
+                recvMessage(recv);
+            });
+            stompClient.send(`/app/chat/message`, {}, JSON.stringify({ type: 'ENTER', roomId: roomId, sender: sender }));
+            // ws 상태 업데이트
+            setWs(stompClient);
+        });
+    };
 
 
     return (

@@ -65,8 +65,8 @@ function App() {
         <Route path='/destination/detail/:id' element={<DetailInfo />}></Route>
         <Route path='/selectSchedule' element={<SelectSchedule></SelectSchedule>}></Route>
         <Route path='/qna/write' element={<QnaWrite />}></Route>
-        <Route path='/chat/room' element={<ChatRoom />}></Route>
-        <Route path='/chat/rooms' ></Route>
+        <Route path='/chat/rooms' element={<ChatRoom />}></Route>
+        {/* <Route path='/chat/rooms' ></Route> */}
         <Route path='/chat/room/:roomId?' element={<ChatRoomDetail />}></Route>
       </Routes>
     </ThemeProvider>
