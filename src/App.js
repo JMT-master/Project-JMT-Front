@@ -42,6 +42,15 @@ function App() {
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
 
+  // const { createProxyMiddleware } = require("http-proxy-middleware");
+
+  // module.exports = (app) => {
+  //     app.use(
+  //         "/ws/chat",
+  //         createProxyMiddleware({ target: "http://localhost:8888", ws: true })
+  //     );
+  // };
+
   return (
     <ThemeProvider theme={themeMode}>
       <GlobalStyles />
