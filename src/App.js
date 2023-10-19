@@ -39,6 +39,7 @@ function App() {
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
 
+
   return (
     <ThemeProvider theme={themeMode}>
       <GlobalStyles />
@@ -69,6 +70,9 @@ function App() {
 
 function HeaderTop(props) {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const accessToken = localStorage.getItem('ACCESS_TOKEN');
+  const refreshToken = localStorage.getItem('REFRESH_TOKEN');
 
   const handleMouseOverDes = () => {
     $(".destination-list").show();
@@ -91,12 +95,31 @@ function HeaderTop(props) {
     $(".notice-list").hide();
   };
 
+  const handleClick = () => {
+    console.log("들어옴?");
+    console.log(pathname);
 
+    if(accessToken === null) { // login
+      navigate("/login");
+      window.location.reload();
+    } else { // logout
+      localStorage.removeItem("ACCESS_TOKEN");
+      localStorage.removeItem("REFRESH_TOKEN");
+      navigate(pathname);
+      window.location.reload();
+    }
+  };
+
+  console.log(accessToken);
   return (
     <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`} >
       <div className="headerTop">
         <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
-        <Link to="/login" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>로그인</Link>
+        <span>
+          <a href={() => false} onClick={() => handleClick()} 
+          className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
+          >{(accessToken === null) ? '로그인' : '로그아웃'}</a>
+        </span>
         <Toggle theme={props.theme} toggleTheme={props.themeToggler} />
       </div>
       <div className="header-container">
