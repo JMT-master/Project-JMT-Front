@@ -4,8 +4,13 @@ import { renderToString } from 'react-dom/server';
 // import '../css/button.scss';
 
 function NaverMapView({ gps, onNav }) {
+  if(gps.lat == null || gps.lng == null){
+    gps.lat = 33.3764981
+    gps.lng = 126.5193789
+  }
     const { lat, lng, title, img } = gps;
     console.log('gps: ', gps);
+
 
     const center = new window.naver.maps.LatLng(lat, lng);
 

@@ -51,10 +51,12 @@ const JoinUser = () => {
       address : address,
       addressDetail : addressDetail,
       phone : phone,
-      email : email
+      email : email,
+      adminYn : 'N'
     }
 
     call("/joinUser", "POST", member);
+    window.location.href = "/login";
   }
   function onEmailHandler() {
 
@@ -70,7 +72,6 @@ const JoinUser = () => {
   }
   return (
     <div className='join-container'>
-      <form onClick={onSubmitHandler} >
         <div className='item-title'>
           <h2>JMT로의 회원가입을 통해<br /> 더 다양한 서비스를 만나보세요</h2>
         </div>
@@ -163,14 +164,13 @@ const JoinUser = () => {
           <div className='joinUser-btn'>
             <ul className='type2'>
               <li className='lt'><button onClick={(e) => {
-                e.preventDefault()
+                e.preventDefault();
                 return onSubmitHandler();
                 }}><span>가입완료</span></button></li>
               <li className='rt' onClick={()=>navigate(-1)} ><button><span>취소</span></button></li>
             </ul>
           </div>
         </div>
-      </form>
     </div>
   );
 }

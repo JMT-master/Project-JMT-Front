@@ -9,7 +9,7 @@ import TravelSchedule from './travelschedule/TravelSchedule';
 import Login from './member/Login';
 import NoticeBoard from './notice/NoticeBoard';
 import NoticeBoardDetail from './notice/NoticeBoardDetail';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { knowledgeData, noticeData, qnaData } from './data/Data';
 import QnABoard from './notice/QnABoard';
 import QnaBoardDetail from './notice/QnaBoardDetail';
@@ -29,8 +29,11 @@ import Toggle from './common/Toggle';
 import YouTube from 'react-youtube'
 import data from "./data/festival.json";
 import { MdFestival } from 'react-icons/md';
-import { AiFillYoutube } from 'react-icons/ai';
+import { AiFillYoutube, AiOutlineBell } from 'react-icons/ai';
 import { MdCardTravel } from 'react-icons/md';
+import {call} from './common/ApiService'
+import OnModalComp from "./common/OnModalComp";
+import AlarmList from "./common/Notification";
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -79,8 +82,6 @@ function HeaderTop(props) {
     setModalOpen(!modalOpen);
   }
 
-  const {pathname} = useLocation();
-
   const handleMouseOverDes = () => {
     $(".destination-list").show();
   };
@@ -105,6 +106,18 @@ function HeaderTop(props) {
   const handleClick = () => {
     console.log("들어옴?");
     console.log(pathname);
+
+    if(accessToken === null) { // login
+      navigate("/login");
+      window.location.reload();
+    } else { // logout
+      localStorage.removeItem("ACCESS_TOKEN");
+      localStorage.removeItem("REFRESH_TOKEN");
+      navigate(pathname);
+      window.location.reload();
+    }
+  };
+
   useEffect(() => {
     call("/alarm",
        "POST",
@@ -118,18 +131,6 @@ function HeaderTop(props) {
          console.log(error);
        })
   }, []);
-
-
-    if(accessToken === null) { // login
-      navigate("/login");
-      window.location.reload();
-    } else { // logout
-      localStorage.removeItem("ACCESS_TOKEN");
-      localStorage.removeItem("REFRESH_TOKEN");
-      navigate(pathname);
-      window.location.reload();
-    }
-  };
 
   console.log(accessToken);
   return (
@@ -147,7 +148,7 @@ function HeaderTop(props) {
         <Toggle theme={props.theme} toggleTheme={props.themeToggler} />
          <Link to="/login" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>로그인</Link>
          <Toggle theme={props.theme} toggleTheme={props.themeToggler}/>
-         {modalOpen && <OnModalComp setModalOpen={setModalOpen} comp={<Alarm/>}></OnModalComp>}
+         {modalOpen && <OnModalComp setModalOpen={setModalOpen} comp={<AlarmList/>}></OnModalComp>}
        </div>
        <div className="header-container">
          <Link to="/">
