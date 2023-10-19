@@ -6,11 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="23년 10월 17일 5시 50분 안광현 프론트단 커밋">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/trableinfo/ChatRoom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/trableinfo/ChatRoom.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/trableinfo/ChatRoomDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/trableinfo/ChatRoomDetail.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
