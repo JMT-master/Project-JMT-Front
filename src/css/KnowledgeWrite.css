@@ -99,8 +99,8 @@
     background: #f3a344;
     color: #fff;
 }
-#file {
-  display: none;
+#knowledgeWrite-file {
+  /* display: none; */
 }
 .submit-knowledge{
   padding: 10px 20px;

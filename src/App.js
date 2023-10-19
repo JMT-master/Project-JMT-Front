@@ -9,11 +9,11 @@ import TravelSchedule from './travelschedule/TravelSchedule';
 import Login from './member/Login';
 import NoticeBoard from './notice/NoticeBoard';
 import NoticeBoardDetail from './notice/NoticeBoardDetail';
-import React, {useEffect, useState} from 'react';
-import {knowledgeData, noticeData, qnaData} from './data/Data';
+import { useState } from 'react';
+import { knowledgeData, noticeData, qnaData } from './data/Data';
 import QnABoard from './notice/QnABoard';
 import QnaBoardDetail from './notice/QnaBoardDetail';
-import Festival, {FesListNoImg} from './trableinfo/Festival';
+import Festival, { FesListNoImg } from './trableinfo/Festival';
 import Knowledge from './trableinfo/Knowledge';
 import KnowledgeDetail from './trableinfo/KnowledgeDetail';
 import KnowledgeWrite from './trableinfo/KnowledgeWrite';
@@ -21,19 +21,16 @@ import TourList from './destination/TourList';
 import DetailInfo from './destination/DetailInfo';
 import Traffic from './trableinfo/Traffic';
 import SelectSchedule from './travelschedule/SelectSchedule';
-import {ThemeProvider} from 'styled-components';
-import {darkTheme, lightTheme} from './common/Themes';
-import {GlobalStyles} from './common/GlobalStyles';
-import {useDarkMode} from './common/useDarkMode';
+import { ThemeProvider } from 'styled-components';
+import { darkTheme, lightTheme } from './common/Themes';
+import { GlobalStyles } from './common/GlobalStyles';
+import { useDarkMode } from './common/useDarkMode';
 import Toggle from './common/Toggle';
 import YouTube from 'react-youtube'
 import data from "./data/festival.json";
-import {MdCardTravel, MdFestival} from 'react-icons/md';
-import {AiFillYoutube, AiOutlineBell} from 'react-icons/ai';
-import {call} from './common/ApiService'
-import Alarm from "./common/Alarm";
-import OnModalComp from "./common/OnModalComp";
-import './css/OnModal.css'
+import { MdFestival } from 'react-icons/md';
+import { AiFillYoutube } from 'react-icons/ai';
+import { MdCardTravel } from 'react-icons/md';
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -43,35 +40,38 @@ function App() {
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
 
   return (
-     <ThemeProvider theme={themeMode}>
-       <GlobalStyles/>
-       <HeaderTop theme={theme} themeToggler={themeToggler}/>
-       <Routes>
-         <Route path='/' element={<Header></Header>}></Route>
-         <Route path="/joinUser" element={<JoinUser></JoinUser>}></Route>
-         <Route path="/curator" element={<Curator></Curator>}></Route>
-         <Route path="/travelSchedule" element={<TravelSchedule></TravelSchedule>}></Route>
-         <Route path="/mypage" element={<Mypage></Mypage>}></Route>
-         <Route path="/login" element={<Login></Login>}></Route>
-         <Route path="/noticeBoard" element={<NoticeBoard></NoticeBoard>}></Route>
-         <Route path="/noticeBoard/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
-         <Route path="/qnABoard" element={<QnABoard></QnABoard>}></Route>
-         <Route path="/qnABoard/:id?" element={<QnaBoardDetail data={newQnaData}></QnaBoardDetail>}></Route>
-         <Route path="/festival?" element={<Festival></Festival>}></Route>
-         <Route path="/traffic" element={<Traffic></Traffic>}></Route>
-         <Route path="/knowledge?" element={<Knowledge></Knowledge>}></Route>
-         <Route path="/knowledgeDetail/:id?"
-                element={<KnowledgeDetail data={newKnowledgeData}></KnowledgeDetail>}></Route>
-         <Route path="/knowledgeWrite" element={<KnowledgeWrite></KnowledgeWrite>}></Route>
-         <Route path='/destination/:pageId' element={<TourList/>}></Route>
-         <Route path='/destination/detail/:id' element={<DetailInfo/>}></Route>
-         <Route path='/selectSchedule' element={<SelectSchedule></SelectSchedule>}></Route>
-       </Routes>
-     </ThemeProvider>
+    <ThemeProvider theme={themeMode}>
+      <GlobalStyles />
+      <HeaderTop theme={theme} themeToggler={themeToggler} />
+      <Routes>
+        <Route path='/' element={<Header></Header>}></Route>
+        <Route path="/joinUser" element={<JoinUser></JoinUser>}></Route>
+        <Route path="/curator" element={<Curator></Curator>}></Route>
+        <Route path="/travelSchedule" element={<TravelSchedule></TravelSchedule>}></Route>
+        <Route path="/mypage" element={<Mypage></Mypage>}></Route>
+        <Route path="/login" element={<Login></Login>}></Route>
+        <Route path="/noticeBoard" element={<NoticeBoard></NoticeBoard>}></Route>
+        <Route path="/noticeBoard/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
+        <Route path="/qnABoard" element={<QnABoard></QnABoard>}></Route>
+        <Route path="/qnABoard/:id?" element={<QnaBoardDetail data={newQnaData}></QnaBoardDetail>}></Route>
+        <Route path="/festival?" element={<Festival></Festival>}></Route>
+        <Route path="/traffic" element={<Traffic></Traffic>}></Route>
+        <Route path="/knowledge?" element={<Knowledge></Knowledge>}></Route>
+        <Route path="/knowledgeDetail/:id?" element={<KnowledgeDetail data={newKnowledgeData}></KnowledgeDetail>}></Route>
+        <Route path="/knowledgeWrite" element={<KnowledgeWrite></KnowledgeWrite>}></Route>
+        <Route path='/destination/:pageId' element={<TourList />}></Route>
+        <Route path='/destination/detail/:id' element={<DetailInfo />}></Route>
+        <Route path='/selectSchedule' element={<SelectSchedule></SelectSchedule>}></Route>
+      </Routes>
+    </ThemeProvider>
   );
 }
 
 function HeaderTop(props) {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const accessToken = localStorage.getItem('ACCESS_TOKEN');
+  const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   //알람 모달 관련
   const [alarms, setAlarms] = useState()
   const [modalOpen, setModalOpen] = useState(false);
@@ -102,6 +102,9 @@ function HeaderTop(props) {
     $(".notice-list").hide();
   };
 
+  const handleClick = () => {
+    console.log("들어옴?");
+    console.log(pathname);
   useEffect(() => {
     call("/alarm",
        "POST",
@@ -117,14 +120,31 @@ function HeaderTop(props) {
   }, []);
 
 
+    if(accessToken === null) { // login
+      navigate("/login");
+      window.location.reload();
+    } else { // logout
+      localStorage.removeItem("ACCESS_TOKEN");
+      localStorage.removeItem("REFRESH_TOKEN");
+      navigate(pathname);
+      window.location.reload();
+    }
+  };
+
+  console.log(accessToken);
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
-
        <div className="headerTop">
          <button type="button" onClick={showModal} style={{justifyContent:"left"}}>
            <AiOutlineBell className="headerAlarm"/>
          </button>
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
+        <span>
+          <a href={() => false} onClick={() => handleClick()}
+          className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
+          >{(accessToken === null) ? '로그인' : '로그아웃'}</a>
+        </span>
+        <Toggle theme={props.theme} toggleTheme={props.themeToggler} />
          <Link to="/login" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>로그인</Link>
          <Toggle theme={props.theme} toggleTheme={props.themeToggler}/>
          {modalOpen && <OnModalComp setModalOpen={setModalOpen} comp={<Alarm/>}></OnModalComp>}
@@ -255,8 +275,8 @@ function Header() {
                      {`header-travel-Image-li-title ${changeImage === 1 ?
                         'header-travel-Image-li-info' : 'header-travel-Image-li-info-vertical'}`}>음식
              </div>
-             <div
-                className={`header-travel-Image-li-content ${changeImage === 1 ?
+            <div 
+            className={`header-travel-Image-li-content ${changeImage === 1 ? 
                    'header-travel-Image-li-info header-travel-Image-li-info-cursor' : 'header-travel-Image-li-info-title-none'}`}
                 onClick={() => navigate('/destination/restaurant')}>원하는 음식를 찾아보세요
              </div>
@@ -355,7 +375,7 @@ function Header() {
 }
 
 function Footer() {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   return (
      <>
@@ -384,6 +404,6 @@ function Footer() {
   )
 }
 
-export {HeaderTop, Footer};
+export { HeaderTop, Footer };
 export default App;
 
