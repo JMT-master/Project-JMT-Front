@@ -66,7 +66,9 @@ const Curator = () => {
       visitTag = []; tagSet = [];
 
       setList(visit.items.map((item,i) => {
-        visitTag = visitTag.concat(item.tag.replace(/, /gi, ',').split(','));
+
+        if(item.tag !== null) visitTag = visitTag.concat(item.tag.replace(/, /gi, ',').split(','));
+        
         // if(i <= 10){
           return <ImageList key={i} number={i} className='curatorResult-img-li' 
           data={item.repPhoto !== null ? item.repPhoto.photoid.imgpath : null} title={item.title}></ImageList>

@@ -70,32 +70,31 @@ const ChatRoomDetail = () => {
 
 
     return (
-        <div className="container" id="app">
+        <div >
             <div>
                 <h2>{room.name}</h2>
             </div>
-            <div className="input-group">
-                <div className="input-group-prepend">
-                    <label className="input-group-text">내용</label>
+            <div >
+                <div >
+                    <label >내용</label>
                 </div>
                 <input
                     type="text"
-                    className="form-control"
                     value={message}
                     onChange={e => setMessage(e.target.value)}
                     onKeyPress={e => {
                         if (e.key === 'Enter') sendMessage();
                     }}
                 />
-                <div className="input-group-append">
-                    <button className="btn btn-primary" type="button" onClick={sendMessage}>
+                <div>
+                    <button type="button" onClick={sendMessage}>
                         보내기
                     </button>
                 </div>
             </div>
-            <ul className="list-group">
+            <ul >
                 {messages.map((msg, index) => (
-                    <li className="list-group-item" key={index}>
+                    <li  key={index}>
                         {msg.sender} - {msg.message}
                     </li>
                 ))}
