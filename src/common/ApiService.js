@@ -7,15 +7,11 @@ export function call(api, method, request){
     });
 
     const accessToken = localStorage.getItem("ACCESS_TOKEN");
-    if(accessToken && accessToken != null) {
+    console.log("call 사용시 토큰" + accessToken);
+    if(accessToken) {
       headers.append("Authorization", "Bearer " + accessToken);
     }
-  // return call("/auth/signin","POST", {})
-  //    .then((response) => {
-  //      localStorage.setItem("ACCESS_TOKEN", response.token)
-  //      console.log("response : " + response);
-  //      window.location.href = "/";
-  //    });
+  console.log("call 사용시 headers = " + headers.get('Authorization'))
 
     let options = {
         headers : headers,
@@ -24,7 +20,6 @@ export function call(api, method, request){
     };
 
     console.log(options.url);
-
     if (request){
         options.body = JSON.stringify(request);
     }

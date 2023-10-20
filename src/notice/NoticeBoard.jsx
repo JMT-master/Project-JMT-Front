@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import style from '../css/NoticeBoard.css'
 import { VscSearch } from 'react-icons/vsc';
 import { Link, useNavigate } from 'react-router-dom';
 import { noticeData } from '../data/Data';
 import Paging from '../common/Paging';
+import {call} from "../common/ApiService";
+
+
 
 const TestTr = (props) => {
   const navigate = useNavigate();
@@ -26,7 +29,8 @@ const NoticeBoard = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentItems = noticeData.slice(startIndex, endIndex);
+  // const currentItems = noticeData.slice(startIndex, endIndex);
+  const [currentItems, setCurrentItems] = useState([])
   const totalPages = Math.ceil(noticeData.length / itemsPerPage);
 
   const handlePageChange = (page) => {
@@ -36,6 +40,19 @@ const NoticeBoard = () => {
   const handleSelect = (e) =>{
     setItemsPerPage(e.target.value);
   }
+
+  useEffect(() => {
+    call("/notice/test",
+       "GET",
+       null
+       // request = 현재 접속한 유저의 아이디, 지금은 고정값
+    ).then((response) => {
+      setCurrentItems(response.data);
+    })
+       .catch((error) => {
+         console.log(error);
+       })
+  }, []);
 
 
   return (

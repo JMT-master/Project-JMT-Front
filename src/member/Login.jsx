@@ -26,12 +26,14 @@ const Login = () => {
 
   const [checkLogin, setCheckLogin] = useState(true);
   const logBtn = () => {
-    const loginDto = {
+    let loginDto = {
       userid : id,
       password : pwd
     };
 
-    signin(loginDto);
+    const {userid, email, acessToken, refreshToken} = signin(loginDto);
+    console.log("로그인 시 날아오는 데이터" + userid, email, acessToken, refreshToken);
+
 
   }
   return (
