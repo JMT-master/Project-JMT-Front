@@ -77,8 +77,8 @@ function App() {
         <Route path='/destination/detail/:id' element={<DetailInfo />}></Route>
         <Route path='/selectSchedule' element={<SelectSchedule></SelectSchedule>}></Route>
         <Route path='/qna/write' element={<QnaWrite />}></Route>
-        <Route path='/chat/rooms' element={<ChatRoom />}></Route>
-        {/* <Route path='/chat/rooms' ></Route> */}
+        <Route path='/chat/room' element={<ChatRoom />}></Route>
+        <Route path='/chat/rooms' ></Route>
         <Route path='/chat/room/:roomId?' element={<ChatRoomDetail />}></Route>
       </Routes>
     </ThemeProvider>
@@ -197,8 +197,7 @@ function HeaderTop(props) {
              <div className='myTrableInfo-list'>
                <li><Link to="/traffic" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통
                  혼잡도</Link></li>
-               <li><Link to="/festival" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>축제 및
-                 행사</Link></li>
+               <li><Link to="/chat/room" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주</Link></li>
                <li><Link to="/knowledge" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광
                  지식in</Link></li>
              </div>
