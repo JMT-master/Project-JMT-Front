@@ -37,6 +37,7 @@ import ChatRoomDetail from './trableinfo/ChatRoomDetail';
 import {call} from './common/ApiService'
 import OnModalComp from "./common/OnModalComp";
 import AlarmList from "./common/Notification";
+import ChatDetail from './trableinfo/ChatDetail';
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -79,7 +80,8 @@ function App() {
         <Route path='/qna/write' element={<QnaWrite />}></Route>
         <Route path='/chat/room' element={<ChatRoom />}></Route>
         <Route path='/chat/rooms' ></Route>
-        <Route path='/chat/room/:roomId?' element={<ChatRoomDetail />}></Route>
+        <Route path='/chat/room/enter/:roomId?' element={<ChatDetail />}></Route>
+        <Route path='/ws/chat/#hash?' element={<ChatRoomDetail />}></Route>
       </Routes>
     </ThemeProvider>
   );
@@ -147,7 +149,7 @@ function HeaderTop(props) {
        })
   }, []);
 
-  console.log(accessToken);
+  // console.log(accessToken);
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
        <div className="headerTop">
@@ -161,8 +163,6 @@ function HeaderTop(props) {
           >{(accessToken === null) ? '로그인' : '로그아웃'}</a>
         </span>
         <Toggle theme={props.theme} toggleTheme={props.themeToggler} />
-         <Link to="/login" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>로그인</Link>
-         <Toggle theme={props.theme} toggleTheme={props.themeToggler}/>
          {modalOpen && <OnModalComp setModalOpen={setModalOpen} comp={<AlarmList/>}></OnModalComp>}
        </div>
        <div className="header-container">
@@ -197,8 +197,8 @@ function HeaderTop(props) {
              <div className='myTrableInfo-list'>
                <li><Link to="/traffic" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통
                  혼잡도</Link></li>
-               <li><Link to="/festival" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>축제 및
-                 행사</Link></li>
+               <li><Link to="/chat/room" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
+                 </Link></li>
                <li><Link to="/knowledge" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광
                  지식in</Link></li>
              </div>

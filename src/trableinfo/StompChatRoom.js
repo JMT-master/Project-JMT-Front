@@ -7,12 +7,12 @@ function CreateReadChat() {
   const [chatList, setChatList] = useState([]);
   const [chat, setChat] = useState('');
 
-  const { apply_id } = useParams();
+  const { roomId } = useParams();
   const client = useRef({});
 
   const connect = () => {
     client.current = new StompJs.Client({
-      brokerURL: 'ws://localhost:8787/ws',
+      brokerURL: 'ws://localhost:8888/ws/chat',
       onConnect: () => {
         console.log('success');
         subscribe();
@@ -25,9 +25,9 @@ function CreateReadChat() {
     if (!client.current.connected) return;
 
     client.current.publish({
-      destination: '/pub/chat',
+      destination: '/app/chat',
       body: JSON.stringify({
-        applyId: apply_id,
+        roomId: roomId,
         chat: chat,
       }),
     });
@@ -36,7 +36,7 @@ function CreateReadChat() {
   };
 
   const subscribe = () => {
-    client.current.subscribe('/sub/chat/' + apply_id, (body) => {
+    client.current.subscribe('/topic/chat/room/' + roomId, (body) => {
       const json_body = JSON.parse(body.body);
       setChatList((_chat_list) => [
         ..._chat_list, json_body
