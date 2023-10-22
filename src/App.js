@@ -78,7 +78,7 @@ function App() {
 function HeaderTop(props) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  let state = 0;
+  let state = 1;
 
   const handleMouseOverDes = () => {
     $(".destination-list").show();
@@ -114,17 +114,17 @@ function HeaderTop(props) {
     }
   };
 
-  {
-    const accessToken = localStorage.getItem('ACCESS_TOKEN');
-    const refreshToken = localStorage.getItem('REFRESH_TOKEN');
-    const requestToken = {
-      accessToken : accessToken,
-      refreshToken : refreshToken
-    }
+  // {
+  //   const accessToken = localStorage.getItem('ACCESS_TOKEN');
+  //   const refreshToken = localStorage.getItem('REFRESH_TOKEN');
+  //   const requestToken = {
+  //     accessToken : accessToken,
+  //     refreshToken : refreshToken
+  //   }
 
-    accessToken !== null ? state = 1 : state = 0;
-    // call(pathname, "GET", requestToken);
-  }
+  //   accessToken !== null ? state = 1 : state = 0;
+  //   // call(pathname, "GET", requestToken);
+  // }
 
   return (
     <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`} >
