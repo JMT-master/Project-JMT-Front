@@ -6,9 +6,8 @@ export function call(api, method, request){
         "Content-Type" : "application/json"
     });
 
-    const accessToken = localStorage.getItem("ACCESS_TOKEN");
-    if(accessToken && accessToken != null) {
-      headers.append("Authorization", "Bearer " + accessToken);
+    if(request.accessToken && request.accessToken != null) {
+      headers.append("Authorization", "Bearer " + request.accessToken);
     }
     
     let options = {
@@ -27,13 +26,6 @@ export function call(api, method, request){
         console.log("call_response : ", response);
         if (response.status === 200){
             return response.json();
-        } else if(response.status === 401) { // unauthorized
-            Swal.fire({
-                icon: 'warning',
-                title: '로그인',
-                text: '아이디 혹은 비밀번호가 맞지 않습니다.'
-            })
-            // window.location.href = "/login";
         }
     }).catch((error) => {
         console.log(error);
@@ -41,17 +33,15 @@ export function call(api, method, request){
     
 }
 
-export function signin(loginDto) {
-    console.log("loginDto : ", loginDto);
-    return call("/login", "POST", loginDto)
-    .then(response => {
-        console.log("signin response : ",response);
-        
-        if(response !== undefined) {
-            localStorage.setItem("ACCESS_TOKEN", response.accessToken);
-            localStorage.setItem("REFRESH_TOKEN", response.refreshToken);
-            window.location.href = "/";
-        }      
-    })
+//   export function emailSend(loginDto) {
+//     console.log("loginDto : ", loginDto);
+//     call("/login", "POST", loginDto)
+//     .then(response => {
+//         console.log("signin response : ",response);
+//     })
+
+//     return function emailSend() {
+//         return a;
+//     };
   
-  }
+//   }

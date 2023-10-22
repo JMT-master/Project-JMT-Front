@@ -31,6 +31,9 @@ import data from "./data/festival.json";
 import { MdFestival } from 'react-icons/md';
 import { AiFillYoutube } from 'react-icons/ai';
 import { MdCardTravel } from 'react-icons/md';
+import { call } from './common/ApiService';
+import JoinUserValidateChk from './member/JoinUserValidateChk';
+import KakaoLogin from './member/KakaoLogin';
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -38,7 +41,9 @@ function App() {
   const [newKnowledgeData, setNewKnowledgeData] = useState(knowledgeData);
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
-
+  {
+    const token = localStorage.getItem("ACCESSTOKEN");
+  }
 
   return (
     <ThemeProvider theme={themeMode}>
@@ -47,10 +52,12 @@ function App() {
       <Routes>
         <Route path='/' element={<Header></Header>}></Route>
         <Route path="/joinUser" element={<JoinUser></JoinUser>}></Route>
+        <Route path="/joinUser/email/validateCheck/:userid" element={<JoinUserValidateChk></JoinUserValidateChk>}></Route>
         <Route path="/curator" element={<Curator></Curator>}></Route>
         <Route path="/travelSchedule" element={<TravelSchedule></TravelSchedule>}></Route>
         <Route path="/mypage" element={<Mypage></Mypage>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
+        <Route path="/login/auth" element={<KakaoLogin></KakaoLogin>}></Route>
         <Route path="/noticeBoard" element={<NoticeBoard></NoticeBoard>}></Route>
         <Route path="/noticeBoard/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
         <Route path="/qnABoard" element={<QnABoard></QnABoard>}></Route>
@@ -71,8 +78,7 @@ function App() {
 function HeaderTop(props) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
-  const refreshToken = localStorage.getItem('REFRESH_TOKEN');
+  let state = 0;
 
   const handleMouseOverDes = () => {
     $(".destination-list").show();
@@ -95,11 +101,9 @@ function HeaderTop(props) {
     $(".notice-list").hide();
   };
 
+  // token 처리
   const handleClick = () => {
-    console.log("들어옴?");
-    console.log(pathname);
-
-    if(accessToken === null) { // login
+    if(state === 1) { // login
       navigate("/login");
       window.location.reload();
     } else { // logout
@@ -110,7 +114,18 @@ function HeaderTop(props) {
     }
   };
 
-  console.log(accessToken);
+  {
+    const accessToken = localStorage.getItem('ACCESS_TOKEN');
+    const refreshToken = localStorage.getItem('REFRESH_TOKEN');
+    const requestToken = {
+      accessToken : accessToken,
+      refreshToken : refreshToken
+    }
+
+    accessToken !== null ? state = 1 : state = 0;
+    // call(pathname, "GET", requestToken);
+  }
+
   return (
     <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`} >
       <div className="headerTop">
@@ -118,7 +133,7 @@ function HeaderTop(props) {
         <span>
           <a href={() => false} onClick={() => handleClick()} 
           className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
-          >{(accessToken === null) ? '로그인' : '로그아웃'}</a>
+          >{(state === 1) ? '로그인' : '로그아웃'}</a>
         </span>
         <Toggle theme={props.theme} toggleTheme={props.themeToggler} />
       </div>

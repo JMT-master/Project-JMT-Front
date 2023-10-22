@@ -121,6 +121,9 @@
   width: 120px;
   height: 40px;
 }
+.email-check-btn:hover {
+  cursor: pointer;
+}
 .email-check-txt{
   position: relative;
   padding-top: 5px;
@@ -133,6 +136,9 @@
   border-radius: 4px;
   color: white;
   margin: 0 10px;
+}
+.commit-email-btn:hover {
+  cursor: pointer;
 }
 .joinUser-txt{
   border-top: 1px solid #000;

@@ -4,13 +4,17 @@ import style from '../css/Login.css'
 import { Link, useNavigate } from 'react-router-dom';
 import OnModal from '../common/OnModal';
 import LoginModal from './LoginModal';
-import { signin } from '../common/ApiService';
+import { signin } from './MemberFuc';
 
 const Login = () => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [id,setId] = useState("");
   const [pwd,setPwd] = useState("");
+  const clientId = '1921d336e78e0f12cb65133fb93aeab0';
+  const clientUri = 'http://localhost:3000/login/auth';
+  const KakaoLoginAPI = 'https://kauth.kakao.com/oauth/authorize?client_id='+clientId+'&redirect_uri='
+                         +clientUri+'&response_type=code';
 
   const showModal = () => {
     setModalOpen(true);
@@ -24,7 +28,6 @@ const Login = () => {
     setPwd(e.target.value);
   }
 
-  const [checkLogin, setCheckLogin] = useState(true);
   const logBtn = () => {
     const loginDto = {
       userid : id,
@@ -34,6 +37,12 @@ const Login = () => {
     signin(loginDto);
 
   }
+
+  const openKakaoLogin = () => {
+    // window.open(KakaoLoginAPI,'_self');
+    window.location.href = KakaoLoginAPI;
+  }
+
   return (
     <div className='login-content'>
       <div className='login-title'>
@@ -54,7 +63,7 @@ const Login = () => {
           {modalOpen && <LoginModal setModalOpen={setModalOpen}></LoginModal>}
         </p>
         <div className='sns-login'>
-          <Link to='/'><img src="../images/kakao-icon.png" alt="" /></Link>
+          <button className='sns-login-kakao' onClick={openKakaoLogin}><img src="../images/kakao-icon.png" alt="" /></button>
           <Link to='/'><img src="../images/google-icon.png" alt="" /></Link>
         </div>
       </div>
