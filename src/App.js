@@ -40,7 +40,6 @@ function App() {
   const [newKnowledgeData, setNewKnowledgeData] = useState(knowledgeData);
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
 
   return (
      <ThemeProvider theme={themeMode}>

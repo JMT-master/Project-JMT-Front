@@ -8,8 +8,8 @@ export function call(api, method, request) {
   });
 
   const accessToken = localStorage.getItem("ACCESS_TOKEN");
-  console.log("call 사용시 토큰" + accessToken);
-  if (accessToken) {
+    if(accessToken && accessToken != null) {
+      console.log("token is")
     headers.append("Authorization", "Bearer " + accessToken);
   }
   console.log("call 사용시 headers = " + headers.get('Authorization'))
@@ -57,6 +57,7 @@ export function signin(loginDto) {
      })
 }
 
+//프론트에서 임시 버튼 만들고 더미 데이터 만들어서 클릭시 데이터 입력하게 하기.
 export function sseSource(url){
   const eventSource = new EventSourcePolyfill(
      API_BASE_URL + '/notification/' + url,
