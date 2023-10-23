@@ -31,8 +31,8 @@ const NotificationList = ({notifications}) => {
 }
 
 
-const Notification = ({alarm}) => {
-  const {content, url, yn} = alarm;
+const Notification = ({notification}) => {
+  const {content, url, yn} = notification;
   return (<div>
        {"content = " + content}
      </div>)

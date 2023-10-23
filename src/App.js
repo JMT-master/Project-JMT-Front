@@ -30,7 +30,7 @@ import YouTube from 'react-youtube'
 import data from "./data/festival.json";
 import {MdCardTravel, MdFestival} from 'react-icons/md';
 import {AiFillYoutube, AiOutlineBell} from 'react-icons/ai';
-import {call} from './common/ApiService'
+import {call, sseSource} from './common/ApiService'
 import OnModalComp from "./common/OnModalComp";
 import NotificationList from "./common/Notification";
 
@@ -130,7 +130,10 @@ function HeaderTop(props) {
        .catch((error) => {
          console.log(error);
        })
+
   }, []);
+
+  sseSource("sub")
 
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
@@ -138,6 +141,7 @@ function HeaderTop(props) {
          <button type="button" onClick={showModal} style={{justifyContent: "left"}}>
            <AiOutlineBell className="headerNotification"/>
          </button>
+         <button type="button" className="testBtn" onClick={sseSource("send")}>테스트용 버튼</button>
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
          <span>
           <a href={() => false} onClick={() => handleClick()}
