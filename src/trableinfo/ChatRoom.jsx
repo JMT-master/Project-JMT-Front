@@ -16,15 +16,6 @@ const ChatRoomComponent = () => {
       });
   };
 
-const enterRoom = roomId => {
-    const sender = prompt('대화명을 입력해 주세요.');
-    if (sender !== null && sender !== '') {
-        localStorage.setItem('wschat.sender', sender);
-        localStorage.setItem('wschat.roomId', roomId);
-        window.location.href = '/chat/room/enter/' + roomId;
-    }
-};
-
   const createChatRoom = async () => {
     call("/chat/room", "POST", { 
         roomName: roomName 
@@ -40,6 +31,14 @@ const enterRoom = roomId => {
         console.error('Error creating chat room:', error);
       });
   };
+const enterRoom = (roomId) => {
+    const sender = prompt('대화명을 입력해 주세요.');
+    if (sender !== null && sender !== '') {
+        localStorage.setItem('wschat.sender', sender);
+        localStorage.setItem('wschat.roomId', roomId);
+        window.location.href = '/chat/room/enter/' + roomId;
+    }
+};
   useEffect(() => {
     fetchChatRooms(); // 컴포넌트가 마운트될 때 방 목록을 불러옵니다.
   }, [chatRooms.length]); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 실행되도록 합니다.
@@ -52,7 +51,7 @@ const enterRoom = roomId => {
           <li key={room.roomId}
           ><span 
           style={{ cursor: "pointer" }}
-          onClick={enterRoom}>{room.roomName}</span></li>
+          onClick={() => enterRoom(room.roomId)} >{room.roomName}</span></li>
         ))}
       </ul>
       <div>
