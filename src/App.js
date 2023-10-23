@@ -33,6 +33,7 @@ import {AiFillYoutube, AiOutlineBell} from 'react-icons/ai';
 import {call, sseSource} from './common/ApiService'
 import OnModalComp from "./common/OnModalComp";
 import NotificationList from "./common/Notification";
+import {func} from "prop-types";
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -133,7 +134,10 @@ function HeaderTop(props) {
 
   }, []);
 
-  sseSource("sub")
+  const showAlert = () => {
+    sseSource("sub");
+  };
+
 
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
@@ -141,7 +145,7 @@ function HeaderTop(props) {
          <button type="button" onClick={showModal} style={{justifyContent: "left"}}>
            <AiOutlineBell className="headerNotification"/>
          </button>
-         <button type="button" className="testBtn" onClick={sseSource("send")}>테스트용 버튼</button>
+         <button type="button" className="testBtn" onClick={showAlert}>테스트용 버튼</button>
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
          <span>
           <a href={() => false} onClick={() => handleClick()}
