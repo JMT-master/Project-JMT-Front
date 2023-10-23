@@ -3,10 +3,37 @@ import style from '../css/KnowledgeWrite.css'
 import { VscSearch } from 'react-icons/vsc';
 import { useNavigate } from 'react-router-dom';
 import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'react-icons/ai';
+import { call } from '../common/ApiService';
+import { useState } from 'react';
 
-const QnaWrite = () => {
+const QnaWrite = (props) => {
+    const [items, setItems] = useState([]);
+    const [item, setItem] = useState({
+        qna_category : "",
+        qna_title : "",
+        qna_content : "",
+        qna_view :  0
+    });
 
+    const addItem = (item) => {
+        call("/qna","POST", item)
+            .then((response) => setItems(response.data));
+      }
 
+      const editItem = (item) => {
+        call("/qna", "PUT", item)
+            .then((response) => setItems(response.data));
+      }
+
+    const onButtonClick = () => {
+        addItem(item);
+        setItem({
+            qna_category : "",
+            qna_title : "",
+            qna_content : "",
+            qna_view :  0
+        })
+    }
 
     return (
         <form action="/qna/write" method="post">
@@ -29,7 +56,8 @@ const QnaWrite = () => {
                             <option value="관광지">관광지</option>
                             <option value="음식">음식</option>
                             <option value="축제">축제</option>
-                            <option value="유저">유저</option>
+                            <option value="여행일정">여행일정</option>
+                            <option value="로그인">로그인</option>
                             <option value="기타">기타</option>
                         </select>
                         {/*<input type="hidden" id="qna_category" name="qna_category">*/}
@@ -43,11 +71,11 @@ const QnaWrite = () => {
                         <label htmlFor='file'>
                             <div className='btn-upload'>파일 업로드 하기</div>
                         </label>
-                        <input type="file" name='file' id='file' multiple/>
+                        <input type="file" name='qna_file' id='qna_file' multiple/>
                     </div>
                 </div>
                 <div className='button-box'>
-                    <button type="button" className='submit-knowledge' onSubmit="">작성완료</button>
+                    <button type="button" className='submit-knowledge' onClick={onButtonClick}>작성완료</button>
                     {/*<button className='back-to-knlist'onClick={() => navigate(-1)}>목록으로 돌아가기</button>*/}
                 </div>
             </div>
