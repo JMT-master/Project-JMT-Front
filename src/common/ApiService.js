@@ -64,7 +64,6 @@ export function sseSource(url){
        headers:
           {
             'Authorization': `Bearer ` + localStorage.getItem('ACCESS_TOKEN'),
-            'Content-Type': 'text/event-stream'
           }
      }
   )
@@ -78,21 +77,28 @@ export function sseSource(url){
     console.log('connect event data:');
   };
   eventSource.onmessage = function (event){
-    console.log("메세지 소스 메세지 확인 : " + event.data.notificationId);
+    const notificationDto = {
+      "id": "1",
+      "content": "ㅂㅈㄷㄱ",
+      "url": "ㅁㄴㅇㄹ",
+      "yn": "n"
+    };
+    // const notificationJson = JSON.parse(event.data);
+    // const {id, content, url, yn} =
+    // console.log("id : " + id);
+    // console.log("content : " + content);
+    // console.log("url : " + url);
+    // console.log("yn : " + yn);
+    // console.log(notificationJson);
+    console.log(typeof(event.data));
   }
+
   console.log("eventSource", eventSource);
 
-  eventSource.addEventListener('sse', (event) => {
-    console.log('sse = ', event.data);
-  });
+  // eventSource.addEventListener('message', (event) => {
+  //   console.log('sse = ', event.data);
+  // });
 
-  eventSource.sse = function (event){
-    console.log("이벤트 소스 메세지 확인 : " + event.data);
-  }
-
-  eventSource.addEventListener('onmessage', (event) => {
-    console.log('sse = ', event.data);
-  });
 
 
   eventSource.onerror = function (event) {
