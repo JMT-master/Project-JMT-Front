@@ -6,11 +6,13 @@ const ChatRoomComponent = () => {
   const [roomName, setRoomName] = useState('');
   const [chatRooms, setChatRooms] = useState([]);
 
+  const token = localStorage.getItem('ACCESS_TOKEN');
+
   const fetchChatRooms = async () => {
       call("/chat/room", "GET", null)
       .then((response) => {
         setChatRooms(response.data);
-        console.log("response.data"+response.data);
+        console.log("response.data : "+response.data);
       }).catch((error) => {
         console.error('Error fetching chat rooms:', error);
       });
@@ -36,7 +38,7 @@ const enterRoom = (roomId) => {
     if (sender !== null && sender !== '') {
         localStorage.setItem('wschat.sender', sender);
         localStorage.setItem('wschat.roomId', roomId);
-        window.location.href = '/chat/room/enter/' + roomId;
+        window.location.href = '/chat/room/' + roomId;
     }
 };
   useEffect(() => {

@@ -46,15 +46,7 @@ function App() {
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
 
-  // const { createProxyMiddleware } = require("http-proxy-middleware");
-
-  // module.exports = (app) => {
-  //     app.use(
-  //         "/ws/chat",
-  //         createProxyMiddleware({ target: "http://localhost:8888", ws: true })
-  //     );
-  // };
-
+  
   return (
     <ThemeProvider theme={themeMode}>
       <GlobalStyles />
@@ -80,8 +72,7 @@ function App() {
         <Route path='/qna/write' element={<QnaWrite />}></Route>
         <Route path='/chat/room' element={<ChatRoom />}></Route>
         <Route path='/chat/rooms' ></Route>
-        <Route path='/chat/room/enter/:roomId?' element={<ChatDetail />}></Route>
-        <Route path='/ws/chat/#hash?' element={<ChatRoomDetail />}></Route>
+        <Route path='/chat/room/:roomId?' element={<ChatDetail />}></Route>
       </Routes>
     </ThemeProvider>
   );
@@ -206,9 +197,9 @@ function HeaderTop(props) {
            <ul id="notice" onMouseOver={handleMouseOverNoti} onMouseOut={handleMouseOutNoti}>
              <div className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}><a>공지사항</a></div>
              <div className='notice-list'>
-               <li><Link to="/noticeBoard"
+               <li><Link to="/notice"
                          className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</Link></li>
-               <li><Link to="/qnABoard" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>Q&A</Link>
+               <li><Link to="/qna" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>Q&A</Link>
                </li>
              </div>
            </ul>

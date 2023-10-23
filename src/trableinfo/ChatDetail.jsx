@@ -6,12 +6,8 @@ import { useEffect } from 'react';
 
 const ChatDetail = () => {
   const navigate = useNavigate();
-
-  //채널 구분 식별자
-  const param = useParams();
-  // const roomId = param.roomId;
   //현재 로그인된 사용자 토큰
-  const token = JSON.stringify(window.localStorage.getItem("token"));
+  const token = JSON.stringify(window.localStorage.getItem("ACCESS_TOKEN"));
   const [roomId, setRoomId] = useState(localStorage.getItem('wschat.roomId') || '');
   const [sender, setSender] = useState(localStorage.getItem('wschat.sender') || '');
   let [client, changeClient] = useState(null);
@@ -22,60 +18,68 @@ const ChatDetail = () => {
 
   //유저 코드 받을꺼임
 
-  //보낸 메시지 받은 메시지 다른 스타일로 확인해볼까? -> 나중에 해도됨
-  const msgBox = messages.map((item, index) => {
-
-    console.log("item.data 찍어보기"+item.data);
-    console.log("item.data.data : "+item.data.data);
-    console.log("item.sender 찍어보기 : "+item.sender);
-
-    if (Number(item.sender) !== sender) {
-      return (
-        <div key={index}>
-          <div>
-            상대방
-            <span>{item.data}</span>
-          </div>
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          <span>{item.data}</span>
-        </div>
-      )
-    }
-  })
-
   const connect = () => {
     //소켓을 연결합시다
     try {
-      const clientdata = new StompJs.Client({
+      client = new StompJs.Client({
         brokerURL: "ws://localhost:8888/ws/chat",
         connectHeaders: {
-          login: "",
-          passcode: "password",
+          token: token
         },
         debug: function (str) {
           console.log("str임 : " + str);
           console.log("str.chatAt임 : " + str.charAt);
         },
-        // reconnectDelay: 5000, //자동 재 연결 값
-        // heartbeatIncoming: 4000,
-        // heartbeatOutgoing: 4000,
+        reconnectDelay: 5000, //자동 재 연결 값
+        heartbeatIncoming: 4000,
+        heartbeatOutgoing: 4000,
       });
-
       //구독하는 코드
-      clientdata.onConnect = function () {
-        clientdata.subscribe("/topic/chat/room/" + roomId, callback);
-      };
+      client.onConnect = function () {
+        client.subscribe("/topic/chat/room/" + roomId, onMessageReceived);
 
-      clientdata.activate(); //클라이언트 활성화
-      changeClient(clientdata); //클라이언트 갱신
+        client.publish({
+          destination: "/app/chat/message/" + roomId,
+          body: JSON.stringify({
+            type: "ENTER",
+            sender: sender,
+            roomId: roomId,
+            data: message
+          }),
+        });
+
+      };
+      client.activate(); //클라이언트 활성화
+      changeClient(client); //클라이언트 갱신
     } catch (error) {
       console.log("connect 하면서 생긴 오류 : " + error);
     }
   };
+
+  const onMessageReceived = (message) => {
+    console.log("message가 들어오는가..." + message);
+    var chat = JSON.parse(message.body);
+    console.log("chat이 지금 존재하는가? : " + chat);
+    if (chat.type === 'ENTER' || chat.type === 'LEAVE') {
+      // 화면에 입장 또는 퇴장 메시지를 보여줄 DOM 엘리먼트를 생성하고 추가
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('event-message');
+      messageElement.innerText = chat.sender + '님이 입장하였습니다.'; // 또는 chat.message 사용
+      const chatMessages = document.getElementById('chat-messages');
+      chatMessages.appendChild(messageElement);
+    } else if (chat.type === 'TALK') {
+      // 'TALK' 대화 메시지 처리
+      console.log("chat 한번만 보여줘 : {}", chat);
+      console.log(chat.sender + ': ' + chat.message);
+      // 대화를 화면에 보여줄 DOM 엘리먼트를 생성하고 추가
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('chat-message');
+      messageElement.innerText = chat.sender + ': ' + chat.message;
+      const chatMessages = document.getElementById('chat-messages');
+      chatMessages.appendChild(messageElement);
+    }
+    // setMessages((messages) => [...messages, chat]);
+  }
 
   const disConnect = () => {
     //연결 끊기
@@ -85,66 +89,65 @@ const ChatDetail = () => {
     client.deactivate();
   };
 
-  //콜백 함수  => messages 저장하기
-  const callback = function (message) {
-    if (message.body) {
-      let msg = JSON.parse(message.body);
-      console.log("msg임 : "+msg);
-      setMessages((messages) => [...messages, msg]);
-    }
-  };
-
-  const sendChat = () => {
+  const sendChat = (message) => {
     if (message === "") {
       return;
     }
+    console.log("message 들어왔나..? : " + message);
 
     client.publish({
       destination: "/app/chat/message/" + roomId,
       body: JSON.stringify({
-        type: "",
+        type: "TALK",
         sender: sender,
         roomId: roomId,
-        data: message,
+        message: message,
       }),
     });
-
+    // setMessages((messages) => [...messages, message]);
     setMessage("");
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     //최초 렌더링 시 웹소켓에 연결해야함
     connect();
 
-    return () => disConnect();
-  }, [changeClient]);
+    // return () => disConnect();
+  }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, message) => {
     e.preventDefault();
+    sendChat(message);
+    console.log("메시지가 잘 div에 들어가나 확인.." + document.getElementById("chat-messages").innerText);
   };
 
   const onChangeMessage = (e) => {
     console.log("e.target.value : "+e.target.value);
     setMessage(e.target.value);
   }
-
+  const outSocket = () => {
+    disConnect();
+    navigate("/chat/room");
+  }
   return (
     <div>
       {/* 나가기 버튼 */}
-        <button type='button' onClick={() => navigate("/chat/room")}>나가기</button>
-        {/* 상대방 이름 */}
-        <span>상대방</span>
-        {/* 여기는 입력 폼 */}
-        {msgBox}
-        <form onSubmit={handleSubmit}>
-          <input type="text" id='msg' value={message} placeholder='메세지를 보내라'
-          onChange={onChangeMessage} onKeyDown={(ev) => {
-            if(ev.key === 'ENTER'){
-              sendChat();
-            }
-          }} />
-        </form>
-        <button type='button' onClick={sendChat}>전송</button>
+      <button type='button' onClick={() => outSocket()}>나가기</button>
+      <h1>채팅방</h1>
+      <div id="chat-messages">
+        {messages.map((message, index) => (
+          <div key={index}>
+            {message.message}
+          </div>
+        ))}
+      </div>
+      {/* 여기는 입력 폼 */}
+      <form onSubmit={(event) => handleSubmit(event, message)}>
+        <input type="text" id='msg' value={message} placeholder='메세지를 보내라'
+          onChange={onChangeMessage}
+        />
+      </form>
+      <button type='submit'>전송</button>
     </div>
   )
 }

@@ -14,7 +14,6 @@ const ChatRoomDetail = () => {
     const [ws, setWs] = useState(null); // 상태로 ws를 관리
 
     useEffect(() => {
-        findRoom();
         connect();
         // 컴포넌트 언마운트 시 웹소켓 연결 해제
         return () => {
@@ -23,17 +22,6 @@ const ChatRoomDetail = () => {
             }
         };
     }, []); // 빈 배열을 전달하여 컴포넌트가 처음 마운트될 때만 실행
-
-    const findRoom = () => {
-        // axios.get(`/chat/room/${roomId}`)
-        call(`/chat/room/${roomId}`, "GET", room)
-            .then((response) => {
-                setRoom(response.data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    };
 
     const sendMessage = () => {
         const socketMessage = {
@@ -44,9 +32,11 @@ const ChatRoomDetail = () => {
         };
 
         if (ws) {
-            ws.send("/app/chat/message", {}, JSON.stringify(socketMessage));
+            ws.publish({
+                destination : "/app/chat/message",
+                body : JSON.stringify(socketMessage)
+            });
         }
-
         setMessage('');
     };
 
@@ -57,27 +47,49 @@ const ChatRoomDetail = () => {
         ]);
     };
 
+    // const createWebSocket = () => {
+    //     var sock = new SockJS("http://localhost:8888/ws/chat");
+    //     const stompClient = StompJs.Stomp.over(sock);
+    //     return stompClient;
+    // };
+
     const createWebSocket = () => {
-        var sock = new SockJS("/ws/chat");
-        const stompClient = StompJs.Stomp.over(sock);
-        return stompClient;
+        const client = new StompJs.Client({
+            brokerURL: "ws://localhost:8888/ws/chat",
+            debug: function (str) {
+                console.log("str임 : " + str);
+              },
+            reconnectDelay: 5000, // 자동 재 연결 값
+            heartbeatIncoming: 4000,
+            heartbeatOutgoing: 4000,
+        });
+        return client;
     };
-    
-    function connect(e){
+
+    function connect(e) {
         const stompClient = createWebSocket();
         console.log("stompClient: " + stompClient.brokerURL);
-    
-        stompClient.connect({}, frame => {
+
+        stompClient.onConnect = function(){
             stompClient.subscribe(`/topic/chat/room/${roomId}`, message => {
                 const recv = JSON.parse(message.body);
                 recvMessage(recv);
             });
-    
-            stompClient.send("/app/chat/message", {}, JSON.stringify({ type: 'ENTER', roomId: roomId, sender: sender }));
+
+            // 입장 메시지를 발행
+            const enterMessage = {
+                type: 'ENTER',
+                roomId: roomId,
+                sender: sender
+            };
+            stompClient.publish({
+                destination: "/app/chat/message",
+                body: JSON.stringify(enterMessage)
+            });
             // ws 상태 업데이트
             setWs(stompClient);
-        
-        });
+
+        };
     };
 
     // const clientdata = new StompJs.Client({
@@ -93,7 +105,7 @@ const ChatRoomDetail = () => {
     //     heartbeatIncoming: 4000,
     //     heartbeatOutgoing: 4000,
     //   });
-      
+
     return (
         <div >
             <div>
@@ -119,7 +131,7 @@ const ChatRoomDetail = () => {
             </div>
             <ul >
                 {messages.map((msg, index) => (
-                    <li  key={index}>
+                    <li key={index}>
                         {msg.sender} - {msg.message}
                     </li>
                 ))}
