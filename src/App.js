@@ -133,7 +133,6 @@ function HeaderTop(props) {
        })
   }, []);
 
-  console.log("알람들 : " + notifications);
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
        <div className="headerTop">
