@@ -1,7 +1,6 @@
 import Swal from "sweetalert2";
 import {API_BASE_URL} from "./ApiConfig";
-import { EventSourcePolyfill } from 'event-source-polyfill';
-import {type} from "@testing-library/user-event/dist/type";
+import {EventSourcePolyfill} from 'event-source-polyfill';
 
 export function call(api, method, request) {
   let headers = new Headers({
@@ -9,8 +8,8 @@ export function call(api, method, request) {
   });
 
   const accessToken = localStorage.getItem("ACCESS_TOKEN");
-    if(accessToken && accessToken != null) {
-      console.log("token is")
+  if (accessToken && accessToken != null) {
+    console.log("token is")
     headers.append("Authorization", "Bearer " + accessToken);
   }
   console.log("call 사용시 headers = " + headers.get('Authorization'))
@@ -110,44 +109,40 @@ export function signin(loginDto) {
 //   console.log("sse eventsorce : " + eventSource);
 // }
 
-export function sseSource(url , setNotifications) {
+export function sseSource(url, setNotifications) {
   const accessToken = localStorage.getItem('ACCESS_TOKEN');
   // SSE 지원
-  const eventSource = new EventSourcePolyfill(API_BASE_URL + '/notification/' + url, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Content-Type': 'text/event-stream'
-    }
-  });
-  console.log("타입타입! : " + typeof eventSource);
-  if (typeof eventSource !== "undefined") {
-    console.log("이벤트 소스  :" + eventSource);
-    eventSource.onopen = e => {
-      console.log('SSE 연결 성공');
-      console.log('토큰 확인용' + accessToken);
-    };
+  if (typeof EventSource !== "undefined") {
+    const eventSource = new EventSourcePolyfill(API_BASE_URL + '/notification/' + url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'text/event-stream',
+        // Connection: 'keep-alive',
+        // 'Cache-Control': 'no-cache',
+        // 'X-Accel-Buffering': 'no',
+        // 'Transfer-Encoding': 'chunked'
+      }
+    });
+    console.log("타입타입! : " + typeof eventSource);
+
+    console.log("이벤트 소스  :" + eventSource.toString());
+
     eventSource.addEventListener('sse', (event) => {
       console.log("메세지 수신 : " + event.data);
-      const {data: Notification} = event;
+      // const {data: Notification} = event;
       // setNotifications(Notification);
     })
-    eventSource.addEventListener('send', (event) => {
-      console.log("send!");
-      const {data: Notification} = event;
-      setNotifications(Notification);
-      console.log("onnotify : " + event);
-
-    })
-    eventSource.onmessage = function (event) {
-      console.log('SSE 메시지 수신:', event.data);
-      if (typeof (event.data) != "String") {
-        // const notificationDto = JSON.parse(event.data);
-      }
-      // 여기서 notificationDto를 처리하고 화면에 표시하는 로직을 추가하세요.
-    };
+    // eventSource.addEventListener('send', (event) => {
+    //   console.log("send!");
+    //   // const {data: Notification} = event;
+    //   // setNotifications(Notification);
+    //   console.log("onnotify : " + event);
+    //
+    // })
 
     eventSource.onerror = function (event) {
       console.error('SSE 에러 발생:', event);
+      eventSource.close();
     };
 
   }

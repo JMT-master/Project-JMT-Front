@@ -33,6 +33,7 @@ import {AiFillYoutube, AiOutlineBell} from 'react-icons/ai';
 import OnModalComp from "./common/OnModalComp";
 import NotificationList from "./common/Notification";
 import axios from "axios";
+import {sseSource} from "./common/ApiService";
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -136,33 +137,30 @@ function HeaderTop(props) {
   //
   // }, []);
 
-  const showAlert = async () => {
-       // call("/notification/send", "POST", {
-       //
-       // }).then(r =>{
-       //   console.log(r);
-       // })
-       const accessToken = localStorage.getItem("ACCESS_TOKEN");
-       await axios({
-         method: 'POST',
-         url: `http://localhost:8888/notification/send`,
-         data: {
-           "content": "테스트2",
-           "url": "테스트용url",
-           "yn": "y"
-         },
-         headers: {
-           Authorization:  "Bearer " +accessToken,
-         }
+  const send = async () => {
+    const accessToken = localStorage.getItem("ACCESS_TOKEN");
+    await axios({
+      method: 'POST',
+      url: `http://localhost:8888/notification/send`,
+      data: {
+        "content": "테스트2",
+        "url": "테스트용url",
+        "yn": "y"
+      },
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      }
+    })
+       .then(function (response) {
+         console.log('handleCountClick', response);
        })
-          .then(function (response) {
-            console.log('handleCountClick', response);
-          })
-          .catch(function (error) {
-            console.log('error', error);
-          });
-     }
-  ;
+       .catch(function (error) {
+         console.log('error', error);
+       });
+  };
+  const sub = () => {
+    sseSource("sub", setNotifications);
+  };
 
 
   return (
@@ -171,7 +169,8 @@ function HeaderTop(props) {
          <button type="button" onClick={showModal} style={{justifyContent: "left"}}>
            <AiOutlineBell className="headerNotification"/>
          </button>
-         <button type="button" className="testBtn" onClick={showAlert}>테스트용 버튼</button>
+         <button type="button" className="testBtn" onClick={sub}>테스트용 sub</button>
+         <button type="button" className="testBtn" onClick={send}>테스트용 send</button>
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
          <span>
           <a href={() => false} onClick={() => handleClick()}
