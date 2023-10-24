@@ -30,11 +30,16 @@ const Knowledge = () => {
   const endIndex = startIndex + itemsPerPage;
   const currentItems = knowledgeData.slice(startIndex, endIndex);
   const totalPages = Math.ceil(knowledgeData.length / itemsPerPage);
+  const [categoryChk, setCategoryChk] = useState(0);
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
   const handleSelect = (e) =>{
     setItemsPerPage(e.target.value);
+  }
+
+  const onKnowledgeClick = (value) => {
+    setCategoryChk(value);
   }
   console.log(itemsPerPage);
   return (
@@ -46,27 +51,31 @@ const Knowledge = () => {
         <button className='question cursor' onClick={() => navigate('/knowledgeWrite')}></button>
       </div>
       <div className='knowledge-content cursor'>
-        <div className='most-qna1' onClick={() => navigate('/knowledgeDetail/1')}>
+        {/* <div className='most-qna1' onClick={() => navigate('/knowledgeDetail/1')}>
           <img src="../images/qna-icon.png" alt="이미지1" style={{ width: '120px', height: '120px' }} />
           <p>가장 많이 본 qna1</p>
           <p>가장 많이 본 qna1의 내용 간략히</p>
-        </div>
-        <div className='most-qna2' onClick={() => navigate('/knowledgeDetail/2')}>
+        </div> */}
+        {/* <div className='most-qna2' onClick={() => navigate('/knowledgeDetail/2')}>
           <img src="../images/qna-icon.png" alt="이미지2" style={{ width: '120px', height: '120px' }} />
           <p>가장 많이 본 qna2</p>
           <p>가장 많이 본 qna2의 내용 간략히</p>
-        </div>
+        </div> */}
         <div className='knowledge-category'>
-          <button>전체</button>
-          <button>관광지</button>
-          <button>음식</button>
-          <button>축제</button>
-          <button>기타</button>
+          <button className={'knowledge-category-default' + (categoryChk === 0 ? ' knowledge-category-check' : '')} onClick={() => onKnowledgeClick(0)}>전체</button>
+          <button className={'knowledge-category-default' + (categoryChk === 1 ? ' knowledge-category-check' : '')} onClick={() => onKnowledgeClick(1)}>관광지</button>
+          <button className={'knowledge-category-default' + (categoryChk === 2 ? ' knowledge-category-check' : '')} onClick={() => onKnowledgeClick(2)}>음식</button>
+          <button className={'knowledge-category-default' + (categoryChk === 3 ? ' knowledge-category-check' : '')} onClick={() => onKnowledgeClick(3)}>숙박</button>
+          {/* <button>기타</button> */}
         </div>
         <div className='searchKnowledge-box'>
           <h2>지식in 
           </h2>
             <div className='searchKnowledge'>
+              <select className='searchKnowledge-select'>
+                <option value='title'>제목</option>
+                <option value='content'>내용</option>
+              </select>
               <input type="text" placeholder='검색어를 입력하세요' />
               <button><VscSearch /></button>
             </div>

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import { call } from '../common/ApiService';
 import Swal from 'sweetalert2';
 import { emailValidate, joinUser, userChk } from './MemberFuc';
+import { Form } from 'react-router-dom';
 
 const JoinUser = () => {
   const [enroll_company, setEnroll_company] = useState({
