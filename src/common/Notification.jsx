@@ -5,6 +5,7 @@ const NotificationList = ({notifications}) => {
   console.log("=================" + notifications)
   const makeNotificationList = () => {
     const notificationList = [];
+
     notifications.forEach((notification) => {
       notificationList.push(<Notification notification={notification}/>);
     })

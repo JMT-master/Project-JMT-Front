@@ -9,7 +9,7 @@ import TravelSchedule from './travelschedule/TravelSchedule';
 import Login from './member/Login';
 import NoticeBoard from './notice/NoticeBoard';
 import NoticeBoardDetail from './notice/NoticeBoardDetail';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {knowledgeData, noticeData, qnaData} from './data/Data';
 import QnABoard from './notice/QnABoard';
 import QnaBoardDetail from './notice/QnaBoardDetail';
@@ -30,10 +30,9 @@ import YouTube from 'react-youtube'
 import data from "./data/festival.json";
 import {MdCardTravel, MdFestival} from 'react-icons/md';
 import {AiFillYoutube, AiOutlineBell} from 'react-icons/ai';
-import {call, sseSource} from './common/ApiService'
 import OnModalComp from "./common/OnModalComp";
 import NotificationList from "./common/Notification";
-import {func} from "prop-types";
+import axios from "axios";
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -41,18 +40,20 @@ function App() {
   const [newKnowledgeData, setNewKnowledgeData] = useState(knowledgeData);
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
+  const [notifications, setNotifications] = useState()
 
   return (
      <ThemeProvider theme={themeMode}>
        <GlobalStyles/>
-       <HeaderTop theme={theme} themeToggler={themeToggler}/>
+       <HeaderTop theme={theme} themeToggler={themeToggler} notifications={notifications}
+                  setNotifications={setNotifications}/>
        <Routes>
          <Route path='/' element={<Header></Header>}></Route>
          <Route path="/joinUser" element={<JoinUser></JoinUser>}></Route>
          <Route path="/curator" element={<Curator></Curator>}></Route>
          <Route path="/travelSchedule" element={<TravelSchedule></TravelSchedule>}></Route>
          <Route path="/mypage" element={<Mypage></Mypage>}></Route>
-         <Route path="/login" element={<Login></Login>}></Route>
+         <Route path="/login" element={<Login setNotifications={setNotifications}></Login>}></Route>
          <Route path="/noticeBoard" element={<NoticeBoard></NoticeBoard>}></Route>
          <Route path="/noticeBoard/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
          <Route path="/qnABoard" element={<QnABoard></QnABoard>}></Route>
@@ -76,8 +77,9 @@ function HeaderTop(props) {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('ACCESS_TOKEN');
   const refreshToken = localStorage.getItem('REFRESH_TOKEN');
+  const {notifications, setNotifications} = props;
   //알람 모달 관련
-  const [notifications, setNotifications] = useState()
+
   const [modalOpen, setModalOpen] = useState(false);
   const showModal = () => {
     setModalOpen(!modalOpen);
@@ -119,24 +121,48 @@ function HeaderTop(props) {
     }
   };
 
-  useEffect(() => {
-    call("/notification",
-       "POST",
-       null
-       // 아이디는 백에서 토큰으로 확인
-    )
-       .then((response) => {
-         setNotifications(response);
-       })
-       .catch((error) => {
-         console.log(error);
-       })
+  // useEffect(() => {
+  //   call("/notification",
+  //      "POST",
+  //      null
+  //      // 아이디는 백에서 토큰으로 확인
+  //   )
+  //      .then((response) => {
+  //        setNotifications(response);
+  //      })
+  //      .catch((error) => {
+  //        console.log(error);
+  //      })
+  //
+  // }, []);
 
-  }, []);
-
-  const showAlert = () => {
-    sseSource("sub");
-  };
+  const showAlert = async () => {
+       // call("/notification/send", "POST", {
+       //
+       // }).then(r =>{
+       //   console.log(r);
+       // })
+       const accessToken = localStorage.getItem("ACCESS_TOKEN");
+       await axios({
+         method: 'POST',
+         url: `http://localhost:8888/notification/send`,
+         data: {
+           "content": "테스트2",
+           "url": "테스트용url",
+           "yn": "y"
+         },
+         headers: {
+           Authorization:  "Bearer " +accessToken,
+         }
+       })
+          .then(function (response) {
+            console.log('handleCountClick', response);
+          })
+          .catch(function (error) {
+            console.log('error', error);
+          });
+     }
+  ;
 
 
   return (
@@ -173,7 +199,8 @@ function HeaderTop(props) {
            </ul>
            <ul id="tema">
              <div>
-               <a><Link to="/curator" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>테마</Link></a>
+               <a><Link to="/curator"
+                        className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>테마</Link></a>
              </div>
            </ul>
            <ul id="myTrab">
@@ -198,7 +225,8 @@ function HeaderTop(props) {
              <div className='notice-list'>
                <li><Link to="/noticeBoard"
                          className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</Link></li>
-               <li><Link to="/qnABoard" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>Q&A</Link>
+               <li><Link to="/qnABoard"
+                         className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>Q&A</Link>
                </li>
              </div>
            </ul>

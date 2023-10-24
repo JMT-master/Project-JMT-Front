@@ -6,11 +6,12 @@ import OnModal from '../common/OnModal';
 import LoginModal from './LoginModal';
 import {call, signin, sseSource} from '../common/ApiService';
 
-const Login = () => {
+const Login = (props) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
+  const {setNotifications} = props;
 
   const showModal = () => {
     setModalOpen(true);
@@ -33,12 +34,11 @@ const Login = () => {
 
     const {userid, email, acessToken, refreshToken} = signin(loginDto);
     console.log("로그인 시 날아오는 데이터" + userid, email, acessToken, refreshToken);
-    sseSource("sub");
-
-
+    sseSource("sub",setNotifications);
 
 
   }
+
   return (
      <div className='login-content'>
        <div className='login-title'>

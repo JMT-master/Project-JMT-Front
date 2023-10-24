@@ -27,7 +27,7 @@ export function call(api, method, request) {
   }
 
   return fetch(options.url, options).then((response) => {
-    // console.log("call_response : ", response);
+    console.log("call_response : ", response);
     if (response.status === 200) {
       return response.json();
     } else if (response.status === 401) { // unauthorized
@@ -110,24 +110,37 @@ export function signin(loginDto) {
 //   console.log("sse eventsorce : " + eventSource);
 // }
 
-export function sseSource(url) {
+export function sseSource(url , setNotifications) {
   const accessToken = localStorage.getItem('ACCESS_TOKEN');
-
-  if (typeof EventSource !== "undefined") {
-    // SSE 지원
-    const eventSource = new EventSource(API_BASE_URL + '/notification/' + url, {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`
-      }
-    });
-
+  // SSE 지원
+  const eventSource = new EventSourcePolyfill(API_BASE_URL + '/notification/' + url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'text/event-stream'
+    }
+  });
+  console.log("타입타입! : " + typeof eventSource);
+  if (typeof eventSource !== "undefined") {
+    console.log("이벤트 소스  :" + eventSource);
     eventSource.onopen = e => {
       console.log('SSE 연결 성공');
+      console.log('토큰 확인용' + accessToken);
     };
+    eventSource.addEventListener('sse', (event) => {
+      console.log("메세지 수신 : " + event.data);
+      const {data: Notification} = event;
+      // setNotifications(Notification);
+    })
+    eventSource.addEventListener('send', (event) => {
+      console.log("send!");
+      const {data: Notification} = event;
+      setNotifications(Notification);
+      console.log("onnotify : " + event);
 
+    })
     eventSource.onmessage = function (event) {
       console.log('SSE 메시지 수신:', event.data);
-      if(typeof(event.data) != "String") {
+      if (typeof (event.data) != "String") {
         // const notificationDto = JSON.parse(event.data);
       }
       // 여기서 notificationDto를 처리하고 화면에 표시하는 로직을 추가하세요.
@@ -136,8 +149,6 @@ export function sseSource(url) {
     eventSource.onerror = function (event) {
       console.error('SSE 에러 발생:', event);
     };
-  } else {
-    // SSE 미지원
-    console.log('SSE 미지원');
+
   }
 }
