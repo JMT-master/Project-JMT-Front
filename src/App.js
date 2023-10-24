@@ -61,7 +61,8 @@ function App() {
         <Route path="/notice" element={<NoticeBoard></NoticeBoard>}></Route>
         <Route path="/notice/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
         <Route path="/qna" element={<QnABoard></QnABoard>}></Route>
-        <Route path="/qna/:id?" element={<QnaBoardDetail data={newQnaData}></QnaBoardDetail>}></Route>
+        <Route path="/qna/:id?" element={<QnaBoardDetail></QnaBoardDetail>}></Route>
+        <Route path="/qna/admin/:id?" element={<QnaWrite></QnaWrite>}></Route>
         <Route path="/traffic" element={<Traffic></Traffic>}></Route>
         <Route path="/knowledge?" element={<Knowledge></Knowledge>}></Route>
         <Route path="/knowledgeDetail/:id?" element={<KnowledgeDetail data={newKnowledgeData}></KnowledgeDetail>}></Route>
@@ -69,7 +70,7 @@ function App() {
         <Route path='/destination/:pageId' element={<TourList />}></Route>
         <Route path='/destination/detail/:id' element={<DetailInfo />}></Route>
         <Route path='/selectSchedule' element={<SelectSchedule></SelectSchedule>}></Route>
-        <Route path='/qna/write' element={<QnaWrite />}></Route>
+        <Route path='/qna/admin/write' element={<QnaWrite />}></Route>
         <Route path='/chat/room' element={<ChatRoom />}></Route>
         <Route path='/chat/rooms' ></Route>
         <Route path='/chat/room/:roomId?' element={<ChatDetail />}></Route>
