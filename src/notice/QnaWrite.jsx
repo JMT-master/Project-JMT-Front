@@ -6,7 +6,6 @@ import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'rea
 import { call } from '../common/ApiService';
 import { useState } from 'react';
 
-
 const QnaWrite = (props) => {
     const [items, setItems] = useState([]);
     const [category, setCategory] = useState("관광지");
@@ -34,21 +33,31 @@ const QnaWrite = (props) => {
       }
 
       const postEditItem = (item) => {
-        call("/qma/admin/"+item.id, "POST", item)
-        .then((response) => setItem(response.data))
-        .then(()=> navigate("/qna"));
-      }
-
-      const onButtonClick = () => {
-        const newItem = {
-          qnaCategory: category,
-          qnaTitle: document.getElementById('qna_title').value,
-          qnaContent: document.getElementById('qna_content').value,
-          qnaView: 0,
-          qnaColNum : document.getElementById("qnaNum").value
+        const updatedItem = {
+            qnaCategory: category,
+            qnaTitle: document.getElementById('qna_title').value,
+            qnaContent: document.getElementById('qna_content').value,
+            qnaView: 0,
+            qnaColNum: document.getElementById("qnaNum").value
         };
-        addItem(newItem);
-      };
+        call("/qna/admin/" + item.id, "POST", updatedItem) // Assuming PUT method for update operation
+            .then(() => navigate("/qna"));
+    };
+
+    const onButtonClick = () => {
+        if (item.id) {
+            postEditItem(item);
+        } else {
+            const newItem = {
+                qnaCategory: category,
+                qnaTitle: document.getElementById('qna_title').value,
+                qnaContent: document.getElementById('qna_content').value,
+                qnaView: 0,
+                qnaColNum: document.getElementById("qnaNum").value
+            };
+            addItem(newItem);
+        }
+    };
 
     const cateSelect = (e) => {
         setCategory(e.target.value);
