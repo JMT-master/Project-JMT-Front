@@ -14,7 +14,7 @@ const QnaBoardDetail = () => {
     // qnaColNum을 사용하여 API를 호출하고 데이터를 가져옵니다.
     call("/qna/"+qnaColNum, "GET", null)
       .then((response) => setItem(response.data[0]));
-    console.log("item {} : ", item);
+    // console.log("item {} : ", item);
   }, [qnaColNum]); // qnaColNum이 변경될 때마다 useEffect가 실행됩니다.
 
   return (
