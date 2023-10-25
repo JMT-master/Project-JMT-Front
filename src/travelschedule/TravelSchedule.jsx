@@ -56,38 +56,12 @@ const TravelSchedule = (props) => {
     }
   }, [visit]);
 
-  // Drag 도중
-  // const onDragUpdate = (update) => {
-  //   const { destination } = update;
-
-  //   if (destination) {
-  //     // 아이템이 특정 대상 영역 위로 드래그
-  //     const isDraggingOverTable1 = destination.droppableId === "table1";
-  //     const isDraggingOverTable2 = destination.droppableId === "table2";
-
-  //     if (isDraggingOverTable1) {
-  //       const tableRows = document.querySelectorAll(".table1"); // 테이블의 모든 행 가져오기
-
-  //       tableRows.forEach((row, index) => {
-  //         if(index === destination.index) {
-  //           row.style.backgroundColor = "orange";
-  //         }
-  //       });
-  //     } else if (isDraggingOverTable2) {
-  //       // table2 대상 영역에 드래그 중 CSS를 적용합니다.
-  //       // 마찬가지로, 배경색을 변경하거나 테두리를 추가할 수 있습니다.
-  //     }
-  //   }
-  // };
-
   // Drag가 끝났을 경우
   const onDragEnd = (result) => {
     // source : drag 지점
     // destination : drop 지점
     const { destination, source } = result;
     let dragIndex = 0;
-
-    // console.log("result : ", result);
 
     // drop이 List일 경우
     if (destination === null) return;
