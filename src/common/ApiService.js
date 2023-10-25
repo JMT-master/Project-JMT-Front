@@ -129,16 +129,18 @@ export function sseSource(url, setNotifications) {
 
     eventSource.addEventListener('sse', (event) => {
       console.log("메세지 수신 : " + event.data);
-      // const {data: Notification} = event;
-      // setNotifications(Notification);
-    })
-    // eventSource.addEventListener('send', (event) => {
-    //   console.log("send!");
-    //   // const {data: Notification} = event;
-    //   // setNotifications(Notification);
-    //   console.log("onnotify : " + event);
-    //
-    // })
+      call("/notification",
+         "POST",
+         null
+         // 아이디는 백에서 토큰으로 확인
+      )
+         .then((response) => {
+           setNotifications(response);
+         })
+         .catch((error) => {
+           console.log(error);
+         })
+    });
 
     eventSource.onerror = function (event) {
       console.error('SSE 에러 발생:', event);

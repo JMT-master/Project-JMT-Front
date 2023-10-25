@@ -5,10 +5,16 @@ const NotificationList = ({notifications}) => {
   console.log("=================" + notifications)
   const makeNotificationList = () => {
     const notificationList = [];
+    console.log(notifications == undefined)
 
-    notifications.forEach((notification) => {
-      notificationList.push(<Notification notification={notification}/>);
-    })
+
+    if(notifications != undefined && notifications[0] != null) {
+      notifications.forEach((notification) => {
+        notificationList.push(<Notification notification={notification}/>);
+      })
+    }else{
+      notificationList.push(<Notification notification={{content : "임시", url : null, yn : "y"}}/>)
+    }
     console.log("notificationList" + notificationList)
     return notificationList;
   }

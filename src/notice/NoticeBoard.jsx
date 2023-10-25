@@ -22,7 +22,7 @@ const TestTr = (props) => {
   );
 };
 
-const NoticeBoard = () => {
+const NoticeBoard = ({send}) => {
   const navigate = useNavigate();
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
   const [currentPage , setCurrentPage] = useState(1);
@@ -32,7 +32,6 @@ const NoticeBoard = () => {
   // const currentItems = noticeData.slice(startIndex, endIndex);
   const [currentItems, setCurrentItems] = useState([])
   const totalPages = Math.ceil(noticeData.length / itemsPerPage);
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -93,6 +92,7 @@ const NoticeBoard = () => {
             })}
           </tbody>
         </table>
+        <button type="button" className="testBtn" onClick={send}>테스트용 send</button>
       </div>
       <div className='page'>
       <Paging

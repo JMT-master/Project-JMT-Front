@@ -9,7 +9,7 @@ import TravelSchedule from './travelschedule/TravelSchedule';
 import Login from './member/Login';
 import NoticeBoard from './notice/NoticeBoard';
 import NoticeBoardDetail from './notice/NoticeBoardDetail';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {knowledgeData, noticeData, qnaData} from './data/Data';
 import QnABoard from './notice/QnABoard';
 import QnaBoardDetail from './notice/QnaBoardDetail';
@@ -33,7 +33,7 @@ import {AiFillYoutube, AiOutlineBell} from 'react-icons/ai';
 import OnModalComp from "./common/OnModalComp";
 import NotificationList from "./common/Notification";
 import axios from "axios";
-import {sseSource} from "./common/ApiService";
+import {call, sseSource} from "./common/ApiService";
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -43,11 +43,44 @@ function App() {
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   const [notifications, setNotifications] = useState()
 
+
+  const send = async () => {
+    const accessToken = localStorage.getItem("ACCESS_TOKEN");
+    await axios({
+      method: 'POST',
+      url: `http://localhost:8888/notification/send`,
+      data: {
+        "content": "테스트3",
+        "url": "테스트용url",
+        "yn": "y"
+      },
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      }
+    })
+       .then(function (response) {
+         call("/notification",
+            "POST",
+            null
+            // 아이디는 백에서 토큰으로 확인
+         )
+            .then((response) => {
+              setNotifications(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+       })
+       .catch(function (error) {
+         console.log('error', error);
+       });
+  };
+
   return (
      <ThemeProvider theme={themeMode}>
        <GlobalStyles/>
        <HeaderTop theme={theme} themeToggler={themeToggler} notifications={notifications}
-                  setNotifications={setNotifications}/>
+                  setNotifications={setNotifications} send={send} />
        <Routes>
          <Route path='/' element={<Header></Header>}></Route>
          <Route path="/joinUser" element={<JoinUser></JoinUser>}></Route>
@@ -55,7 +88,7 @@ function App() {
          <Route path="/travelSchedule" element={<TravelSchedule></TravelSchedule>}></Route>
          <Route path="/mypage" element={<Mypage></Mypage>}></Route>
          <Route path="/login" element={<Login setNotifications={setNotifications}></Login>}></Route>
-         <Route path="/noticeBoard" element={<NoticeBoard></NoticeBoard>}></Route>
+         <Route path="/noticeBoard" element={<NoticeBoard send={send}></NoticeBoard>}></Route>
          <Route path="/noticeBoard/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
          <Route path="/qnABoard" element={<QnABoard></QnABoard>}></Route>
          <Route path="/qnABoard/:id?" element={<QnaBoardDetail data={newQnaData}></QnaBoardDetail>}></Route>
@@ -78,7 +111,8 @@ function HeaderTop(props) {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('ACCESS_TOKEN');
   const refreshToken = localStorage.getItem('REFRESH_TOKEN');
-  const {notifications, setNotifications} = props;
+  const {notifications, setNotifications, send} = props;
+
   //알람 모달 관련
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -122,45 +156,12 @@ function HeaderTop(props) {
     }
   };
 
-  // useEffect(() => {
-  //   call("/notification",
-  //      "POST",
-  //      null
-  //      // 아이디는 백에서 토큰으로 확인
-  //   )
-  //      .then((response) => {
-  //        setNotifications(response);
-  //      })
-  //      .catch((error) => {
-  //        console.log(error);
-  //      })
-  //
-  // }, []);
+  useEffect(() => {
+      sseSource("sub", setNotifications);
+  }, [accessToken]);
 
-  const send = async () => {
-    const accessToken = localStorage.getItem("ACCESS_TOKEN");
-    await axios({
-      method: 'POST',
-      url: `http://localhost:8888/notification/send`,
-      data: {
-        "content": "테스트2",
-        "url": "테스트용url",
-        "yn": "y"
-      },
-      headers: {
-        Authorization: "Bearer " + accessToken,
-      }
-    })
-       .then(function (response) {
-         console.log('handleCountClick', response);
-       })
-       .catch(function (error) {
-         console.log('error', error);
-       });
-  };
-  const sub = () => {
-    sseSource("sub", setNotifications);
-  };
+
+
 
 
   return (
@@ -169,7 +170,6 @@ function HeaderTop(props) {
          <button type="button" onClick={showModal} style={{justifyContent: "left"}}>
            <AiOutlineBell className="headerNotification"/>
          </button>
-         <button type="button" className="testBtn" onClick={sub}>테스트용 sub</button>
          <button type="button" className="testBtn" onClick={send}>테스트용 send</button>
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
          <span>
