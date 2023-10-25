@@ -37,10 +37,13 @@ const QnABoard = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
+    
     fetchData(currentPage);
+
   }, [currentPage]);
 
   const fetchData = (page) => {
+
     call(`/qna?page=${page}`, "GET", null)
       .then((response) => {
         // console.log("response.items : {}", response.items);

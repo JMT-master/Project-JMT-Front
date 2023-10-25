@@ -39,7 +39,7 @@ const QnaBoardDetail = () => {
         </div>
         <div className='qnaDetail-inside'>
           <textarea cols="30" rows="10" readOnly placeholder='qna 내용' value={item.qnaContent}></textarea>
-        <button  onClick={() => navigate("/qna/admin/"+qnaColNum)}>수정하기</button>
+        <button  onClick={() => navigate("/qna/admin/"+qnaColNum)} >수정하기</button>
         </div>
         <button className='back-to-qna'  onClick={()=>navigate("/qna")}>목록으로 가기</button>
       </div>

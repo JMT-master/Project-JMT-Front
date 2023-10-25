@@ -38,6 +38,8 @@ import {call} from './common/ApiService'
 import OnModalComp from "./common/OnModalComp";
 import AlarmList from "./common/Notification";
 import ChatDetail from './trableinfo/ChatDetail';
+import JoinUserValidateChk from './member/JoinUserValidateChk';
+import KakaoLogin from './member/KakaoLogin';
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -54,6 +56,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Header></Header>}></Route>
         <Route path="/joinUser" element={<JoinUser></JoinUser>}></Route>
+        <Route path="/joinUser/email/validateCheck/:userid" element={<JoinUserValidateChk></JoinUserValidateChk>}></Route>
         <Route path="/curator" element={<Curator></Curator>}></Route>
         <Route path="/travelSchedule" element={<TravelSchedule></TravelSchedule>}></Route>
         <Route path="/mypage" element={<Mypage></Mypage>}></Route>
@@ -111,12 +114,10 @@ function HeaderTop(props) {
   const handleMouseOutNoti = () => {
     $(".notice-list").hide();
   };
-
+let state = 1;
+  // token 처리
   const handleClick = () => {
-    console.log("들어옴?");
-    console.log(pathname);
-
-    if(accessToken === null) { // login
+    if(state === 1) { // login
       navigate("/login");
       window.location.reload();
     } else { // logout
@@ -126,20 +127,6 @@ function HeaderTop(props) {
       window.location.reload();
     }
   };
-
-  useEffect(() => {
-    call("/alarm",
-       "POST",
-       null
-       // request = 현재 접속한 유저의 아이디, 지금은 고정값
-    )
-       .then((response) => {
-         setAlarms(response.data);
-       })
-       .catch((error) => {
-         console.log(error);
-       })
-  }, []);
 
   // console.log(accessToken);
   return (
@@ -152,7 +139,7 @@ function HeaderTop(props) {
         <span>
           <a href={() => false} onClick={() => handleClick()}
           className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
-          >{(accessToken === null) ? '로그인' : '로그아웃'}</a>
+          >{(state === 1) ? '로그인' : '로그아웃'}</a>
         </span>
         <Toggle theme={props.theme} toggleTheme={props.themeToggler} />
          {modalOpen && <OnModalComp setModalOpen={setModalOpen} comp={<AlarmList/>}></OnModalComp>}

@@ -68,6 +68,7 @@
   font-size: large;
   padding: 15px 30px;
 }
+
 .login-active .memberCheck {
   grid-column: 4/6;
   grid-row: 5/6;
@@ -84,6 +85,10 @@
   background-color: #f3a344; opacity: 0.7;
 }
 
+.membership > button:hover, .memberCheck > button:hover {
+  cursor: pointer;
+}
+
 .sns-login {
   grid-column: 1/7;
   grid-row: 6/6;
@@ -91,6 +96,15 @@
 
 .sns-login img {
   margin: 0 20px;
+}
+
+.sns-login-kakao {
+  background-color: transparent;
+  border: none;
+}
+
+.sns-login-kakao:hover {
+  cursor: pointer;
 }
 @media screen and (max-width:1260px) {
   .login-active {

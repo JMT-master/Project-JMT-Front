@@ -6,10 +6,9 @@ export function call(api, method, request){
         "Content-Type" : "application/json",
     });
 
-    const accessToken = localStorage.getItem("ACCESS_TOKEN");
-    if(accessToken && accessToken != null) {
-      headers.append("Authorization", "Bearer " + accessToken);
-    }
+    // if(request.accessToken && request.accessToken != null) {
+    //   headers.append("Authorization", "Bearer " + request.accessToken);
+    // }
   // return call("/auth/signin","POST", {})
   //    .then((response) => {
   //      localStorage.setItem("ACCESS_TOKEN", response.token)
@@ -33,13 +32,6 @@ export function call(api, method, request){
         console.log("call_response : ", response);
         if (response.status === 200){
             return response.json();
-        } else if(response.status === 401) { // unauthorized
-            Swal.fire({
-                icon: 'warning',
-                title: '로그인',
-                text: '아이디 혹은 비밀번호가 맞지 않습니다.'
-            })
-            // window.location.href = "/login";
         }
     }).catch((error) => {
         console.log(error);
