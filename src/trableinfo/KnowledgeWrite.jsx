@@ -1,12 +1,10 @@
 import React, { useRef, useState } from 'react';
 import style from '../css/KnowledgeWrite.css'
 import { VscSearch } from 'react-icons/vsc';
-// import { VscSearch } from 'react-icons/vsc';
 import { useNavigate } from 'react-router-dom';
 import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'react-icons/ai';
 import axios from 'axios';
 import { API_BASE_URL } from '../common/ApiConfig';
-
 
 const KnowledgeWrite = () => {
   const navigate = useNavigate();
@@ -138,5 +136,4 @@ const KnowledgeWrite = () => {
     </div>
   );
 };
-
 export default KnowledgeWrite;
