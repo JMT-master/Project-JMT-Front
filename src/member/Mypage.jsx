@@ -9,6 +9,7 @@ import { useState } from 'react'
 import MypageList from './MypageList'
 import { useEffect } from 'react'
 import axios from 'axios'
+import TravelPdf from '../travelschedule/TravelPdf'
 
 
 const Mypage = () => {
@@ -19,27 +20,6 @@ const Mypage = () => {
   const [visit, setVisit] = useState(null);
   const [list, setList] = useState();
   const [totalCount, setTotalCount] = useState(0);
-
-  //pdf를 다운 받기 위한 작성 부분
-
-  const [pdfUrl, setPdfUrl] = useState('');
-
-
-  const handleDownloadPdf = () => {
-    axios.get('http://localhost:8888/travel/generate-pdf',
-      { responseType: 'arraybuffer' })
-      .then(response => {
-        console.log("response : {}", response.data);
-        const blob = new Blob([response.data], { type: 'application/pdf' });
-        const url = URL.createObjectURL(blob);
-        setPdfUrl(url);
-      })
-      .catch(error => {
-        console.error('ERROR downloading PDf : ', error);
-      });
-  }
-
-
 
   // Big page에서 Title 클릭시
   const onChangeTitle = (index) => {
@@ -167,8 +147,8 @@ const Mypage = () => {
         </div>
         <hr></hr>
         <div>
-          <button type='button' onClick={handleDownloadPdf}>pdf 만들기</button>
-          {pdfUrl && <a href={pdfUrl} download="travel-plan.pdf">여기 누르고 다운로드하세여</a>}
+        <h1>여행 계획 입력</h1>
+        <TravelPdf />
         </div>
         <h1 className='myPage-h1-title'>{title}({totalCount})</h1>
         <ul className='myPage-Big-Image-ul'>
