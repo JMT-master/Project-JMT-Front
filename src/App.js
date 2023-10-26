@@ -186,7 +186,6 @@ let state = 1;
           className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
           >{(state === 1) ? '로그인' : '로그아웃'}</a>
         </span>
-         <Link to="/login" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>로그인</Link>
          <Toggle theme={props.theme} toggleTheme={props.themeToggler}/>
        </div>
        <div className="header-container">
