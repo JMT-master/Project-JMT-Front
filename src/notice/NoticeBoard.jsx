@@ -10,11 +10,12 @@ import {call} from "../common/ApiService";
 
 const TestTr = (props) => {
   const navigate = useNavigate();
-  const {no, category, title, content, createDate} = props.data;
+  console.log(props.data)
+  const {idx, category, title, content, createDate} = props.data;
   
   return (
-    <tr onClick={()=>navigate('/noticeBoard/'+no)}>
-      <td>{no}</td>
+    <tr onClick={()=>navigate('/noticeBoard/'+idx)}>
+      <td>{idx}</td>
       <td>{category}</td>
       <td>{title}</td>
       <td>{createDate}</td>
@@ -41,12 +42,13 @@ const NoticeBoard = ({send}) => {
   }
 
   useEffect(() => {
-    call("/notice/test",
+    call("/notice",
        "GET",
        null
        // request = 현재 접속한 유저의 아이디, 지금은 고정값
     ).then((response) => {
-      setCurrentItems(response.data);
+      console.log("readall? : " + response)
+      response != null ? setCurrentItems(response) : setCurrentItems([]);
     })
        .catch((error) => {
          console.log(error);
@@ -85,14 +87,14 @@ const NoticeBoard = ({send}) => {
             </tr>
           </thead>
           <tbody className='cursor'>
-            {currentItems.map((item, index)=>{
+            {currentItems&&currentItems.map((item, index)=>{
               return (
                 <TestTr data={item} key={item.id}></TestTr>
               )
             })}
           </tbody>
         </table>
-        <button type="button" className="testBtn" onClick={send}>테스트용 send</button>
+        <button type="button" className="testBtn" onClick={()=>{send("notice")}}>글 작성 send</button>
       </div>
       <div className='page'>
       <Paging

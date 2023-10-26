@@ -44,11 +44,11 @@ function App() {
   const [notifications, setNotifications] = useState()
 
 
-  const send = async () => {
+  const send = async (type, nav) => {
     const accessToken = localStorage.getItem("ACCESS_TOKEN");
     await axios({
       method: 'POST',
-      url: `http://localhost:8888/notification/send`,
+      url: `http://localhost:8888/${type}/send` ,
       data: {
         "content": "테스트3",
         "url": "테스트용url",
@@ -170,7 +170,7 @@ function HeaderTop(props) {
          <button type="button" onClick={showModal} style={{justifyContent: "left"}}>
            <AiOutlineBell className="headerNotification"/>
          </button>
-         <button type="button" className="testBtn" onClick={send}>테스트용 send</button>
+         <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
          <span>
           <a href={() => false} onClick={() => handleClick()}
