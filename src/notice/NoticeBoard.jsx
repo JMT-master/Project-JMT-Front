@@ -11,19 +11,25 @@ import {call} from "../common/ApiService";
 const TestTr = (props) => {
   const navigate = useNavigate();
   console.log(props.data)
-  const {idx, category, title, content, createDate} = props.data;
+  const {idx, category, title, content, regDate} = props.data;
   
   return (
-    <tr onClick={()=>navigate('/noticeBoard/'+idx)}>
+    <tr onClick={()=>navigate('/noticeBoard/'+ idx)}>
       <td>{idx}</td>
       <td>{category}</td>
       <td>{title}</td>
-      <td>{createDate}</td>
+      <td>{regDate}</td>
+      <td><button onClick={()=>{
+        call("/notice","DELETE",{idx : idx})
+           .then(response =>{
+             console.log("삭제 완료", response)
+           })
+      }}>삭제</button></td>
     </tr>
   );
 };
 
-const NoticeBoard = ({send}) => {
+const NoticeBoard = () => {
   const navigate = useNavigate();
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
   const [currentPage , setCurrentPage] = useState(1);
@@ -53,7 +59,7 @@ const NoticeBoard = ({send}) => {
        .catch((error) => {
          console.log(error);
        })
-  }, []);
+  }, [currentItems.length]);
 
 
   return (
@@ -78,7 +84,7 @@ const NoticeBoard = ({send}) => {
           </select>
         </div>
         <div className='plus-notice'>
-          <button onClick={()=>navigate('/noticeWrite')}>글쓰기</button>
+          <button onClick={()=>navigate('/notice/admin/write')}>글쓰기</button>
         </div>
         <table>
           <thead>
@@ -97,7 +103,17 @@ const NoticeBoard = ({send}) => {
             })}
           </tbody>
         </table>
-        <button type="button" className="testBtn" onClick={()=>{send("notice")}}>글 작성 send</button>
+        <button type="button" className="testBtn" onClick={()=> {
+          call("/notice/write", "POST",{
+            "idx" : 1,
+            "category" : "테스트",
+            "content" : "테스트 내용",
+            "title" : "테스트 제목"
+          })
+             .then(response =>{
+               console.log("글 작성 완료", response)
+             })
+        }}>글 작성 send</button>
       </div>
       <div className='page'>
       <Paging
