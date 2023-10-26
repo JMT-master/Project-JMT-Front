@@ -78,7 +78,7 @@ const NoticeBoard = ({send}) => {
           </select>
         </div>
         <div className='plus-notice'>
-          <button onClick={()=>navigate('/noticeWrite')}>글쓰기</button>
+          <button onClick={()=>navigate('/notice/admin/write')}>글쓰기</button>
         </div>
         <table>
           <thead>

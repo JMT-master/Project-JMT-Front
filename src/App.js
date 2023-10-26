@@ -40,6 +40,7 @@ import KakaoLogin from './member/KakaoLogin';
 import NotificationList from "./common/Notification";
 import axios from "axios";
 import {call, getCookie, sseSource} from "./common/ApiService";
+import NoticeWrite from './notice/NoticeWrite';
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -97,6 +98,7 @@ function App() {
         <Route path="/mypage" element={<Mypage></Mypage>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/notice" element={<NoticeBoard send={send}></NoticeBoard>}></Route>
+        <Route path="/notice/admin/write" element={<NoticeWrite></NoticeWrite>}></Route>
         <Route path="/notice/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
         <Route path="/qna" element={<QnABoard></QnABoard>}></Route>
         <Route path="/qna/:id?" element={<QnaBoardDetail></QnaBoardDetail>}></Route>
@@ -186,7 +188,6 @@ let state = 1;
           className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
           >{(state === 1) ? '로그인' : '로그아웃'}</a>
         </span>
-         <Link to="/login" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>로그인</Link>
          <Toggle theme={props.theme} toggleTheme={props.themeToggler}/>
        </div>
        <div className="header-container">
