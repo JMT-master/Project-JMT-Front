@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import {API_BASE_URL} from "./ApiConfig";
+import { Cookies } from "react-cookie";
 
 export function call(api, method, request){
     let  headers = new Headers({
@@ -52,4 +53,11 @@ export function signin(loginDto) {
         }
     })
 
+  }
+
+  
+  
+  export const getCookie = () => {
+    const cookies = new Cookies();
+    return cookies.get('ACCESS_TOKEN');
   }

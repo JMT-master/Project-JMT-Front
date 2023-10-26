@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'react-icons/ai';
 import axios from 'axios';
 import { API_BASE_URL } from '../common/ApiConfig';
+import { getCookie } from '../common/ApiService';
 
 const KnowledgeWrite = () => {
   const navigate = useNavigate();
@@ -65,8 +66,10 @@ const KnowledgeWrite = () => {
     }
 
     console.log(file);
-    for(let i = 0; i < file.length; i++) {
-      formData.append('file',file[i]);
+    if(file !== undefined && file != null) {
+      for(let i = 0; i < file.length; i++) {
+        formData.append('file',file[i]);
+      }
     }
     
 
@@ -76,14 +79,30 @@ const KnowledgeWrite = () => {
 
     console.log('formData : ', formData);
 
-    axios({
-      method : 'post',
-      url : API_BASE_URL + '/knowledgeWrite/send',
-      headers : {
-        "Content-Type" : "multipart/form-data",
-      },
-      data : formData
-    })
+    const accessToken = getCookie();
+
+    console.log("accessToken : ",accessToken);
+
+    if(accessToken === undefined) {
+      axios({
+        method : 'post',
+        url : API_BASE_URL + '/knowledgeWrite/send',
+        headers : {
+          "Content-Type" : "multipart/form-data"
+        },
+        data : formData
+      })
+    } else {
+      axios({
+        method : 'post',
+        url : API_BASE_URL + '/knowledgeWrite/send',
+        headers : {
+          "Content-Type" : "multipart/form-data",
+          "Authorization": 'Bearer ' + accessToken
+        },
+        data : formData
+      })
+    }
   }
 
   return (

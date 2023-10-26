@@ -14,8 +14,8 @@ import TravelScheduleModal from './TravelScheduleModal';
 import Swal from 'sweetalert2'
 import TsModalMap from '../common/TsModalMap'
 const TravelSchedule = (props) => {
-  const [visit, setVisit] = useState();
-  const [list, setList] = useState([]);
+  const [visit, setVisit] = useState(); // Json Data를 가지고 있음
+  const [list, setList] = useState([]); // 변경 가공 data
   const [currentPage, setCurrentPage] = useState(1);
   const [table1FontColor, setTable1FontColor] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [table2FontColor, setTable2FontColor] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
@@ -49,36 +49,20 @@ const TravelSchedule = (props) => {
   // data가 변경되었을 때, tag와 List 변경
   useEffect(() => {
     if (visit != null && visit !== undefined) {
-      setList(visit.items.map(item => {
-        return ({ item })
-      }));
+      setList(visit.items
+        .filter(data => (data.repPhoto !== null && data.repPhoto !== undefined))
+        .map(item => {
+          return ({ 
+          "dayImage" : item.repPhoto.photoid.imgpath, // img 경로
+          "dayTitle" : item.title,                    // 제목
+          "dayRegion1" : item.region1cd.label,       // 지역1
+          "dayRegion2" : item.region2cd.label,       // 지역2
+          "latitude" : item.latitude,                // 위도
+          "longitude" : item.longitude               // 경도
+         }) }));
       setLoading(false);
     }
   }, [visit]);
-
-  // Drag 도중
-  // const onDragUpdate = (update) => {
-  //   const { destination } = update;
-
-  //   if (destination) {
-  //     // 아이템이 특정 대상 영역 위로 드래그
-  //     const isDraggingOverTable1 = destination.droppableId === "table1";
-  //     const isDraggingOverTable2 = destination.droppableId === "table2";
-
-  //     if (isDraggingOverTable1) {
-  //       const tableRows = document.querySelectorAll(".table1"); // 테이블의 모든 행 가져오기
-
-  //       tableRows.forEach((row, index) => {
-  //         if(index === destination.index) {
-  //           row.style.backgroundColor = "orange";
-  //         }
-  //       });
-  //     } else if (isDraggingOverTable2) {
-  //       // table2 대상 영역에 드래그 중 CSS를 적용합니다.
-  //       // 마찬가지로, 배경색을 변경하거나 테두리를 추가할 수 있습니다.
-  //     }
-  //   }
-  // };
 
   // Drag가 끝났을 경우
   const onDragEnd = (result) => {
@@ -86,8 +70,6 @@ const TravelSchedule = (props) => {
     // destination : drop 지점
     const { destination, source } = result;
     let dragIndex = 0;
-
-    // console.log("result : ", result);
 
     // drop이 List일 경우
     if (destination === null) return;
@@ -113,12 +95,17 @@ const TravelSchedule = (props) => {
       dropIndexData = tableData1.filter((item, i) => i === destination.index);
 
       if (flag === 0) { // drag 지점 => Lists, drop 지점 => table1
-        if (tableData1.find(item => item === dragIndexData[0].item)) return;
+        if (tableData1.find(item => item === dragIndexData[0])) return;
 
         setTableData1(tableData1.map((item, i) => {
-          if (destination.index === i) {
+          if (destination.index === i) { // 도착지점과 index가 같을 때
             table1FontColorChn.push(1);
-            return dragIndexData[0].item;
+
+            const data = {...dragIndexData[0]};
+            data['dayCount'] = 1;
+            data['dayIndex'] = i;
+
+            return data;
           } else if (Number.isInteger(item)) {
             table1FontColorChn.push(0);
             return i;
@@ -135,7 +122,10 @@ const TravelSchedule = (props) => {
         setTableData1(tableData1.map((item, i) => {
           if (destination.index === i) { // 도착지점과 index가 같을 때
             table1FontColorChn.push(1);
-            return dragIndexData[0];
+            const data = {...dragIndexData[0]};
+            data['dayIndex'] = i;
+
+            return data;
           } else if (Number.isInteger(item)) { // 빈 테이블
             table1FontColorChn.push(0);
             return i;
@@ -144,7 +134,7 @@ const TravelSchedule = (props) => {
               table1FontColorChn.push(0);
               return i;
             } else {
-              table1FontColorChn.push(1);
+              table1FontColorChn.push(0);
               return dropIndexData[0];
             }
           } else {
@@ -164,7 +154,11 @@ const TravelSchedule = (props) => {
         setTableData1(tableData1.map((item, i) => {
           if (destination.index === i) { // 도착지점과 index가 같을 때
             table1FontColorChn.push(1);
-            return dragIndexData[0];
+            const data = {...dragIndexData[0]};
+            data['dayCount'] = 1;
+            data['dayIndex'] = i;
+
+            return data;
           } else if(destination.index > i) {
             table1FontColorChn.push(table1ChnColor[i]);
             return table1Chn[i];
@@ -199,7 +193,13 @@ const TravelSchedule = (props) => {
         setTableData2(tableData2.map((item, i) => {
           if (destination.index === i) {
             table2FontColorChn.push(1);
-            return dragIndexData[0].item;
+
+            const data = {...dragIndexData[0]};
+            data['dayCount'] = 2;
+            data['dayIndex'] = i;
+
+            return data;
+
           } else if (Number.isInteger(item)) {
             table2FontColorChn.push(0);
             return i;
@@ -219,7 +219,11 @@ const TravelSchedule = (props) => {
         setTableData2(tableData2.map((item, i) => {
           if (destination.index === i) { // 도착지점과 index가 같을 때
             table2FontColorChn.push(1);
-            return dragIndexData[0];
+            const data = {...dragIndexData[0]};
+            data['dayCount'] = 2;
+            data['dayIndex'] = i;
+
+            return data;
           } else if(destination.index > i) {
             table2FontColorChn.push(table2ChnColor[i]);
             return table2Chn[i];
@@ -256,7 +260,7 @@ const TravelSchedule = (props) => {
               table2FontColorChn.push(0);
               return i;
             } else {
-              table2FontColorChn.push(1);
+              table2FontColorChn.push(0);
               return dropIndexData[0];
             }
           } else {
@@ -266,7 +270,6 @@ const TravelSchedule = (props) => {
         })
         )
       }
-
       setTable2FontColor(table2FontColorChn);
     }
   };
@@ -454,8 +457,8 @@ const TravelSchedule = (props) => {
                       {...provided.droppableProps}
                     >
                       {
-                        visit !== undefined
-                          ? visit.items.map((item, i) => {
+                        // visit !== undefined?
+                           list.map((item, i) => {
                             // if (i <= 10) {
                             return (
                               <Draggable
@@ -476,7 +479,7 @@ const TravelSchedule = (props) => {
                             );
                             // }
                           })
-                          : null // <></> 대신 null을 사용하세요.
+                          // : null // <></> 대신 null을 사용하세요.
                       }
                       {provided.placeholder}
                     </div>
@@ -505,6 +508,7 @@ const TravelSchedule = (props) => {
                         {
                           // (table1Data1 !== undefined && table1Data1 !== null) ?
                           tableData1.map((data, i) => {
+                            console.log("tableData1 : ",tableData1);
                             return (
                               <Draggable
                                 key={i}
