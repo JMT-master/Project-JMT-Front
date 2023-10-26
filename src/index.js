@@ -5,13 +5,16 @@ import App, { Footer} from './App';
 // import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { NavermapsProvider } from 'react-naver-maps';
+import { CookiesProvider } from 'react-cookie';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>   
-    <NavermapsProvider>
-      <App />
-    </NavermapsProvider>
+    <CookiesProvider>
+      <NavermapsProvider>
+        <App />
+      </NavermapsProvider>
+    </CookiesProvider>
     <Footer />
   </BrowserRouter>
 );

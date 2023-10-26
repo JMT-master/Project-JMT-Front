@@ -75,6 +75,10 @@
   border: none;
   font-size: large;
 }
+.searchKnowledge-select {
+  margin-right: 10px;
+  padding-right: 10px;
+}
 .knowledge-table{
   clear: both;
   text-align: center;
@@ -89,13 +93,20 @@
   margin: 0 10px;
   display: flex;
 }
-.knowledge-category button{
+.knowledge-category-default {
   margin: 10px auto;
-  width: 19vw;
+  width: 25vw;
   padding: 10px 0;
   background-color: white;
   color: black;
   border: 0.8px solid #ccc;
+}
+.knowledge-category-check {
+  background-color: #f3a344;
+  color: white;
+}
+.knowledge-category-default:hover {
+  cursor: pointer;
 }
 .page-choice{
   position: relative;

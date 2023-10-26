@@ -30,9 +30,9 @@ const NoticeBoard = ({send}) => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  // const currentItems = noticeData.slice(startIndex, endIndex);
   const [currentItems, setCurrentItems] = useState([])
   const totalPages = Math.ceil(noticeData.length / itemsPerPage);
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -77,7 +77,10 @@ const NoticeBoard = ({send}) => {
             <option value={20}>20개씩</option>
           </select>
         </div>
-        <table cl>
+        <div className='plus-notice'>
+          <button onClick={()=>navigate('/noticeWrite')}>글쓰기</button>
+        </div>
+        <table>
           <thead>
             <tr>
               <th>No.</th>

@@ -102,6 +102,15 @@
 #knowledgeWrite-file {
   /* display: none; */
 }
+.file-attach input[type='file'] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
+
 .submit-knowledge{
   padding: 10px 20px;
   background-color: #f3a344;

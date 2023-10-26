@@ -10,10 +10,10 @@ import Login from './member/Login';
 import NoticeBoard from './notice/NoticeBoard';
 import NoticeBoardDetail from './notice/NoticeBoardDetail';
 import {useEffect, useState} from 'react';
-import {knowledgeData, noticeData, qnaData} from './data/Data';
+import { knowledgeData, noticeData, qnaData } from './data/Data';
 import QnABoard from './notice/QnABoard';
 import QnaBoardDetail from './notice/QnaBoardDetail';
-import Festival, {FesListNoImg} from './trableinfo/Festival';
+import Festival, { FesListNoImg } from './trableinfo/Festival';
 import Knowledge from './trableinfo/Knowledge';
 import KnowledgeDetail from './trableinfo/KnowledgeDetail';
 import KnowledgeWrite from './trableinfo/KnowledgeWrite';
@@ -21,19 +21,25 @@ import TourList from './destination/TourList';
 import DetailInfo from './destination/DetailInfo';
 import Traffic from './trableinfo/Traffic';
 import SelectSchedule from './travelschedule/SelectSchedule';
-import {ThemeProvider} from 'styled-components';
-import {darkTheme, lightTheme} from './common/Themes';
-import {GlobalStyles} from './common/GlobalStyles';
-import {useDarkMode} from './common/useDarkMode';
+import { ThemeProvider } from 'styled-components';
+import { darkTheme, lightTheme } from './common/Themes';
+import { GlobalStyles } from './common/GlobalStyles';
+import { useDarkMode } from './common/useDarkMode';
 import Toggle from './common/Toggle';
 import YouTube from 'react-youtube'
 import data from "./data/festival.json";
-import {MdCardTravel, MdFestival} from 'react-icons/md';
-import {AiFillYoutube, AiOutlineBell} from 'react-icons/ai';
+import { AiFillYoutube, AiOutlineBell } from 'react-icons/ai';
+import { MdCardTravel,MdFestival } from 'react-icons/md';
+import QnaWrite from './notice/QnaWrite';
+import ChatRoom from './trableinfo/ChatRoom';
+import ChatRoomDetail from './trableinfo/ChatRoomDetail';
 import OnModalComp from "./common/OnModalComp";
+import ChatDetail from './trableinfo/ChatDetail';
+import JoinUserValidateChk from './member/JoinUserValidateChk';
+import KakaoLogin from './member/KakaoLogin';
 import NotificationList from "./common/Notification";
 import axios from "axios";
-import {call, sseSource} from "./common/ApiService";
+import {call, getCookie, sseSource} from "./common/ApiService";
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -45,7 +51,8 @@ function App() {
 
 
   const send = async (type, nav) => {
-    const accessToken = localStorage.getItem("ACCESS_TOKEN");
+    const accessToken = getCookie("ACCESS_TOKEN");
+    console.log("accesTK : " + accessToken)
     await axios({
       method: 'POST',
       url: `http://localhost:8888/${type}/send` ,
@@ -77,37 +84,41 @@ function App() {
   };
 
   return (
-     <ThemeProvider theme={themeMode}>
+    <ThemeProvider theme={themeMode}>
        <GlobalStyles/>
        <HeaderTop theme={theme} themeToggler={themeToggler} notifications={notifications}
                   setNotifications={setNotifications} send={send} />
-       <Routes>
-         <Route path='/' element={<Header></Header>}></Route>
-         <Route path="/joinUser" element={<JoinUser></JoinUser>}></Route>
-         <Route path="/curator" element={<Curator></Curator>}></Route>
-         <Route path="/travelSchedule" element={<TravelSchedule></TravelSchedule>}></Route>
-         <Route path="/mypage" element={<Mypage></Mypage>}></Route>
-         <Route path="/login" element={<Login setNotifications={setNotifications}></Login>}></Route>
-         <Route path="/noticeBoard" element={<NoticeBoard send={send}></NoticeBoard>}></Route>
-         <Route path="/noticeBoard/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
-         <Route path="/qnABoard" element={<QnABoard></QnABoard>}></Route>
-         <Route path="/qnABoard/:id?" element={<QnaBoardDetail data={newQnaData}></QnaBoardDetail>}></Route>
-         <Route path="/festival?" element={<Festival></Festival>}></Route>
-         <Route path="/traffic" element={<Traffic></Traffic>}></Route>
-         <Route path="/knowledge?" element={<Knowledge></Knowledge>}></Route>
-         <Route path="/knowledgeDetail/:id?"
-                element={<KnowledgeDetail data={newKnowledgeData}></KnowledgeDetail>}></Route>
-         <Route path="/knowledgeWrite" element={<KnowledgeWrite></KnowledgeWrite>}></Route>
-         <Route path='/destination/:pageId' element={<TourList/>}></Route>
-         <Route path='/destination/detail/:id' element={<DetailInfo/>}></Route>
-         <Route path='/selectSchedule' element={<SelectSchedule></SelectSchedule>}></Route>
-       </Routes>
-     </ThemeProvider>
+      <Routes>
+        <Route path='/' element={<Header></Header>}></Route>
+        <Route path="/joinUser" element={<JoinUser></JoinUser>}></Route>
+        <Route path="/joinUser/email/validateCheck/:userid" element={<JoinUserValidateChk></JoinUserValidateChk>}></Route>
+        <Route path="/curator" element={<Curator></Curator>}></Route>
+        <Route path="/travelSchedule" element={<TravelSchedule></TravelSchedule>}></Route>
+        <Route path="/mypage" element={<Mypage></Mypage>}></Route>
+        <Route path="/login" element={<Login></Login>}></Route>
+        <Route path="/notice" element={<NoticeBoard send={send}></NoticeBoard>}></Route>
+        <Route path="/notice/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
+        <Route path="/qna" element={<QnABoard></QnABoard>}></Route>
+        <Route path="/qna/:id?" element={<QnaBoardDetail></QnaBoardDetail>}></Route>
+        <Route path="/qna/admin/:id?" element={<QnaWrite></QnaWrite>}></Route>
+        <Route path="/traffic" element={<Traffic></Traffic>}></Route>
+        <Route path="/knowledge?" element={<Knowledge></Knowledge>}></Route>
+        <Route path="/knowledgeDetail/:id?" element={<KnowledgeDetail data={newKnowledgeData}></KnowledgeDetail>}></Route>
+        <Route path="/knowledgeWrite" element={<KnowledgeWrite></KnowledgeWrite>}></Route>
+        <Route path='/destination/:pageId' element={<TourList />}></Route>
+        <Route path='/destination/detail/:id' element={<DetailInfo />}></Route>
+        <Route path='/selectSchedule' element={<SelectSchedule></SelectSchedule>}></Route>
+        <Route path='/qna/admin/write' element={<QnaWrite />}></Route>
+        <Route path='/chat/room' element={<ChatRoom />}></Route>
+        <Route path='/chat/rooms' ></Route>
+        <Route path='/chat/room/:roomId?' element={<ChatDetail />}></Route>
+      </Routes>
+    </ThemeProvider>
   );
 }
 
 function HeaderTop(props) {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('ACCESS_TOKEN');
   const refreshToken = localStorage.getItem('REFRESH_TOKEN');
@@ -140,12 +151,10 @@ function HeaderTop(props) {
   const handleMouseOutNoti = () => {
     $(".notice-list").hide();
   };
-
+let state = 1;
+  // token 처리
   const handleClick = () => {
-    console.log("들어옴?");
-    console.log(pathname);
-
-    if (accessToken === null) { // login
+    if(state === 1) { // login
       navigate("/login");
       window.location.reload();
     } else { // logout
@@ -172,11 +181,11 @@ function HeaderTop(props) {
          </button>
          <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
-         <span>
+        <span>
           <a href={() => false} onClick={() => handleClick()}
-             className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
-          >{(accessToken === null) ? '로그인' : '로그아웃'}</a>
-          </span>
+          className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
+          >{(state === 1) ? '로그인' : '로그아웃'}</a>
+        </span>
          <Link to="/login" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>로그인</Link>
          <Toggle theme={props.theme} toggleTheme={props.themeToggler}/>
        </div>
@@ -198,8 +207,7 @@ function HeaderTop(props) {
            </ul>
            <ul id="tema">
              <div>
-               <a><Link to="/curator"
-                        className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>테마</Link></a>
+               <a><Link to="/curator" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>테마</Link></a>
              </div>
            </ul>
            <ul id="myTrab">
@@ -213,8 +221,8 @@ function HeaderTop(props) {
              <div className='myTrableInfo-list'>
                <li><Link to="/traffic" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통
                  혼잡도</Link></li>
-               <li><Link to="/festival" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>축제 및
-                 행사</Link></li>
+               <li><Link to="/chat/room" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
+                 </Link></li>
                <li><Link to="/knowledge" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광
                  지식in</Link></li>
              </div>
@@ -222,10 +230,9 @@ function HeaderTop(props) {
            <ul id="notice" onMouseOver={handleMouseOverNoti} onMouseOut={handleMouseOutNoti}>
              <div className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}><a>공지사항</a></div>
              <div className='notice-list'>
-               <li><Link to="/noticeBoard"
+               <li><Link to="/notice"
                          className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</Link></li>
-               <li><Link to="/qnABoard"
-                         className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>Q&A</Link>
+               <li><Link to="/qna" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>Q&A</Link>
                </li>
              </div>
            </ul>
@@ -410,7 +417,7 @@ function Header() {
 }
 
 function Footer() {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   return (
      <>
@@ -439,6 +446,6 @@ function Footer() {
   )
 }
 
-export {HeaderTop, Footer};
+export { HeaderTop, Footer };
 export default App;
 

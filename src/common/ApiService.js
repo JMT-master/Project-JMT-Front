@@ -1,18 +1,22 @@
-import Swal from "sweetalert2";
 import {API_BASE_URL} from "./ApiConfig";
 import {EventSourcePolyfill} from 'event-source-polyfill';
+import {Cookies} from "react-cookie";
 
 export function call(api, method, request) {
   let headers = new Headers({
     "Content-Type": "application/json",
+    Authorization: "Bearer " + getCookie()
   });
 
-  const accessToken = localStorage.getItem("ACCESS_TOKEN");
-  if (accessToken && accessToken != null) {
-    console.log("token is")
-    headers.append("Authorization", "Bearer " + accessToken);
-  }
-  console.log("call 사용시 headers = " + headers.get('Authorization'))
+  // if(request.accessToken && request.accessToken != null) {
+  //   headers.append("Authorization", "Bearer " + getCookie());
+  // }
+  // return call("/auth/signin","POST", {})
+  //    .then((response) => {
+  //      localStorage.setItem("ACCESS_TOKEN", response.token)
+  //      console.log("response : " + response);
+  //      window.location.href = "/";
+  //    });
 
   let options = {
     headers: headers,
@@ -29,13 +33,6 @@ export function call(api, method, request) {
     console.log("call_response : ", response);
     if (response.status === 200) {
       return response.json();
-    } else if (response.status === 401) { // unauthorized
-      Swal.fire({
-        icon: 'warning',
-        title: '로그인',
-        text: '아이디 혹은 비밀번호가 맞지 않습니다.'
-      })
-      // window.location.href = "/login";
     }
   }).catch((error) => {
     console.log(error);
@@ -44,10 +41,10 @@ export function call(api, method, request) {
 }
 
 export function signin(loginDto) {
-  // console.log("loginDto : ", loginDto);
+  console.log("loginDto : ", loginDto);
   return call("/login", "POST", loginDto)
      .then(response => {
-       // console.log("signin response : ",response);
+       console.log("signin response : ", response);
 
        if (response !== undefined) {
          localStorage.setItem("ACCESS_TOKEN", response.accessToken);
@@ -57,70 +54,14 @@ export function signin(loginDto) {
      })
 }
 
-//프론트에서 임시 버튼 만들고 더미 데이터 만들어서 클릭시 데이터 입력하게 하기.
-// export function sseSource(url){
-//   const eventSource = new EventSourcePolyfill(
-//      API_BASE_URL + '/notification/' + url,
-//      {
-//        headers:
-//           {
-//             'Authorization': `Bearer ` + localStorage.getItem('ACCESS_TOKEN'),
-//           }
-//      }
-//   )
-//
-//   if (typeof (EventSource) !== "undefined") {
-//     console.log("sse지원");
-//   } else {
-//     console.log("sse미지원");
-//   }
-//   eventSource.onopen = e => {
-//     console.log('connect event data:');
-//   };
-//   eventSource.onmessage = function (event){
-//     const notificationDto = {
-//       "id": "1",
-//       "content": "ㅂㅈㄷㄱ",
-//       "url": "ㅁㄴㅇㄹ",
-//       "yn": "n"
-//     };
-//     // const notificationJson = JSON.parse(event.data);
-//     // const {id, content, url, yn} =
-//     // console.log("id : " + id);
-//     // console.log("content : " + content);
-//     // console.log("url : " + url);
-//     // console.log("yn : " + yn);
-//     // console.log(notificationJson);
-//     console.log(typeof(event.data));
-//   }
-//
-//   console.log("eventSource", eventSource);
-//
-//   // eventSource.addEventListener('message', (event) => {
-//   //   console.log('sse = ', event.data);
-//   // });
-//
-//
-//
-//   eventSource.onerror = function (event) {
-//     // 에러 처리
-//     console.error("emitter SSE 에러 발생: ", event);
-//   };
-//   console.log("sse eventsorce : " + eventSource);
-// }
-
 export function sseSource(url, setNotifications) {
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
+  const accessToken = getCookie();
   // SSE 지원
   if (typeof EventSource !== "undefined") {
     const eventSource = new EventSourcePolyfill(API_BASE_URL + '/notification/' + url, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'text/event-stream',
-        // Connection: 'keep-alive',
-        // 'Cache-Control': 'no-cache',
-        // 'X-Accel-Buffering': 'no',
-        // 'Transfer-Encoding': 'chunked'
       }
     });
     console.log("타입타입! : " + typeof eventSource);
@@ -148,4 +89,10 @@ export function sseSource(url, setNotifications) {
     };
 
   }
+}
+
+
+export const getCookie = () => {
+  const cookies = new Cookies();
+  return cookies.get('ACCESS_TOKEN');
 }
