@@ -4,11 +4,13 @@ import style from '../css/Login.css'
 import { Link, useNavigate } from 'react-router-dom';
 import OnModal from '../common/OnModal';
 import LoginModal from './LoginModal';
+import {call, sseSource} from '../common/ApiService';
 import { signin } from './MemberFuc';
 
-const Login = () => {
+const Login = (props) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
+  const {setNotifications} = props;
   const [id,setId] = useState("");
   const [pwd,setPwd] = useState("");
   const clientId = '1921d336e78e0f12cb65133fb93aeab0';

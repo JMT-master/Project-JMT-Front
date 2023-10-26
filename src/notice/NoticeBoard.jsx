@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import style from '../css/NoticeBoard.css'
 import { VscSearch } from 'react-icons/vsc';
 import { Link, useNavigate } from 'react-router-dom';
 import { noticeData } from '../data/Data';
 import Paging from '../common/Paging';
+import {call} from "../common/ApiService";
+
+
 
 const TestTr = (props) => {
   const navigate = useNavigate();
-  const {no, category, title, content, createDate} = props.data;
+  console.log(props.data)
+  const {idx, category, title, content, createDate} = props.data;
   
   return (
-    <tr onClick={()=>navigate('/notice/'+no)}>
-      <td>{no}</td>
+    <tr onClick={()=>navigate('/noticeBoard/'+idx)}>
+      <td>{idx}</td>
       <td>{category}</td>
       <td>{title}</td>
       <td>{createDate}</td>
@@ -19,14 +23,14 @@ const TestTr = (props) => {
   );
 };
 
-const NoticeBoard = () => {
+const NoticeBoard = ({send}) => {
   const navigate = useNavigate();
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
   const [currentPage , setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentItems = noticeData.slice(startIndex, endIndex);
+  const [currentItems, setCurrentItems] = useState([])
   const totalPages = Math.ceil(noticeData.length / itemsPerPage);
 
   const handlePageChange = (page) => {
@@ -36,6 +40,22 @@ const NoticeBoard = () => {
   const handleSelect = (e) =>{
     setItemsPerPage(e.target.value);
   }
+
+  useEffect(() => {
+    call("/notice",
+       "GET",
+       null
+       // request = 현재 접속한 유저의 아이디, 지금은 고정값
+    ).then((response) => {
+      console.log("readall? : " + response)
+      response != null ? setCurrentItems(response) : setCurrentItems([]);
+    })
+       .catch((error) => {
+         console.log(error);
+       })
+  }, []);
+
+
   return (
     <div className='content'>
       <h1><img src="../images/notice-icon.png" alt="공지사항 이미지" /></h1>
@@ -70,13 +90,14 @@ const NoticeBoard = () => {
             </tr>
           </thead>
           <tbody className='cursor'>
-            {currentItems.map((item, index)=>{
+            {currentItems&&currentItems.map((item, index)=>{
               return (
                 <TestTr data={item} key={item.id}></TestTr>
               )
             })}
           </tbody>
         </table>
+        <button type="button" className="testBtn" onClick={()=>{send("notice")}}>글 작성 send</button>
       </div>
       <div className='page'>
       <Paging

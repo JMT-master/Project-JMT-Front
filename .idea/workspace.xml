@@ -4,13 +4,60 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="23년 10월 17일 5시 50분 안광현 프론트단 커밋">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="231026.front">
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/second-project.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/setupProxy.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/member/JoinUserValidateChk.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/member/KakaoLogin.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/member/MemberFuc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/notice/QnaWrite.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/session관리" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/trableinfo/ChatDetail.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/trableinfo/ChatRoom.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/trableinfo/ChatRoomDetail.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/trableinfo/FestivalList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/trableinfo/RoomList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/trableinfo/StompChatRoom.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/ApiService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ApiService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/JoinUser.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/JoinUser.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/Knowledge.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/Knowledge.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/KnowledgeWrite.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/KnowledgeWrite.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/Login.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/Login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/member/JoinUser.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/member/JoinUser.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/member/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/member/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/QnABoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/QnABoard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/QnaBoardDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/QnaBoardDetail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thema/Curator.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/thema/Curator.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trableinfo/Festival.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/trableinfo/Festival.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trableinfo/Knowledge.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/trableinfo/Knowledge.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trableinfo/KnowledgeWrite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/trableinfo/KnowledgeWrite.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/travelschedule/TravelForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/travelschedule/TravelForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/travelschedule/TravelSchedule.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/travelschedule/TravelSchedule.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/node_modules/@react-native/gradle-plugin">
+      <ProjectState />
+    </projectState>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -37,21 +84,21 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;ang&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/second-project/src/notice&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "park 병합 중",
+    "last_opened_file_path": "D:/second-project/src/notice",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\second-project\src\notice" />
@@ -102,6 +149,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="23년 10월 17일 5시 50분 안광현 프론트단 커밋" />
-    <option name="LAST_COMMIT_MESSAGE" value="23년 10월 17일 5시 50분 안광현 프론트단 커밋" />
+    <MESSAGE value="231026.front" />
+    <option name="LAST_COMMIT_MESSAGE" value="231026.front" />
   </component>
 </project>

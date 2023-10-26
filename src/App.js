@@ -28,18 +28,18 @@ import { useDarkMode } from './common/useDarkMode';
 import Toggle from './common/Toggle';
 import YouTube from 'react-youtube'
 import data from "./data/festival.json";
-import { MdFestival } from 'react-icons/md';
 import { AiFillYoutube, AiOutlineBell } from 'react-icons/ai';
-import { MdCardTravel } from 'react-icons/md';
+import { MdCardTravel,MdFestival } from 'react-icons/md';
 import QnaWrite from './notice/QnaWrite';
 import ChatRoom from './trableinfo/ChatRoom';
 import ChatRoomDetail from './trableinfo/ChatRoomDetail';
-import {call} from './common/ApiService'
 import OnModalComp from "./common/OnModalComp";
-import AlarmList from "./common/Notification";
 import ChatDetail from './trableinfo/ChatDetail';
 import JoinUserValidateChk from './member/JoinUserValidateChk';
 import KakaoLogin from './member/KakaoLogin';
+import NotificationList from "./common/Notification";
+import axios from "axios";
+import {call, getCookie, sseSource} from "./common/ApiService";
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -47,12 +47,47 @@ function App() {
   const [newKnowledgeData, setNewKnowledgeData] = useState(knowledgeData);
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
+  const [notifications, setNotifications] = useState()
 
-  
+
+  const send = async (type, nav) => {
+    const accessToken = getCookie("ACCESS_TOKEN");
+    console.log("accesTK : " + accessToken)
+    await axios({
+      method: 'POST',
+      url: `http://localhost:8888/${type}/send` ,
+      data: {
+        "content": "테스트3",
+        "url": "테스트용url",
+        "yn": "y"
+      },
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      }
+    })
+       .then(function (response) {
+         call("/notification",
+            "POST",
+            null
+            // 아이디는 백에서 토큰으로 확인
+         )
+            .then((response) => {
+              setNotifications(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            })
+       })
+       .catch(function (error) {
+         console.log('error', error);
+       });
+  };
+
   return (
     <ThemeProvider theme={themeMode}>
-      <GlobalStyles />
-      <HeaderTop theme={theme} themeToggler={themeToggler} />
+       <GlobalStyles/>
+       <HeaderTop theme={theme} themeToggler={themeToggler} notifications={notifications}
+                  setNotifications={setNotifications} send={send} />
       <Routes>
         <Route path='/' element={<Header></Header>}></Route>
         <Route path="/joinUser" element={<JoinUser></JoinUser>}></Route>
@@ -61,7 +96,7 @@ function App() {
         <Route path="/travelSchedule" element={<TravelSchedule></TravelSchedule>}></Route>
         <Route path="/mypage" element={<Mypage></Mypage>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
-        <Route path="/notice" element={<NoticeBoard></NoticeBoard>}></Route>
+        <Route path="/notice" element={<NoticeBoard send={send}></NoticeBoard>}></Route>
         <Route path="/notice/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
         <Route path="/qna" element={<QnABoard></QnABoard>}></Route>
         <Route path="/qna/:id?" element={<QnaBoardDetail></QnaBoardDetail>}></Route>
@@ -87,8 +122,10 @@ function HeaderTop(props) {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('ACCESS_TOKEN');
   const refreshToken = localStorage.getItem('REFRESH_TOKEN');
+  const {notifications, setNotifications, send} = props;
+
   //알람 모달 관련
-  const [alarms, setAlarms] = useState()
+
   const [modalOpen, setModalOpen] = useState(false);
   const showModal = () => {
     setModalOpen(!modalOpen);
@@ -128,21 +165,29 @@ let state = 1;
     }
   };
 
-  // console.log(accessToken);
+  useEffect(() => {
+      sseSource("sub", setNotifications);
+  }, [accessToken]);
+
+
+
+
+
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
        <div className="headerTop">
-         <button type="button" onClick={showModal} style={{justifyContent:"left"}}>
-           <AiOutlineBell className="headerAlarm"/>
+         <button type="button" onClick={showModal} style={{justifyContent: "left"}}>
+           <AiOutlineBell className="headerNotification"/>
          </button>
+         <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
         <span>
           <a href={() => false} onClick={() => handleClick()}
           className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
           >{(state === 1) ? '로그인' : '로그아웃'}</a>
         </span>
-        <Toggle theme={props.theme} toggleTheme={props.themeToggler} />
-         {modalOpen && <OnModalComp setModalOpen={setModalOpen} comp={<AlarmList/>}></OnModalComp>}
+         <Link to="/login" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>로그인</Link>
+         <Toggle theme={props.theme} toggleTheme={props.themeToggler}/>
        </div>
        <div className="header-container">
          <Link to="/">
@@ -193,6 +238,8 @@ let state = 1;
            </ul>
          </div>
        </div>
+       {modalOpen && <OnModalComp style={{display: "inline-flex"}} setModalOpen={setModalOpen}
+                                  comp={<NotificationList notifications={notifications}/>}></OnModalComp>}
      </div>
   )
 }
@@ -270,8 +317,8 @@ function Header() {
                      {`header-travel-Image-li-title ${changeImage === 1 ?
                         'header-travel-Image-li-info' : 'header-travel-Image-li-info-vertical'}`}>음식
              </div>
-            <div 
-            className={`header-travel-Image-li-content ${changeImage === 1 ? 
+             <div
+                className={`header-travel-Image-li-content ${changeImage === 1 ?
                    'header-travel-Image-li-info header-travel-Image-li-info-cursor' : 'header-travel-Image-li-info-title-none'}`}
                 onClick={() => navigate('/destination/restaurant')}>원하는 음식를 찾아보세요
              </div>
