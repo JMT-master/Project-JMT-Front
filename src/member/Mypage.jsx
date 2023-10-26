@@ -11,7 +11,6 @@ import { useEffect } from 'react'
 
 
 const Mypage = () => {
-  const width = useWindowDimensions().width;
   const [index, setIndex] = useState(0);
   const [title, setTitle] = useState("나의 일정");
   const titleArray = ["나의 일정", "찜한 일정", "찜한 여행지"]
@@ -58,6 +57,7 @@ const Mypage = () => {
     
   }, [visit]);
 
+  const width = useWindowDimensions().width;
   if(loading) {
     return <div className='loading'><AiOutlineLoading className='loadingIcon'></AiOutlineLoading></div>
   }

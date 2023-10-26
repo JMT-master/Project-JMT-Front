@@ -3,40 +3,45 @@
 @import '~slick-carousel/slick/slick-theme.css';
 @import './button.scss';
 
-*{
+* {
   font-family: 'Nanum Pen Script', cursive;
 }
 
-.header-main-position{
+.header-main-position {
   background-size: cover;
   width: 100%;
   height: 150px;
   position: relative;
   z-index: 999;
 }
-.main-slider{
+
+.main-slider {
   visibility: visible;
   z-index: 1;
 }
 .header-slider {
   position: absolute;
-  width: 100%; height: 800px;
+  width: 100%;
+  height: 800px;
   top: 0;
   z-index: 1;
   overflow-x: hidden;
 }
-.header-main{
+
+.header-main {
   width: 100%;
   height: 200px;
   position: absolute;
   z-index: 100;
 }
+
 .header-slider-divs {
   position: absolute;
   z-index: 1;
   width: 100%;
-  height: 800px;
+  height: inherit;
 }
+
 .header-slider-img1 {
   width: 100%;
   height: 770px;
@@ -44,6 +49,7 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 .header-slider-img2 {
   width: 100%;
   height: 770px;
@@ -51,6 +57,7 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 .header-slider-img3 {
   width: 100%;
   height: 770px;
@@ -58,6 +65,7 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 .header-slider-img4 {
   width: 100%;
   height: 770px;
@@ -65,13 +73,15 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 .header-body {
   // position: relative;
   margin-top: 650px;
 }
 
 .header-travel-Image {
-  width: 100%; height: 400px;
+  width: 100%;
+  height: 400px;
 }
 
 .header-travel-Image-title {
@@ -80,7 +90,8 @@
 }
 
 .header-travel-Image-icon {
-  width: 45px; height: 45px;
+  width: 45px;
+  height: 45px;
   color: #f3a344;
 }
 
@@ -92,8 +103,10 @@
 }
 
 .header-travel-Image-ul {
-  margin-left: 3%; margin-top: 15px;
-  width: 80%; height: 90%;
+  margin-left: 3%;
+  margin-top: 15px;
+  width: 80%;
+  height: 90%;
   display: flex;
 }
 
@@ -134,13 +147,15 @@
 }
 
 .header-travel-Image-li-content {
-  margin-top: 3%; margin-left: 10%;
+  margin-top: 3%;
+  margin-left: 10%;
   color: white;
   font-size: 20px;
 }
 
 .header-travel-Image-li-info {
-  margin-top: 2%; padding-top: 20px;
+  margin-top: 2%;
+  padding-top: 20px;
   margin-left: 5%;
 }
 
@@ -197,7 +212,7 @@
   width: 100%; height: 100%;
 }
 
-.header-container{
+.header-container {
   margin-top: 20px;
   display: grid;
   grid-template-columns: 120px 1fr; 
@@ -210,17 +225,21 @@
     color: black;
   }
 }
-.header-container:hover > div > ul > div{
+
+.header-container:hover > div > ul > div {
   background-color: white;
   filter: opacity(0.9);
 }
-.headerTop{
+
+.headerTop {
+  margin-right: 10px;
   text-align: right;
   font-size: 20px;
   height: 30px;
-  line-height: 30px;
+  line-height: 15px;
 }
-.headerSell{
+
+.headerSell {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   display: grid;
   font-size: 1.5rem;
@@ -236,14 +255,19 @@
   height: 70px;
 }
 /* Header MouseOver Event */
-.destination-list{
+.destination-list {
   display: none;
 }
-.myTrableInfo-list{
+
+.myTrableInfo-list {
   display: none;
 }
-.notice-list{
+
+.notice-list {
   display: none;
+}
+#loginToggle:hover {
+  cursor: pointer;
 }
 .footer-main{
   width: 100%;
@@ -251,7 +275,7 @@
   background: no-repeat;
   background-image: url(https://media.discordapp.net/attachments/1127767279715749978/1143555123793113129/--001.jpg?width=1260&height=315);
   background-size: cover;
-  bottom : 0;
+  bottom: 0;
 }
 .footer-container{
   margin: 30px auto;
@@ -313,11 +337,11 @@
   font-size: 0.85rem;
 }
 
-.headerCh{
+.headerCh {
   color: black;
 }
 
-.headernoCh a{
+.headernoCh a {
   color: rgb(245, 245, 245);
 }
 .headerTop a{
@@ -369,4 +393,319 @@
   left: 50%;
   transform: translate(-20%, -50%);
   color: white;
+}
+
+
+@media screen and (max-width: 450px) {
+
+  //슬릭
+
+  .header-slider {
+    position: absolute;
+    width: 100%;
+    height: 60%;
+    top: 0;
+    z-index: 1;
+    overflow: hidden;
+    touch-action: none;
+
+
+
+    &-img1 {
+      width: 100%;
+      height: 50vh;
+      background-image: url(../images/001.png);
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    &-img2 {
+      width: 100%;
+      height: 50vh;
+      background-image: url(../images/002.png);
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    &-img3 {
+      width: 100%;
+      height: 50vh;
+      background-image: url(../images/003.png);
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    &-img4 {
+      width: 100%;
+      height: 50vh;
+      background-image: url(../images/004.png);
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+  }
+  .header-main {
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    z-index: 100;
+  }
+  .header-slider-divs {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: inherit;
+  }
+
+  //헤더
+
+  .header-main-position {
+    background-size: cover;
+    width: 100%;
+    height: 130px;
+    position: relative;
+    z-index: 999;
+  }
+  .main-slider {
+    visibility: visible;
+    z-index: 1;
+  }
+
+  .header-main {
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    z-index: 100;
+  }
+  .header-slider-divs {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 800px;
+  }
+
+  .header-body {
+    // position: relative;
+    margin-top: 70%;
+  }
+
+  .header-travel-Image {
+    width: 100%;
+    height: 400px;
+  }
+
+  .header-travel-Image-title {
+    margin-left: 3%;
+    display: flex;
+  }
+
+  .header-travel-Image-icon {
+    width: 45px;
+    height: 45px;
+    color: #f3a344;
+  }
+
+  .header-travel-Image-text {
+    margin-left: 5px;
+    font-size: 25px;
+    line-height: 45px;
+    font-weight: bold;
+  }
+
+  .header-travel-Image-ul {
+    margin-left: 3%;
+    margin-top: 15px;
+    width: 80%;
+    height: 90%;
+    display: flex;
+  }
+
+  .header-travel-Image-li {
+    border-radius: 10px;
+    width: 10%;
+    margin-right: 15px;
+    transition: all 0.7s ease-out;
+  }
+
+  .header-travel-Image-li-background1 {
+    background-image: url("../images/main001.png");
+    background-size: cover;
+  }
+
+  .header-travel-Image-li-background2 {
+    background-image: url("../images/main002.png");
+    background-size: cover;
+  }
+
+  .header-travel-Image-li-background3 {
+    background-image: url("../images/main003.png");
+    background-size: cover;
+  }
+
+  .header-travel-Image-li-width {
+    width: 70%;
+  }
+
+  .header-travel-Image-li-title {
+    font-size: 50px;
+    color: white;
+    font-weight: bold;
+  }
+
+  .header-travel-Image-li-info-cursor {
+    cursor: pointer;
+  }
+
+  .header-travel-Image-li-content {
+    margin-top: 3%;
+    margin-left: 10%;
+    color: white;
+    font-size: 20px;
+  }
+
+  .header-travel-Image-li-info {
+    margin-top: 2%;
+    padding-top: 20px;
+    margin-left: 5%;
+  }
+
+  .header-travel-Image-li-info-vertical {
+    margin-top: 25px;
+    margin-left: 10px;
+    font-size: 35px;
+    writing-mode: vertical-lr;
+    transition: all 1s;
+  }
+
+  .header-travel-Image-li-info-title {
+    display: block;
+    margin-top: 2%;
+    padding-top: 20px;
+    margin-left: 50%;
+  }
+
+  .header-travel-Image-li-info-title-none {
+    display: none;
+  }
+
+  .header-Youtube-container {
+    width: 100%;
+    height: 400px;
+    margin-top: 20px;
+    padding-top: 10px;
+  }
+
+  .header-Youtube-title {
+    display: flex;
+    margin-left: 3%;
+    margin-bottom: 20px;
+  }
+
+  .header-Youtube-title-icon {
+    width: 45px;
+    height: 45px;
+    color: red;
+  }
+
+  .header-Youtube-title-text {
+    margin-left: 5px;
+    font-size: 25px;
+    line-height: 45px;
+    font-weight: bold;
+  }
+
+  .header-Youtube-ul {
+    display: grid;
+    width: 90%;
+    height: 80%;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-left: 3%;
+  }
+
+  .header-Youtube-li {
+    width: 100%;
+    height: 100%;
+  }
+
+  .header-container {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 16% 84%;
+    grid-template-rows: 50px;
+  }
+  .header-main-position:hover {
+    background-color: white;
+    filter: opacity(0.8);
+
+    & a {
+      color: black;
+    }
+  }
+  .header-container:hover > div > ul > div {
+    background-color: white;
+    filter: opacity(0.9);
+  }
+  .headerTop {
+    text-align: right;
+
+    height: 30px;
+    line-height: 30px;
+    margin-top: 5px;
+
+  }
+  .headerAlarm{
+    font-size: 25px;
+    cursor: pointer;
+  }
+
+  .headerTop a {
+    font-size: 18px;
+    margin: 0 10px;
+  }
+
+  .headerSell {
+    grid-template-columns: 15.5% 15.5% 22.5% 22.5% 22.5%;
+    display: grid;
+    font-size: 1.1rem;
+    text-align: center;
+    line-height: 60px;
+    font-weight: bold;
+  }
+  .header-image {
+    text-align: center;
+  }
+
+  //푸터
+  .footer-main {
+    width: 100%;
+    height: 200px;
+    background: no-repeat;
+    background-image: url(https://media.discordapp.net/attachments/1127767279715749978/1143555123793113129/--001.jpg?width=1260&height=315);
+    background-size: cover;
+    bottom: 0;
+  }
+  .footer-container {
+    width: 100%;
+    margin: 30px auto;
+  }
+  .footer-main > div {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    display: grid;
+    grid-template-columns: 20% 80%;
+  }
+  .footer-Grid1 {
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    display: inline-grid;
+    text-align: left;
+  }
+  .footer-Grid2 {
+    margin-top: 20px;
+    grid-template-columns: 100%;
+    grid-column: 1/6;
+    display: grid;
+    text-align: left;
+    font-size: small;
+  }
 }

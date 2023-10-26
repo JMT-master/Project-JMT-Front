@@ -10,7 +10,7 @@ const TestTr = (props) => {
   const {no, category, title, content, createDate} = props.data;
   
   return (
-    <tr onClick={()=>navigate('/noticeBoard/'+no)}>
+    <tr onClick={()=>navigate('/notice/'+no)}>
       <td>{no}</td>
       <td>{category}</td>
       <td>{title}</td>
@@ -36,8 +36,6 @@ const NoticeBoard = () => {
   const handleSelect = (e) =>{
     setItemsPerPage(e.target.value);
   }
-
-
   return (
     <div className='content'>
       <h1><img src="../images/notice-icon.png" alt="공지사항 이미지" /></h1>
@@ -59,7 +57,10 @@ const NoticeBoard = () => {
             <option value={20}>20개씩</option>
           </select>
         </div>
-        <table cl>
+        <div className='plus-notice'>
+          <button onClick={()=>navigate('/noticeWrite')}>글쓰기</button>
+        </div>
+        <table>
           <thead>
             <tr>
               <th>No.</th>

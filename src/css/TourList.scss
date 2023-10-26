@@ -1,8 +1,7 @@
 @import './loading.scss';
 @import './button.scss';
+
 $jOrange: #f3a344;
-
-
 
 //리스트 그리드일때
 .list {
@@ -209,7 +208,7 @@ $jOrange: #f3a344;
         //   // justify-content: center;
         //   // align-items: center;
         // }
-        button{
+        button {
           position: absolute;
           right: 0px;
         }
@@ -226,7 +225,8 @@ $jOrange: #f3a344;
           justify-content: center;
           align-items: center;
         }
-        &-tag{
+
+        &-tag {
           line-height: 15px;
         }
       }
@@ -264,5 +264,157 @@ $jOrange: #f3a344;
     width: 100%;
     height: 136px;
     border-radius: 0 0 13px 13px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .list {
+    height: 100%;
+    width: 98vw;
+    margin: 0 auto;
+
+    //메인 헤더
+    &-head {
+      height: minmax(200px, 10%);
+      margin: 5px 10px;
+
+      h1 {
+        height: 40px;
+      }
+
+      &-intro {
+        margin: 5px;
+        padding: 5px 20px;
+        line-height: 20px;
+        font-size: 14px;
+      }
+
+      &-typeBtn {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+
+
+    //메인 컨텐츠
+    &-content {
+      height: auto;
+      display: grid;
+      grid-template-columns: 100%;
+      gap: 5px;
+
+      &-list {
+        cursor: pointer;
+
+        &-ul {
+          height: 600px;
+          margin: 0;
+          padding-left: 10px;
+          overflow-y: auto;
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        }
+      }
+
+      &-map {
+        display: none;
+        height: 100%;
+        width: 90%;
+        border: 1px solid $jOrange;
+        // position: relative;
+
+      }
+
+
+    }
+
+    //각 아이템
+    &-itemGrid {
+      display: grid;
+      margin-bottom: 10px;
+      grid-template-columns: 39.7% 59%;
+      gap: 5px;
+
+      &-img {
+        margin-top: 5px;
+        width: inherit;
+        height: auto;
+
+
+        img {
+          width: 100%;
+          height: 130px;
+          border-radius: 10px;
+          object-fit: cover;
+        }
+      }
+
+      &-content {
+        display: grid;
+        grid-template-rows: 20% 80%;
+        gap: 2px;
+        text-align: left;
+        padding: 3px 5px;
+
+        h3 {
+          line-height: 26px;
+        }
+
+        &Text {
+          display: grid;
+          grid-template-rows: 19% 30% 51%;
+          padding: 3px 10px;
+          align-items: center;
+
+          &-tag {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+
+          &-text {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+        }
+
+      }
+
+
+    }
+  }
+
+  ///////////////////////////////////////
+
+  .iw_outter {
+    width: 200px;
+    height: 166px;
+    text-align: center;
+    border: 2px solid $jOrange;
+    border-radius: 15px;
+    background-color: transparent;
+    text-align: center;
+
+    h2 {
+      display: block;
+      background: $jOrange;
+      color: #fff;
+      text-align: center;
+      height: 24px;
+      line-height: 22px;
+      border-radius: 10px 10px 0 0;
+      padding: 3px 10px;
+    }
+
+    .thumb {
+      width: 100%;
+      height: 136px;
+      border-radius: 0 0 13px 13px;
+    }
   }
 }
