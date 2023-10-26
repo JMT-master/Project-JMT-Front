@@ -508,6 +508,7 @@ const TravelSchedule = (props) => {
                         {
                           // (table1Data1 !== undefined && table1Data1 !== null) ?
                           tableData1.map((data, i) => {
+                            console.log("tableData1 : ",tableData1);
                             return (
                               <Draggable
                                 key={i}
