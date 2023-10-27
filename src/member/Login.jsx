@@ -32,7 +32,7 @@ const Login = (props) => {
 
   const logBtn = () => {
     const loginDto = {
-      userid : id,
+      email : id,
       password : pwd
     };
 
