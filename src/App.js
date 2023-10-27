@@ -10,10 +10,10 @@ import Login from './member/Login';
 import NoticeBoard from './notice/NoticeBoard';
 import NoticeBoardDetail from './notice/NoticeBoardDetail';
 import {useEffect, useState} from 'react';
-import { knowledgeData, noticeData, qnaData } from './data/Data';
+import {knowledgeData, noticeData, qnaData} from './data/Data';
 import QnABoard from './notice/QnABoard';
 import QnaBoardDetail from './notice/QnaBoardDetail';
-import Festival, { FesListNoImg } from './trableinfo/Festival';
+import {FesListNoImg} from './trableinfo/Festival';
 import Knowledge from './trableinfo/Knowledge';
 import KnowledgeDetail from './trableinfo/KnowledgeDetail';
 import KnowledgeWrite from './trableinfo/KnowledgeWrite';
@@ -21,22 +21,20 @@ import TourList from './destination/TourList';
 import DetailInfo from './destination/DetailInfo';
 import Traffic from './trableinfo/Traffic';
 import SelectSchedule from './travelschedule/SelectSchedule';
-import { ThemeProvider } from 'styled-components';
-import { darkTheme, lightTheme } from './common/Themes';
-import { GlobalStyles } from './common/GlobalStyles';
-import { useDarkMode } from './common/useDarkMode';
+import {ThemeProvider} from 'styled-components';
+import {darkTheme, lightTheme} from './common/Themes';
+import {GlobalStyles} from './common/GlobalStyles';
+import {useDarkMode} from './common/useDarkMode';
 import Toggle from './common/Toggle';
 import YouTube from 'react-youtube'
 import data from "./data/festival.json";
-import { AiFillYoutube, AiOutlineBell } from 'react-icons/ai';
-import { MdCardTravel,MdFestival } from 'react-icons/md';
+import {AiFillYoutube, AiOutlineBell} from 'react-icons/ai';
+import {MdCardTravel, MdFestival} from 'react-icons/md';
 import QnaWrite from './notice/QnaWrite';
 import ChatRoom from './trableinfo/ChatRoom';
-import ChatRoomDetail from './trableinfo/ChatRoomDetail';
 import OnModalComp from "./common/OnModalComp";
 import ChatDetail from './trableinfo/ChatDetail';
 import JoinUserValidateChk from './member/JoinUserValidateChk';
-import KakaoLogin from './member/KakaoLogin';
 import NotificationList from "./common/Notification";
 import axios from "axios";
 import {call, getCookie, sseSource} from "./common/ApiService";
@@ -49,7 +47,11 @@ function App() {
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   const [notifications, setNotifications] = useState()
+  const [modalOpen, setModalOpen] = useState(false);
 
+  const modalToggle = () => {
+    setModalOpen(!modalOpen);
+  }
 
   const send = async (type, nav) => {
     const accessToken = getCookie("ACCESS_TOKEN");
@@ -64,9 +66,11 @@ function App() {
       },
       headers: {
         Authorization: "Bearer " + accessToken,
+        heartbeatTimeout: 180*1000
       }
     })
        .then(function (response) {
+         console.log("현재 로그인된 아이디 " + response)
          call("/notification",
             "POST",
             null
@@ -115,6 +119,11 @@ function App() {
         <Route path='/chat/rooms' ></Route>
         <Route path='/chat/room/:roomId?' element={<ChatDetail />}></Route>
       </Routes>
+      <button className="notifyToggleBtn" type="button" onClick={modalToggle}>
+        <AiOutlineBell className="notifyIcon"/>
+      </button>
+      {modalOpen && <OnModalComp setModalOpen={setModalOpen}
+                                 comp={<NotificationList notifications={notifications}/>}></OnModalComp>}
     </ThemeProvider>
   );
 }
@@ -178,9 +187,6 @@ let state = 1;
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
        <div className="headerTop">
-         <button type="button" onClick={showModal} style={{justifyContent: "left"}}>
-           <AiOutlineBell className="headerNotification"/>
-         </button>
          <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
         <span>
@@ -240,8 +246,6 @@ let state = 1;
            </ul>
          </div>
        </div>
-       {modalOpen && <OnModalComp style={{display: "inline-flex"}} setModalOpen={setModalOpen}
-                                  comp={<NotificationList notifications={notifications}/>}></OnModalComp>}
      </div>
   )
 }

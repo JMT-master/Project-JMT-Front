@@ -3,6 +3,8 @@
 @import '~slick-carousel/slick/slick-theme.css';
 @import './button.scss';
 
+$jOrange: #f3a444;
+
 * {
   font-family: 'Nanum Pen Script', cursive;
 }
@@ -92,7 +94,7 @@
 .header-travel-Image-icon {
   width: 45px;
   height: 45px;
-  color: #f3a344;
+  color: $jOrange;
 }
 
 .header-travel-Image-text {
@@ -361,7 +363,7 @@
   margin-left: 2%;
 }
 .festival-send-content h2 span{
-  color: #f3a344;
+  color: $jOrange;
   margin: 0 10px;
 }
 .festival-send-content ul{
@@ -394,6 +396,26 @@
   transform: translate(-20%, -50%);
   color: white;
 }
+
+.notifyToggleBtn{
+  @include btnSet(50px, 50px);
+  // @include btnSet(30px,50px);
+  //height: 50px;
+  position: fixed;
+  background: none;
+  border: 1px $jOrange solid;
+  border-radius: 50%;
+  right : 3%;
+  bottom : 5%;
+  z-index: 111;
+  color: $jOrange;
+  padding : 0;
+  .notifyIcon{
+    display: inline-flex;
+    font-size: 30px;
+  }
+}
+
 
 
 @media screen and (max-width: 450px) {
@@ -502,7 +524,7 @@
   .header-travel-Image-icon {
     width: 45px;
     height: 45px;
-    color: #f3a344;
+    color: $jOrange;
   }
 
   .header-travel-Image-text {
