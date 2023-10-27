@@ -83,17 +83,18 @@ export function signin(loginDto) {
   .then(response => {
       console.log("signin response : ",response);
       
-      if(response !== undefined) {
+      if(response.status === 401) { // unauthorized
+        Swal.fire({
+            icon: 'warning',
+            title: '로그인',
+            text: '아이디 혹은 비밀번호가 맞지 않습니다.'
+        })
+      }
+      else if(response !== undefined) {
           // localStorage.setItem("ACCESS_TOKEN", response.accessToken);
           // localStorage.setItem("REFRESH_TOKEN", response.refreshToken);
-          // window.location.href = "/";
-      } else if(response.status === 401) { // unauthorized
-          Swal.fire({
-              icon: 'warning',
-              title: '로그인',
-              text: '아이디 혹은 비밀번호가 맞지 않습니다.'
-          })
-      }
+          window.location.href = "/";
+      } 
   })
 
 }

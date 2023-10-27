@@ -1,35 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from '../css/Knowledge.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { VscSearch } from 'react-icons/vsc';
-import { knowledgeData } from '../data/Data';
 import Paging from '../common/Paging';
+import { call, setDateFormat } from '../common/ApiService';
 
 
 const Trkn = (props) => {
   const navigate = useNavigate();
-  const { no, category, title, content, persnal, createDate } = props.data;
+  console.log('props.data : ',props.data);
+  const { num, category, title, userid, regDate, view } = props.data;
+
+  const regDateFormat = setDateFormat(regDate);
 
   return (
-    <tr onClick={() => navigate('/knowledgeDetail/' + no)}>
-      <td>{no}</td>
+    <tr onClick={() => navigate('/knowledgeDetail/' + num, {
+      state : {
+        data : props.data
+      }
+    })}>
+      <td>{num}</td>
       <td>{category}</td>
       <td>{title}</td>
-      <td>{persnal}</td>
-      <td>{createDate}</td>
+      <td>{userid}</td>
+      <td>{regDateFormat}</td>
+      <td>{view}</td>
     </tr>
   );
 }
 
 const Knowledge = () => {
   const navigate = useNavigate();
-  const [newKnowledgeData, setNewKnowledgeData] = useState(knowledgeData);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [currentItems, setCurrentItems] = useState();
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentItems = knowledgeData.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(knowledgeData.length / itemsPerPage);
+  
+  // const totalPages = Math.ceil(knowledgeData.length / itemsPerPage);
   const [categoryChk, setCategoryChk] = useState(0);
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -41,7 +49,16 @@ const Knowledge = () => {
   const onKnowledgeClick = (value) => {
     setCategoryChk(value);
   }
-  console.log(itemsPerPage);
+
+  useEffect(() => {
+    call("/knowledge","GET")
+    .then(response => {
+      setCurrentItems(response);
+    });
+  },[]);
+
+
+  console.log(currentItems);
   return (
     <div className='content'>
       <div className='knowledge-title'>
@@ -51,16 +68,6 @@ const Knowledge = () => {
         <button className='question cursor' onClick={() => navigate('/knowledgeWrite')}></button>
       </div>
       <div className='knowledge-content cursor'>
-        {/* <div className='most-qna1' onClick={() => navigate('/knowledgeDetail/1')}>
-          <img src="../images/qna-icon.png" alt="이미지1" style={{ width: '120px', height: '120px' }} />
-          <p>가장 많이 본 qna1</p>
-          <p>가장 많이 본 qna1의 내용 간략히</p>
-        </div> */}
-        {/* <div className='most-qna2' onClick={() => navigate('/knowledgeDetail/2')}>
-          <img src="../images/qna-icon.png" alt="이미지2" style={{ width: '120px', height: '120px' }} />
-          <p>가장 많이 본 qna2</p>
-          <p>가장 많이 본 qna2의 내용 간략히</p>
-        </div> */}
         <div className='knowledge-category'>
           <button className={'knowledge-category-default' + (categoryChk === 0 ? ' knowledge-category-check' : '')} onClick={() => onKnowledgeClick(0)}>전체</button>
           <button className={'knowledge-category-default' + (categoryChk === 1 ? ' knowledge-category-check' : '')} onClick={() => onKnowledgeClick(1)}>관광지</button>
@@ -97,10 +104,11 @@ const Knowledge = () => {
                 <th>제목</th>
                 <th>아이디</th>
                 <th>작성일자</th>
+                <th>조회수</th>
               </tr>
             </thead>
             <tbody className='cursor'>
-              {currentItems.map((item, index) => {
+              {currentItems !== undefined && currentItems !== null && currentItems.map((item, index) => {
                 return (
                   <Trkn data={item} key={item.id}></Trkn>
                 )
@@ -110,7 +118,9 @@ const Knowledge = () => {
         </div>
         <div className='page'>
           <Paging
-            totalPages={totalPages} currentPage={currentPage}
+            // totalPages={totalPages} 
+            totalPages='3'
+            currentPage={currentPage}
             onPageChange={handlePageChange}></Paging>
         </div>
       </div>

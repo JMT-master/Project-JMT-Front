@@ -10,7 +10,7 @@ import Login from './member/Login';
 import NoticeBoard from './notice/NoticeBoard';
 import NoticeBoardDetail from './notice/NoticeBoardDetail';
 import {useEffect, useState} from 'react';
-import { knowledgeData, noticeData, qnaData } from './data/Data';
+import { noticeData, qnaData } from './data/Data';
 import QnABoard from './notice/QnABoard';
 import QnaBoardDetail from './notice/QnaBoardDetail';
 import Festival, { FesListNoImg } from './trableinfo/Festival';
@@ -34,7 +34,7 @@ import { MdCardTravel } from 'react-icons/md';
 import QnaWrite from './notice/QnaWrite';
 import ChatRoom from './trableinfo/ChatRoom';
 import ChatRoomDetail from './trableinfo/ChatRoomDetail';
-import {call} from './common/ApiService'
+import {call, getCookie} from './common/ApiService'
 import OnModalComp from "./common/OnModalComp";
 import AlarmList from "./common/Notification";
 import ChatDetail from './trableinfo/ChatDetail';
@@ -44,7 +44,6 @@ import KakaoLogin from './member/KakaoLogin';
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
   const [newQnaData, setNewQnaData] = useState(qnaData);
-  const [newKnowledgeData, setNewKnowledgeData] = useState(knowledgeData);
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
 
@@ -68,7 +67,7 @@ function App() {
         <Route path="/qna/admin/:id?" element={<QnaWrite></QnaWrite>}></Route>
         <Route path="/traffic" element={<Traffic></Traffic>}></Route>
         <Route path="/knowledge?" element={<Knowledge></Knowledge>}></Route>
-        <Route path="/knowledgeDetail/:id?" element={<KnowledgeDetail data={newKnowledgeData}></KnowledgeDetail>}></Route>
+        <Route path="/knowledgeDetail/:id?" element={<KnowledgeDetail></KnowledgeDetail>}></Route>
         <Route path="/knowledgeWrite" element={<KnowledgeWrite></KnowledgeWrite>}></Route>
         <Route path='/destination/:pageId' element={<TourList />}></Route>
         <Route path='/destination/detail/:id' element={<DetailInfo />}></Route>
@@ -114,15 +113,15 @@ function HeaderTop(props) {
   const handleMouseOutNoti = () => {
     $(".notice-list").hide();
   };
-let state = 1;
+
+  const state = getCookie();
+  console.log("state : ",state);
   // token 처리
   const handleClick = () => {
-    if(state === 1) { // login
+    
+    if(state === undefined || state === null) { // login
       navigate("/login");
-      window.location.reload();
     } else { // logout
-      localStorage.removeItem("ACCESS_TOKEN");
-      localStorage.removeItem("REFRESH_TOKEN");
       navigate(pathname);
       window.location.reload();
     }
@@ -139,7 +138,7 @@ let state = 1;
         <span>
           <a href={() => false} onClick={() => handleClick()}
           className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
-          >{(state === 1) ? '로그인' : '로그아웃'}</a>
+          >{(state === undefined || state === null) ? '로그인' : '로그아웃'}</a>
         </span>
         <Toggle theme={props.theme} toggleTheme={props.themeToggler} />
          {modalOpen && <OnModalComp setModalOpen={setModalOpen} comp={<AlarmList/>}></OnModalComp>}

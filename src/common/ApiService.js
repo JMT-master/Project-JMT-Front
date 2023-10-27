@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import {API_BASE_URL} from "./ApiConfig";
 import { Cookies } from "react-cookie";
+import moment from "moment/moment";
 
 export function call(api, method, request){
     let  headers = new Headers({
@@ -29,6 +30,9 @@ export function call(api, method, request){
         options.body = JSON.stringify(request);
     }
 
+    console.log('request : ', request);
+    console.log('options.body : ', options.body);
+
     return fetch(options.url, options).then((response) => {
         console.log("call_response : ", response);
         if (response.status === 200){
@@ -39,25 +43,16 @@ export function call(api, method, request){
     });
 
 }
-
-export function signin(loginDto) {
-    console.log("loginDto : ", loginDto);
-    return call("/login", "POST", loginDto)
-    .then(response => {
-        console.log("signin response : ",response);
-
-        if(response !== undefined) {
-            localStorage.setItem("ACCESS_TOKEN", response.accessToken);
-            localStorage.setItem("REFRESH_TOKEN", response.refreshToken);
-            window.location.href = "/";
-        }
-    })
-
-  }
-
   
-  
+  // Cookie 값 설정
   export const getCookie = () => {
     const cookies = new Cookies();
     return cookies.get('ACCESS_TOKEN');
+  }
+
+  // Date Format
+  export const setDateFormat = (data) => {
+    const revDate = new Date(data);
+    const chnDate = moment(revDate).format('YYYY-MM-DD');
+    return chnDate;
   }

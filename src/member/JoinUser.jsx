@@ -65,7 +65,8 @@ const JoinUser = () => {
       return;
     }
 
-    const userid = document.getElementById('email').value;
+    // const userid = document.getElementById('email').value;
+    const email = document.getElementById('email').value;
     const username = document.getElementById('NameId').value;
     const password = document.getElementById('LoginPwd').value;
     const passwordChk = document.getElementById('LoginPwdChk').value;
@@ -75,7 +76,8 @@ const JoinUser = () => {
     const phone = document.getElementById('LoginPhone').value;
 
     const member = {
-      userid : userid,
+      // userid : userid,
+      email : email,
       username : username,
       password : password,
       passwordChk : passwordChk,
@@ -83,7 +85,8 @@ const JoinUser = () => {
       address : address,
       addressDetail : addressDetail,
       phone : phone,
-      adminYn : 'N'
+      adminYn : 'N',
+      socialYn : 'N'
     }
 
     joinUser(member);
