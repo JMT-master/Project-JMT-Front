@@ -14,6 +14,7 @@ const KnowledgeWrite = () => {
   const [content, setContent] = useState("");
   const [file, setFile] = useState();
 
+  // 첨부파일 변경
   const fileUpload = (e) => {
     // const files = document.getElementById("knowledgeWrite-file").files;
     const files = e.target.files;
@@ -34,6 +35,46 @@ const KnowledgeWrite = () => {
       setFile(files);
     
   }
+  
+  const onSubmitKnowledge = (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData();
+
+    const data = {
+      "category" : category,
+      "title" : title,
+      "content" : content,
+      "view" : "0"
+    }
+
+    if(file !== undefined && file != null) {
+      for(let i = 0; i < file.length; i++) {
+        formData.append('file',file[i]);
+      }
+    }
+    
+    formData.append('data',new Blob([JSON.stringify(data)], {
+      type: "application/json"
+    }));
+
+    const accessToken = getCookie();
+
+    axios({
+      method : 'post',
+      url : API_BASE_URL + '/knowledgeWrite/send',
+      headers : {
+        "Content-Type" : "multipart/form-data",
+        "Authorization": 'Bearer ' + accessToken
+      },
+      data : formData
+    }).then(response => {
+      console.log("knowledgeWrite :",response)
+      if(response.status === 200) {
+        window.location.href="/knowledge";
+      }
+    });
+  }
 
   const onChangeCategory = (e) => {
     e.preventDefault();
@@ -51,58 +92,6 @@ const KnowledgeWrite = () => {
     e.preventDefault();
 
     setContent(e.target.value);
-  }
-
-  const onSubmitKnowledge = (e) => {
-    e.preventDefault();
-    
-    const formData = new FormData();
-
-    const data = {
-      "category" : category,
-      "title" : title,
-      "content" : content,
-      "view" : "0"
-    }
-
-    console.log(file);
-    if(file !== undefined && file != null) {
-      for(let i = 0; i < file.length; i++) {
-        formData.append('file',file[i]);
-      }
-    }
-    
-
-    formData.append('data',new Blob([JSON.stringify(data)], {
-      type: "application/json"
-    }));
-
-    console.log('formData : ', formData);
-
-    const accessToken = getCookie();
-
-    console.log("accessToken : ",accessToken);
-
-    if(accessToken === undefined) {
-      axios({
-        method : 'post',
-        url : API_BASE_URL + '/knowledgeWrite/send',
-        headers : {
-          "Content-Type" : "multipart/form-data"
-        },
-        data : formData
-      })
-    } else {
-      axios({
-        method : 'post',
-        url : API_BASE_URL + '/knowledgeWrite/send',
-        headers : {
-          "Content-Type" : "multipart/form-data",
-          "Authorization": 'Bearer ' + accessToken
-        },
-        data : formData
-      })
-    }
   }
 
   return (

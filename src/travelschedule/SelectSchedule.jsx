@@ -151,10 +151,10 @@ const SelectSchedule = () => {
                 <input className='inputTime' type='time' value={endTime} onChange={onEndTime}></input>
               </div>
               <div className='selectItem'>
-                <RadioGroup>
+                {/* <RadioGroup>
                   <Radio name="public">공개</Radio>
                   <Radio name="public" defaultChecked="true">비공개</Radio>
-                </RadioGroup>
+                </RadioGroup> */}
               </div>
             </div>
           </div>
