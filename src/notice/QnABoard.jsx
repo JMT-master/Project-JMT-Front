@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { qnaData } from '../data/Data';
 import Paging from '../common/Paging';
 import { call } from './../common/ApiService';
+import { Button, Table } from 'react-bootstrap';
 
 
 export const Tr = (props) => {
@@ -37,7 +38,7 @@ const QnABoard = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    
+
     fetchData(currentPage);
 
   }, [currentPage]);
@@ -89,7 +90,7 @@ const QnABoard = () => {
             <option value={20}>20개씩</option>
           </select>
         </div>
-        <table>
+        <Table striped bordered hover variant="dark">
           <thead>
             <tr>
               <th>Q</th>
@@ -105,7 +106,7 @@ const QnABoard = () => {
               <Tr key={item.qnaNum} data={item} deleteItem={deleteItem}></Tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
       <div className='page'>
       <Paging
@@ -115,7 +116,7 @@ const QnABoard = () => {
             />
       </div>
       <div>
-        <button type='button' onClick={addItemPage}>Q&A 작성하기</button>
+        <Button type='button' onClick={addItemPage}>Q&A 작성하기</Button>
       </div>
     </div>
   );

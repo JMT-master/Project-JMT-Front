@@ -30,6 +30,14 @@ const TravelSchedule = (props) => {
   function travelDelete(){
     console.log("param",param);
     console.log("삭제");
+    call("/travel/dayFormatSave","POST",
+    tableData1
+    ).then((response) => {
+      console.log("response",response);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   }
   function travelSave(){
     console.log("param",param);

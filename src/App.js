@@ -33,7 +33,6 @@ import { MdCardTravel,MdFestival } from 'react-icons/md';
 import QnaWrite from './notice/QnaWrite';
 import ChatRoom from './trableinfo/ChatRoom';
 import ChatRoomDetail from './trableinfo/ChatRoomDetail';
-import {call, getCookie} from './common/ApiService'
 import OnModalComp from "./common/OnModalComp";
 import ChatDetail from './trableinfo/ChatDetail';
 import JoinUserValidateChk from './member/JoinUserValidateChk';
@@ -41,6 +40,8 @@ import KakaoLogin from './member/KakaoLogin';
 import NotificationList from "./common/Notification";
 import axios from "axios";
 import {call, getCookie, sseSource} from "./common/ApiService";
+import NoticeWrite from './notice/NoticeWrite';
+import TravelPdf from './travelschedule/TravelPdf';
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -97,6 +98,7 @@ function App() {
         <Route path="/mypage" element={<Mypage></Mypage>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/notice" element={<NoticeBoard send={send}></NoticeBoard>}></Route>
+        <Route path="/notice/admin/write" element={<NoticeWrite></NoticeWrite>}></Route>
         <Route path="/notice/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
         <Route path="/qna" element={<QnABoard></QnABoard>}></Route>
         <Route path="/qna/:id?" element={<QnaBoardDetail></QnaBoardDetail>}></Route>
@@ -112,6 +114,7 @@ function App() {
         <Route path='/chat/room' element={<ChatRoom />}></Route>
         <Route path='/chat/rooms' ></Route>
         <Route path='/chat/room/:roomId?' element={<ChatDetail />}></Route>
+        <Route path='/travel-schedule' element={<TravelPdf></TravelPdf>}></Route>
       </Routes>
     </ThemeProvider>
   );
@@ -186,7 +189,6 @@ function HeaderTop(props) {
           className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
           >{(state === undefined || state === null) ? '로그인' : '로그아웃'}</a>
         </span>
-         <Link to="/login" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>로그인</Link>
          <Toggle theme={props.theme} toggleTheme={props.themeToggler}/>
        </div>
        <div className="header-container">
