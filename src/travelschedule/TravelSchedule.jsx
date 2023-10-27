@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "../css/travelSchedule.css";
 import Tables from './Tables';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import TravelForm from './TravelForm';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import ListPaging from '../destination/ListPaging'
@@ -13,6 +13,7 @@ import { useTheme } from 'styled-components';
 import TravelScheduleModal from './TravelScheduleModal';
 import Swal from 'sweetalert2'
 import TsModalMap from '../common/TsModalMap'
+import { call } from '../common/ApiService';
 const TravelSchedule = (props) => {
   const [visit, setVisit] = useState(); // Json Data를 가지고 있음
   const [list, setList] = useState([]); // 변경 가공 data
@@ -25,10 +26,23 @@ const TravelSchedule = (props) => {
   const [scheduleBtn, setScheduleBtn] = useState("2");
   const [mapModal, setMapModal] = useState(false);
   const theme = useTheme();
-
-  // const markers = [
-  //   ...tableData1
-  // ];
+  const param = useParams();
+  function travelDelete(){
+    console.log("param",param);
+    console.log("삭제");
+  }
+  function travelSave(){
+    console.log("param",param);
+    console.log("tableData1555555555555555555555555",tableData1);
+    call("/travel/dayFormatSave","POST",
+    tableData1
+    ).then((response) => {
+      console.log("response",response);
+    })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
 
   const markers = [];
   tableData1.map((item) => {
@@ -419,11 +433,11 @@ const TravelSchedule = (props) => {
               </div>
               <div onClick={onScheduleReset} className='travelSchedule-icon'>
                 {/* <BiTrash className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>삭제</BiTrash> */}
-                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>삭제</p>
+                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`} onClick={travelDelete}>삭제</p>
               </div>
               <div className='travelSchedule-icon'>
                 {/* <BiSolidSave className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>저장</BiSolidSave> */}
-                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>저장</p>
+                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`} onClick={travelSave}>저장</p>
               </div>
             </div>
           </div>
