@@ -2,12 +2,14 @@ import React from 'react'
 import '../css/myPage.css'
 import { useWindowDimensions } from 'react-native'
 import { AiOutlineSchedule, AiOutlineLoading } from 'react-icons/ai'
-import {BiUser} from 'react-icons/bi'
+import { BiUser } from 'react-icons/bi'
 import { MdTravelExplore } from 'react-icons/md'
 import { GiCommercialAirplane } from 'react-icons/gi'
 import { useState } from 'react'
 import MypageList from './MypageList'
 import { useEffect } from 'react'
+import axios from 'axios'
+import TravelPdf from '../travelschedule/TravelPdf'
 
 
 
@@ -31,9 +33,9 @@ const Mypage = () => {
   useEffect(() => {
     setLoading(true);
     let num = 0;
-    if(index === 0) num = 1;
-    else if(index === 1) num = 4;
-    else if(index === 2) num = 3;
+    if (index === 0) num = 1;
+    else if (index === 1) num = 4;
+    else if (index === 2) num = 3;
 
     fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=c${num}&page=1`)
       .then(res => {
@@ -47,20 +49,20 @@ const Mypage = () => {
   // data가 변경되었을 때, tag와 List 변경
   useEffect(() => {
     let count = 0;
-    if(visit != null) {
-      setList(visit.items.map((item,i) => {
+    if (visit != null) {
+      setList(visit.items.map((item, i) => {
         count++;
-          return (<MypageList className='myPage-Big-Image-li' data={item}></MypageList>)
+        return (<MypageList className='myPage-Big-Image-li' data={item}></MypageList>)
       }));
 
       setTotalCount(count);
       setLoading(false);
     }
-    
+
   }, [visit]);
 
   const width = useWindowDimensions().width;
-  if(loading) {
+  if (loading) {
     return <div className='loading'><AiOutlineLoading className='loadingIcon'></AiOutlineLoading></div>
   }
   // 작은 경우
@@ -105,11 +107,11 @@ const Mypage = () => {
               <p className='myPageChap2-title'>제목 : ....</p>
             </li>
             <li className='myPageChap2-li'>
-            <img className='myPageChap2-img' src='../images/002.png' alt='img2'></img>
+              <img className='myPageChap2-img' src='../images/002.png' alt='img2'></img>
               <p className='myPageChap2-title'>제목 : ....</p>
             </li>
             <li className='myPageChap2-li'>
-            <img className='myPageChap2-img' src='../images/003.png' alt='img3'></img>
+              <img className='myPageChap2-img' src='../images/003.png' alt='img3'></img>
               <p className='myPageChap2-title'>제목 : ....</p>
             </li>
           </ul>
@@ -146,6 +148,10 @@ const Mypage = () => {
           </ul>
         </div>
         <hr></hr>
+        <div>
+        <h1>여행 계획 입력</h1>
+        <TravelPdf />
+        </div>
         <h1 className='myPage-h1-title'>{title}({totalCount})</h1>
         <ul className='myPage-Big-Image-ul'>
           {list}

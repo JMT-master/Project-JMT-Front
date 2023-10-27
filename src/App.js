@@ -40,7 +40,11 @@ import KakaoLogin from './member/KakaoLogin';
 import NotificationList from "./common/Notification";
 import axios from "axios";
 import {call, getCookie, sseSource} from "./common/ApiService";
+<<<<<<< HEAD
 import NoticeWrite from './notice/NoticeWrite';
+=======
+import TravelPdf from './travelschedule/TravelPdf';
+>>>>>>> 6fe3d4ada0dab955c942b226de00b741c824f09c
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -114,6 +118,7 @@ function App() {
         <Route path='/chat/room' element={<ChatRoom />}></Route>
         <Route path='/chat/rooms' ></Route>
         <Route path='/chat/room/:roomId?' element={<ChatDetail />}></Route>
+        <Route path='/travel-schedule' element={<TravelPdf></TravelPdf>}></Route>
       </Routes>
     </ThemeProvider>
   );
