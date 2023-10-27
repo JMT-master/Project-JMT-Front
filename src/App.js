@@ -88,6 +88,10 @@ function App() {
        });
   };
 
+  useEffect(() => {
+    sseSource("sub", setNotifications);
+  }, [getCookie()]);
+
   return (
     <ThemeProvider theme={themeMode}>
        <GlobalStyles/>
@@ -119,11 +123,12 @@ function App() {
         <Route path='/chat/rooms' ></Route>
         <Route path='/chat/room/:roomId?' element={<ChatDetail />}></Route>
       </Routes>
-      <button className="notifyToggleBtn" type="button" onClick={modalToggle}>
+      <button className={modalOpen === false ? "notifyToggleBtn" : "notifyToggleBtnOff"} type="button" onClick={modalToggle}>
         <AiOutlineBell className="notifyIcon"/>
       </button>
       {modalOpen && <OnModalComp setModalOpen={setModalOpen}
-                                 comp={<NotificationList notifications={notifications}/>}></OnModalComp>}
+                                 comp={<NotificationList notifications={notifications} setNotifications={setNotifications}/>}></OnModalComp>}
+      <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
     </ThemeProvider>
   );
 }
@@ -131,7 +136,7 @@ function App() {
 function HeaderTop(props) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
+  const accessToken = getCookie();
   const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   const {notifications, setNotifications, send} = props;
 
@@ -176,10 +181,6 @@ let state = 1;
     }
   };
 
-  useEffect(() => {
-      sseSource("sub", setNotifications);
-  }, [accessToken]);
-
 
 
 
@@ -187,7 +188,6 @@ let state = 1;
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
        <div className="headerTop">
-         <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
         <span>
           <a href={() => false} onClick={() => handleClick()}

@@ -1,9 +1,14 @@
-
-.alarmContainer{
-  width: 300px;
+$jOrange: #f3a444;
+.notificationContainer{
+  width: 200px;
   height: 200px;
-  background: antiquewhite;
+  background: white;
+  border: 3px $jOrange solid;
+  border-radius: 5px;
   position : fixed;
   text-align: left;
-  right: 10%;
+  right: 2%;
+  bottom: 110px;
+  z-index: 1999;
+  padding :10px;
 }
