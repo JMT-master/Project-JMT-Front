@@ -46,6 +46,7 @@ const TravelSchedule = (props) => {
     tableData1
     ).then((response) => {
       console.log("response",response);
+      window.location.href = '/';
     })
       .catch((error) => {
         console.log(error);

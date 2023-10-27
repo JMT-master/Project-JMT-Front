@@ -92,9 +92,9 @@ function App() {
       <Routes>
         <Route path='/' element={<Header></Header>}></Route>
         <Route path="/joinUser" element={<JoinUser></JoinUser>}></Route>
-        <Route path="/joinUser/email/validateCheck/:userid" element={<JoinUserValidateChk></JoinUserValidateChk>}></Route>
+        <Route path="/joinUser/email/validateCheck/:userid?" element={<JoinUserValidateChk></JoinUserValidateChk>}></Route>
         <Route path="/curator" element={<Curator></Curator>}></Route>
-        <Route path="/travelSchedule/:id" element={<TravelSchedule></TravelSchedule>}></Route>
+        <Route path="/travelSchedule/:id?" element={<TravelSchedule></TravelSchedule>}></Route>
         <Route path="/mypage" element={<Mypage></Mypage>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/notice" element={<NoticeBoard send={send}></NoticeBoard>}></Route>
