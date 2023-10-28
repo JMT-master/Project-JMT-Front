@@ -126,8 +126,8 @@ function App() {
       <button className={modalOpen === false ? "notifyToggleBtn" : "notifyToggleBtnOff"} type="button" onClick={modalToggle}>
         <AiOutlineBell className="notifyIcon"/>
       </button>
-      {modalOpen && <OnModalComp setModalOpen={setModalOpen}
-                                 comp={<NotificationList notifications={notifications} setNotifications={setNotifications}/>}></OnModalComp>}
+      <OnModalComp setModalOpen={setModalOpen}
+                                 comp={<NotificationList notifications={notifications} setNotifications={setNotifications} modalOpen={modalOpen}/>}></OnModalComp>
       <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
     </ThemeProvider>
   );

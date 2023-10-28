@@ -12,6 +12,8 @@ $jOrange: #f3a444;
   color: $jOrange;
   font-size: 0.95rem;
   font-weight: bold;
+  align-items: center;
+  justify-content: center;
   
 
   &:hover {
@@ -30,6 +32,10 @@ $jOrange: #f3a444;
 .oBtn {
   @include btnSet;
   // @include btnSet(30px,50px);
+  &:active{
+    color: black;
+    border: 1px $jOrange solid;
+  }
 }
 
 .twentySize{

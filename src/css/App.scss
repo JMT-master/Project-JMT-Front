@@ -425,39 +425,42 @@ $jOrange: #f3a444;
   color: white;
 }
 
-.notifyToggleBtn {
-  //@include btnSet(50px, 50px);
-  // @include btnSet(30px,50px);
+@mixin notifyToggle() {
   height: 50px;
   width: 50px;
   position: fixed;
-  background: $jOrange;
-  border: none;
-  border-radius: 50%;
-  right: 3%;
-  bottom: 50px;
+  border-radius: 10% 0 0 50%;
+  right: -5px;
+  bottom: 250px;
   z-index: 111;
-  color: white;
   padding: 0;
+  }
 
+.notifyToggleBtn {
+  //@include btnSet(50px, 50px);
+  // @include btnSet(30px,50px);
+  @include notifyToggle();
+
+  border: none;
+  background: $jOrange;
+  color: white;
+  transition: all 0.5s ease-out;
 
 }
 
 .notifyToggleBtnOff {
-  height: 50px;
-  width: 50px;
-  position: fixed;
-  border-radius: 50%;
-  right: 3%;
-  bottom: 50px;
-  z-index: 111;
-  padding: 0;
+  @include notifyToggle();
+
   border: 2px $jOrange solid;
+  border-right: 0;
   background-color: white;
   color: $jOrange;
+  transition: all 0.5s ease-out;
 }
 
 .notifyIcon {
+  position: relative;
+  left : 3px;
   font-size: 30px;
 }
 
