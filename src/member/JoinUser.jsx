@@ -214,10 +214,10 @@ const JoinUser = () => {
           </div>
           <div className='joinUser-btn'>
             <ul className='type2'>
-              <li className='lt'><button onClick={(e) => {
+              <li className='lt'><button id='joinUser-Success' onClick={(e) => {
                 return onSubmitHandler();
                 }}><span>가입완료</span></button></li>
-              <li className='rt' onClick={()=>navigate(-1)} ><button><span>취소</span></button></li>
+              <li className='rt' onClick={()=>navigate(-1)} ><button id='joinUser-Cancel'><span>취소</span></button></li>
             </ul>
           </div>
         </div>

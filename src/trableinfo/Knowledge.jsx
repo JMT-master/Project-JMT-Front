@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import style from '../css/Knowledge.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { VscSearch } from 'react-icons/vsc';
-import Paging from '../common/Paging';
 import { call, setDateFormat } from '../common/ApiService';
+import ListPaging from '../destination/ListPaging';
 
 
 const Trkn = (props) => {
   const navigate = useNavigate();
-  console.log('props.data : ',props.data);
   const { num, category, title, userid, regDate, view } = props.data;
 
   const regDateFormat = setDateFormat(regDate);
@@ -31,34 +30,65 @@ const Trkn = (props) => {
 
 const Knowledge = () => {
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(10); // 5/10/15/20
   const [currentItems, setCurrentItems] = useState();
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  
-  // const totalPages = Math.ceil(knowledgeData.length / itemsPerPage);
+  const [itemsLength, setItemsLength] = useState();
+  const [currentPage,setCurrentPage] = useState(1);
   const [categoryChk, setCategoryChk] = useState(0);
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-  const handleSelect = (e) =>{
-    setItemsPerPage(e.target.value);
-  }
-
-  const onKnowledgeClick = (value) => {
-    setCategoryChk(value);
-  }
+  const [totalPage, setTotalPage] = useState(0);  
+  const [searchResult, setSearchResult] = useState('');
+  const [searchSelect, setSearchSelect] = useState('title');
+  // const startIndex = (currentPage - 1) * itemsPerPage;
+  // const endIndex = startIndex + itemsPerPage;
+  // const totalPages = Math.ceil(knowledgeData.length / itemsPerPage);
 
   useEffect(() => {
     call("/knowledge","GET")
     .then(response => {
       setCurrentItems(response);
+      setTotalPage((response.length/itemsPerPage) + 1);
+      setItemsLength(response.length);
     });
   },[]);
 
 
-  console.log(currentItems);
+  const handleSelect = (e) =>{
+    setItemsPerPage(e.target.value);
+    setTotalPage((itemsLength/e.target.value) + 1);
+    setCurrentPage(1);
+  }
+
+  const onKnowledgeClick = (e,value) => {
+    call("/knowledge/category?name="+e.target.value,"GET")
+    .then(response => {
+      setCurrentItems(response.data);
+      setTotalPage((response.data.length/itemsPerPage) + 1);
+      setCurrentPage(1);
+    });
+
+    setCategoryChk(value);
+  }
+
+  function onChangeSearchSelect(e) {
+    setSearchSelect(e.target.options[e.target.selectedIndex].value);
+  }
+
+  function onChangeSearchResult(e) {
+    setSearchResult(e.target.value);
+  }
+
+  function handleOnKeyDown(e) {
+    if(e.key === 'Enter') {
+      onClickSearch();
+    }
+  }
+
+  function onClickSearch() {
+    call("/knowledge/search?select=" + searchSelect + "&result=" + searchResult,"GET")
+    .then(response => setCurrentItems(response.data));
+  }
+
+
   return (
     <div className='content'>
       <div className='knowledge-title'>
@@ -69,27 +99,27 @@ const Knowledge = () => {
       </div>
       <div className='knowledge-content cursor'>
         <div className='knowledge-category'>
-          <button className={'knowledge-category-default' + (categoryChk === 0 ? ' knowledge-category-check' : '')} onClick={() => onKnowledgeClick(0)}>전체</button>
-          <button className={'knowledge-category-default' + (categoryChk === 1 ? ' knowledge-category-check' : '')} onClick={() => onKnowledgeClick(1)}>관광지</button>
-          <button className={'knowledge-category-default' + (categoryChk === 2 ? ' knowledge-category-check' : '')} onClick={() => onKnowledgeClick(2)}>음식</button>
-          <button className={'knowledge-category-default' + (categoryChk === 3 ? ' knowledge-category-check' : '')} onClick={() => onKnowledgeClick(3)}>숙박</button>
+          <button className={'knowledge-category-default' + (categoryChk === 0 ? ' knowledge-category-check' : '')} value='전체'   onClick={(e) => onKnowledgeClick(e,0)}>전체</button>
+          <button className={'knowledge-category-default' + (categoryChk === 1 ? ' knowledge-category-check' : '')} value='관광지' onClick={(e) => onKnowledgeClick(e,1)}>관광지</button>
+          <button className={'knowledge-category-default' + (categoryChk === 2 ? ' knowledge-category-check' : '')} value='음식'   onClick={(e) => onKnowledgeClick(e,2)}>음식</button>
+          <button className={'knowledge-category-default' + (categoryChk === 3 ? ' knowledge-category-check' : '')} value='숙박'   onClick={(e) => onKnowledgeClick(e,3)}>숙박</button>
           {/* <button>기타</button> */}
         </div>
         <div className='searchKnowledge-box'>
           <h2>지식in 
           </h2>
             <div className='searchKnowledge'>
-              <select className='searchKnowledge-select'>
+              <select className='searchKnowledge-select' onChange={onChangeSearchSelect}>
                 <option value='title'>제목</option>
                 <option value='content'>내용</option>
               </select>
-              <input type="text" placeholder='검색어를 입력하세요' />
-              <button><VscSearch /></button>
+              <input type="text" placeholder='검색어를 입력하세요' value={searchResult} onChange={onChangeSearchResult} onKeyDown={handleOnKeyDown} />
+              <button className='searchKnowledge-btn' onClick={onClickSearch}><VscSearch /></button>
             </div>
         </div>
         <div className='knowledge-table'>
           <div className='page-choice'>
-            <select onChange={handleSelect}>
+            <select onChange={handleSelect} id='page-choice'>
             <option value={5}>5개씩</option>
             <option value={10} selected>10개씩</option>
             <option value={15}>15개씩</option>
@@ -109,19 +139,15 @@ const Knowledge = () => {
             </thead>
             <tbody className='cursor'>
               {currentItems !== undefined && currentItems !== null && currentItems.map((item, index) => {
-                return (
-                  <Trkn data={item} key={item.id}></Trkn>
-                )
+                if(index >= ((currentPage-1)*itemsPerPage) && index < (currentPage*itemsPerPage)) {
+                  return <Trkn data={item} key={item.id}></Trkn>
+                }                
               })}
             </tbody>
           </table>
         </div>
         <div className='page'>
-          <Paging
-            // totalPages={totalPages} 
-            totalPages='3'
-            currentPage={currentPage}
-            onPageChange={handlePageChange}></Paging>
+        <ListPaging lastPage={totalPage} page={currentPage} setPage={setCurrentPage}></ListPaging>
         </div>
       </div>
     </div>

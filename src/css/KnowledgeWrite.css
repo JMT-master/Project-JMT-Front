@@ -118,6 +118,7 @@
   font-size: larger;
   border: none;
   border-radius: 10px;
+  cursor: pointer;
 }
 .button-box{
   width: 100%;
@@ -132,4 +133,5 @@
   border: none;
   border-radius: 10px;
   margin-left: 20px;
+  cursor: pointer;
 }

@@ -55,7 +55,16 @@ export function emailValidateCheck(chkUser) {
 export function joinUser(memberDto) {
   return call("/joinUser", "POST", memberDto)
      .then(response => {
-       if (response !== undefined) window.location.href = "/login";
+      console.log("join response : ",response);
+       if (response !== undefined) { 
+        Swal.fire({
+          icon: 'success',
+          title: '회원가입',
+          text: '가입을 축하드립니다.'
+        }).then(function() {
+           window.location.href = "/login";
+          });
+      }
        else {
          Swal.fire({
            icon: 'warning',
