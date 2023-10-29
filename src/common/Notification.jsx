@@ -26,10 +26,7 @@ const NotificationList = ({notifications, setNotifications, modalOpen}) => {
   const deleteAllNotify = () => {
     call("/notification/all", "DELETE", null)
        .then(response => {
-         call("/notification", "POST", null)
-            .then(response => {
-              setNotifications(response);
-            })
+         setNotifications(response);
        })
   }
 
@@ -47,7 +44,6 @@ const NotificationList = ({notifications, setNotifications, modalOpen}) => {
          </div>
          <div className='notificationFooter'>
            <button className={"oBtn"} onClick={deleteAllNotify}><BsTrash/></button>
-           {/*  TODO : 전체삭제 버튼, 전체 알람 확인으로 변경, 다른 장소 누르면 닫기*/}
          </div>
        </div>
      </div>)

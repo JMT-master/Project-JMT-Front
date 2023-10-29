@@ -6,7 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/react-native-gradle-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/react-native-gradle-plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/react-native-gradle-plugin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/react-native-gradle-plugin.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/react-native-gradle-plugin.test.iml" filepath="$PROJECT_DIR$/.idea/modules/react-native-gradle-plugin.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/second-project.iml" filepath="$PROJECT_DIR$/.idea/second-project.iml" />
     </modules>
   </component>
 </project>

@@ -105,7 +105,7 @@ function App() {
         <Route path="/travelSchedule" element={<TravelSchedule></TravelSchedule>}></Route>
         <Route path="/mypage" element={<Mypage></Mypage>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
-        <Route path="/notice" element={<NoticeBoard send={send}></NoticeBoard>}></Route>
+        <Route path="/notice" element={<NoticeBoard></NoticeBoard>}></Route>
         <Route path="/notice/admin/write" element={<NoticeWrite></NoticeWrite>}></Route>
         <Route path="/notice/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
         <Route path="/qna" element={<QnABoard></QnABoard>}></Route>
