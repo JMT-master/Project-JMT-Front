@@ -12,10 +12,9 @@ const NoticeWrite = () => {
   const [index, setIndex] = useState(parseInt(localStorage.getItem('notice.length'))+1 || 0);
   const [item, setItem] = useState({
       noticeCategory : category,
-      qnaTitle : "",
-      qnaContent : "",
-      qnaView :  0,
-      qnaNum : 0,
+      noticeTitle : "",
+      noticeContent : "",
+      noticeNum : 0,
   });
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,7 +22,7 @@ const NoticeWrite = () => {
   useEffect(() => {
       if (id) {
         // 브라우저 주소에서 읽어온 id 값이 있을 경우 API 호출
-        call(`/qna/admin/${id}`, "GET")
+        call(`/notice/admin/${id}`, "GET")
           .then((response) => {
           console.log("response.data : {}",response.data);
           setItems(response.data);
@@ -35,7 +34,7 @@ const NoticeWrite = () => {
 
   const addItem = (item) => {
       console.log("add item : {}", item);
-      call("/qna/admin/write","POST", item)
+      call("/notice/admin/write","POST", item)
           .then((response) => setItems(response.data))
           .then(()=> navigate("/qna"));
     }
@@ -43,24 +42,22 @@ const NoticeWrite = () => {
     const postEditItem = (item) => {
       console.log("item : {}", item);
       const updatedItem = {
-          qnaCategory: category,
-          qnaTitle: document.getElementById('qna_title').value,
-          qnaContent: document.getElementById('qna_content').value,
-          qnaView: 0,
-          qnaNum: items[0].qnaNum
+        noticeCategory: category,
+        noticeTitle: document.getElementById('notice_title').value,
+        noticeContent: document.getElementById('notice_content').value,
+        noticeNum: items[0].noticeNum
       };
-      call("/qna/admin/" + items[0].qnaNum, "POST", updatedItem) // Assuming PUT method for update operation
-          .then(() => navigate("/qna"));
+      call("/notice/admin/" + items[0].noticeNum, "POST", updatedItem) // Assuming PUT method for update operation
+          .then(() => navigate("/notice"));
   };
 
   const onButtonClick = () => {
       console.log(index);
           const newItem = {
-              qnaCategory: category,
-              qnaTitle: document.getElementById('qna_title').value,
-              qnaContent: document.getElementById('qna_content').value,
-              qnaView: 0,
-              qnaNum: document.getElementById("qnaNum").value
+            noticeCategory: category,
+            noticeTitle: document.getElementById('notice_title').value,
+            noticeContent: document.getElementById('notice_content').value,
+            noticeNum: document.getElementById("noticeNum").value
           };
           addItem(newItem);
   };
@@ -96,12 +93,12 @@ const NoticeWrite = () => {
                           <option value={"로그인"}>로그인</option>
                           <option value={"기타"}>기타</option>
                       </select>
-                      <input type="hidden" id="qna_category" name="qna_category" />
+                      <input type="hidden" id="notice_category" name="notice_category" />
                   </div>
                   <div className='ask-textarea'>
                       <h4>제목 작성</h4>
-                      <input type="text" placeholder='제목을 작성해주세요' id="qna_title" name="qna_title" />
-                      <textarea cols="80" rows="10" id="qna_content" name="qna_content" ></textarea>
+                      <input type="text" placeholder='제목을 작성해주세요' id="notice_title" name="notice_title" />
+                      <textarea cols="80" rows="10" id="notice_content" name="notice_content" ></textarea>
                   </div>
                   {/* <div className='file-attach'>
                       <label htmlFor='file'>
@@ -113,9 +110,9 @@ const NoticeWrite = () => {
               <div className='button-box'>
                   <button type="button" className='submit-knowledge' onClick={onButtonClick} style={{display : isContainingWrite ? "block" : "none"}}>작성완료</button> 
                   <button type="button" className='submit-knowledge' onClick={()=>postEditItem(items)} style={{display : isContainingWrite ? "none" : "block"}}>수정완료</button>
-                  <button className='back-to-knlist'onClick={() => navigate("/qna")}>목록으로 돌아가기</button>
+                  <button className='back-to-knlist'onClick={() => navigate("/notice")}>목록으로 돌아가기</button>
               </div>
-              <input type="hidden" id='qnaNum' name='qnaNum' value={index} />
+              <input type="hidden" id='noticeNum' name='noticeNum' value={index} />
           </div>
 
   )
