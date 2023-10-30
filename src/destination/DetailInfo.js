@@ -92,6 +92,7 @@ const DetailInfo = () => {
             }
             <hr />
             <ListPaging page={page} setPage={setPage} lastPage={lastPage.current} ></ListPaging>
+          {/*  일단 커밋용*/}
           </div>
         </div>
       </div>
