@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'react-icons/ai';
 import axios from 'axios';
 import { API_BASE_URL } from '../common/ApiConfig';
-import { getCookie } from '../common/ApiService';
+import { getCookie } from '../common/ApiService'; 
 
 const KnowledgeWrite = () => {
   const navigate = useNavigate();
