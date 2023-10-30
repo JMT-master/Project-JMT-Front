@@ -1,17 +1,28 @@
-import React from 'react'
+import React from "react";
 import * as StompJs from "@stomp/stompjs";
-import { useNavigate, useParams } from 'react-router-dom';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
+import style from "../css/ChatDetail.css";
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"></link>
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
+></link>;
 
 const ChatDetail = () => {
   const navigate = useNavigate();
   //현재 로그인된 사용자 토큰
   const token = JSON.stringify(window.localStorage.getItem("ACCESS_TOKEN"));
-  const [roomId, setRoomId] = useState(localStorage.getItem('wschat.roomId') || '');
-  const [sender, setSender] = useState(localStorage.getItem('wschat.sender') || '');
+  const [roomId, setRoomId] = useState(
+    localStorage.getItem("wschat.roomId") || ""
+  );
+  const [sender, setSender] = useState(
+    localStorage.getItem("wschat.sender") || ""
+  );
+  const [roomName, setRoomName] = useState(
+    localStorage.getItem("wschat.roomName") || ""
+  );
   let [client, changeClient] = useState(null);
   //채팅 변수
   const [message, setMessage] = useState("");
@@ -26,7 +37,7 @@ const ChatDetail = () => {
       client = new StompJs.Client({
         brokerURL: "ws://localhost:8888/ws/chat",
         connectHeaders: {
-          token: token
+          token: token,
         },
         debug: function (str) {
           console.log("str임 : " + str);
@@ -46,10 +57,9 @@ const ChatDetail = () => {
             type: "ENTER",
             sender: sender,
             roomId: roomId,
-            data: message
+            data: message,
           }),
         });
-
       };
       client.activate(); //클라이언트 활성화
       changeClient(client); //클라이언트 갱신
@@ -62,51 +72,55 @@ const ChatDetail = () => {
     console.log("message가 들어오는가..." + message);
     var chat = JSON.parse(message.body);
     console.log("chat이 지금 존재하는가? : " + chat);
-    if (chat.type === 'ENTER' || chat.type === 'LEAVE') {
+    if (chat.type === "ENTER" || chat.type === "LEAVE") {
       // 화면에 입장 또는 퇴장 메시지를 보여줄 DOM 엘리먼트를 생성하고 추가
-      const messageElement = document.createElement('div');
-      messageElement.classList.add('event-message');
-      messageElement.innerText = chat.sender + '님이 입장하였습니다.'; // 또는 chat.message 사용
+      const messageElement = document.createElement("div");
+      messageElement.classList.add("event-message");
+      messageElement.innerText = chat.sender + "님이 입장하였습니다."; // 또는 chat.message 사용
 
       //여기는 어차피 입장용이니까 다 같은 style을 줘도 괜찮을듯?
-      messageElement.style.padding = '10px';
-      messageElement.style.margin = '10px 0';
+      messageElement.style.padding = "10px";
+      messageElement.style.margin = "10px 0";
+      messageElement.style.textAlign = "center";
 
-      const chatMessages = document.getElementById('chat-messages');
+      const chatMessages = document.getElementById("chat-messages");
       chatMessages.appendChild(messageElement);
-    } else if (chat.type === 'TALK') {
+    } else if (chat.type === "TALK") {
       // 'TALK' 대화 메시지 처리
       console.log("chat 한번만 보여줘 : {}", chat);
-      console.log(chat.sender + ': ' + chat.message);
+      console.log(chat.sender + ": " + chat.message);
       // 대화를 화면에 보여줄 DOM 엘리먼트를 생성하고 추가
-      const messageElement = document.createElement('div');
-      messageElement.classList.add('chat-message');
-      messageElement.innerText = chat.sender + ': ' + chat.message;
+      const messageElement = document.createElement("div");
+      messageElement.classList.add("chat-message");
+      messageElement.innerText = chat.sender + ": " + chat.message;
 
-      //여기는 style을 주는 부분  
+      //여기는 style을 주는 부분
       if (chat.sender == sender) {
-        messageElement.style.backgroundColor = 'lightblue';
-        messageElement.style.color = 'black';
-        messageElement.style.padding = '10px';
-        messageElement.style.margin = '10px 0';
-        messageElement.style.width = '30%';
-        messageElement.style.borderRadius='25px';
-        messageElement.style.right = '5px';
-        messageElement.style.float = 'right';
+        messageElement.style.backgroundColor = "lightblue";
+        messageElement.style.color = "black";
+        messageElement.style.padding = "10px";
+        messageElement.style.margin = "10px 0";
+        messageElement.style.width = "40%";
+        messageElement.style.borderRadius = "25px";
+        messageElement.style.right = "5px";
       } else {
-        messageElement.style.backgroundColor = 'lightgreen';
-        messageElement.style.color = 'white';
-        messageElement.style.padding = '10px';
-        messageElement.style.width = '30%';
-        messageElement.style.borderRadius='25px';
-        messageElement.style.margin = '10px 0';
-        messageElement.style.float = 'left';
+        messageElement.style.backgroundColor = "lightgreen";
+        messageElement.style.color = "white";
+        messageElement.style.padding = "10px";
+        messageElement.style.width = "40%";
+        messageElement.style.borderRadius = "25px";
+        messageElement.style.margin = "10px 0";
       }
 
-      const chatMessages = document.getElementById('chat-messages');
+      const chatMessages = document.getElementById("chat-messages");
+      //채팅이 올라올 때마다 스크롤바가 항상 하단에 고정되도록
+      const scrollToBottom = () => {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      };
       chatMessages.appendChild(messageElement);
+      scrollToBottom();
     }
-  }
+  };
 
   const disConnect = () => {
     //연결 끊기
@@ -145,38 +159,57 @@ const ChatDetail = () => {
   const handleSubmit = (e, message) => {
     e.preventDefault();
     sendChat(message);
-    console.log("메시지가 잘 div에 들어가나 확인.." + document.getElementById("chat-messages").innerText);
+    console.log(
+      "메시지가 잘 div에 들어가나 확인.." +
+        document.getElementById("chat-messages").innerText
+    );
   };
 
   const onChangeMessage = (e) => {
-    console.log("e.target.value : " + e.target.value);
+    // console.log("e.target.value : " + e.target.value);
     setMessage(e.target.value);
-  }
+  };
   const outSocket = () => {
     disConnect();
     navigate("/chat/room");
-  }
+  };
+
   return (
-    <div>
+    <div className="chat-detail-container">
       {/* 나가기 버튼 */}
-      <button type='button' className='btn-primary' onClick={() => outSocket()}>나가기</button>
-      <h1>채팅방</h1>
-      <div id="chat-messages" style={{backgroundColor:'#f3a344', color:'white', width:'100%', height:'100%'}}>
+      <button
+        type="button"
+        className="chat-detail-out"
+        onClick={() => outSocket()}
+      >
+        나가기
+      </button>
+      <h1 className="chat-room-title">{roomName}</h1>
+      <div
+        id="chat-messages"
+        // style={{backgroundColor:'#f3a344', color:'white', width:'100%', height:'100%'}}
+      >
         {messages.map((message, index) => (
-          <div key={index}>
-            {message.message}
-          </div>
+          <div key={index}>{message.message}</div>
         ))}
       </div>
       {/* 여기는 입력 폼 */}
-      <form onSubmit={(event) => handleSubmit(event, message)}>
-        <input type="text" id='msg' value={message} placeholder='메세지를 보내라'
+      <form onSubmit={(event) => handleSubmit(event, message)}
+      className="chat-input-form">
+        <input
+          type="text"
+          id="msg"
+          value={message}
+          placeholder="메세지를 입력하세요"
           onChange={onChangeMessage}
+          className="chat-input"
         />
+      <button type="submit" className="chat-submit">
+        전송
+      </button>
       </form>
-      <button type='submit'>전송</button>
     </div>
-  )
-}
+  );
+};
 
-export default ChatDetail
+export default ChatDetail;

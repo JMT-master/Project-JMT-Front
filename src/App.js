@@ -149,6 +149,11 @@ function HeaderTop(props) {
     setModalOpen(!modalOpen);
   }
 
+  //채팅 화면 관련
+  if(pathname.includes("/chat/room")) {
+    return <div></div>;
+  }
+
   const handleMouseOverDes = () => {
     $(".destination-list").show();
   };
@@ -185,6 +190,15 @@ function HeaderTop(props) {
   };
 
 
+ //채팅 관련 새 창 띄우는 코드
+ const handleChatLinkClick = () => {
+  const width = 800; // 원하는 너비
+  const height = 600; // 원하는 높이
+  const left = (window.innerWidth - width) / 2;
+  const top = (window.innerHeight - height) / 2;
+
+  window.open('/chat/room', 'ChatPopup', `width=${width},height=${height},left=${left},top=${top}`);
+};
 
 
 
@@ -231,8 +245,12 @@ function HeaderTop(props) {
              <div className='myTrableInfo-list'>
                <li><Link to="/traffic" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통
                  혼잡도</Link></li>
-               <li><Link to="/chat/room" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
-                 </Link></li>
+               <li>
+                <span onClick={handleChatLinkClick} className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
+                  </span>  
+                {/* <Link to="/chat/room" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
+                 </Link> */}
+                 </li>
                <li><Link to="/knowledge" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광
                  지식in</Link></li>
              </div>
@@ -426,6 +444,9 @@ function Header() {
 
 function Footer() {
   const { pathname } = useLocation();
+  if(pathname.includes("/chat/room")) {
+    return <div></div>;
+  }
 
   return (
      <>
