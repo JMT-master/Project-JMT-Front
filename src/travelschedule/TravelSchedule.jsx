@@ -40,13 +40,22 @@ const TravelSchedule = (props) => {
     })
   }
   function travelSave(){
+
+    const dtoList = {
+      dtoList1:tableData1,
+      dtoList2:tableData2,
+      param:param('id')
+    }
+
     console.log("param",param);
-    console.log("tableData1555555555555555555555555",tableData1);
+    console.log("tableData1",tableData1);
+    console.log("tableData2",tableData2);
+    console.log("dtoList",dtoList);
     call("/travel/dayFormatSave","POST",
-    tableData1
+    dtoList
     ).then((response) => {
       console.log("response",response);
-      window.location.href = '/';
+      // window.location.href = '/';
     })
       .catch((error) => {
         console.log(error);
