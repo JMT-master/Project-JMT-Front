@@ -1,6 +1,6 @@
 .attachfile-container {
   width: 100%;
-  height: 100px;
+  height: 200px;
 }
 
 .attachfile-icon-box {
@@ -8,7 +8,7 @@
   height: 125px;
   width: 100%;
   display: grid;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: 100px 400px 1fr;
 }
 
 .attachfile-name {
@@ -17,14 +17,32 @@
 }
 
 .attachfile-data-ul {
-  width: 100%;
+  /* width: 100%; */
   overflow: scroll;
+  height: 180px;
 }
 
 .attachfile-data-li {
-  margin-bottom: 5px;
+  margin-bottom: 7px;
+  display: flex;
+}
+
+.attachfile-save {
+  color: #f3a344;
+  width: 20px; height: 20px;
+  margin-right: 5px;
 }
 
 .attachfile-data-ul::-webkit-scrollbar {
   display: none;
+}
+
+.attachfile-data-data {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+}
+
+.attachFileModal-img {
+  width: 200px; height: 200px;
 }

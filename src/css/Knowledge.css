@@ -78,6 +78,11 @@
 .searchKnowledge-select {
   margin-right: 10px;
   padding-right: 10px;
+  border: none; 
+  width: 70px; height: 25px;
+}
+.searchKnowledge-btn {
+  cursor: pointer;
 }
 .knowledge-table{
   clear: both;

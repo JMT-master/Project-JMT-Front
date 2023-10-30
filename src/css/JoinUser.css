@@ -179,6 +179,12 @@
   font-weight: bold;
   font-size: 16px;
 }
+#joinUser-Success:hover {
+  cursor: pointer;
+}
+#joinUser-Cancel:hover {
+  cursor: pointer;
+}
 .failPwd{
   color: red;
 }

@@ -2,8 +2,9 @@
   margin: 10px 30px;
 }
 .knowledgeDetail-title{
+  width: 100%;
   display: flex;
-  border-bottom: 1px solid #ccc;
+  /* border-bottom: 1px solid #ccc; */
 }
 .knowledgeDetail-title h1{
   text-align: left;
@@ -17,6 +18,25 @@
   margin-right: 10px;
 
 }
+.knowledgeDetail-title-btn {
+  width: 50px; height: 30px;
+  background-color: white; color: #f3a344;
+  border: none;
+  font-size: large;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.knowledgeDetail-title-btn:hover {
+  background-color: #f3a344; color: white;
+}
+
+.knowledgeDetail-title-view {
+  width: 98%;
+  text-align: right;
+  margin-right: 50px;
+}
+
 .knowledgeDetail-box{
   text-align: left;
   margin: 30px auto;
@@ -76,9 +96,15 @@
 .knowledgeDetail-answer-btn > button{
   width: 150px;
   height: 50px;
-  background-color: rgb(242, 207, 141);
+  background-color: white;
+  color: #f3a344;
+  font-weight: 700; 
   border: none;
   border-radius: 20px;
+  cursor: pointer;
+}
+.knowledgeDetail-answer-btn > button:hover {
+  background-color: #f3a344; color: white;
 }
 .knowledgeDetail-answer-box{
   text-align: left;
@@ -105,10 +131,16 @@
 .back-to-knin{
   width: 120px;
   height: 50px;
-  background-color: rgb(242, 207, 141);
+  background-color: white; color: #f3a344; 
+  font-weight: 700; 
   border: none;
   border-radius: 20px;
   margin-right: 10px;
+  font-size: large;
+  cursor: pointer;
+}
+.back-to-knin:hover {
+  background-color: #f3a344; color: white; 
 }
 @media screen and (max-width:1260px) {
   .knowledgeDetail-title h1{
