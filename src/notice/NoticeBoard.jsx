@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
-import  '../css/NoticeBoard.css'
+import '../css/NoticeBoard.css'
 import {VscSearch} from 'react-icons/vsc';
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {noticeData} from '../data/Data';
 import Paging from '../common/Paging';
-import {call} from "../common/ApiService";
+import {call, getCookie} from "../common/ApiService";
 
 
 const NoticeRead = (props) => {
@@ -43,6 +43,9 @@ const NoticeBoard = () => {
   const [currentItems, setCurrentItems] = useState([])
   const totalPages = Math.ceil(noticeData.length / itemsPerPage);
   const idxNum = useRef(0);
+  const isAdmin = useRef(getCookie("adminChk"));
+
+  console.log("admin? " + isAdmin.current)
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -53,6 +56,16 @@ const NoticeBoard = () => {
   }
 
   useEffect(() => {
+    //   call("/checkUser","POST",{
+    //     userid : "1234"
+    //   })
+    //      .then(response =>{
+    //        console.log("checkUser : " + response)
+    //        console.log("checkUser u : " + response.isSameUser)
+    //        console.log("checkUser a : " + response.isAdmin)
+    //      })
+
+
     call("/notice",
        "GET",
        null
@@ -98,15 +111,18 @@ const NoticeBoard = () => {
            </tr>
            </thead>
            <tbody>
-           {currentItems && currentItems.map((item, index) => {
+           {currentItems && currentItems.map((item) => {
              return (
-                <NoticeRead data={item} key={item.id} currentItems={currentItems} setCurrentItems={setCurrentItems}></NoticeRead>
+                <NoticeRead data={item} key={item.id} currentItems={currentItems}
+                            setCurrentItems={setCurrentItems}></NoticeRead>
              )
            })}
            </tbody>
          </table>
          <div className='plus-notice'>
-           <button onClick={() => navigate('/notice/admin/write', {state: {idx: idxNum.current}})}>글쓰기</button>
+           <button style={isAdmin.current == "Y" ? null : {display: "none"}}
+                   onClick={() => navigate('/notice/admin/write', {state: {idx: idxNum.current}})}>글쓰기
+           </button>
          </div>
        </div>
        <div className='page'>

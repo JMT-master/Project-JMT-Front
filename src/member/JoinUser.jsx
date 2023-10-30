@@ -83,7 +83,8 @@ const JoinUser = () => {
       address : address,
       addressDetail : addressDetail,
       phone : phone,
-      adminYn : 'N'
+      adminYn : 'N',
+      socialYn : 'N'
     }
 
     joinUser(member);

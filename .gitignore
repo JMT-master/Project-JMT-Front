@@ -134,6 +134,3 @@ dist
 *.iws
 *.iml
 *.ipr
-
-#ide
-.idea/

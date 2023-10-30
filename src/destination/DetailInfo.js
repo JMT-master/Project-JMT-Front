@@ -13,7 +13,7 @@ const DetailInfo = () => {
     photoVisible: false,
     reviewVisible: false,
   });
-  const { img, tag, address, phoneno, title, content } = location.state;
+    const { img, tag, address, phoneno, title, content } = location.state;
   const { id } = useParams();
 
   const toggleTab = (tab) => {
@@ -86,7 +86,7 @@ const DetailInfo = () => {
               review.current.sort((a,b)=>b.gettime - a.gettime).slice(pageNum, offset * page).map(item => (
                 <div className='reviewListBox'>
                   <ReviewBox item={item} />
-                  <hr/>
+                  <button type="button">더미 데이터 insert</button>
                 </div>)
               )
             }
