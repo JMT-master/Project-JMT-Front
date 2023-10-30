@@ -94,7 +94,8 @@ export function sseSource(url, setNotifications) {
 
 export const getCookie = (name) => {
   const cookies = new Cookies();
-  return name == null ? cookies.get('ACCESS_TOKEN') : cookies.get('adminChk');
+  console.log("getcookie" + name);
+  return name != 'adminChk' ? cookies.get('ACCESS_TOKEN') : cookies.get('adminChk');
 }
 
 // Date Format

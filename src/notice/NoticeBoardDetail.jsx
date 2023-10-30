@@ -42,7 +42,7 @@ const NoticeBoardDetail = ({data}) => {
       <div className='noticeDetail-inside'>
         <textarea cols="30" rows="10" readOnly placeholder='공지사항 내용' value={item.content}></textarea>
       </div>
-      <button className='back-to-notice' onClick={() => navigate(-1)}>목록으로 가기</button>
+      <button className='back-to-notice' onClick={() => navigate("/notice")}>목록으로 가기</button>
     </div>
   </div>);
 };

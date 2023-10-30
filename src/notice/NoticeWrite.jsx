@@ -75,7 +75,7 @@ const NoticeWrite = () => {
          </div>
          <div className='button-box'>
            <button className='submit-knowledge' type='submit'>작성완료</button>
-           <button className='back-to-knlist' onClick={() => navigate(-1)}>목록으로 돌아가기</button>
+           <button className='back-to-knlist' onClick={() => navigate("/notice")}>목록으로 돌아가기</button>
          </div>
        </form>
 

@@ -7,32 +7,6 @@ import Paging from '../common/Paging';
 import {call, getCookie} from "../common/ApiService";
 
 
-const NoticeRead = (props) => {
-  const navigate = useNavigate();
-  const {idx, category, title, content, regDate, currentItems, setCurrentItems} = props.data;
-
-  return (
-     <tr>
-       <td>{idx}</td>
-       <td>{category}</td>
-       <td onClick={() => {
-         navigate('/notice/' + idx)
-       }} className='cursor'>{title}</td>
-       <td>{regDate}</td>
-       <td>
-         <button onClick={() => {
-           call("/notice", "DELETE", {idx: idx})
-              .then(response => {
-                console.log("삭제 완료", response)
-                setCurrentItems(response);
-              })
-         }}>삭제
-         </button>
-       </td>
-     </tr>
-  );
-};
-
 const NoticeBoard = () => {
   const navigate = useNavigate();
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -135,3 +109,30 @@ const NoticeBoard = () => {
 };
 
 export default NoticeBoard;
+
+const NoticeRead = (props, {currentItems, setCurrentItems}) => {
+  const navigate = useNavigate();
+  const {idx, category, title, content, regDate, } = props.data;
+  console.log(currentItems)
+  console.log(setCurrentItems)
+  return (
+     <tr>
+       <td>{idx}</td>
+       <td>{category}</td>
+       <td onClick={() => {
+         navigate('/notice/' + idx)
+       }} className='cursor'>{title}</td>
+       <td>{regDate}</td>
+       <td>
+         <button onClick={() => {
+           call("/notice", "DELETE", {idx: idx})
+              .then(response => {
+                console.log("삭제 완료", response)
+                setCurrentItems(response);
+              })
+         }}>삭제
+         </button>
+       </td>
+     </tr>
+  );
+};

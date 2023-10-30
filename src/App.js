@@ -56,8 +56,7 @@ function App() {
   }
 
   const send = async (type, nav) => {
-    const accessToken = getCookie("ACCESS_TOKEN");
-    console.log("accesTK : " + accessToken)
+    const accessToken = getCookie();
     await axios({
       method: 'POST',
       url: `http://localhost:8888/${type}/send` ,
@@ -131,6 +130,7 @@ function App() {
       </button>
       <OnModalComp setModalOpen={setModalOpen}
                                  comp={<NotificationList notifications={notifications} setNotifications={setNotifications} modalOpen={modalOpen}/>}></OnModalComp>
+      <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
     </ThemeProvider>
   );
 }
