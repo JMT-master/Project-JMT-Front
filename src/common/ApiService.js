@@ -6,9 +6,8 @@ import moment from "moment/moment";
 export function call(api, method, request) {
   let headers = new Headers({
     "Content-Type": "application/json",
-    Authorization: "Bearer " + getCookie()
   });
-
+  getCookie() && headers.append("Authorization", "Bearer " + getCookie());
   // if(request.accessToken && request.accessToken != null) {
   //   headers.append("Authorization", "Bearer " + getCookie());
   // }
@@ -93,9 +92,15 @@ export function sseSource(url, setNotifications) {
 }
 
 
-export const getCookie = () => {
+export const getCookie = (name) => {
   const cookies = new Cookies();
-  return cookies.get('ACCESS_TOKEN');
+  console.log("getcookie" + name);
+  return name != 'adminChk' ? cookies.get('ACCESS_TOKEN') : cookies.get('adminChk');
+}
+
+export const deleteCookie = () => {
+  const cookies = new Cookies();  
+  cookies.remove('ACCESS_TOKEN');
 }
 
 // Date Format

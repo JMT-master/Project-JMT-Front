@@ -18,7 +18,6 @@ const QnaWrite = (props) => {
         qnaTitle: "",
         qnaContent: "",
         qnaView: 0,
-        qnaNum: 0,
     });
     const navigate = useNavigate();
     const location = useLocation();
@@ -84,7 +83,7 @@ const QnaWrite = (props) => {
             },
             data : formData
           }).then(response => {
-            console.log("/qna/admin/write :",response)
+            console.log("/qna/admin/write :", response)
             if(response.status === 200) {
               window.location.href="/qna";
             }
@@ -111,7 +110,6 @@ const QnaWrite = (props) => {
             qnaTitle: document.getElementById('qna_title').value,
             qnaContent: document.getElementById('qna_content').value,
             qnaView: 0,
-            qnaNum: document.getElementById("qnaNum").value
         };
         addItem(newItem);
     };

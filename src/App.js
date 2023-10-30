@@ -39,7 +39,7 @@ import JoinUserValidateChk from './member/JoinUserValidateChk';
 import KakaoLogin from './member/KakaoLogin';
 import NotificationList from "./common/Notification";
 import axios from "axios";
-import {call, getCookie, sseSource} from "./common/ApiService";
+import {call, deleteCookie, getCookie, sseSource} from "./common/ApiService";
 import NoticeWrite from './notice/NoticeWrite';
 import TravelPdf from './travelschedule/TravelPdf';
 
@@ -49,11 +49,14 @@ function App() {
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   const [notifications, setNotifications] = useState()
+  const [modalOpen, setModalOpen] = useState(false);
 
+  const modalToggle = () => {
+    setModalOpen(!modalOpen);
+  }
 
   const send = async (type, nav) => {
-    const accessToken = getCookie("ACCESS_TOKEN");
-    console.log("accesTK : " + accessToken)
+    const accessToken = getCookie();
     await axios({
       method: 'POST',
       url: `http://localhost:8888/${type}/send` ,
@@ -64,9 +67,11 @@ function App() {
       },
       headers: {
         Authorization: "Bearer " + accessToken,
+        heartbeatTimeout: 180*1000
       }
     })
        .then(function (response) {
+         console.log("현재 로그인된 아이디 " + response)
          call("/notification",
             "POST",
             null
@@ -84,6 +89,10 @@ function App() {
        });
   };
 
+  useEffect(() => {
+    sseSource("sub", setNotifications);
+  }, [getCookie()]);
+
   return (
     <ThemeProvider theme={themeMode}>
        <GlobalStyles/>
@@ -97,7 +106,7 @@ function App() {
         <Route path="/travelSchedule/:id?" element={<TravelSchedule></TravelSchedule>}></Route>
         <Route path="/mypage" element={<Mypage></Mypage>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
-        <Route path="/notice" element={<NoticeBoard send={send}></NoticeBoard>}></Route>
+        <Route path="/notice" element={<NoticeBoard></NoticeBoard>}></Route>
         <Route path="/notice/admin/write" element={<NoticeWrite></NoticeWrite>}></Route>
         <Route path="/notice/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
         <Route path="/qna" element={<QnABoard></QnABoard>}></Route>
@@ -116,6 +125,12 @@ function App() {
         <Route path='/chat/room/:roomId?' element={<ChatDetail />}></Route>
         <Route path='/travel-schedule' element={<TravelPdf></TravelPdf>}></Route>
       </Routes>
+      <button className={modalOpen === false ? "notifyToggleBtn" : "notifyToggleBtnOff"} type="button" onClick={modalToggle}>
+        <AiOutlineBell className="notifyIcon"/>
+      </button>
+      <OnModalComp setModalOpen={setModalOpen}
+                                 comp={<NotificationList notifications={notifications} setNotifications={setNotifications} modalOpen={modalOpen}/>}></OnModalComp>
+      <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
     </ThemeProvider>
   );
 }
@@ -123,7 +138,7 @@ function App() {
 function HeaderTop(props) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
+  const accessToken = getCookie();
   const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   const {notifications, setNotifications, send} = props;
 
@@ -163,14 +178,11 @@ function HeaderTop(props) {
     if(state === undefined || state === null) { // login
       navigate("/login");
     } else { // logout
-      navigate(pathname);
+      console.log('pathname : ', pathname);
+      deleteCookie();
       window.location.reload();
     }
   };
-
-  useEffect(() => {
-      sseSource("sub", setNotifications);
-  }, [accessToken]);
 
 
 
@@ -179,10 +191,6 @@ function HeaderTop(props) {
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
        <div className="headerTop">
-         <button type="button" onClick={showModal} style={{justifyContent: "left"}}>
-           <AiOutlineBell className="headerNotification"/>
-         </button>
-         <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
         <span>
           <a href={() => false} onClick={() => handleClick()}
@@ -240,8 +248,6 @@ function HeaderTop(props) {
            </ul>
          </div>
        </div>
-       {modalOpen && <OnModalComp style={{display: "inline-flex"}} setModalOpen={setModalOpen}
-                                  comp={<NotificationList notifications={notifications}/>}></OnModalComp>}
      </div>
   )
 }

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { call } from '../common/ApiService';
+import Modal from 'react-modal';
 
 const ChatRoomComponent = () => {
   const [roomName, setRoomName] = useState('');
   const [chatRooms, setChatRooms] = useState([]);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const token = localStorage.getItem('ACCESS_TOKEN');
 
   const fetchChatRooms = async () => {
@@ -45,8 +46,24 @@ const enterRoom = (roomId) => {
     fetchChatRooms(); // 컴포넌트가 마운트될 때 방 목록을 불러옵니다.
   }, [chatRooms.length]); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 실행되도록 합니다.
 
+
+  //모달 열기 함수
+  const openModal = () => {
+    setIsModalOpen(true);
+  }
+  //모달 닫기 함수
+  const closeModal = () => {
+    setIsModalOpen(false);
+  }
+
   return (
     <div>
+      <button onClick={openModal}>채팅방 만들기</button>
+      <Modal
+        isOpen={isModalOpen} // 모달 열림 여부를 상태 변수로 제어
+        onRequestClose={closeModal} // 모달을 닫기 위한 콜백 함수
+        contentLabel="Chat Room Modal" // 모달의 레이블 (접근성을 위해 사용됨)
+      >
       <h1>채팅방 만들기</h1>
       <ul>
         {chatRooms.map((room) => (
@@ -67,13 +84,18 @@ const enterRoom = (roomId) => {
         }}
         />
         <button type='button'
-         onClick={createChatRoom}
+         onClick={() => {
+          createChatRoom();
+          closeModal(); // 모달을 닫음
+        }}
          >방 만들기</button>
       </div>
+      <button onClick={closeModal}>취소</button>
+      </Modal>
     </div>
   );
 };
-
+export default ChatRoomComponent;
 // const ChatRoomComponent = () => {
 //   const [roomName, setRoomName] = useState('');
 //   const [chatrooms, setChatrooms] = useState([]);
@@ -162,4 +184,4 @@ const enterRoom = (roomId) => {
 //   );
 // };
 
-export default ChatRoomComponent;
+

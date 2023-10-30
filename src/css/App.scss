@@ -3,6 +3,8 @@
 @import '~slick-carousel/slick/slick-theme.css';
 @import './button.scss';
 
+$jOrange: #f3a444;
+
 * {
   font-family: 'Nanum Pen Script', cursive;
 }
@@ -19,6 +21,7 @@
   visibility: visible;
   z-index: 1;
 }
+
 .header-slider {
   position: absolute;
   width: 100%;
@@ -92,7 +95,7 @@
 .header-travel-Image-icon {
   width: 45px;
   height: 45px;
-  color: #f3a344;
+  color: $jOrange;
 }
 
 .header-travel-Image-text {
@@ -160,7 +163,8 @@
 }
 
 .header-travel-Image-li-info-vertical {
-  margin-top: 25px; margin-left: 10px;
+  margin-top: 25px;
+  margin-left: 10px;
   font-size: 35px;
   writing-mode: vertical-lr;
   transition: all 1s;
@@ -168,7 +172,8 @@
 
 .header-travel-Image-li-info-title {
   display: block;
-  margin-top: 2%; padding-top: 20px;
+  margin-top: 2%;
+  padding-top: 20px;
   margin-left: 50%;
 }
 
@@ -177,7 +182,8 @@
 }
 
 .header-Youtube-container {
-  width: 100%; height: 400px;
+  width: 100%;
+  height: 400px;
   margin-top: 20px;
   padding-top: 10px;
 }
@@ -189,7 +195,8 @@
 }
 
 .header-Youtube-title-icon {
-  width: 45px; height: 45px;
+  width: 45px;
+  height: 45px;
   color: red;
 }
 
@@ -202,14 +209,16 @@
 
 .header-Youtube-ul {
   display: grid;
-  width: 90%; height: 80%;
+  width: 90%;
+  height: 80%;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
   margin-left: 3%;
 }
 
 .header-Youtube-li {
-  width: 100%; height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .header-container {
@@ -218,10 +227,12 @@
   grid-template-columns: 120px 1fr;
   grid-template-rows: 70px;
 }
-.header-main-position:hover{
+
+.header-main-position:hover {
   background-color: white;
   filter: opacity(0.8);
-  & a{
+
+  & a {
     color: black;
   }
 }
@@ -247,13 +258,16 @@
   line-height: 60px;
   font-weight: bold;
 }
-.header-image{
+
+.header-image {
   text-align: center;
 }
-#jeju-image{
+
+#jeju-image {
   width: 70px;
   height: 70px;
 }
+
 /* Header MouseOver Event */
 .destination-list {
   display: none;
@@ -266,10 +280,12 @@
 .notice-list {
   display: none;
 }
+
 #loginToggle:hover {
   cursor: pointer;
 }
-.footer-main{
+
+.footer-main {
   width: 100%;
   height: 200px;
   background: no-repeat;
@@ -277,21 +293,25 @@
   background-size: cover;
   bottom: 0;
 }
-.footer-container{
+
+.footer-container {
   margin: 30px auto;
 }
-.footer-main > div{
+
+.footer-main > div {
   padding-top: 50px;
   padding-bottom: 50px;
   display: grid;
   grid-template-columns: 20% 80%;
 }
-.footer-Grid1{
+
+.footer-Grid1 {
   grid-template-columns: 200px 200px 200px 200px 200px;
   display: inline-grid;
   text-align: left;
 }
-.footer-Grid2{
+
+.footer-Grid2 {
   margin-top: 20px;
   grid-template-columns: 1000px;
   display: grid;
@@ -299,7 +319,7 @@
   font-size: small;
 }
 
-.cursor{
+.cursor {
   cursor: pointer;
 }
 
@@ -319,13 +339,13 @@
   color: white;
 }
 
-.max{
+.max {
   height: 100%;
   width: 100%;
 }
 
-.ra{
-  float:right;
+.ra {
+  float: right;
 }
 
 .gray {
@@ -344,33 +364,40 @@
 .headernoCh a {
   color: rgb(245, 245, 245);
 }
-.headerTop a{
+
+.headerTop a {
   margin: 0 10px;
 }
-.footernoCh{
+
+.footernoCh {
   margin-top: 620px;
 }
-.footerCh{
+
+.footerCh {
   margin-top: 0;
   height: 180px;
 }
-.festival-send-content{
+
+.festival-send-content {
   width: 90%;
   height: 400px;
   margin-top: 50px;
   margin-left: 2%;
 }
-.festival-send-content h2 span{
-  color: #f3a344;
+
+.festival-send-content h2 span {
+  color: $jOrange;
   margin: 0 10px;
 }
-.festival-send-content ul{
+
+.festival-send-content ul {
   display: inline-flex;
   margin: 20px auto;
   margin-left: 10px;
   border-top: 1px solid lightgray;
 }
-.festival-send-content .festival-list-item{
+
+.festival-send-content .festival-list-item {
   width: 45%;
   height: 70%;
   margin: 20px;
@@ -378,16 +405,19 @@
   background-color: whitesmoke;
   cursor: pointer;
 }
-.main-fest div{
+
+.main-fest div {
   width: 100%;
   padding: 10px 20px;
 }
+
 .custom-marker {
   width: 25px;
   height: 25px;
   position: relative;
 }
-.custom-marker-text{
+
+.custom-marker-text {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -395,6 +425,44 @@
   color: white;
 }
 
+@mixin notifyToggle() {
+  height: 50px;
+  width: 50px;
+  position: fixed;
+  border-radius: 10% 0 0 50%;
+  right: -5px;
+  bottom: 250px;
+  z-index: 111;
+  padding: 0;
+  }
+
+.notifyToggleBtn {
+  //@include btnSet(50px, 50px);
+  // @include btnSet(30px,50px);
+  @include notifyToggle();
+
+  border: none;
+  background: $jOrange;
+  color: white;
+  transition: all 0.5s ease-out;
+
+}
+
+.notifyToggleBtnOff {
+  @include notifyToggle();
+
+  border: 2px $jOrange solid;
+  border-right: 0;
+  background-color: white;
+  color: $jOrange;
+  transition: all 0.5s ease-out;
+}
+
+.notifyIcon {
+  position: relative;
+  left : 3px;
+  font-size: 30px;
+}
 
 @media screen and (max-width: 450px) {
 
@@ -408,7 +476,6 @@
     z-index: 1;
     overflow: hidden;
     touch-action: none;
-
 
 
     &-img1 {
@@ -502,7 +569,7 @@
   .header-travel-Image-icon {
     width: 45px;
     height: 45px;
-    color: #f3a344;
+    color: $jOrange;
   }
 
   .header-travel-Image-text {
@@ -654,7 +721,7 @@
     margin-top: 5px;
 
   }
-  .headerAlarm{
+  .headerAlarm {
     font-size: 25px;
     cursor: pointer;
   }

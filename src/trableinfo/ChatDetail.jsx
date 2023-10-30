@@ -4,6 +4,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"></link>
+
 const ChatDetail = () => {
   const navigate = useNavigate();
   //현재 로그인된 사용자 토큰
@@ -65,6 +67,11 @@ const ChatDetail = () => {
       const messageElement = document.createElement('div');
       messageElement.classList.add('event-message');
       messageElement.innerText = chat.sender + '님이 입장하였습니다.'; // 또는 chat.message 사용
+
+      //여기는 어차피 입장용이니까 다 같은 style을 줘도 괜찮을듯?
+      messageElement.style.padding = '10px';
+      messageElement.style.margin = '10px 0';
+
       const chatMessages = document.getElementById('chat-messages');
       chatMessages.appendChild(messageElement);
     } else if (chat.type === 'TALK') {
@@ -75,10 +82,30 @@ const ChatDetail = () => {
       const messageElement = document.createElement('div');
       messageElement.classList.add('chat-message');
       messageElement.innerText = chat.sender + ': ' + chat.message;
+
+      //여기는 style을 주는 부분  
+      if (chat.sender == sender) {
+        messageElement.style.backgroundColor = 'lightblue';
+        messageElement.style.color = 'black';
+        messageElement.style.padding = '10px';
+        messageElement.style.margin = '10px 0';
+        messageElement.style.width = '30%';
+        messageElement.style.borderRadius='25px';
+        messageElement.style.right = '5px';
+        messageElement.style.float = 'right';
+      } else {
+        messageElement.style.backgroundColor = 'lightgreen';
+        messageElement.style.color = 'white';
+        messageElement.style.padding = '10px';
+        messageElement.style.width = '30%';
+        messageElement.style.borderRadius='25px';
+        messageElement.style.margin = '10px 0';
+        messageElement.style.float = 'left';
+      }
+
       const chatMessages = document.getElementById('chat-messages');
       chatMessages.appendChild(messageElement);
     }
-    // setMessages((messages) => [...messages, chat]);
   }
 
   const disConnect = () => {
@@ -122,7 +149,7 @@ const ChatDetail = () => {
   };
 
   const onChangeMessage = (e) => {
-    console.log("e.target.value : "+e.target.value);
+    console.log("e.target.value : " + e.target.value);
     setMessage(e.target.value);
   }
   const outSocket = () => {
@@ -132,9 +159,9 @@ const ChatDetail = () => {
   return (
     <div>
       {/* 나가기 버튼 */}
-      <button type='button' onClick={() => outSocket()}>나가기</button>
+      <button type='button' className='btn-primary' onClick={() => outSocket()}>나가기</button>
       <h1>채팅방</h1>
-      <div id="chat-messages">
+      <div id="chat-messages" style={{backgroundColor:'#f3a344', color:'white', width:'100%', height:'100%'}}>
         {messages.map((message, index) => (
           <div key={index}>
             {message.message}

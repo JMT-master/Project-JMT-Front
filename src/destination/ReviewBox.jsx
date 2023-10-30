@@ -8,7 +8,6 @@ const ReviewBox = ({ item }) => {
   return (
     <div className='reviewBox'>
       <div className='reviewBox-header'>
-        <img src={item.profileImg} alt="" />
         <div>{item.id}</div>
         <div>{`${year}/${month}/${day}`}</div>
       </div>
