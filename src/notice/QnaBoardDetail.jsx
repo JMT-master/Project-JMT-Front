@@ -21,10 +21,11 @@ const QnaBoardDetail = () => {
     <div className='qnaDetail-content'>
       <div className='qnaDetail-title'>
         <h1>Q & A</h1>
-        <span><AiFillPrinter style={{width:'50px', height:'30px'}}></AiFillPrinter> </span>
+        <span><button  onClick={() => navigate("/qna/admin/"+qnaColNum)} >수정하기</button></span>
+        {/* <span><AiFillPrinter style={{width:'50px', height:'30px'}}></AiFillPrinter> </span>
         <span><AiFillFilePdf style={{width:'50px', height:'30px'}}></AiFillFilePdf> </span>
         <span> <AiFillYoutube style={{width:'50px', height:'30px'}}></AiFillYoutube> </span>
-        <span><AiFillFacebook style={{width:'50px', height:'30px'}}></AiFillFacebook> </span>
+        <span><AiFillFacebook style={{width:'50px', height:'30px'}}></AiFillFacebook> </span> */}
       </div>
       {item &&
       <div className='qnaDetail-box'>
@@ -39,7 +40,6 @@ const QnaBoardDetail = () => {
         </div>
         <div className='qnaDetail-inside'>
           <textarea cols="30" rows="10" readOnly placeholder='qna 내용' value={item.qnaContent}></textarea>
-        <button  onClick={() => navigate("/qna/admin/"+qnaColNum)} >수정하기</button>
         </div>
         <button className='back-to-qna'  onClick={()=>navigate("/qna")}>목록으로 가기</button>
       </div>

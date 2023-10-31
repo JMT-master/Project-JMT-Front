@@ -102,6 +102,11 @@ export const getCookie = (name) => {
   return name != 'adminChk' ? cookies.get('ACCESS_TOKEN') : cookies.get('adminChk');
 }
 
+export const deleteCookie = () => {
+  const cookies = new Cookies();  
+  cookies.remove('ACCESS_TOKEN');
+}
+
 // Date Format
 export const setDateFormat = (data) => {
   const revDate = new Date(data);

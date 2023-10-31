@@ -25,10 +25,10 @@ const KnowledgeDetail = ({ data }) => {
   useEffect(() => {
     let revData = null;
     setLoading(true);
-    call("/knowledgeDetail?id="+params.id,"POST",detail.data)
+    call("/knowledgeDetail?id="+params.id,"POST", detail.data)
     .then(response => {
       revData = response;
-      
+      console.log("detail.data ? "+detail.data);
       if(revData !== undefined && revData !== null && revData[0].originalName !== null && revData[0].originalName !== undefined) {
           revData.map((data,i) => {
           axios({

@@ -1,0 +1,46 @@
+.chat-list-container > h1 {
+    text-align: center;
+    margin: 40px auto;
+}
+.chat-list-container > ul {
+    background-color: white;
+    width: 90%;
+    color: #f3a344;
+    margin: 0 auto;
+    font-size: larger;
+}
+.chat-list > li {
+    height: 60px;
+    padding: 20px auto;
+    text-align: center;
+    line-height: 60px;
+    border: #f3a344;
+    border-radius: 10px;
+    font-size: larger;
+}
+.chat-list-container > .create-chat-room {
+    text-align: center;    
+}
+.create-chat-room > input {
+    padding: 10px 20px;
+    border: none;
+    font-size: larger;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #f3a344;
+    text-align: center;
+    width: 60%;
+}
+.create-chat-room > input:focus{
+    border-color: #f3a344;
+}
+.create-chat-room > button{
+    padding: 10px 20px;
+    background-color: #f3a344;
+    color: white;
+    font-size: larger;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
