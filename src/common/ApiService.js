@@ -2,6 +2,7 @@ import { API_BASE_URL } from "./ApiConfig";
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import { Cookies } from "react-cookie";
 import moment from "moment/moment";
+import {connect} from "react-redux";
 
 export function call(api, method, request) {
   let headers = new Headers({
@@ -54,7 +55,9 @@ export function signin(loginDto) {
     })
 }
 
-export function sseSource(url, setNotifications) {
+
+export function sseSource(url, setNotifications, count) {
+
   const accessToken = getCookie();
   // SSE 지원
   if (typeof EventSource !== "undefined") {
@@ -62,14 +65,16 @@ export function sseSource(url, setNotifications) {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'text/event-stream',
-      }
+      },
+      heartbeatTimeout: 1000 * 60 * 60,
     });
-    console.log("타입타입! : " + typeof eventSource);
 
-    console.log("이벤트 소스  :" + eventSource.toString());
+    eventSource.addEventListener('sub',(event) =>{
+      console.log("메세지 수신 : " + event.data);
+    })
 
     eventSource.addEventListener('sse', (event) => {
-      console.log("메세지 수신 : " + event.data);
+
       call("/notification",
         "POST",
         null
@@ -94,7 +99,6 @@ export function sseSource(url, setNotifications) {
 
 export const getCookie = (name) => {
   const cookies = new Cookies();
-  console.log("getcookie" + name);
   return name != 'adminChk' ? cookies.get('ACCESS_TOKEN') : cookies.get('adminChk');
 }
 

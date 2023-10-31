@@ -9,7 +9,7 @@ import TravelSchedule from './travelschedule/TravelSchedule';
 import Login from './member/Login';
 import NoticeBoard from './notice/NoticeBoard';
 import NoticeBoardDetail from './notice/NoticeBoardDetail';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import { noticeData, qnaData } from './data/Data';
 import QnABoard from './notice/QnABoard';
 import QnaBoardDetail from './notice/QnaBoardDetail';
@@ -43,13 +43,24 @@ import {call, getCookie, sseSource} from "./common/ApiService";
 import NoticeWrite from './notice/NoticeWrite';
 import TravelPdf from './travelschedule/TravelPdf';
 
-function App() {
+function App(factory, deps) {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
   const [newQnaData, setNewQnaData] = useState(qnaData);
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   const [notifications, setNotifications] = useState()
   const [modalOpen, setModalOpen] = useState(false);
+  const notifyCount = useMemo(() => {
+    let count = 0;
+    notifications && notifications.length != 0 && notifications.forEach((notify) => {
+      if (notify.yn === "y") {
+        count += 1;
+      }
+    });
+    return count; // count를 반환해야 합니다.
+  }, [notifications]);
+  const isSub = useRef(true);
+  console.log("count : " + notifyCount)
 
   const modalToggle = () => {
     setModalOpen(!modalOpen);
@@ -57,6 +68,7 @@ function App() {
 
   const send = async (type, nav) => {
     const accessToken = getCookie();
+    console.log("tokenchk : " +accessToken)
     await axios({
       method: 'POST',
       url: `http://localhost:8888/${type}/send` ,
@@ -67,31 +79,31 @@ function App() {
       },
       headers: {
         Authorization: "Bearer " + accessToken,
-        heartbeatTimeout: 180*1000
-      }
+      },
     })
        .then(function (response) {
-         console.log("현재 로그인된 아이디 " + response)
-         call("/notification",
-            "POST",
-            null
-            // 아이디는 백에서 토큰으로 확인
-         )
-            .then((response) => {
-              setNotifications(response);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+         console.log("현재 로그인된 아이디 " + JSON.stringify(response.data))
+         // call("/notification",
+         //    "POST",
+         //    null
+         //    // 아이디는 백에서 토큰으로 확인
+         // )
+         //    .then((response) => {
+         //      setNotifications(response);
+         //
+         //    })
+         //    .catch((error) => {
+         //      console.log(error);
+         //    })
        })
        .catch(function (error) {
          console.log('error', error);
        });
   };
-
   useEffect(() => {
-    sseSource("sub", setNotifications);
-  }, [getCookie()]);
+    if(isSub.current) sseSource("sub", setNotifications, notifyCount);
+    isSub.current = false;
+  }, []);
 
   return (
     <ThemeProvider theme={themeMode}>
@@ -125,9 +137,13 @@ function App() {
         <Route path='/chat/room/:roomId?' element={<ChatDetail />}></Route>
         <Route path='/travel-schedule' element={<TravelPdf></TravelPdf>}></Route>
       </Routes>
-      <button className={modalOpen === false ? "notifyToggleBtn" : "notifyToggleBtnOff"} type="button" onClick={modalToggle}>
-        <AiOutlineBell className="notifyIcon"/>
-      </button>
+      <div className="notifyContainer">
+          {<div className="numOfNotify">{notifyCount}</div>}
+        <button className={modalOpen === false ? "notifyToggleBtn" : "notifyToggleBtnOff"} type="button" onClick={modalToggle}>
+          <AiOutlineBell className="notifyIcon"/>
+        </button>
+      </div>
+
       <OnModalComp setModalOpen={setModalOpen}
                                  comp={<NotificationList notifications={notifications} setNotifications={setNotifications} modalOpen={modalOpen}/>}></OnModalComp>
       <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>

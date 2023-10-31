@@ -11,8 +11,10 @@ $jOrange: #f3a444;
   position: fixed;
   text-align: left;
   bottom: 298px;
-  z-index: 1999;
+  z-index: 222;
   padding: 5px 10px;
+
+
 
   .notificationBody{
     display: grid;
@@ -40,7 +42,7 @@ $jOrange: #f3a444;
       }
       .notificationOne{
         margin-bottom: 5px;
-        height: 50px;
+        height: 60px;
         display: grid;
         grid-template-columns: 215px 50px;
         padding : 1px 0;
@@ -52,7 +54,7 @@ $jOrange: #f3a444;
           display: -webkit-box;
           -webkit-line-clamp: 2 ;
           -webkit-box-orient: vertical;
-          line-height: 25px;
+          line-height: 30px;
           height: 50px;
           overflow: hidden;
         }
@@ -103,4 +105,11 @@ $jOrange: #f3a444;
   to {
     right: -300px;
   }
+}
+
+.noRead{
+  color: black;
+}
+.read{
+  color: gray;
 }
