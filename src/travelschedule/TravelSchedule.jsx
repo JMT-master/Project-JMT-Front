@@ -26,35 +26,41 @@ const TravelSchedule = (props) => {
   const [scheduleBtn, setScheduleBtn] = useState("2");
   const [mapModal, setMapModal] = useState(false);
   const theme = useTheme();
-  const param = useParams();
-  function travelDelete(){
-    console.log("param",param);
+  // const { id } = useParams();
+
+
+
+
+  function travelDelete() {
     console.log("삭제");
-    call("/travel/dayFormatSave","POST",
-    tableData1
+    call("/travel/dayFormatSave", "POST",
+      tableData1
     ).then((response) => {
-      console.log("response",response);
+      console.log("response", response);
     })
-    .catch((error) => {
-      console.log(error);
-    })
+      .catch((error) => {
+        console.log(error);
+      })
   }
-  function travelSave(){
+  function travelSave() {
+    const location = window.location;
+    console.log("location.search:", location.search);
+    const params = new URLSearchParams(location.search);
+    const id = params.get("id");
+    console.log("params.get('id'):", id);
 
     const dtoList = {
-      dtoList1:tableData1,
-      dtoList2:tableData2,
-      param:param('id')
+      dtoList1: tableData1,
+      dtoList2: tableData2
     }
-
-    console.log("param",param);
-    console.log("tableData1",tableData1);
-    console.log("tableData2",tableData2);
-    console.log("dtoList",dtoList);
-    call("/travel/dayFormatSave","POST",
-    dtoList
+    console.log("tableData1", tableData1);
+    console.log("tableData2", tableData2);
+    console.log("dtoList", dtoList);
+    console.log("params", id);
+    call("/travel/dayFormatSave?id="+id, "POST",
+      dtoList
     ).then((response) => {
-      console.log("response",response);
+      console.log("response", response);
       // window.location.href = '/';
     })
       .catch((error) => {
@@ -64,7 +70,7 @@ const TravelSchedule = (props) => {
 
   const markers = [];
   tableData1.map((item) => {
-    if(!Number.isInteger(item)) markers.push(item);
+    if (!Number.isInteger(item)) markers.push(item);
   });
 
   useEffect(() => {
@@ -84,14 +90,15 @@ const TravelSchedule = (props) => {
       setList(visit.items
         .filter(data => (data.repPhoto !== null && data.repPhoto !== undefined))
         .map(item => {
-          return ({ 
-          "dayImage" : item.repPhoto.photoid.imgpath, // img 경로
-          "dayTitle" : item.title,                    // 제목
-          "dayRegion1" : item.region1cd.label,       // 지역1
-          "dayRegion2" : item.region2cd.label,       // 지역2
-          "latitude" : item.latitude,                // 위도
-          "longitude" : item.longitude               // 경도
-         }) }));
+          return ({
+            "dayImage": item.repPhoto.photoid.imgpath, // img 경로
+            "dayTitle": item.title,                    // 제목
+            "dayRegion1": item.region1cd.label,       // 지역1
+            "dayRegion2": item.region2cd.label,       // 지역2
+            "latitude": item.latitude,                // 위도
+            "longitude": item.longitude               // 경도
+          })
+        }));
       setLoading(false);
     }
   }, [visit]);
@@ -133,7 +140,7 @@ const TravelSchedule = (props) => {
           if (destination.index === i) { // 도착지점과 index가 같을 때
             table1FontColorChn.push(1);
 
-            const data = {...dragIndexData[0]};
+            const data = { ...dragIndexData[0] };
             data['dayCount'] = 1;
             data['dayIndex'] = i;
 
@@ -154,7 +161,7 @@ const TravelSchedule = (props) => {
         setTableData1(tableData1.map((item, i) => {
           if (destination.index === i) { // 도착지점과 index가 같을 때
             table1FontColorChn.push(1);
-            const data = {...dragIndexData[0]};
+            const data = { ...dragIndexData[0] };
             data['dayIndex'] = i;
 
             return data;
@@ -179,29 +186,29 @@ const TravelSchedule = (props) => {
         dragIndex = source.index;
         let table2ChnColor = [...table2FontColor];
         const table1Chn = [...tableData1];
-        const table1ChnColor = [...table1FontColor] ;
+        const table1ChnColor = [...table1FontColor];
 
         if (tableData1.includes(dragIndexData[0])) return; // table2의 데이터를 table1이 갖고 있는 경우
 
         setTableData1(tableData1.map((item, i) => {
           if (destination.index === i) { // 도착지점과 index가 같을 때
             table1FontColorChn.push(1);
-            const data = {...dragIndexData[0]};
+            const data = { ...dragIndexData[0] };
             data['dayCount'] = 1;
             data['dayIndex'] = i;
 
             return data;
-          } else if(destination.index > i) {
+          } else if (destination.index > i) {
             table1FontColorChn.push(table1ChnColor[i]);
             return table1Chn[i];
           } else {
-            table1FontColorChn.push(table1ChnColor[i-1]);
-            return table1Chn[i-1];
+            table1FontColorChn.push(table1ChnColor[i - 1]);
+            return table1Chn[i - 1];
           }
         }));
 
         setTableData2(tableData2.map((item, i) => {
-          if(dragIndex === i) {
+          if (dragIndex === i) {
             table2ChnColor[i] = 0;
             return i;
           } else {
@@ -215,7 +222,7 @@ const TravelSchedule = (props) => {
       setTable1FontColor(table1FontColorChn);
     }
     // drop 지점 => table2
-     else if (destination.droppableId === "table2") { 
+    else if (destination.droppableId === "table2") {
       const table2FontColorChn = [];
       dropIndexData = tableData2.filter((item, i) => i === destination.index);
 
@@ -226,7 +233,7 @@ const TravelSchedule = (props) => {
           if (destination.index === i) {
             table2FontColorChn.push(1);
 
-            const data = {...dragIndexData[0]};
+            const data = { ...dragIndexData[0] };
             data['dayCount'] = 2;
             data['dayIndex'] = i;
 
@@ -244,24 +251,24 @@ const TravelSchedule = (props) => {
         dragIndex = source.index;
         let table1ChnColor = [...table1FontColor];
         const table2Chn = [...tableData2];
-        const table2ChnColor = [...table2FontColor] ;
+        const table2ChnColor = [...table2FontColor];
 
         if (tableData2.includes(dragIndexData[0])) return; // table1의 데이터를 table2가 갖고 있는 경우
 
         setTableData2(tableData2.map((item, i) => {
           if (destination.index === i) { // 도착지점과 index가 같을 때
             table2FontColorChn.push(1);
-            const data = {...dragIndexData[0]};
+            const data = { ...dragIndexData[0] };
             data['dayCount'] = 2;
             data['dayIndex'] = i;
 
             return data;
-          } else if(destination.index > i) {
+          } else if (destination.index > i) {
             table2FontColorChn.push(table2ChnColor[i]);
             return table2Chn[i];
           } else {
-            table2FontColorChn.push(table2ChnColor[i-1]);
-            return table2Chn[i-1];
+            table2FontColorChn.push(table2ChnColor[i - 1]);
+            return table2Chn[i - 1];
           }
         }));
 
@@ -277,9 +284,9 @@ const TravelSchedule = (props) => {
         setTable1FontColor(table1ChnColor);
       } else if (flag === 2) { // drag 지점 => table2, drop 지점 => table2
         dragIndex = source.index;
-  
+
         if (Number.isInteger(dragIndexData[0])) return;
-  
+
         setTableData2(tableData2.map((item, i) => {
           if (destination.index === i) { // 도착지점과 index가 같을 때
             table2FontColorChn.push(1);
@@ -490,28 +497,28 @@ const TravelSchedule = (props) => {
                     >
                       {
                         // visit !== undefined?
-                           list.map((item, i) => {
-                            // if (i <= 10) {
-                            return (
-                              <Draggable
-                                key={i}
-                                draggableId={"List" + i.toString()} // 드래그 가능한 항목마다 고유한 문자열로 설정
-                                index={i}
-                              >
-                                {(provided, snapshot) => (
-                                  <div
-                                    ref={provided.innerRef} // provided.innerRef를 여기서 사용
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                  >
-                                    <TravelForm key={i} data={item} tableArea={0} addSchedule={addSchedule} index={i}></TravelForm>
-                                  </div>
-                                )}
-                              </Draggable>
-                            );
-                            // }
-                          })
-                          // : null // <></> 대신 null을 사용하세요.
+                        list.map((item, i) => {
+                          // if (i <= 10) {
+                          return (
+                            <Draggable
+                              key={i}
+                              draggableId={"List" + i.toString()} // 드래그 가능한 항목마다 고유한 문자열로 설정
+                              index={i}
+                            >
+                              {(provided, snapshot) => (
+                                <div
+                                  ref={provided.innerRef} // provided.innerRef를 여기서 사용
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                >
+                                  <TravelForm key={i} data={item} tableArea={0} addSchedule={addSchedule} index={i}></TravelForm>
+                                </div>
+                              )}
+                            </Draggable>
+                          );
+                          // }
+                        })
+                        // : null // <></> 대신 null을 사용하세요.
                       }
                       {provided.placeholder}
                     </div>
