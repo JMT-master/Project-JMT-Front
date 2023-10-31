@@ -8,15 +8,19 @@
     background-color: #f3a344;
     color: white;
 }
-
 .chat-detail-container > div {
     background-color: #f3a344;
     color: white;
     width: 100%;
-    height: 400px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    height: 518px;
+    overflow-y: scroll; /* 수직 스크롤바 숨김 */
+    overflow-x: hidden; /* 수평 스크롤바 숨김 */
 }
+
+.chat-detail-container > div::-webkit-scrollbar {
+    display: none;
+}
+
 .chat-detail-out {
     padding: 10px 20px;
     background-color: #f3a344;
@@ -34,7 +38,7 @@
     border-radius: 10px;
     cursor: pointer;
     text-align: center;
-    width: 80%;
+    width: 85%;
 }
 .chat-submit{
     padding: 10px 20px;
@@ -44,4 +48,7 @@
     border: none;
     border-radius: 10px;
     cursor: pointer;
+}
+.chat-input-form > input:focus{
+    outline: none;
 }

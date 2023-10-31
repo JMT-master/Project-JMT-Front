@@ -32,7 +32,6 @@ import { AiFillYoutube, AiOutlineBell } from 'react-icons/ai';
 import { MdCardTravel,MdFestival } from 'react-icons/md';
 import QnaWrite from './notice/QnaWrite';
 import ChatRoom from './trableinfo/ChatRoom';
-import ChatRoomDetail from './trableinfo/ChatRoomDetail';
 import OnModalComp from "./common/OnModalComp";
 import ChatDetail from './trableinfo/ChatDetail';
 import JoinUserValidateChk from './member/JoinUserValidateChk';
@@ -50,6 +49,10 @@ function App() {
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   const [notifications, setNotifications] = useState()
   const [modalOpen, setModalOpen] = useState(false);
+
+//채팅 관련
+const { pathname } = useLocation();
+const isChatRoom = pathname.includes("/chat/room");
 
   const modalToggle = () => {
     setModalOpen(!modalOpen);
@@ -124,13 +127,20 @@ function App() {
         <Route path='/chat/rooms' ></Route>
         <Route path='/chat/room/:roomId?' element={<ChatDetail />}></Route>
         <Route path='/travel-schedule' element={<TravelPdf></TravelPdf>}></Route>
+        <Route path='/member/update' element={<JoinUser></JoinUser>}></Route>
       </Routes>
-      <button className={modalOpen === false ? "notifyToggleBtn" : "notifyToggleBtnOff"} type="button" onClick={modalToggle}>
-        <AiOutlineBell className="notifyIcon"/>
-      </button>
-      <OnModalComp setModalOpen={setModalOpen}
-                                 comp={<NotificationList notifications={notifications} setNotifications={setNotifications} modalOpen={modalOpen}/>}></OnModalComp>
-      <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
+      <div>
+        { isChatRoom ? null : (
+        <div>
+          <button className={modalOpen === false ? "notifyToggleBtn" : "notifyToggleBtnOff"} type="button" onClick={modalToggle}>
+            <AiOutlineBell className="notifyIcon"/>
+          </button>
+          <OnModalComp setModalOpen={setModalOpen}
+                                     comp={<NotificationList notifications={notifications} setNotifications={setNotifications} modalOpen={modalOpen}/>}></OnModalComp>
+          <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
+        </div>
+        )}
+      </div>
     </ThemeProvider>
   );
 }
@@ -197,7 +207,7 @@ function HeaderTop(props) {
   const left = (window.innerWidth - width) / 2;
   const top = (window.innerHeight - height) / 2;
 
-  window.open('/chat/room', 'ChatPopup', `width=${width},height=${height},left=${left},top=${top}`);
+  window.open('/chat/room', '_blank', `width=${width},height=${height},left=${left},top=${top}`);
 };
 
 

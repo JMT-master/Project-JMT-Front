@@ -91,23 +91,26 @@ const ChatDetail = () => {
       console.log(chat.sender + ": " + chat.message);
       // 대화를 화면에 보여줄 DOM 엘리먼트를 생성하고 추가
       const messageElement = document.createElement("div");
+      // 대화를 감싸는 div 하나 더 추가
+      const messageBoxElement = document.createElement("div");
+      messageBoxElement.classList.add("chat-message-box");
+      messageBoxElement.style.display = 'flex';
       messageElement.classList.add("chat-message");
-      messageElement.innerText = chat.sender + ": " + chat.message;
-
+      messageElement.innerText = chat.sender + " : " + chat.message;
+      
+      
       //여기는 style을 주는 부분
       if (chat.sender == sender) {
-        messageElement.style.backgroundColor = "lightblue";
+        messageElement.style.backgroundColor = "white";
         messageElement.style.color = "black";
-        messageElement.style.padding = "10px";
+        messageElement.style.padding = "20px";
         messageElement.style.margin = "10px 0";
-        messageElement.style.width = "40%";
         messageElement.style.borderRadius = "25px";
-        messageElement.style.right = "5px";
+        messageBoxElement.style.justifyContent = "flex-end";
       } else {
-        messageElement.style.backgroundColor = "lightgreen";
-        messageElement.style.color = "white";
-        messageElement.style.padding = "10px";
-        messageElement.style.width = "40%";
+        messageElement.style.backgroundColor = "white";
+        messageElement.style.color = "black";
+        messageElement.style.padding = "20px";
         messageElement.style.borderRadius = "25px";
         messageElement.style.margin = "10px 0";
       }
@@ -117,7 +120,8 @@ const ChatDetail = () => {
       const scrollToBottom = () => {
         chatMessages.scrollTop = chatMessages.scrollHeight;
       };
-      chatMessages.appendChild(messageElement);
+      messageBoxElement.appendChild(messageElement);
+      chatMessages.appendChild(messageBoxElement);
       scrollToBottom();
     }
   };

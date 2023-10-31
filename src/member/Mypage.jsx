@@ -10,6 +10,8 @@ import MypageList from './MypageList'
 import { useEffect } from 'react'
 import axios from 'axios'
 import TravelPdf from '../travelschedule/TravelPdf'
+import { useNavigate } from 'react-router'
+import { call } from '../common/ApiService'
 
 
 
@@ -21,7 +23,17 @@ const Mypage = () => {
   const [visit, setVisit] = useState(null);
   const [list, setList] = useState();
   const [totalCount, setTotalCount] = useState(0);
+  const navigate = useNavigate();
+  const [member, setMember] = useState();
 
+  //member의 정보 가져와서 화면에 보여줘야함
+  const getMember = () => {
+    call("/mypage", "GET")
+    .then((response) => {
+      setMember(response);
+      console.log("response : {}", response);
+    })
+  }
 
   // Big page에서 Title 클릭시
   const onChangeTitle = (index) => {
@@ -49,6 +61,7 @@ const Mypage = () => {
   // data가 변경되었을 때, tag와 List 변경
   useEffect(() => {
     let count = 0;
+    getMember();
     if (visit != null) {
       setList(visit.items.map((item, i) => {
         count++;
@@ -73,7 +86,9 @@ const Mypage = () => {
           <div className='myPageHeader-profile'>
             {/* <img className='myPageHeader-profile-img' src="../images/user.jpg" alt="" /> */}
             <BiUser className='myPage-tagList-li-icon'></BiUser>
-            <div className='myPageHeader-profile-name'>My Page</div>
+            <div className='myPageHeader-profile-name' 
+            onClick={()=>navigate("/member/update")}
+            >회원정보수정</div>
           </div>
           <div>
             <ul className='myPageHeader-ul'>
@@ -131,7 +146,9 @@ const Mypage = () => {
             <li className='myPage-tagList-li'>
               {/* <img className='myPage-tagList-li-profile-img' src="../images/user.jpg" alt="" /> */}
               <BiUser className='myPage-tagList-li-icon'></BiUser>
-              <div className='myPage-tagList-li-name'>My Page</div>
+              <div className='myPage-tagList-li-name'
+              onClick={()=>navigate("/member/update")}
+              >회원정보수정</div>
             </li>
             <li className='myPage-tagList-li' data-value='0' onClick={() => onChangeTitle(0)}>
               <AiOutlineSchedule className='myPage-tagList-li-icon'></AiOutlineSchedule>
