@@ -7,14 +7,6 @@
     <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="231031 공지 수정부터 시작,">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ApiService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ApiService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Notification.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Notification.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/Alarm.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/Alarm.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/App.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/NoticeBoardDetail.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/NoticeBoardDetail.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoardDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoardDetail.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/trableinfo/KnowledgeWrite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/trableinfo/KnowledgeWrite.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +50,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "android.gradle.sync.needed": "true",
-    "git-widget-placeholder": "park",
+    "git-widget-placeholder": "Deb",
     "last_opened_file_path": "D:/second-project/src/notice",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -153,6 +145,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="23년 10월 17일 5시 50분 안광현 프론트단 커밋" />
     <MESSAGE value="231026.front" />
-    <option name="LAST_COMMIT_MESSAGE" value="231026.front" />
+    <MESSAGE value="231031 공지Delete 및 버튼 배치 끝, 수정부터 시작하면됨" />
+    <MESSAGE value="231031 공지 수정부터 시작," />
+    <option name="LAST_COMMIT_MESSAGE" value="231031 공지 수정부터 시작," />
   </component>
 </project>

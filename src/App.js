@@ -37,7 +37,7 @@ import ChatDetail from './trableinfo/ChatDetail';
 import JoinUserValidateChk from './member/JoinUserValidateChk';
 import NotificationList from "./common/Notification";
 import axios from "axios";
-import {getCookie, sseSource} from "./common/ApiService";
+import {deleteCookie, getCookie, sseSource} from "./common/ApiService";
 import NoticeWrite from './notice/NoticeWrite';
 import TravelPdf from './travelschedule/TravelPdf';
 
