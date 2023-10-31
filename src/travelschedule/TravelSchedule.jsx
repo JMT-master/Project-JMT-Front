@@ -29,19 +29,18 @@ const TravelSchedule = (props) => {
   // const { id } = useParams();
 
 
-
-
-  function travelDelete() {
-    console.log("삭제");
-    call("/travel/dayFormatSave", "POST",
-      tableData1
-    ).then((response) => {
-      console.log("response", response);
-    })
-      .catch((error) => {
-        console.log(error);
-      })
-  }
+  // function travelDelete() {
+  //   console.log("삭제");
+    
+  //   call("/travel/dayFormatSave", "POST",
+  //     tableData1
+  //   ).then((response) => {
+  //     console.log("response", response);
+  //   })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  // }
   function travelSave() {
     const location = window.location;
     console.log("location.search:", location.search);
@@ -458,7 +457,7 @@ const TravelSchedule = (props) => {
               </div>
               <div onClick={onScheduleReset} className='travelSchedule-icon'>
                 {/* <BiTrash className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>삭제</BiTrash> */}
-                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`} onClick={travelDelete}>삭제</p>
+                <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>삭제</p>
               </div>
               <div className='travelSchedule-icon'>
                 {/* <BiSolidSave className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>저장</BiSolidSave> */}
