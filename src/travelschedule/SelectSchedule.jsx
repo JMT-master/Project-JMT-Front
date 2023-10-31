@@ -41,8 +41,8 @@ function test(){
     travelTitle : document.getElementById("title").value,
     travelYn : travelYn,
     travelPnum : peopleNum,
-    travelStartTime : startTime,
-    travelEndTime : endTime,
+    travelStartTime : state[0].startDate,
+    travelEndTime : state[0].endDate,
     startDate : state[0].startDate,
     endDate : state[0].endDate,
   }

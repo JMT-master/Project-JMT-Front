@@ -43,8 +43,8 @@ const TravelSchedule = (props) => {
 
     const dtoList = {
       dtoList1:tableData1,
-      dtoList2:tableData2,
-      param:param('id')
+      dtoList2:tableData2
+      // param:param
     }
 
     console.log("param",param);
