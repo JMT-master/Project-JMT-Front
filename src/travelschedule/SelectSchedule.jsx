@@ -41,10 +41,10 @@ function test(){
     travelTitle : document.getElementById("title").value,
     travelYn : travelYn,
     travelPnum : peopleNum,
-    travelStartTime : state[0].startDate,
-    travelEndTime : state[0].endDate,
-    startDate : state[0].startDate,
-    endDate : state[0].endDate,
+    travelStartTime : startTime,
+    travelEndTime : endTime,
+    travelStartDate : state[0].startDate,
+    travelEndDate : state[0].endDate,
   }
 console.log("selectForm555555555555555555555555",selectForm);
   call("/travel/saveSchedule","POST",
