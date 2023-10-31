@@ -44,7 +44,6 @@ import TravelPdf from './travelschedule/TravelPdf';
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
-  const [newQnaData, setNewQnaData] = useState(qnaData);
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   const [notifications, setNotifications] = useState()
