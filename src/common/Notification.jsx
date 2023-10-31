@@ -7,7 +7,6 @@ const NotificationList = ({notifications, setNotifications, modalOpen}) => {
   console.log("=================" + notifications)
   const makeNotificationList = () => {
     const notificationList = [];
-    console.log(notifications == undefined)
 
 
     if (notifications != undefined && notifications[0] != null) {
@@ -19,7 +18,6 @@ const NotificationList = ({notifications, setNotifications, modalOpen}) => {
       return <div className="notNotify">알림이 없습니다.</div>
       // notificationList.push(<Notification notification={{content: "알람이 없습니다.", url: null, yn: "y"}}/>)
     }
-    console.log("notificationList" + notificationList)
     return notificationList;
   }
 
@@ -66,10 +64,29 @@ const Notification = ({notification, setNotifications}) => {
        })
   }
 
+  const readNotify = () => {
+    call("/notification/isRead", "PUT", {
+      id: id,
+      content: content,
+      url: url
+    })
+       .then(response => {
+         setNotifications(response);
+       })
+  }
+
+  // document.querySelector("#notifyContent").addEventListener("click", ()=>{
+  //   read
+  //   goUrl();
+  //
+  // })
 
   return (
-     <div className="notificationOne">
-       <div onClick={goUrl}>{content}</div>
+     <div onClick={readNotify} className="notificationOne">
+       <div id="notifyContent" className={yn == "y" ? "noRead" : "read"} onClick={() => {
+
+         goUrl()
+       }}>{content}</div>
        <button className={"oBtn notifyDeleteBtn"} onClick={deleteNotify}>X</button>
      </div>)
 }

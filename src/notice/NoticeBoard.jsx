@@ -19,7 +19,6 @@ const NoticeBoard = () => {
   const idxNum = useRef(0);
   const isAdmin = useRef(getCookie("adminChk"));
 
-  console.log("admin? " + isAdmin.current)
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -28,6 +27,7 @@ const NoticeBoard = () => {
   const handleSelect = (e) => {
     setItemsPerPage(e.target.value);
   }
+
 
   useEffect(() => {
     //   call("/checkUser","POST",{
@@ -38,15 +38,15 @@ const NoticeBoard = () => {
     //        console.log("checkUser u : " + response.isSameUser)
     //        console.log("checkUser a : " + response.isAdmin)
     //      })
-
+    console.log("admin? " + isAdmin.current)
 
     call("/notice",
        "GET",
        null
-       // request = 현재 접속한 유저의 아이디, 지금은 고정값
     ).then((response) => {
       response != null ? setCurrentItems(response) : setCurrentItems([]);
-      idxNum.current = response.length;
+      // response != null ? console.log("데이터 있음")  : console.log("데이터 ddjqtmda");
+      idxNum.current = parseInt(JSON.stringify(response[0].idx));
     })
        .catch((error) => {
          console.log(error);
@@ -110,11 +110,10 @@ const NoticeBoard = () => {
 
 export default NoticeBoard;
 
-const NoticeRead = (props, {currentItems, setCurrentItems}) => {
+const NoticeRead = (props) => {
   const navigate = useNavigate();
-  const {idx, category, title, content, regDate, } = props.data;
-  console.log(currentItems)
-  console.log(setCurrentItems)
+  const {idx, category, title, regDate,} = props.data;
+  const {currentItems, setCurrentItems} = props;
   return (
      <tr>
        <td>{idx}</td>
@@ -123,16 +122,6 @@ const NoticeRead = (props, {currentItems, setCurrentItems}) => {
          navigate('/notice/' + idx)
        }} className='cursor'>{title}</td>
        <td>{regDate}</td>
-       <td>
-         <button onClick={() => {
-           call("/notice", "DELETE", {idx: idx})
-              .then(response => {
-                console.log("삭제 완료", response)
-                setCurrentItems(response);
-              })
-         }}>삭제
-         </button>
-       </td>
      </tr>
   );
 };

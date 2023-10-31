@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="231026.front">
+    <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="231031 공지 수정부터 시작,">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ApiService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ApiService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoardDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoardDetail.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="park" />
+        <entry key="$PROJECT_DIR$" value="Deb" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -48,22 +44,23 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;android.gradle.sync.needed&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Deb&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/second-project/src/notice&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "android.gradle.sync.needed": "true",
+    "git-widget-placeholder": "Deb",
+    "last_opened_file_path": "D:/second-project/src/notice",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\second-project\src\notice" />
@@ -86,6 +83,7 @@
       <workItem from="1697618785719" duration="1252000" />
       <workItem from="1697673284171" duration="593000" />
       <workItem from="1697695191033" duration="1217000" />
+      <workItem from="1698712342669" duration="22561000" />
     </task>
     <task id="LOCAL-00001" summary="23년 10월 17일 5시 50분 안광현 프론트단 커밋">
       <option name="closed" value="true" />
@@ -102,6 +100,26 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/park" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="main" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -127,6 +145,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="23년 10월 17일 5시 50분 안광현 프론트단 커밋" />
     <MESSAGE value="231026.front" />
-    <option name="LAST_COMMIT_MESSAGE" value="231026.front" />
+    <MESSAGE value="231031 공지Delete 및 버튼 배치 끝, 수정부터 시작하면됨" />
+    <MESSAGE value="231031 공지 수정부터 시작," />
+    <option name="LAST_COMMIT_MESSAGE" value="231031 공지 수정부터 시작," />
   </component>
 </project>

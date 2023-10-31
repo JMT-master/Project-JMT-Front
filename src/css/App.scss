@@ -425,6 +425,16 @@ $jOrange: #f3a444;
   color: white;
 }
 
+.notifyContainer{
+  height: 50px;
+  width: 50px;
+  background: transparent;
+  position: fixed;
+  right: -5px;
+  bottom: 250px;
+  z-index: 222;
+}
+
 @mixin notifyToggle() {
   height: 50px;
   width: 50px;
@@ -447,6 +457,25 @@ $jOrange: #f3a444;
   transition: all 0.5s ease-out;
 
 }
+
+.numOfNotify{
+  width: 20px;
+  height: 20px;
+  display: flow;
+  position: relative;
+  background: #ff0013;
+  border-radius: 50%;
+  top : 35px;
+  left : -5px;
+  text-align: center;
+  color: white;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 20px;
+  z-index: 999;
+  cursor: default;
+}
+
 
 .notifyToggleBtnOff {
   @include notifyToggle();
