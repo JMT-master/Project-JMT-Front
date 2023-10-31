@@ -5,11 +5,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import style from "../css/ChatDetail.css";
 
-<link
-  rel="stylesheet"
-  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
-></link>;
-
 const ChatDetail = () => {
   const navigate = useNavigate();
   //현재 로그인된 사용자 토큰
@@ -149,7 +144,6 @@ const ChatDetail = () => {
         message: message,
       }),
     });
-    // setMessages((messages) => [...messages, message]);
     setMessage("");
   };
 
@@ -173,6 +167,7 @@ const ChatDetail = () => {
     // console.log("e.target.value : " + e.target.value);
     setMessage(e.target.value);
   };
+  
   const outSocket = () => {
     disConnect();
     navigate("/chat/room");
