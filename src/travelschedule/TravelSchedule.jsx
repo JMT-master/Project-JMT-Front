@@ -28,6 +28,24 @@ const TravelSchedule = (props) => {
   const theme = useTheme();
   // const { id } = useParams();
 
+  function castingTravel() {
+    let tableDataes = [];
+
+    tableData1.map(data => {
+      if(!Number.isInteger(data)) {
+        tableDataes.push(data);
+      }
+    });
+
+    tableData2.map(data => {
+      if(!Number.isInteger(data)){
+        tableDataes.push(data);
+      }
+    });
+
+    return tableDataes;
+  }
+
 
   // function travelDelete() {
   //   console.log("삭제");
@@ -48,10 +66,12 @@ const TravelSchedule = (props) => {
     const id = params.get("id");
     console.log("params.get('id'):", id);
 
-    const dtoList = {
-      dtoList1: tableData1,
-      dtoList2: tableData2
-    }
+    // const dtoList = {
+    //   dtoList1: tableData1,
+    //   dtoList2: tableData2
+    // }
+
+    const dtoList = castingTravel();
     console.log("tableData1", tableData1);
     console.log("tableData2", tableData2);
     console.log("dtoList", dtoList);
