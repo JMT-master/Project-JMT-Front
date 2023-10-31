@@ -26,8 +26,12 @@ const TravelSchedule = (props) => {
   const [scheduleBtn, setScheduleBtn] = useState("2");
   const [mapModal, setMapModal] = useState(false);
   const theme = useTheme();
-  // const { id } = useParams();
 
+  const location = window.location;
+  const params = new URLSearchParams(location.search);
+  const id = params.get("id");
+  console.log("id값:",id);
+  
   function castingTravel() {
     let tableDataes = [];
 
@@ -46,6 +50,29 @@ const TravelSchedule = (props) => {
     return tableDataes;
   }
 
+  function selectForm1(){
+    call("/travel/dayFormatSelect1?id="+id, "GET",
+      null
+    ).then((response) => {
+      console.log("response.data1", response.data);
+      // window.location.href = '/';
+    })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+  function selectForm2(){
+    call("/travel/dayFormatSelect2?id="+id, "GET",
+      null
+    ).then((response) => {
+      console.log("response.data2", response.data);
+      // window.location.href = '/';
+    })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
 
   // function travelDelete() {
   //   console.log("삭제");
@@ -60,32 +87,26 @@ const TravelSchedule = (props) => {
   //     })
   // }
   function travelSave() {
-    const location = window.location;
-    console.log("location.search:", location.search);
-    const params = new URLSearchParams(location.search);
-    const id = params.get("id");
-    console.log("params.get('id'):", id);
-
-    // const dtoList = {
-    //   dtoList1: tableData1,
-    //   dtoList2: tableData2
-    // }
-
     const dtoList = castingTravel();
-    console.log("tableData1", tableData1);
-    console.log("tableData2", tableData2);
     console.log("dtoList", dtoList);
     console.log("params", id);
     call("/travel/dayFormatSave?id="+id, "POST",
       dtoList
     ).then((response) => {
-      console.log("response", response);
+      selectFormList();
+      console.log("responseSaveData", response);
       // window.location.href = '/';
     })
       .catch((error) => {
         console.log(error);
       })
   }
+
+  function selectFormList(){
+    selectForm1();
+    selectForm2();
+  }
+
 
   const markers = [];
   tableData1.map((item) => {
