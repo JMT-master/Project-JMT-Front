@@ -39,9 +39,13 @@ import JoinUserValidateChk from './member/JoinUserValidateChk';
 import KakaoLogin from './member/KakaoLogin';
 import NotificationList from "./common/Notification";
 import axios from "axios";
-import {call, getCookie, sseSource} from "./common/ApiService";
+import {call, deleteCookie, getCookie, sseSource} from "./common/ApiService";
 import NoticeWrite from './notice/NoticeWrite';
 import TravelPdf from './travelschedule/TravelPdf';
+import LoginTimer from './member/LoginTimer';
+import Moment from 'react-moment';
+import moment from 'moment';
+import { useInterval } from 'react-use';
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -49,7 +53,6 @@ function App() {
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   const [notifications, setNotifications] = useState()
-
 
   const send = async (type, nav) => {
     const accessToken = getCookie("ACCESS_TOKEN");
@@ -126,6 +129,7 @@ function HeaderTop(props) {
   const accessToken = localStorage.getItem('ACCESS_TOKEN');
   const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   const {notifications, setNotifications, send} = props;
+  const [currentTime, setCurrentTime] = useState();
 
   //알람 모달 관련
 
@@ -156,25 +160,26 @@ function HeaderTop(props) {
   };
 
   const state = getCookie();
-  console.log("state : ",state);
+  
   // token 처리
   const handleClick = () => {
     
     if(state === undefined || state === null) { // login
       navigate("/login");
     } else { // logout
-      navigate(pathname);
+      console.log('pathname : ', pathname);
+      deleteCookie();
       window.location.reload();
     }
   };
 
   useEffect(() => {
       sseSource("sub", setNotifications);
+      if(localStorage.getItem("loginTime")) {
+        console.log("탔어?");
+        setCurrentTime(moment(localStorage.getItem("loginTime")));
+      }
   }, [accessToken]);
-
-
-
-
 
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
@@ -183,7 +188,16 @@ function HeaderTop(props) {
            <AiOutlineBell className="headerNotification"/>
          </button>
          <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
-         <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
+         {
+          currentTime === undefined || currentTime === '' ?
+          <></> :
+          <>
+            <LoginTimer loginTime = {currentTime}></LoginTimer>
+          </>
+         }
+         <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>
+          {(state === undefined || state === null) ? '' : '마이페이지'}
+          </Link>
         <span>
           <a href={() => false} onClick={() => handleClick()}
           className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
@@ -420,6 +434,8 @@ function Header() {
 
 function Footer() {
   const { pathname } = useLocation();
+
+  console.log('Footer pathname : ',pathname);
 
   return (
      <>

@@ -22,10 +22,10 @@ const LoginModal = ({setModalOpen, id, title, content, writer}) => {
   }
   const ModalId = () => {
     return (
-      <div className='modal-container-click'
-      style={{width:'400px' , height:'400px'}}>
+      <div className='modal-container-click'>
         <input className='moid-name' type="text" placeholder='이름을 입력해주세요' />
         <input className='moid-tel' type="tel" placeholder='전화번호를 입력해주세요' />
+        <input className='moid-result' type='text' value='abcd' readOnly></input>
         <button className='moid-submit'>아이디 찾기</button>
       </div>
     )
@@ -35,8 +35,8 @@ const LoginModal = ({setModalOpen, id, title, content, writer}) => {
       <div className='modal-container-click'
       style={{width:'400px' , height:'400px'}}>
         <input className='mopwd-id' type="id" placeholder='아이디를 입력해주세요' />
-        <input className='mopwd-email' type="email" placeholder='이메일을 입력해주세요' />
-        <button className='mopwd-submit'>비밀번호 찾기</button>
+        <input className='moid-tel' type="id" placeholder='이메일 인증' />
+        <button className='mopwd-submit'>인증번호 전송</button>
       </div>
     )
   }

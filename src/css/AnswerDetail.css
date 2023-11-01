@@ -17,20 +17,6 @@
   width: 85%; height: 100px;
 }
 
-.answerDetail-answer-btn {
-  margin-left: 10px;
-  width: 100px; height: 35px;
-  font-weight: 700;
-  background-color: white; color: #f3a344;
-  border-radius: 15px;
-  border: none;
-  cursor: pointer;
-}
-
-.answerDetail-answer-btn:hover {
-  background-color: #f3a344; color: white;
-}
-
 .answerDetail-reviews{
   margin-top: 10px; margin-left: 30px;
 }
@@ -45,17 +31,6 @@
   margin-right: 10px;
 }
 
-.answerDetail-review-info-btn {
-  background-color: white; color: #f3a344;
-  border: none;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-.answerDetail-review-info-btn:hover {
-  background-color: #f3a344; color: white;
-}
-
 .answerDetail-review-info-date {
   color: rgb(130, 130, 130);
 }
@@ -63,6 +38,11 @@
 .answerDetail-review-content {
   margin-bottom: 15px;
   font-size: large;
+}
+
+.answerDetail-review-content-text {
+  border: none;
+  width: 70%;
 }
 
 .answerDetail-review-content-like {
