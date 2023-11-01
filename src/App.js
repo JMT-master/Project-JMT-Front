@@ -44,6 +44,7 @@ import LoginTimer from './member/LoginTimer';
 import Moment from 'react-moment';
 import moment from 'moment';
 import { useInterval } from 'react-use';
+import NoticeUpdate from "./notice/NoticeUpdate";
 
 function App(factory, deps) {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -124,8 +125,9 @@ function App(factory, deps) {
          <Route path="/mypage" element={<Mypage></Mypage>}></Route>
          <Route path="/login" element={<Login></Login>}></Route>
          <Route path="/notice" element={<NoticeBoard></NoticeBoard>}></Route>
-         <Route path="/notice/admin/write" element={<NoticeWrite></NoticeWrite>}></Route>
          <Route path="/notice/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
+         <Route path="/notice/admin/write" element={<NoticeWrite></NoticeWrite>}></Route>
+         <Route path="/notice/admin/update" element={<NoticeUpdate></NoticeUpdate>}></Route>
          <Route path="/qna" element={<QnABoard></QnABoard>}></Route>
          <Route path="/qna/:id?" element={<QnaBoardDetail></QnaBoardDetail>}></Route>
          <Route path="/qna/admin/:id?" element={<QnaWrite></QnaWrite>}></Route>
@@ -213,7 +215,7 @@ function HeaderTop(props) {
   };
 
   const state = getCookie();
-  
+
   // token 처리
   const handleClick = () => {
     
@@ -240,10 +242,6 @@ function HeaderTop(props) {
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
        <div className="headerTop">
-         <button type="button" onClick={showModal} style={{justifyContent: "left"}}>
-           <AiOutlineBell className="headerNotification"/>
-         </button>
-         <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
         <span>
           <a href={() => false} onClick={() => handleClick()}

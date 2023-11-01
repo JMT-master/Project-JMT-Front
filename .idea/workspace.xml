@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="231031 공지 수정부터 시작,">
+    <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="231031 머지 후 커밋">
+      <change afterPath="$PROJECT_DIR$/src/notice/NoticeUpdate.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/ApiService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ApiService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoardDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoardDetail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,8 +55,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "android.gradle.sync.needed": "true",
-    "git-widget-placeholder": "Deb",
-    "last_opened_file_path": "D:/second-project/src/notice",
+    "git-widget-placeholder": "park",
+    "last_opened_file_path": "D:/workspace/PJ/Project-JMT-Front/src/notice",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -63,6 +68,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\workspace\PJ\Project-JMT-Front\src\notice" />
       <recent name="D:\second-project\src\notice" />
     </key>
   </component>
@@ -84,6 +90,7 @@
       <workItem from="1697673284171" duration="593000" />
       <workItem from="1697695191033" duration="1217000" />
       <workItem from="1698712342669" duration="22561000" />
+      <workItem from="1698798493823" duration="7891000" />
     </task>
     <task id="LOCAL-00001" summary="23년 10월 17일 5시 50분 안광현 프론트단 커밋">
       <option name="closed" value="true" />
@@ -93,7 +100,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697532542815</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="231031 17:36">
+      <option name="closed" value="true" />
+      <created>1698741378970</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1698741378970</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -130,7 +145,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/Deb" />
+                        <option value="origin/park" />
                       </list>
                     </value>
                   </entry>

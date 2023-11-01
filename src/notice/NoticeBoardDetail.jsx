@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube} from "react-icons/ai";
-import {call} from "../common/ApiService";
+import {call, getCookie} from "../common/ApiService";
 import '../css/NoticeBoardDetail.scss'
 
 const NoticeBoardDetail = ({data}) => {
@@ -9,6 +9,7 @@ const NoticeBoardDetail = ({data}) => {
   const params = useParams();
   const detail = data[params.id - 1];
   const [item, setItem] = useState({});
+  const isAdmin = useRef(getCookie("adminChk"));
 
 
 
@@ -20,7 +21,7 @@ const NoticeBoardDetail = ({data}) => {
   }, [])
 
   const deleteNotice = () => {
-    call("/notice", "DELETE", {idx: item.idx})
+    call("/notice/admin", "DELETE", {idx: item.idx})
        .then(response => {
          navigate("/notice");
        })
@@ -49,8 +50,10 @@ const NoticeBoardDetail = ({data}) => {
            <textarea cols="30" rows="10" readOnly placeholder='공지사항 내용' value={item.content}></textarea>
          </div>
          <div className="noticeDetail-btnBox">
-           <button className='oBtn' onClick={() => navigate("/notice")}>수정</button>
-           <button className='oBtn' onClick={() =>{
+           <button className='oBtn' style={isAdmin.current == "Y" ? null : {display: "none"}} onClick={() => {
+             navigate("/notice/admin/update", {state : {idx : item.idx}})
+           }}>수정</button>
+           <button className='oBtn' style={isAdmin.current == "Y" ? null : {display: "none"}} onClick={() =>{
              deleteNotice();
            }}>삭제</button>
            <button className='oBtn' onClick={() => navigate("/notice")}>목록으로 가기</button>

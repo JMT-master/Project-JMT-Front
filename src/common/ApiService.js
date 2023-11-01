@@ -26,11 +26,10 @@ export function call(api, method, request) {
     method: method,
   };
 
-    console.log(options.url);
-
-    if (request){
-        options.body = JSON.stringify(request);
-    }
+  console.log(options.url);
+  if (request) {
+    options.body = JSON.stringify(request);
+  }
 
     console.log('request : ', request);
     console.log('options.body : ', options.body);
@@ -129,6 +128,6 @@ export const setDateTimeFormat = (data) => {
 
 // export const countDownTimer = useCallback(date => {
 //   let revDate = moment();
-//   // let leftTime = 
+//   // let leftTime =
 
 // })
