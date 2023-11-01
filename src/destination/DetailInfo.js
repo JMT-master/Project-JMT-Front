@@ -12,6 +12,7 @@ const DetailInfo = () => {
     contentVisible: true,
     photoVisible: false,
     reviewVisible: false,
+    reviewWriteVisible : false
   });
     const { img, tag, address, phoneno, title, content } = location.state;
   const { id } = useParams();
@@ -80,6 +81,13 @@ const DetailInfo = () => {
         <div className='detail-contentReview'>
           <h2 className='detail-contentReview-tab' onClick={() => { toggleTab('reviewVisible') }}>리뷰({review.current.filter(item => item.contentsid === id).length})</h2>
           <div className='detail-contentReview-content' id='review' style={{ display: tabState.reviewVisible ? 'grid' : 'none' }}>
+            <button style={{display: tabState.reviewWriteVisible ? 'none' : 'grid' }} onClick={() => { toggleTab('reviewWriteVisible') }}>리뷰 작성하기</button>
+            <form className="review-writeBox" style={{border :"1px black", display: tabState.reviewWriteVisible ? 'grid' : 'none' }}>
+              <div>리뷰 작성</div>
+              <textarea style={{display:"flex"}} name="review-content" id="review-content" cols="80" rows="5"></textarea>
+              <input style={{justifySelf:"end"}} type="file"/>
+              <button type="submit">작성 완료</button>
+            </form>
             <hr />
 
             {
