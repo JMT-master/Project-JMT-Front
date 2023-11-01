@@ -2,13 +2,14 @@ import { API_BASE_URL } from "./ApiConfig";
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import { Cookies } from "react-cookie";
 import moment from "moment/moment";
+import {connect} from "react-redux";
+import { useCallback } from "react";
 
 export function call(api, method, request) {
   let headers = new Headers({
     "Content-Type": "application/json",
-    Authorization: "Bearer " + getCookie()
   });
-
+  getCookie() && headers.append("Authorization", "Bearer " + getCookie());
   // if(request.accessToken && request.accessToken != null) {
   //   headers.append("Authorization", "Bearer " + getCookie());
   // }
@@ -25,11 +26,10 @@ export function call(api, method, request) {
     method: method,
   };
 
-    console.log(options.url);
-
-    if (request){
-        options.body = JSON.stringify(request);
-    }
+  console.log(options.url);
+  if (request) {
+    options.body = JSON.stringify(request);
+  }
 
     console.log('request : ', request);
     console.log('options.body : ', options.body);
@@ -67,14 +67,16 @@ export function sseSource(url, setNotifications) {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'text/event-stream',
-      }
+      },
+      heartbeatTimeout: 1000 * 60 * 60,
     });
-    console.log("타입타입! : " + typeof eventSource);
 
-    console.log("이벤트 소스  :" + eventSource.toString());
+    eventSource.addEventListener('sub',(event) =>{
+      console.log("메세지 수신 : " + event.data);
+    })
 
     eventSource.addEventListener('sse', (event) => {
-      console.log("메세지 수신 : " + event.data);
+
       call("/notification",
         "POST",
         null
@@ -97,14 +99,35 @@ export function sseSource(url, setNotifications) {
 }
 
 
-export const getCookie = () => {
+export const getCookie = (name) => {
   const cookies = new Cookies();
-  return cookies.get('ACCESS_TOKEN');
+  return name != 'adminChk' ? cookies.get('ACCESS_TOKEN') : cookies.get('adminChk');
 }
 
+export const deleteCookie = () => {
+  const cookies = new Cookies();  
+  cookies.remove('ACCESS_TOKEN');
+  cookies.remove('adminChk');
+}
+
+
+// Date 관련
 // Date Format
 export const setDateFormat = (data) => {
   const revDate = new Date(data);
   const chnDate = moment(revDate).format('YYYY-MM-DD');
   return chnDate;
 }
+
+// Date Time Format
+export const setDateTimeFormat = (data) => {
+  const revDate = new Date(data);
+  const chnDate = moment(revDate).format('YYYY-MM-DD HH:mm');
+  return chnDate;
+}
+
+// export const countDownTimer = useCallback(date => {
+//   let revDate = moment();
+//   // let leftTime =
+
+// })

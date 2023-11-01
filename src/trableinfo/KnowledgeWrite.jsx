@@ -1,41 +1,56 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import style from '../css/KnowledgeWrite.css'
 import { VscSearch } from 'react-icons/vsc';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'react-icons/ai';
 import axios from 'axios';
 import { API_BASE_URL } from '../common/ApiConfig';
-import { getCookie } from '../common/ApiService';
+import { getCookie } from '../common/ApiService'; 
+import Swal from 'sweetalert2';
+import { TiDeleteOutline } from 'react-icons/ti';
 
 const KnowledgeWrite = () => {
   const navigate = useNavigate();
   const [category, setCategory] = useState("관광지");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [file, setFile] = useState();
+  const [contentFiles, setContentFiles] = useState();
+
+  const location = useLocation();
+  const revData = location.state;
+  console.log('revData : ', revData);
+
+  // 수정버튼 클릭시 Data 삽입
+  useEffect(() => {
+    if(revData !== null) {
+      setCategory(revData[0].category);
+      setTitle(revData[0].title);
+      setContent(revData[0].content);
+      revData[0].originalName === null ? setContentFiles() :
+      setContentFiles(Object.values(revData).map(value => {
+        let file = new File([value.data],value.originalName);
+        return file;
+      }));
+    }
+  },[]);
 
   // 첨부파일 변경
   const fileUpload = (e) => {
     // const files = document.getElementById("knowledgeWrite-file").files;
     const files = e.target.files;
 
-    const uploadFile = e.target.files[0];
-    console.log("files : ", files);
-    console.log("uploadFile : ", uploadFile);
-
-    if(files.length === 1) {
-      let value = e.target.value;
-      let result = value.split('\\').reverse()[0];
-
-      document.getElementById('knowledgeWrite-file-text').value = result;
+    if(files.length > 5) {
+      Swal.fire({
+        icon: 'warning',
+        title: '파일',
+        text: '파일 최대 갯수는 5개 입니다.'
+      });
+    } else {
+      setContentFiles(files);
     }
-    else 
-      document.getElementById('knowledgeWrite-file-text').value = '첨부파일 : ' + files.length + '개';
-
-      setFile(files);
-    
   }
   
+  // 지식인 create
   const onSubmitKnowledge = (e) => {
     e.preventDefault();
     
@@ -48,9 +63,22 @@ const KnowledgeWrite = () => {
       "view" : "0"
     }
 
-    if(file !== undefined && file != null) {
-      for(let i = 0; i < file.length; i++) {
-        formData.append('file',file[i]);
+    console.log(title);
+    console.log(content);
+    if(title === null || title === undefined ||
+      content === null || content === undefined || title === '' || content === '') {
+        Swal.fire({
+          icon: 'warning',
+          title: '내용',
+          text: '제목 혹은 내용이 비었습니다.'
+        });
+
+        return;
+      }
+
+    if(contentFiles !== undefined && contentFiles != null) {
+      for(let i = 0; i < contentFiles.length; i++) {
+        formData.append('file',contentFiles[i]);
       }
     }
     
@@ -76,23 +104,43 @@ const KnowledgeWrite = () => {
     });
   }
 
+  // 
+  const onDeleteItem = (e) => {
+    e.preventDefault();
+
+    setContentFiles(Array.from(contentFiles)
+    .filter(data => data.name !== e.target.value)
+    .map(value => value));    
+  }
+
+  // category Change
   const onChangeCategory = (e) => {
     e.preventDefault();
 
     setCategory(e.target.value);
   }
 
+  // title Change
   const onChangeTitle = (e) => {
     e.preventDefault();
 
     setTitle(e.target.value);
   }
 
+  // content Change
   const onChangeContent = (e) => {
     e.preventDefault();
 
     setContent(e.target.value);
   }
+
+  // 목록으로 돌아가기
+  const onClickList = (e) => {
+    e.preventDefault();
+    window.location.href = "/knowledge";
+  }
+
+  console.log('files : ',contentFiles && contentFiles);
 
   return (
     <div className='knowledge-content'>
@@ -112,7 +160,7 @@ const KnowledgeWrite = () => {
           <div className='ask-category'>
             <h3>카테고리 선택</h3>
             <p>질문하실 분야를 선택해주세요</p>
-            <select className='category' onChange={onChangeCategory}>
+            <select className='category' onChange={onChangeCategory} value={category}>
               <option value="관광지">관광지</option>
               <option value="음식">음식</option>
               <option value="축제">축제</option>
@@ -122,23 +170,58 @@ const KnowledgeWrite = () => {
             <h4>질문 내용 작성</h4>
             <input type="text" className='ask-textarea-title' 
             placeholder='제목을 작성해주세요'
-            onChange={onChangeTitle} />
+            onChange={onChangeTitle}
+            value={title} />
             <textarea className='ask-textarea-content' cols="80" rows="10"
-            onChange={onChangeContent}></textarea>
+            onChange={onChangeContent} value={content}></textarea>
           </div>
           <div className='file-attach'>
-            <input placeholder='첨부파일' id='knowledgeWrite-file-text' readOnly></input>
-            <label for='knowledgeWrite-file' className='btn-upload'>파일 업로드</label>
-            <input type="file" name='knowledgeWrite-file' id='knowledgeWrite-file'
-            accept='.doc, .pdf, image/*'  // doc, pdf, image 파일만 허용
-             multiple 
-             onChange={fileUpload}
-             />          
+            {
+              revData === null ? 
+              <div style={{margin:0, padding:0, borderBottom : 'none'}}>
+                <label for='knowledgeWrite-file' className='btn-upload'>파일 업로드</label>
+                <input type="file" name='knowledgeWrite-file' id='knowledgeWrite-file'
+                accept='.xlsx, .xls, .doc, .pdf, image/*'  // doc, pdf, image 파일만 허용
+                multiple 
+                onChange={fileUpload}
+                />
+              </div> :
+              <></>
+            }
+            <div className='file-attach-container' style={{margin:0, padding:0, borderBottom : 'none'}}>
+            {
+              contentFiles !== null && contentFiles !== undefined ?
+              Array.from(contentFiles).map(file => {
+                console.log(file);
+                  return (
+                  <div style={{margin:0, padding:0, borderBottom : 'none', display : 'flex'}}>
+                    <input placeholder='첨부파일' className='file-attach-text'
+                     id='knowledgeWrite-file-text'
+                     value={file.name}
+                     style={{width : '200px'}}
+                      readOnly>
+                      </input>
+                      {
+                       revData === null ? <></> :
+                        <button className='oBtn' value={file.name} onClick={onDeleteItem}
+                        style={{width : '70px', height : '30px', textAlign : 'center'}}>삭 제</button>
+                      }
+                      
+                  </div>
+                    );
+                }) :
+                <></>
+             }            
+             </div>
           </div>
         </div>
         <div className='button-box'>
-          <button className='submit-knowledge'>작성완료</button>
-          <button className='back-to-knlist'onClick={()=>navigate(-1)}>목록으로 돌아가기</button>
+          {
+            revData === null ? <button className='submit-knowledge'>작성완료</button>
+                             : <button className='submit-knowledge'>수정완료</button>
+          }
+          
+          <button className='back-to-knlist'onClick={onClickList}>목록으로 돌아가기</button>
         </div>
       </form>
     </div>

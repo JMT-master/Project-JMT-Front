@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useState } from 'react'
+import { useEffect } from 'react'
 import '../css/JoinUser.css';
 import DaumPostcode from 'react-daum-postcode';
 import Post from './Post';
@@ -6,7 +8,8 @@ import { useNavigate } from 'react-router';
 import { call } from '../common/ApiService';
 import Swal from 'sweetalert2';
 import { emailValidate, joinUser, userChk } from './MemberFuc';
-import { Form } from 'react-router-dom';
+import { Form, useLocation } from 'react-router-dom';
+
 
 const JoinUser = () => {
   const [enroll_company, setEnroll_company] = useState({
@@ -15,7 +18,46 @@ const JoinUser = () => {
   const navigate = useNavigate();
   const [pwdPop, setPwdPop] = useState('');
   const [popup, setPopup] = useState(false);
+  const {pathname} = useLocation();
+  const [upMember, setUpMember] = useState({});
 
+  useEffect(() => {
+    if(pathname.includes("/member/update")){
+      call("/member/update", "GET")
+      .then((response) => {
+          setUpMember(response);
+          console.log("response : {}", response);
+      })
+    }
+  }, []);
+
+  //update인지 아닌지에 따라 style에 none 주기
+  const isUpdate = pathname.includes("/member/update");
+  //updateHandler
+  const updateHandler = (member) => {
+    call("/member/update", "POST", member)
+    .then((response) => {
+      console.log("response : "+response);
+      navigate("/mypage");
+    })
+  }
+  //값 변경하는거 가져오기
+  const valueChange = () => {
+    const newMember = {
+      email : document.getElementById('email').value,
+      username : document.getElementById('NameId').value,
+      password : document.getElementById('LoginPwd').value,
+      passwordChk : document.getElementById('LoginPwdChk').value,
+      zipcode : document.getElementById('zipcode').value,
+      address : document.getElementById('address').value,
+      addressDetail : document.getElementById('addressDetail').value,
+      phone : document.getElementById('LoginPhone').value,
+      adminYn : 'N',
+      socialYn : 'N'
+    }
+    console.log("upMember : {}", newMember);
+    updateHandler(newMember);
+  }
 
   const handleInput = (e) => {
     setEnroll_company({
@@ -23,10 +65,12 @@ const JoinUser = () => {
       [e.target.name]:e.target.value,
     })
   }
+
   const handleComplete = (e) => {
     e.preventDefault();
     setPopup(!popup);
   }
+
   const checkPwd = (e) => {
     const pwdVal = document.getElementById('LoginPwd').value;
     console.log(e.target.value === pwdVal);
@@ -43,13 +87,11 @@ const JoinUser = () => {
     const text   = ['아이디', '이름', '비밀번호', '비밀번호 확인', '우편번호', '집주소', '상세주소', '휴대폰 번호'];
     let nullFlag = 0, nullValue = '';
 
-    console.log("?????");
-
     // null값 처리
     formId.map((chkId,i) => {
       if(document.getElementById(chkId).value === '') {
 
-        if(nullFlag === 0) {
+        if(text[i] !== '상세주소' && nullFlag === 0) {
           nullValue = text[i];
           nullFlag = 1;
         }
@@ -129,10 +171,12 @@ const JoinUser = () => {
   function onConfirmPasswordHandler() {
 
   }
+
   return (
     <div className='join-container'>
         <div className='item-title'>
-          <h2>JMT로의 회원가입을 통해<br /> 더 다양한 서비스를 만나보세요</h2>
+          <h2 style={{display : isUpdate ? "none" : "block"}}>JMT로의 회원가입을 통해<br /> 더 다양한 서비스를 만나보세요</h2>
+          <h2 style={{display : isUpdate ? "block" : "none"}}>회원 정보 수정<br /> 필요한건 공지사항을 확인해주세요</h2>
         </div>
         <div className='join-item'>
           <div className='user-item-tb'>
@@ -145,11 +189,13 @@ const JoinUser = () => {
                 <tr className='brd-email'>
                   <th><strong>아이디</strong></th>
                   <td>
-                    <div className='brd'><input type="email" id='email' name='email'
+                    <div className='brd'><input type="email" id='email' name='email' 
+                     style={{width : isUpdate ? "95%" : ""}} 
+                    //  value={isUpdate ? upMember.email : ""}
                       className='brd-ipt-email' placeholder='아이디는 이메일 형식 입니다.' /> </div>
                     <div className='brd-txt'><span id='LoginIdMsg'></span></div>
-                    <button className='email-check-btn' onClick={dupliEmail}>중복확인</button>
-                    <div className='email-check-txt'>
+                    <button className='email-check-btn' onClick={dupliEmail} style={{display : isUpdate ? "none" : "block"}}>중복확인</button>
+                    <div className='email-check-txt' style={{display : isUpdate ? "none" : "block"}}>
                       <span>이메일 도용 피해 방지를 위해 메일 인증을 받아주세요</span>
                       <button className='commit-email-btn' onClick={onEmailHandler}><span>메일 인증받기</span></button>
                     </div>
@@ -208,16 +254,25 @@ const JoinUser = () => {
             </table>
           </div>
           <div className='joinUser-txt'>
-            <p>고객님의 정보를 모두 입력하시면 회원 가입이 완료됩니다.
+            <p style={{display : isUpdate ? "none" : "block"}}>고객님의 정보를 모두 입력하시면 회원 가입이 완료됩니다.
               <br />입력된 정보는 개인정보취급방침에 의해 안전하게 보호받습니다.
             </p>
           </div>
           <div className='joinUser-btn'>
             <ul className='type2'>
-              <li className='lt'><button onClick={(e) => {
+              <li className='lt'><button id='joinUser-Success' style={{display : isUpdate ? "none" : "block"}}
+              onClick={(e) => {
                 return onSubmitHandler();
-                }}><span>가입완료</span></button></li>
-              <li className='rt' onClick={()=>navigate(-1)} ><button><span>취소</span></button></li>
+                }}>
+                  <span>가입완료</span>
+                  </button></li>
+              <li className='lt'><button id='joinUser-Success' style={{display : isUpdate ? "block" : "none"}}
+              onClick={() => {
+                return valueChange();
+                }}>
+                  <span>수정완료</span>
+                  </button></li>
+              <li className='rt' onClick={()=>navigate(-1)} ><button id='joinUser-Cancel'><span>취소</span></button></li>
             </ul>
           </div>
         </div>

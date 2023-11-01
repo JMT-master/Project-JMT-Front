@@ -1,0 +1,59 @@
+.answerDetail-Container {
+  /* background-color: #f3a344; */
+  margin: 0;
+  padding: 0;
+  margin-top: 20px;
+  height: 500px;
+  overflow: scroll;
+}
+
+.answerDetail-Container::-webkit-scrollbar {
+  display: none;
+}
+
+.answerDetail-answer-area {
+  resize: none;
+  margin-top: 30px; margin-left: 30px;
+  width: 85%; height: 100px;
+}
+
+.answerDetail-reviews{
+  margin-top: 10px; margin-left: 30px;
+}
+
+.answerDetail-review-info {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.answerDetail-review-info-writer {
+  font-weight: 700;
+  margin-right: 10px;
+}
+
+.answerDetail-review-info-date {
+  color: rgb(130, 130, 130);
+}
+
+.answerDetail-review-content {
+  margin-bottom: 15px;
+  font-size: large;
+}
+
+.answerDetail-review-content-text {
+  border: none;
+  width: 70%;
+}
+
+.answerDetail-review-content-like {
+  margin-top: 5px;
+}
+
+.answerDetail-review-content-thumbs {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.answerDetail-review-content-count {
+  color: rgb(130, 130, 130);
+}

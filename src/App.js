@@ -9,11 +9,11 @@ import TravelSchedule from './travelschedule/TravelSchedule';
 import Login from './member/Login';
 import NoticeBoard from './notice/NoticeBoard';
 import NoticeBoardDetail from './notice/NoticeBoardDetail';
-import {useEffect, useState} from 'react';
-import { noticeData, qnaData } from './data/Data';
+import {useEffect, useMemo, useRef, useState} from 'react';
+import {noticeData, qnaData} from './data/Data';
 import QnABoard from './notice/QnABoard';
 import QnaBoardDetail from './notice/QnaBoardDetail';
-import Festival, { FesListNoImg } from './trableinfo/Festival';
+import {FesListNoImg} from './trableinfo/Festival';
 import Knowledge from './trableinfo/Knowledge';
 import KnowledgeDetail from './trableinfo/KnowledgeDetail';
 import KnowledgeWrite from './trableinfo/KnowledgeWrite';
@@ -21,42 +21,62 @@ import TourList from './destination/TourList';
 import DetailInfo from './destination/DetailInfo';
 import Traffic from './trableinfo/Traffic';
 import SelectSchedule from './travelschedule/SelectSchedule';
-import { ThemeProvider } from 'styled-components';
-import { darkTheme, lightTheme } from './common/Themes';
-import { GlobalStyles } from './common/GlobalStyles';
-import { useDarkMode } from './common/useDarkMode';
+import {ThemeProvider} from 'styled-components';
+import {darkTheme, lightTheme} from './common/Themes';
+import {GlobalStyles} from './common/GlobalStyles';
+import {useDarkMode} from './common/useDarkMode';
 import Toggle from './common/Toggle';
 import YouTube from 'react-youtube'
 import data from "./data/festival.json";
-import { AiFillYoutube, AiOutlineBell } from 'react-icons/ai';
-import { MdCardTravel,MdFestival } from 'react-icons/md';
+import {AiFillYoutube, AiOutlineBell} from 'react-icons/ai';
+import {MdCardTravel, MdFestival} from 'react-icons/md';
 import QnaWrite from './notice/QnaWrite';
 import ChatRoom from './trableinfo/ChatRoom';
-import ChatRoomDetail from './trableinfo/ChatRoomDetail';
 import OnModalComp from "./common/OnModalComp";
 import ChatDetail from './trableinfo/ChatDetail';
 import JoinUserValidateChk from './member/JoinUserValidateChk';
-import KakaoLogin from './member/KakaoLogin';
 import NotificationList from "./common/Notification";
 import axios from "axios";
-import {call, getCookie, sseSource} from "./common/ApiService";
+import {call, deleteCookie, getCookie, sseSource} from "./common/ApiService";
 import NoticeWrite from './notice/NoticeWrite';
 import TravelPdf from './travelschedule/TravelPdf';
+import LoginTimer from './member/LoginTimer';
+import Moment from 'react-moment';
+import moment from 'moment';
+import { useInterval } from 'react-use';
+import NoticeUpdate from "./notice/NoticeUpdate";
 
-function App() {
+function App(factory, deps) {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
-  const [newQnaData, setNewQnaData] = useState(qnaData);
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   const [notifications, setNotifications] = useState()
+  const [modalOpen, setModalOpen] = useState(false);
+  const notifyCount = useMemo(() => {
+    let count = 0;
+    notifications && notifications.length != 0 && notifications.forEach((notify) => {
+      if (notify.yn === "y") {
+        count += 1;
+      }
+    });
+    return count; // count를 반환해야 합니다.
+  }, [notifications]);
+  const isSub = useRef(true);
+  console.log("count : " + notifyCount)
 
+//채팅 관련
+  const {pathname} = useLocation();
+  const isChatRoom = pathname.includes("/chat/room");
+
+  const modalToggle = () => {
+    setModalOpen(!modalOpen);
+  }
 
   const send = async (type, nav) => {
-    const accessToken = getCookie("ACCESS_TOKEN");
-    console.log("accesTK : " + accessToken)
+    const accessToken = getCookie();
     await axios({
       method: 'POST',
-      url: `http://localhost:8888/${type}/send` ,
+      url: `http://localhost:8888/${type}/send`,
       data: {
         "content": "테스트3",
         "url": "테스트용url",
@@ -67,71 +87,110 @@ function App() {
       }
     })
        .then(function (response) {
-         call("/notification",
-            "POST",
-            null
-            // 아이디는 백에서 토큰으로 확인
-         )
-            .then((response) => {
-              setNotifications(response);
-            })
-            .catch((error) => {
-              console.log(error);
-            })
+         console.log("현재 로그인된 아이디 " + JSON.stringify(response.data))
+         // call("/notification",
+         //    "POST",
+         //    null
+         //    // 아이디는 백에서 토큰으로 확인
+         // )
+         //    .then((response) => {
+         //      setNotifications(response);
+         //
+         //    })
+         //    .catch((error) => {
+         //      console.log(error);
+         //    })
        })
        .catch(function (error) {
          console.log('error', error);
        });
   };
+  useEffect(() => {
+    if (isSub.current) sseSource("sub", setNotifications, notifyCount);
+    isSub.current = false;
+  }, []);
 
   return (
-    <ThemeProvider theme={themeMode}>
+     <ThemeProvider theme={themeMode}>
        <GlobalStyles/>
        <HeaderTop theme={theme} themeToggler={themeToggler} notifications={notifications}
-                  setNotifications={setNotifications} send={send} />
-      <Routes>
-        <Route path='/' element={<Header></Header>}></Route>
-        <Route path="/joinUser" element={<JoinUser></JoinUser>}></Route>
-        <Route path="/joinUser/email/validateCheck/:userid?" element={<JoinUserValidateChk></JoinUserValidateChk>}></Route>
-        <Route path="/curator" element={<Curator></Curator>}></Route>
-        <Route path="/travelSchedule/:id?" element={<TravelSchedule></TravelSchedule>}></Route>
-        <Route path="/mypage" element={<Mypage></Mypage>}></Route>
-        <Route path="/login" element={<Login></Login>}></Route>
-        <Route path="/notice" element={<NoticeBoard send={send}></NoticeBoard>}></Route>
-        <Route path="/notice/admin/write" element={<NoticeWrite></NoticeWrite>}></Route>
-        <Route path="/notice/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
-        <Route path="/qna" element={<QnABoard></QnABoard>}></Route>
-        <Route path="/qna/:id?" element={<QnaBoardDetail></QnaBoardDetail>}></Route>
-        <Route path="/qna/admin/:id?" element={<QnaWrite></QnaWrite>}></Route>
-        <Route path="/traffic" element={<Traffic></Traffic>}></Route>
-        <Route path="/knowledge?" element={<Knowledge></Knowledge>}></Route>
-        <Route path="/knowledgeDetail/:id?" element={<KnowledgeDetail></KnowledgeDetail>}></Route>
-        <Route path="/knowledgeWrite" element={<KnowledgeWrite></KnowledgeWrite>}></Route>
-        <Route path='/destination/:pageId' element={<TourList />}></Route>
-        <Route path='/destination/detail/:id' element={<DetailInfo />}></Route>
-        <Route path='/selectSchedule' element={<SelectSchedule></SelectSchedule>}></Route>
-        <Route path='/qna/admin/write' element={<QnaWrite />}></Route>
-        <Route path='/chat/room' element={<ChatRoom />}></Route>
-        <Route path='/chat/rooms' ></Route>
-        <Route path='/chat/room/:roomId?' element={<ChatDetail />}></Route>
-        <Route path='/travel-schedule' element={<TravelPdf></TravelPdf>}></Route>
-      </Routes>
-    </ThemeProvider>
+                  setNotifications={setNotifications} send={send}/>
+       <Routes>
+         <Route path='/' element={<Header></Header>}></Route>
+         <Route path="/joinUser" element={<JoinUser></JoinUser>}></Route>
+         <Route path="/joinUser/email/validateCheck/:userid"
+                element={<JoinUserValidateChk></JoinUserValidateChk>}></Route>
+         <Route path="/curator" element={<Curator></Curator>}></Route>
+         <Route path="/travelSchedule/:id?" element={<TravelSchedule></TravelSchedule>}></Route>
+         <Route path="/mypage" element={<Mypage></Mypage>}></Route>
+         <Route path="/login" element={<Login></Login>}></Route>
+         <Route path="/notice" element={<NoticeBoard></NoticeBoard>}></Route>
+         <Route path="/notice/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
+         <Route path="/notice/admin/write" element={<NoticeWrite></NoticeWrite>}></Route>
+         <Route path="/notice/admin/update" element={<NoticeUpdate></NoticeUpdate>}></Route>
+         <Route path="/qna" element={<QnABoard></QnABoard>}></Route>
+         <Route path="/qna/:id?" element={<QnaBoardDetail></QnaBoardDetail>}></Route>
+         <Route path="/qna/admin/:id?" element={<QnaWrite></QnaWrite>}></Route>
+         <Route path="/traffic" element={<Traffic></Traffic>}></Route>
+         <Route path="/knowledge?" element={<Knowledge></Knowledge>}></Route>
+         <Route path="/knowledgeDetail/:id?" element={<KnowledgeDetail></KnowledgeDetail>}></Route>
+         <Route path="/knowledgeWrite" element={<KnowledgeWrite></KnowledgeWrite>}></Route>
+         <Route path='/destination/:pageId' element={<TourList/>}></Route>
+         <Route path='/destination/detail/:id' element={<DetailInfo/>}></Route>
+         <Route path='/selectSchedule' element={<SelectSchedule></SelectSchedule>}></Route>
+         <Route path='/qna/admin/write' element={<QnaWrite/>}></Route>
+         <Route path='/chat/room' element={<ChatRoom/>}></Route>
+         <Route path='/chat/rooms'></Route>
+         <Route path='/chat/room/:roomId?' element={<ChatDetail/>}></Route>
+         <Route path='/travel-schedule' element={<TravelPdf></TravelPdf>}></Route>
+         <Route path='/member/update' element={<JoinUser></JoinUser>}></Route>
+       </Routes>
+
+       {isChatRoom ? null : (
+          <div>
+         <div className="notifyContainer">
+           {<div className="numOfNotify">{notifyCount}</div>}
+           <button className={modalOpen === false ? "notifyToggleBtn" : "notifyToggleBtnOff"} type="button"
+                   onClick={modalToggle}>
+             <AiOutlineBell className="notifyIcon"/>
+           </button>
+         </div>
+         <OnModalComp setModalOpen={setModalOpen}
+                      comp={<NotificationList notifications={notifications} setNotifications={setNotifications}
+                                              modalOpen={modalOpen}/>}></OnModalComp>
+         <button type="button" className="testBtn" onClick={() => {
+           send("notification")
+         }}>테스트용 send
+         </button>
+       </div>
+       )}
+
+     </ThemeProvider>
   );
 }
 
 function HeaderTop(props) {
-  const { pathname } = useLocation();
+  const {pathname} = useLocation();
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
+  const accessToken = getCookie();
   const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   const {notifications, setNotifications, send} = props;
+  const [currentTime, setCurrentTime] = useState();
 
+
+  useEffect(() => {
+    sseSource("sub", setNotifications);
+}, [accessToken]);
   //알람 모달 관련
 
   const [modalOpen, setModalOpen] = useState(false);
   const showModal = () => {
     setModalOpen(!modalOpen);
+  }
+
+  //채팅 화면 관련
+  if(pathname.includes("/chat/room")) {
+    return <div></div>;
   }
 
   const handleMouseOverDes = () => {
@@ -156,37 +215,37 @@ function HeaderTop(props) {
   };
 
   const state = getCookie();
-  console.log("state : ",state);
+
   // token 처리
   const handleClick = () => {
     
-    if(state === undefined || state === null) { // login
+    if (state === undefined || state === null) { // login
       navigate("/login");
     } else { // logout
-      navigate(pathname);
+      console.log('pathname : ', pathname);
+      deleteCookie();
       window.location.reload();
     }
   };
 
-  useEffect(() => {
-      sseSource("sub", setNotifications);
-  }, [accessToken]);
 
+ //채팅 관련 새 창 띄우는 코드
+ const handleChatLinkClick = () => {
+  const width = 800; // 원하는 너비
+  const height = 600; // 원하는 높이
+  const left = (window.innerWidth - width) / 2;
+  const top = (window.innerHeight - height) / 2;
 
-
-
+  window.open('/chat/room', '_blank', `width=${width},height=${height},left=${left},top=${top}`);
+};
 
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
        <div className="headerTop">
-         <button type="button" onClick={showModal} style={{justifyContent: "left"}}>
-           <AiOutlineBell className="headerNotification"/>
-         </button>
-         <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
         <span>
           <a href={() => false} onClick={() => handleClick()}
-          className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
+             className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
           >{(state === undefined || state === null) ? '로그인' : '로그아웃'}</a>
         </span>
          <Toggle theme={props.theme} toggleTheme={props.themeToggler}/>
@@ -223,8 +282,12 @@ function HeaderTop(props) {
              <div className='myTrableInfo-list'>
                <li><Link to="/traffic" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통
                  혼잡도</Link></li>
-               <li><Link to="/chat/room" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
-                 </Link></li>
+               <li>
+                <span onClick={handleChatLinkClick} className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
+                  </span>
+                {/* <Link to="/chat/room" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
+                 </Link> */}
+                 </li>
                <li><Link to="/knowledge" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광
                  지식in</Link></li>
              </div>
@@ -240,8 +303,6 @@ function HeaderTop(props) {
            </ul>
          </div>
        </div>
-       {modalOpen && <OnModalComp style={{display: "inline-flex"}} setModalOpen={setModalOpen}
-                                  comp={<NotificationList notifications={notifications}/>}></OnModalComp>}
      </div>
   )
 }
@@ -419,7 +480,10 @@ function Header() {
 }
 
 function Footer() {
-  const { pathname } = useLocation();
+  const {pathname} = useLocation();
+  if(pathname.includes("/chat/room")) {
+    return <div></div>;
+  }
 
   return (
      <>
@@ -448,6 +512,6 @@ function Footer() {
   )
 }
 
-export { HeaderTop, Footer };
+export {HeaderTop, Footer};
 export default App;
 
