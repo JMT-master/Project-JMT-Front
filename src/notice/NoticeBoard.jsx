@@ -45,7 +45,6 @@ const NoticeBoard = () => {
        null
     ).then((response) => {
       response != null ? setCurrentItems(response) : setCurrentItems([]);
-      // response != null ? console.log("데이터 있음")  : console.log("데이터 ddjqtmda");
       idxNum.current = parseInt(JSON.stringify(response[0].idx));
     })
        .catch((error) => {
@@ -112,8 +111,9 @@ export default NoticeBoard;
 
 const NoticeRead = (props) => {
   const navigate = useNavigate();
-  const {idx, category, title, regDate,} = props.data;
-  const {currentItems, setCurrentItems} = props;
+  const {idx, category, title, regDate} = props.data;
+  const isAdmin = useRef(getCookie("adminChk"))
+
   return (
      <tr>
        <td>{idx}</td>
