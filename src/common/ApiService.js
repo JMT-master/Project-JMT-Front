@@ -60,9 +60,7 @@ export function signin(loginDto) {
     })
 }
 
-
-export function sseSource(url, setNotifications, count) {
-
+export function sseSource(url, setNotifications) {
   const accessToken = getCookie();
   // SSE 지원
   if (typeof EventSource !== "undefined") {
@@ -104,9 +102,17 @@ export function sseSource(url, setNotifications, count) {
 
 export const getCookie = (name) => {
   const cookies = new Cookies();
-  return cookies.get('ACCESS_TOKEN');
+  return name != 'adminChk' ? cookies.get('ACCESS_TOKEN') : cookies.get('adminChk');
 }
 
+export const deleteCookie = () => {
+  const cookies = new Cookies();  
+  cookies.remove('ACCESS_TOKEN');
+  cookies.remove('adminChk');
+}
+
+
+// Date 관련
 // Date Format
 export const setDateFormat = (data) => {
   const revDate = new Date(data);
