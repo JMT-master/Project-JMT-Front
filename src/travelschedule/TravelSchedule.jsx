@@ -54,8 +54,30 @@ const TravelSchedule = (props) => {
     call("/travel/dayFormatSelect1?id="+id, "GET",
       null
     ).then((response) => {
-      console.log("response.data1", response.data);
-      // window.location.href = '/';
+      console.log("response.data1", response.data[0]);
+      const data = response.data;
+      let selectItem = {};
+      let item =[];
+      for(let i=0; i<data.length; i++){
+        item = data[i];  
+        selectItem = {
+          dayImage:item.dayImage,
+          dayCount: item.dayCount,
+          dayId: item.dayId,
+          dayTitle: item.dayTitle,
+          dayRegion1:item.dayRegion1,
+          dayRegion2:item.dayRegion2,
+          dayIndex:item.dayIndex
+        };
+
+        tableData1[selectItem.dayIndex] = selectItem;
+        table1FontColor[selectItem.dayIndex] = 1;
+      }
+
+      console.log('tableData1 : ',tableData1);
+
+      setTableData1([...tableData1]);
+      setTable1FontColor([...table1FontColor]);      
     })
       .catch((error) => {
         console.log(error);
@@ -65,8 +87,30 @@ const TravelSchedule = (props) => {
     call("/travel/dayFormatSelect2?id="+id, "GET",
       null
     ).then((response) => {
-      console.log("response.data2", response.data);
-      // window.location.href = '/';
+      console.log("response.data2", response.data[0]);
+      const data = response.data;
+      let selectItem = {};
+      let item =[];
+      for(let i=0; i<data.length; i++){
+        item = data[i];  
+        selectItem = {
+          dayImage:item.dayImage,
+          dayCount: item.dayCount,
+          dayId: item.dayId,
+          dayTitle: item.dayTitle,
+          dayRegion1:item.dayRegion1,
+          dayRegion2:item.dayRegion2,
+          dayIndex:item.dayIndex
+        };
+
+        tableData2[selectItem.dayIndex] = selectItem;
+        table2FontColor[selectItem.dayIndex] = 1;
+      }
+
+      console.log('tableData2 : ',tableData2);
+
+      setTableData2([...tableData2]);
+      setTable2FontColor([...table2FontColor]);      
     })
       .catch((error) => {
         console.log(error);
@@ -86,6 +130,7 @@ const TravelSchedule = (props) => {
   //       console.log(error);
   //     })
   // }
+  
   function travelSave() {
     const dtoList = castingTravel();
     console.log("dtoList", dtoList);
@@ -93,7 +138,6 @@ const TravelSchedule = (props) => {
     call("/travel/dayFormatSave?id="+id, "POST",
       dtoList
     ).then((response) => {
-      selectFormList();
       console.log("responseSaveData", response);
       // window.location.href = '/';
     })
@@ -102,16 +146,17 @@ const TravelSchedule = (props) => {
       })
   }
 
-  function selectFormList(){
-    selectForm1();
-    selectForm2();
-  }
 
 
   const markers = [];
   tableData1.map((item) => {
     if (!Number.isInteger(item)) markers.push(item);
   });
+
+  useEffect(() => {
+    selectForm1();
+    selectForm2();
+  },[]);
 
   useEffect(() => {
     setLoading(true);
@@ -123,6 +168,7 @@ const TravelSchedule = (props) => {
         setVisit(data);
       });
   }, [currentPage]);
+
 
   // data가 변경되었을 때, tag와 List 변경
   useEffect(() => {

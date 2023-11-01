@@ -2,6 +2,7 @@ import React from 'react'
 import "../css/travelForm.css"
 
 const TravelForm = (props) => {
+  console.log("TravelForm" , props.data);
   if(props.data.dayImage === undefined || props.data.dayImage === null) {
     <article className='travelForm-container'>
         <img className='travelForm-img' alt=''></img>
