@@ -81,7 +81,7 @@ const TourList = () => {
 //데이터 받아오기
 
   useEffect(() => {
-    if (page >= (lastPage.current - 2) && dataNum.current <= apiPageCount.current) {
+    if (page >= (lastPage.current - 2) && dataNum.current < apiPageCount.current) {
       dataNum.current += 1;
     }
   }, [page]);
