@@ -87,13 +87,11 @@ const JoinUser = () => {
     const text   = ['아이디', '이름', '비밀번호', '비밀번호 확인', '우편번호', '집주소', '상세주소', '휴대폰 번호'];
     let nullFlag = 0, nullValue = '';
 
-    console.log("?????");
-
     // null값 처리
     formId.map((chkId,i) => {
       if(document.getElementById(chkId).value === '') {
 
-        if(nullFlag === 0) {
+        if(text[i] !== '상세주소' && nullFlag === 0) {
           nullValue = text[i];
           nullFlag = 1;
         }

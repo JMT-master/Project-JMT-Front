@@ -37,9 +37,13 @@ import ChatDetail from './trableinfo/ChatDetail';
 import JoinUserValidateChk from './member/JoinUserValidateChk';
 import NotificationList from "./common/Notification";
 import axios from "axios";
-import {deleteCookie, getCookie, sseSource} from "./common/ApiService";
+import {call, deleteCookie, getCookie, sseSource} from "./common/ApiService";
 import NoticeWrite from './notice/NoticeWrite';
 import TravelPdf from './travelschedule/TravelPdf';
+import LoginTimer from './member/LoginTimer';
+import Moment from 'react-moment';
+import moment from 'moment';
+import { useInterval } from 'react-use';
 
 function App(factory, deps) {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -169,7 +173,12 @@ function HeaderTop(props) {
   const accessToken = getCookie();
   const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   const {notifications, setNotifications, send} = props;
+  const [currentTime, setCurrentTime] = useState();
 
+
+  useEffect(() => {
+    sseSource("sub", setNotifications);
+}, [accessToken]);
   //알람 모달 관련
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -204,7 +213,7 @@ function HeaderTop(props) {
   };
 
   const state = getCookie();
-  console.log("state : ", state);
+  
   // token 처리
   const handleClick = () => {
     
@@ -227,11 +236,16 @@ function HeaderTop(props) {
 
   window.open('/chat/room', '_blank', `width=${width},height=${height},left=${left},top=${top}`);
 };
+
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
        <div className="headerTop">
+         <button type="button" onClick={showModal} style={{justifyContent: "left"}}>
+           <AiOutlineBell className="headerNotification"/>
+         </button>
+         <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
-         <span>
+        <span>
           <a href={() => false} onClick={() => handleClick()}
              className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
           >{(state === undefined || state === null) ? '로그인' : '로그아웃'}</a>

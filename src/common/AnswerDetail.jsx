@@ -10,6 +10,7 @@ import Swal from 'sweetalert2'
 const AnswerDetail = (props) => {
   const [answerList, setAnswerList] = useState();
   const [contentValue, setContentValue] = useState();
+  const [modifyFlag, setModifyFlag] = useState(false);
 
   useEffect(() => {
     call('/knowledgeDetail/answer/?num='+props.data,'GET')
@@ -82,7 +83,7 @@ const AnswerDetail = (props) => {
     
     if(date.getFullYear() === comDate.getFullYear() && 
     date.getMonth() === comDate.getMonth() && 
-    date.getDate() === comDate.getDate()) {
+    date.getDay() === comDate.getDay()) {
       if((date.getHours() - comDate.getHours()) >= 1) {
         showDate = (date.getHours() - comDate.getHours());
         showDate += '시간 전';
@@ -93,14 +94,14 @@ const AnswerDetail = (props) => {
         showDate = '방금';
       }
     } else {
-      if(date.getFullYear() - comDate.getFullYear() >= 1)  {
-        showDate = (date.getHours() - comDate.getHours());
+      if(date.getDay() - comDate.getDay() >= 365)  {
+        showDate = (date.getFullYear() - comDate.getFullYear());
         showDate += '년 전';
-      } else if(date.getMonth() - comDate.getMonth() >= 1)  {
-        showDate = (date.getMonth() - comDate.getMonth());
+      } else if(date.getDay() - comDate.getDay() >= 31)  {
+        showDate = (date.getMonth() - comDate.getMonth())/31;
         showDate += '달 전';
-      } else if(date.getDate() - comDate.getDate() >= 1)  {
-        showDate = (date.getDate() - comDate.getDate());
+      } else if(date.getDay() - comDate.getDay() >= 1)  {
+        showDate = (date.getDay() - comDate.getDay());
         showDate += '일 전';
       }
     }
@@ -108,11 +109,65 @@ const AnswerDetail = (props) => {
     return showDate;
   }
 
+  function onAnswerChange(e) {
+
+  }
+
+  // 답글 삭제
+  function onAnswerDelete(answer) {
+
+    console.log("answer : ", answer);
+
+    Swal.fire({
+      icon : 'question',
+      title: '삭제하시겠습니까?',
+      showCloseButton: true,
+      showDenyButton: true,
+      confirmButtonText: '확인',
+      denyButtonText: '취소',
+
+    }).then(function(result) {
+      if(result.isConfirmed) { // 확인버튼
+        call("/knowledgeDetail/answer/delete","POST",answer)
+        .then(response => {
+          console.log('answer response : ',response)
+          // 에러 발생
+          if(response === undefined || response.status === 400) {
+            Swal.fire({
+              icon : 'warning',
+              title: '삭제되지 않았습니다.',
+              showCloseButton: true,
+              confirmButtonText: '확인',
+        
+            });
+            return;
+          }
+          setAnswerList(response.data);
+          Swal.fire({
+            icon : 'info',
+            title: '삭제되었습니다!',
+            showCloseButton: true,
+            confirmButtonText: '확인',
+      
+          });
+          return;
+        }
+        )} 
+      else { // 취소버튼
+        return;
+      }      
+    })
+  }
+
+  function onAnswerUpdate(result) {
+    setModifyFlag(true);
+  }
+
   return (
     <div className='answerDetail-Container'>
       <div className='answerDetail-answer'>
         <textarea className='answerDetail-answer-area' id='answerDetail-content' cols="150" rows="5" placeholder='답글을 입력해주세요.' value={contentValue} onChange={answerContent}></textarea>
-        <button className='answerDetail-answer-btn' onClick={answerCreate}>
+        <button className='oBtn' onClick={answerCreate}>
           답변하기
         </button>
       </div>
@@ -127,11 +182,14 @@ const AnswerDetail = (props) => {
               <div className='answerDetail-review-info'>
                 <div className='answerDetail-review-info-writer'>{answer.answerWriter}</div>
                 <div className='answerDetail-review-info-date'>{showDate}</div>
-                <button className='answerDetail-review-info-btn'>수정</button>
-                <button className='answerDetail-review-info-btn'>삭제</button>
+                <button className='oBtn' onClick={() => onAnswerUpdate(answer)}>수정</button>
+                <button className='oBtn' onClick={() => onAnswerDelete(answer)}>삭제</button>
               </div>
               <div className='answerDetail-review-content'>
-                {answer.content}
+                <input className='answerDetail-review-content-text' type='text' value={answer.content} onChange={onAnswerChange}></input>
+                <button className='oBtn'>확인</button>
+                <button className='oBtn'>취소</button>
+                
                 <div className='answerDetail-review-content-like'>
                   <BsHandThumbsUp className='answerDetail-review-content-thumbs' onClick={() => thumbsAdd(answer)}></BsHandThumbsUp>
                   <span className='answerDetail-review-content-count'>{answer.answerLike !== 0 ? answer.answerLike : ''}</span>
