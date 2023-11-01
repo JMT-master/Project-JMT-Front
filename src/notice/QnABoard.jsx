@@ -4,14 +4,15 @@ import style from '../css/QnABoard.css';
 import { useNavigate } from 'react-router-dom';
 import { qnaData } from '../data/Data';
 import Paging from '../common/Paging';
-import { call, getCookie } from './../common/ApiService';
+import { call, getCookie, setDateFormat } from './../common/ApiService';
 import { Button, Table } from 'react-bootstrap';
 
 
 export const Tr = (props) => {
   const navigate = useNavigate();
   // console.log("props.data : {}",props.data);
-  const modDate = new Date(props.data.modDate);
+  const modDate = setDateFormat(props.data.modDate);
+  
   const isAdmin = useRef(getCookie("adminChk"));
   const deleteItem = props.deleteItem;
 
@@ -24,9 +25,10 @@ export const Tr = (props) => {
       <td>{props.data.qnaNum}</td>
       <td>{props.data.qnaCategory}</td>
       <td onClick={() => navigate('/qna/' + props.data.qnaNum)}>{props.data.qnaTitle}</td>
-      <td>{props.data.modDate}</td>
+      <td>{modDate}</td>
       <td>{props.data.qnaView}</td>
-      <button type='button' onClick={deleteHandler}
+      <button type='button' className='oBtn'
+      onClick={deleteHandler}
       style={isAdmin.current == "Y" ? null : {display: "none"}}
       >삭제</button>
     </tr>
@@ -51,8 +53,12 @@ const QnABoard = () => {
     call(`/qna?page=${page}`, "GET", null)
       .then((response) => {
         // console.log("response.items : {}", response.items);
-        setItems(response.items);
-        setPagingInfo(response.pagingInfo);
+        if(response != null) {
+          setItems(response.items);
+          setPagingInfo(response.pagingInfo);
+        }else {
+          setItems([]);
+        }
       });
   };
 
@@ -121,7 +127,7 @@ const QnABoard = () => {
             />
       </div>
       <div>
-        <Button type='button' 
+        <Button type='button' className='oBtn'
         style={isAdmin.current == "Y" ? null : {display: "none"}}
         onClick={addItemPage}>Q&A 작성하기</Button>
       </div>

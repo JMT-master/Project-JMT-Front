@@ -49,8 +49,8 @@ const QnaWrite = (props) => {
             // 브라우저 주소에서 읽어온 id 값이 있을 경우 API 호출
             call(`/qna/admin/${id}`, "GET")
                 .then((response) => {
-                    console.log("response.data : {}", response.data);
-                    setItems(response.data);
+                    console.log("response.data : {}", response);
+                    setItem(response);
                 });
 
         }
@@ -97,10 +97,9 @@ const QnaWrite = (props) => {
             qnaTitle: document.getElementById('qna_title').value,
             qnaContent: document.getElementById('qna_content').value,
             qnaView: 0,
-            qnaNum: items[0].qnaNum
         };
-        call("/qna/admin/" + items[0].qnaNum, "POST", updatedItem) // Assuming PUT method for update operation
-            .then(() => navigate("/qna"));
+        call("/qna/admin/" + item.qnaNum, "POST", updatedItem) // Assuming PUT method for update operation
+            .then(() => navigate("/qna/"+item.qnaNum));
     };
 
     const onButtonClick = () => {
@@ -164,7 +163,7 @@ const QnaWrite = (props) => {
             </div>
             <div className='button-box'>
                 <button type="button" className='submit-knowledge' onClick={onButtonClick} style={{ display: isContainingWrite ? "block" : "none" }}>작성완료</button>
-                <button type="button" className='submit-knowledge' onClick={() => postEditItem(items)} style={{ display: isContainingWrite ? "none" : "block" }}>수정완료</button>
+                <button type="button" className='submit-knowledge' onClick={() => postEditItem(item)} style={{ display: isContainingWrite ? "none" : "block" }}>수정완료</button>
                 <button className='back-to-knlist' onClick={() => navigate("/qna")}>목록으로 돌아가기</button>
             </div>
             <input type="hidden" id='qnaNum' name='qnaNum' value={index} />

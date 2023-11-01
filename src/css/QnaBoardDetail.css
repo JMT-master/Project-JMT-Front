@@ -68,11 +68,6 @@
 .qnaDetail-inside textarea:focus{
   outline: none;
 }
-.qnaDetail-box button{
-  position: absolute;
-  right: 5vw;
-  margin-bottom: 10px;
-}
 .back-to-qna{
   width: 120px;
   height: 50px;
