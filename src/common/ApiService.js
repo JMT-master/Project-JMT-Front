@@ -25,10 +25,14 @@ export function call(api, method, request) {
     method: method,
   };
 
-  console.log(options.url);
-  if (request) {
-    options.body = JSON.stringify(request);
-  }
+    console.log(options.url);
+
+    if (request){
+        options.body = JSON.stringify(request);
+    }
+
+    console.log('request : ', request);
+    console.log('options.body : ', options.body);
 
   return fetch(options.url, options).then((response) => {
     console.log("call_response : ", response);
