@@ -3,9 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import style from '../css/QnaBoardDetail.css'
 import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'react-icons/ai';
 import { call, getCookie, setDateFormat } from './../common/ApiService';
+import axios from 'axios';
+import { API_BASE_URL } from '../common/ApiConfig';
+import AttachFile from '../common/AttachFile';
 
 const QnaBoardDetail = () => {
-  const [item, setItem] = useState({});
+  const [item, setItem] = useState();
   const params = useParams();
   const navigate = useNavigate();
   const qnaColNum = params.id;
@@ -13,12 +16,39 @@ const QnaBoardDetail = () => {
 
   useEffect(() => {
     // qnaColNum을 사용하여 API를 호출하고 데이터를 가져옵니다.
+    let details = null;
     call("/qna/"+qnaColNum, "GET", null)
-      .then((response) => 
-      setItem(response)
-      );
-    // console.log("item {} : ", item);
-  }, [qnaColNum]); // qnaColNum이 변경될 때마다 useEffect가 실행됩니다.
+      .then((response) => {
+        console.log('qna response : ',response);
+      details = response;
+        if(details !== undefined && details !== null && details[0].oriName !== null && details[0].oriName !== undefined){
+          details.map((data, i) => {
+            axios({
+              method:'POST',
+              url: API_BASE_URL + "/qna/viewFile",
+              data:data,
+              responseType:'blob',
+            }).then(responseFile => {
+              console.log('responseFile : ', responseFile);
+                const blob = new Blob([responseFile.data]);
+
+                const reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = () => {
+                  details[i] = {...details[i], data : reader.result};
+                  console.log("reader.result"+reader.result);
+                }
+            })
+          })
+          setItem(details);
+
+        }else{
+
+          setItem(details);
+        }
+  });
+    console.log("item {} : ", item);
+  }, []); // qnaColNum이 변경될 때마다 useEffect가 실행됩니다.
 
   return (
     <div className='qnaDetail-content'>
@@ -33,16 +63,17 @@ const QnaBoardDetail = () => {
       <div className='qnaDetail-box'>
         <div className='qnaDetail-img'> 
           <img src="../images/qna-icon.png" alt="qna이미지" />
-          <p>{item.qnaCategory}</p>
+          <p>{item[0].qnaCategory}</p>
         </div>
         <div className='qnaDetail-boxTitle'>
           <p className='no'>{qnaColNum}</p>
-          <h3>{item.qnaTitle}</h3>
-          <p className='date'>{setDateFormat(item.modDate)}</p>
+          <h3>{item[0].qnaTitle}</h3>
+          <p className='date'>{setDateFormat(item[0].modDate)}</p>
         </div>
         <div className='qnaDetail-inside'>
-          <textarea cols="30" rows="10" readOnly placeholder='qna 내용' value={item.qnaContent}></textarea>
+          <textarea cols="30" rows="10" readOnly placeholder='qna 내용' value={item[0].qnaContent}></textarea>
         </div>
+        <AttachFile data={item !== null ? item : '' }></AttachFile>
         <button className='oBtn'  
         style={isAdmin.current == "Y" ? null : {display: "none"}}
         onClick={() => navigate("/qna/admin/"+qnaColNum)} >수정하기</button>
