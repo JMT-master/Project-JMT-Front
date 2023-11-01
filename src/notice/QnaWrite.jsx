@@ -12,6 +12,8 @@ const QnaWrite = (props) => {
     const { id } = useParams(); // 브라우저 주소에서 동적 세그먼트 값 읽어오기
     const [items, setItems] = useState([]);
     const [category, setCategory] = useState("관광지");
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
     const [index, setIndex] = useState(parseInt(localStorage.getItem('qna.length')) + 1 || 0);
     const [item, setItem] = useState({
         qnaCategory: category,
@@ -19,6 +21,7 @@ const QnaWrite = (props) => {
         qnaContent: "",
         qnaView: 0,
     });
+
     const navigate = useNavigate();
     const location = useLocation();
     const isContainingWrite = location.pathname.includes('write');
@@ -51,6 +54,9 @@ const QnaWrite = (props) => {
                 .then((response) => {
                     console.log("response.data : {}", response);
                     setItem(response);
+                    setTitle(response.qnaTitle);
+                    setCategory(response.qnaCategory);
+                    setContent(response.qnaContent);
                 });
 
         }
@@ -91,15 +97,36 @@ const QnaWrite = (props) => {
     }
 
     const postEditItem = (item) => {
-        console.log("item : {}", item);
-        const updatedItem = {
-            qnaCategory: category,
-            qnaTitle: document.getElementById('qna_title').value,
-            qnaContent: document.getElementById('qna_content').value,
-            qnaView: 0,
-        };
-        call("/qna/admin/" + item.qnaNum, "POST", updatedItem) // Assuming PUT method for update operation
-            .then(() => navigate("/qna/"+item.qnaNum));
+        const formData = new FormData();
+
+        console.log("post item : {}", item);
+
+        if (file !== undefined && file != null) {
+            for (let i = 0; i < file.length; i++) {
+                formData.append('file', file[i]);
+            }
+        }
+
+        formData.append('data', new Blob([JSON.stringify(item)], {
+            type: "application/json"
+        }));
+
+        const accessToken = getCookie();
+
+        axios({
+            method : 'post',
+            url : API_BASE_URL + '/qna/admin/'+id,
+            headers : {
+              "Content-Type" : "multipart/form-data",
+              "Authorization": 'Bearer ' + accessToken
+            },
+            data : formData
+          }).then(response => {
+            console.log("/qna/admin/id :", response)
+            if(response.status === 200) {
+              window.location.href="/qna/"+id;
+            }
+          });
     };
 
     const onButtonClick = () => {
@@ -113,12 +140,29 @@ const QnaWrite = (props) => {
         addItem(newItem);
     };
 
+    const onPostClick = () => {
+        const newItem = {
+            qnaCategory: category,
+            qnaTitle: title,
+            qnaContent: content,
+        };
+        postEditItem(newItem);
+    }
+
     const cateSelect = (e) => {
         console.log("items[0] : {}", items[0]);
         console.log("index값 : {}", index);
         setCategory(e.target.value);
     }
-
+    //타이틀 변경
+    const onChangeTitle =(e) =>{
+        setTitle(e.target.value);
+    }
+    //내용 변경
+    const onChangeContent=(e)=>{
+        setContent(e.target.value);
+    }
+    //파일 변경도 추가되어야함
     return (
 
         <div className='knowledge-content'>
@@ -136,7 +180,7 @@ const QnaWrite = (props) => {
                 <div className='ask-category'>
                     <h3>카테고리 선택</h3>
                     <p>분야를 선택해주세요</p>
-                    <select className='category' id='category' name='category' onChange={cateSelect}>
+                    <select className='category' id='category' name='category' value={category} onChange={cateSelect}>
                         <option value={"관광지"} selected>관광지</option>
                         <option value={"음식"}>음식</option>
                         <option value={"축제"}>축제</option>
@@ -148,8 +192,8 @@ const QnaWrite = (props) => {
                 </div>
                 <div className='ask-textarea'>
                     <h4>제목 작성</h4>
-                    <input type="text" placeholder='제목을 작성해주세요' id="qna_title" name="qna_title" />
-                    <textarea cols="80" rows="10" id="qna_content" name="qna_content" ></textarea>
+                    <input type="text" placeholder='제목을 작성해주세요' id="qna_title" name="qna_title" value={title} onChange={onChangeTitle} />
+                    <textarea cols="80" rows="10" id="qna_content" name="qna_content" value={content} onChange={onChangeContent} ></textarea>
                 </div>
                 <div className='file-attach'>
                     <input placeholder='첨부파일' id='qnaWrite-file-text' readOnly></input>
@@ -163,7 +207,7 @@ const QnaWrite = (props) => {
             </div>
             <div className='button-box'>
                 <button type="button" className='submit-knowledge' onClick={onButtonClick} style={{ display: isContainingWrite ? "block" : "none" }}>작성완료</button>
-                <button type="button" className='submit-knowledge' onClick={() => postEditItem(item)} style={{ display: isContainingWrite ? "none" : "block" }}>수정완료</button>
+                <button type="button" className='submit-knowledge' onClick={onPostClick} style={{ display: isContainingWrite ? "none" : "block" }}>수정완료</button>
                 <button className='back-to-knlist' onClick={() => navigate("/qna")}>목록으로 돌아가기</button>
             </div>
             <input type="hidden" id='qnaNum' name='qnaNum' value={index} />

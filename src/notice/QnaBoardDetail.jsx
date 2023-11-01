@@ -21,7 +21,7 @@ const QnaBoardDetail = () => {
       .then((response) => {
         console.log('qna response : ',response);
       details = response;
-        if(details !== undefined && details !== null && details[0].oriName !== null && details[0].oriName !== undefined){
+        if(details !== undefined && details !== null && details[0].originalName !== null && details[0].originalName !== undefined){
           details.map((data, i) => {
             axios({
               method:'POST',
@@ -31,12 +31,11 @@ const QnaBoardDetail = () => {
             }).then(responseFile => {
               console.log('responseFile : ', responseFile);
                 const blob = new Blob([responseFile.data]);
-
                 const reader = new FileReader();
                 reader.readAsDataURL(blob);
                 reader.onloadend = () => {
                   details[i] = {...details[i], data : reader.result};
-                  console.log("reader.result"+reader.result);
+                  console.log("reader.result : "+reader.result);
                 }
             })
           })
@@ -73,13 +72,13 @@ const QnaBoardDetail = () => {
         <div className='qnaDetail-inside'>
           <textarea cols="30" rows="10" readOnly placeholder='qna 내용' value={item[0].qnaContent}></textarea>
         </div>
-        <AttachFile data={item !== null ? item : '' }></AttachFile>
+      </div>
+      }
+      <AttachFile data={item !== null ? item : '' }></AttachFile>
         <button className='oBtn'  
         style={isAdmin.current == "Y" ? null : {display: "none"}}
         onClick={() => navigate("/qna/admin/"+qnaColNum)} >수정하기</button>
         <button className='oBtn'  onClick={()=>navigate("/qna")}>목록으로 가기</button>
-      </div>
-      }
     </div>
   );
 };
