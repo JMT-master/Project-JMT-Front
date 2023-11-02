@@ -111,7 +111,6 @@ const KnowledgeDetail = ({ data }) => {
               title: '삭제 중 에러 발생!',
               showCloseButton: true,
               confirmButtonText: '확인',
-        
             });
             return;
           } else {
@@ -121,8 +120,8 @@ const KnowledgeDetail = ({ data }) => {
               showCloseButton: true,
               confirmButtonText: '확인',        
             }).then(
-              () => {window.location.href = "/knowledge";}
-            );            
+              () => {navigate("/knowledge")}
+            );
           }
         });
       } else {

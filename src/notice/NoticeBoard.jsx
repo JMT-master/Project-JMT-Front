@@ -4,7 +4,9 @@ import {VscSearch} from 'react-icons/vsc';
 import {useNavigate} from 'react-router-dom';
 import {noticeData} from '../data/Data';
 import Paging from '../common/Paging';
-import {call, getCookie} from "../common/ApiService";
+import {call, getCookie, setDateFormat} from "../common/ApiService";
+import ListPaging from "../destination/ListPaging";
+import Swal from "sweetalert2";
 
 
 const NoticeBoard = () => {
@@ -15,17 +17,43 @@ const NoticeBoard = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const [currentItems, setCurrentItems] = useState([])
-  const totalPages = Math.ceil(noticeData.length / itemsPerPage);
+  const totalPages = currentItems && Math.ceil(currentItems.length / itemsPerPage);
   const idxNum = useRef(0);
   const isAdmin = useRef(getCookie("adminChk"));
 
-
+  console.log("총 페이지  :" +  totalPages);
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
+
   const handleSelect = (e) => {
     setItemsPerPage(e.target.value);
+  }
+
+  const deleteHandler = (idx) => {
+    call("/notice/admin", "DELETE", {idx: idx})
+       .then(response => {
+         console.log("delete 호출!!")
+         setCurrentItems(response);
+         if(response === undefined) {
+           Swal.fire({
+             icon : 'warning',
+             title: '삭제 중 에러 발생!',
+             showCloseButton: true,
+             confirmButtonText: '확인',
+           });
+         } else {
+           Swal.fire({
+             icon : 'info',
+             title: '삭제되었습니다!',
+             showCloseButton: true,
+             confirmButtonText: '확인',
+           }).then(
+              () => {navigate("/notice")}
+           );
+         }
+       })
   }
 
 
@@ -44,7 +72,7 @@ const NoticeBoard = () => {
        "GET",
        null
     ).then((response) => {
-      response != null ? setCurrentItems(response) : setCurrentItems([]);
+      if(response != null)setCurrentItems(response);
       idxNum.current = parseInt(JSON.stringify(response[0].idx));
     })
        .catch((error) => {
@@ -86,8 +114,7 @@ const NoticeBoard = () => {
            <tbody>
            {currentItems && currentItems.map((item) => {
              return (
-                <NoticeRead data={item} key={item.id} currentItems={currentItems}
-                            setCurrentItems={setCurrentItems}></NoticeRead>
+                <NoticeRead data={item} key={item.id}  deleteHandler={deleteHandler}></NoticeRead>
              )
            })}
            </tbody>
@@ -99,9 +126,9 @@ const NoticeBoard = () => {
          </div>
        </div>
        <div className='page'>
-         <Paging
-            totalPages={totalPages} currentPage={currentPage}
-            onPageChange={handlePageChange}></Paging>
+         <ListPaging
+            lastpage={totalPages} page={currentPage}
+            setPage={handlePageChange}></ListPaging>
        </div>
      </div>
   );
@@ -111,8 +138,14 @@ export default NoticeBoard;
 
 const NoticeRead = (props) => {
   const navigate = useNavigate();
-  const {idx, category, title, regDate} = props.data;
+  const {idx, category, title, regDate,deleteHandler} = props.data;
+  const dataForm = setDateFormat(props.data.modDate);
   const isAdmin = useRef(getCookie("adminChk"))
+
+  const deleteNotice = (idx) =>{
+    deleteHandler(idx);
+    console.log("마사카!")
+  }
 
   return (
      <tr>
@@ -121,7 +154,15 @@ const NoticeRead = (props) => {
        <td onClick={() => {
          navigate('/notice/' + idx)
        }} className='cursor'>{title}</td>
-       <td>{regDate}</td>
+       <td>{dataForm}</td>
+       <td>
+         <button type='button' className='oBtn'
+                 onClick={()=> {
+                   deleteNotice(idx)
+                 }}
+                 style={isAdmin.current == "Y" ? null : {display: "none"}}
+         >삭제</button>
+       </td>
      </tr>
   );
 };

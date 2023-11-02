@@ -105,10 +105,11 @@ export const getCookie = (name) => {
 }
 
 export const deleteCookie = () => {
-  const cookies = new Cookies();  
+  const cookies = new Cookies();
   cookies.remove('ACCESS_TOKEN');
   cookies.remove('adminChk');
 }
+
 
 
 // Date 관련
