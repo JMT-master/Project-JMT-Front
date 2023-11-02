@@ -43,7 +43,7 @@ const NotificationList = ({notifications, setNotifications, modalOpen}) => {
            {/*  TODO : alarm컴포넌트 구현, xx 글에 xx댓글 ,xx 댓글에 xx답글 달렸습니다 표시, 개별 삭제버튼, 가능하면 등록 시간과 현재 시간 차이 표시*/}
          </div>
          <div className='notificationFooter'>
-           <button className={"oBtn"} onClick={deleteAllNotify}><BsTrash/></button>
+           <button className="oBtn marginBottomBtn" onClick={deleteAllNotify}><BsTrash/></button>
          </div>
        </div>
      </div>)
