@@ -2,11 +2,29 @@ import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import '../css/LoginModal.css'
 import {AiOutlineArrowLeft} from 'react-icons/ai'
+import { call } from '../common/ApiService';
 
 const LoginModal = ({setModalOpen, id, title, content, writer}) => {
   const [moid, setMoid] = useState(false);
   const [mopwd, setMopwd] = useState(false);
   const [activeModal, setActiveModal] = useState("id");
+  const [idFindDto, setIdFindDto] = useState({
+    username : "",
+    phone : ""
+  })
+  const [userId, setUserId] = useState("");
+
+  const findUserId = (e) => {
+    e.preventDefault();
+    setIdFindDto({
+      username : document.getElementById("username").value,
+      phone : document.getElementById("phone").value
+    })
+    call("/findUserId", "POST", idFindDto)
+    .then((response) => {
+      setUserId(response);
+    })
+  }
 
   const closeModal = () => {
     setModalOpen(false);
@@ -22,11 +40,11 @@ const LoginModal = ({setModalOpen, id, title, content, writer}) => {
   }
   const ModalId = () => {
     return (
-      <div className='modal-container-click'
-      style={{width:'400px' , height:'400px'}}>
-        <input className='moid-name' type="text" placeholder='이름을 입력해주세요' />
-        <input className='moid-tel' type="tel" placeholder='전화번호를 입력해주세요' />
-        <button className='moid-submit'>아이디 찾기</button>
+      <div className='modal-container-click'>
+        <input className='moid-name' type="text" id='username' name='username' placeholder='이름을 입력해주세요' />
+        <input className='moid-tel' type="tel" id='phone' name='phone' placeholder='전화번호를 입력해주세요' />
+        <input className='moid-result' type='text' value={userId} readOnly></input>
+        <button className='moid-submit' onClick={findUserId}>아이디 찾기</button>
       </div>
     )
   }
@@ -35,8 +53,8 @@ const LoginModal = ({setModalOpen, id, title, content, writer}) => {
       <div className='modal-container-click'
       style={{width:'400px' , height:'400px'}}>
         <input className='mopwd-id' type="id" placeholder='아이디를 입력해주세요' />
-        <input className='mopwd-email' type="email" placeholder='이메일을 입력해주세요' />
-        <button className='mopwd-submit'>비밀번호 찾기</button>
+        <input className='moid-tel' type="id" placeholder='이메일 인증' />
+        <button className='mopwd-submit'>인증번호 전송</button>
       </div>
     )
   }

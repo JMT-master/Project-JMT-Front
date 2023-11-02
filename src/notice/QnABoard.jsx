@@ -4,15 +4,16 @@ import style from '../css/QnABoard.css';
 import { useNavigate } from 'react-router-dom';
 import { qnaData } from '../data/Data';
 import Paging from '../common/Paging';
-import { call } from './../common/ApiService';
+import { call, getCookie, setDateFormat } from './../common/ApiService';
 import { Button, Table } from 'react-bootstrap';
-
+import ListPaging from '../destination/ListPaging';
 
 export const Tr = (props) => {
   const navigate = useNavigate();
   // console.log("props.data : {}",props.data);
-  const modDate = new Date(props.data.modDate);
+  const modDate = setDateFormat(props.data.modDate);
 
+  const isAdmin = useRef(getCookie("adminChk"));
   const deleteItem = props.deleteItem;
 
   const deleteHandler = (e) => {
@@ -24,9 +25,15 @@ export const Tr = (props) => {
       <td>{props.data.qnaNum}</td>
       <td>{props.data.qnaCategory}</td>
       <td onClick={() => navigate('/qna/' + props.data.qnaNum)}>{props.data.qnaTitle}</td>
-      <td>{props.data.modDate}</td>
+      <td>{modDate}</td>
       <td>{props.data.qnaView}</td>
-      <button type='button' onClick={deleteHandler}>삭제</button>
+      <td style={isAdmin.current == "Y" ? null : { display: "none" }}>
+        <button type='button' 
+        className='oBtn'
+          onClick={deleteHandler}
+          // style={isAdmin.current == "Y" ? null : { display: "none" }}
+        >삭제</button>
+      </td>
     </tr>
   );
 }
@@ -36,20 +43,29 @@ const QnABoard = () => {
   const navigate = useNavigate();
   const [pagingInfo, setPagingInfo] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-
+  const isAdmin = useRef(getCookie("adminChk"));
+  const theme = localStorage.getItem("theme");
   useEffect(() => {
 
     fetchData(currentPage);
 
   }, [currentPage]);
 
+  useEffect(() => {
+
+  },[theme]);
+
   const fetchData = (page) => {
 
     call(`/qna?page=${page}`, "GET", null)
       .then((response) => {
         // console.log("response.items : {}", response.items);
-        setItems(response.items);
-        setPagingInfo(response.pagingInfo);
+        if (response != null) {
+          setItems(response.items);
+          setPagingInfo(response.pagingInfo);
+        } else {
+          setItems([]);
+        }
       });
   };
 
@@ -90,7 +106,7 @@ const QnABoard = () => {
             <option value={20}>20개씩</option>
           </select>
         </div>
-        <Table striped bordered hover variant="dark">
+        <Table striped bordered hover variant={theme}>
           <thead>
             <tr>
               <th>Q</th>
@@ -98,7 +114,9 @@ const QnABoard = () => {
               <th>제목</th>
               <th>작성일자</th>
               <th>조회수</th>
-              <th>삭제 여부</th>
+              <th
+                style={isAdmin.current == "Y" ? null : { display: "none" }}
+              >삭제 여부</th>
             </tr>
           </thead>
           <tbody className='cursor'>
@@ -109,14 +127,15 @@ const QnABoard = () => {
         </Table>
       </div>
       <div className='page'>
-      <Paging
-                currentPage={pagingInfo.currentPage}
-                totalPages={pagingInfo.totalPages}
-                onPageChange={(page) => setCurrentPage(page)}
-            />
+        <ListPaging page={pagingInfo.currentPage}
+          lastPage={pagingInfo.totalPages}
+          setPage={(page) => setCurrentPage(page)}>
+        </ListPaging>
       </div>
       <div>
-        <Button type='button' onClick={addItemPage}>Q&A 작성하기</Button>
+        <Button type='button' className='oBtn'
+          style={isAdmin.current == "Y" ? null : { display: "none" }}
+          onClick={addItemPage}>Q&A 작성하기</Button>
       </div>
     </div>
   );

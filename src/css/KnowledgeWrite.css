@@ -77,11 +77,28 @@
 .file-attach{
   text-align: center;
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 150px 300px 1fr;
   gap: 10px 20px;
 }
 .file-attach div{
   border-bottom: 1px solid #f3a344;
+}
+
+.file-attach-container {
+  display: grid;
+  grid-template-rows: minmax(5);
+}
+
+.file-attach-text {
+  width: 70%;
+  height: 20px;
+  margin-bottom: 10px;
+  align-self: start;
+  cursor: pointer;
+}
+
+.file-attach-delete-icon {
+  color: red;
 }
 .btn-upload {
   width: 150px;

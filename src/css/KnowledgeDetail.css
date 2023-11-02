@@ -21,13 +21,15 @@
 .knowledgeDetail-title-btn {
   width: 50px; height: 30px;
   background-color: white; color: #f3a344;
-  border: none;
+  border: 1px solid #f3a344;
   font-size: large;
   font-weight: 700;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .knowledgeDetail-title-btn:hover {
+  border: none;
   background-color: #f3a344; color: white;
 }
 

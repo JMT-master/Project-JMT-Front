@@ -4,50 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="231026.front">
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/second-project.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/setupProxy.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/member/JoinUserValidateChk.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/member/KakaoLogin.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/member/MemberFuc.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/notice/QnaWrite.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/session관리" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/trableinfo/ChatDetail.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/trableinfo/ChatRoom.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/trableinfo/ChatRoomDetail.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/trableinfo/FestivalList.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/trableinfo/RoomList.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/trableinfo/StompChatRoom.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ApiService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ApiService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/JoinUser.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/JoinUser.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/Knowledge.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/Knowledge.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/KnowledgeWrite.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/KnowledgeWrite.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/Login.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/Login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/member/JoinUser.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/member/JoinUser.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/member/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/member/Login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notice/QnABoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/QnABoard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notice/QnaBoardDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/QnaBoardDetail.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thema/Curator.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/thema/Curator.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/trableinfo/Festival.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/trableinfo/Festival.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/trableinfo/Knowledge.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/trableinfo/Knowledge.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/trableinfo/KnowledgeWrite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/trableinfo/KnowledgeWrite.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/travelschedule/TravelForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/travelschedule/TravelForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/travelschedule/TravelSchedule.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/travelschedule/TravelSchedule.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Notification.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Notification.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/Alarm.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/Alarm.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="ang" />
+        <entry key="$PROJECT_DIR$" value="park" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -81,6 +41,7 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2Wbz6xF3e9OGejvw5wMQOEAWFuk" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
@@ -88,14 +49,17 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "park 병합 중",
+    "android.gradle.sync.needed": "true",
+    "git-widget-placeholder": "Deb",
     "last_opened_file_path": "D:/second-project/src/notice",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "yarn",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -121,6 +85,9 @@
       <workItem from="1697618785719" duration="1252000" />
       <workItem from="1697673284171" duration="593000" />
       <workItem from="1697695191033" duration="1217000" />
+      <workItem from="1698712342669" duration="22561000" />
+      <workItem from="1698798493823" duration="7891000" />
+      <workItem from="1698884188745" duration="20826000" />
     </task>
     <task id="LOCAL-00001" summary="23년 10월 17일 5시 50분 안광현 프론트단 커밋">
       <option name="closed" value="true" />
@@ -130,18 +97,74 @@
       <option name="project" value="LOCAL" />
       <updated>1697532542815</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="231101 페이지 순차 로딩&#10;태그 랜덤화">
+      <option name="closed" value="true" />
+      <created>1698828183229</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1698828183230</updated>
+    </task>
+    <task id="LOCAL-00003" summary="231101 페이지 순차 로딩&#10;태그 랜덤화">
+      <option name="closed" value="true" />
+      <created>1698828295774</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1698828295774</updated>
+    </task>
+    <task id="LOCAL-00004" summary="리뷰 Read 테스트, &#10;댓글 작성에서 call의 reqest에 dbData[0].userid도 보내기">
+      <option name="closed" value="true" />
+      <created>1698901488687</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1698901488687</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/park" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="main" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/Deb" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -150,6 +173,11 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="23년 10월 17일 5시 50분 안광현 프론트단 커밋" />
     <MESSAGE value="231026.front" />
-    <option name="LAST_COMMIT_MESSAGE" value="231026.front" />
+    <MESSAGE value="231031 공지Delete 및 버튼 배치 끝, 수정부터 시작하면됨" />
+    <MESSAGE value="231031 공지 수정부터 시작," />
+    <MESSAGE value="231101 1418 머지" />
+    <MESSAGE value="231101 페이지 순차 로딩&#10;태그 랜덤화" />
+    <MESSAGE value="리뷰 Read 테스트, &#10;댓글 작성에서 call의 reqest에 dbData[0].userid도 보내기" />
+    <option name="LAST_COMMIT_MESSAGE" value="리뷰 Read 테스트, &#10;댓글 작성에서 call의 reqest에 dbData[0].userid도 보내기" />
   </component>
 </project>

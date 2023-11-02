@@ -1,8 +1,116 @@
+$jOrange: #f3a444;
+@import './button.scss';
 
-.alarmContainer{
-  width: 300px;
-  height: 200px;
-  background: antiquewhite;
-  position : static;
+.notificationContainer, .notificationContainerHide {
+  width: 270px;
+  height: 400px;
+  background: white;
+  border: 3px $jOrange solid;
+  border-right: 0;
+  border-radius: 10px 0 0 10px;
+  position: fixed;
   text-align: left;
+  bottom: 298px;
+  z-index: 222;
+  padding: 5px 10px;
+
+
+
+  .notificationBody{
+    display: grid;
+    grid-template-rows: 30px 325px 40px;
+    grid-auto-columns: 100%;
+    .notificationHeader{
+      height: 35px;
+      border-bottom: 1px black solid;
+      padding: 2px;
+    }
+    .notificationContent{
+      padding: 0 7px;
+      overflow-y: auto;
+
+      .notNotify{
+        position: relative;
+        width: 100%;
+        height: 150px;
+        text-align: center;
+        top: 48%;
+        font-size: 1.5em;
+        color: #999999;
+      }
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      .notificationOne{
+        margin-bottom: 5px;
+        height: 60px;
+        display: grid;
+        grid-template-columns: 210px 50px;
+        padding : 1px 0;
+        align-items: center;
+        div{
+          cursor: pointer;
+          font-size: 0.90em;
+          word-wrap: break-word;
+          display: -webkit-box;
+          -webkit-line-clamp: 2 ;
+          -webkit-box-orient: vertical;
+          line-height: 25px;
+          height: 50px;
+          overflow: hidden;
+        }
+
+        .notifyDeleteBtn{
+          display: flex;
+          width: 25px;
+          height: 25px;
+          font-size: 0.85rem;
+        }
+      }
+    }
+
+    .notificationFooter{
+      padding: 0;
+      .oBtn{
+        margin: 0;
+      }
+    }
+  }
+
+
+}
+
+.notificationContainer {
+  right: 0;
+  animation: move 0.5s ease-out;
+}
+
+.notificationContainerHide {
+  right: -300px;
+  animation: rmove 0.5s ease-out;
+}
+
+@keyframes move {
+  from {
+    right: -250px;
+  }
+  to {
+    right: 0;
+  }
+}
+
+@keyframes rmove {
+  from {
+    right: 0;
+  }
+  to {
+    right: -300px;
+  }
+}
+
+.noRead{
+  color: black;
+}
+.read{
+  color: gray;
 }

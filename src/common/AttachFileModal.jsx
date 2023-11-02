@@ -10,15 +10,11 @@ const AttachFileModal = ({imgModal,setImgModal,revData}) => {
 
     if(extension === 'jpg' || extension === 'jpeg' || extension === 'png' && extension === 'bmp' || 
     extension === "gif") {
-      console.log("들어옴?");
       setImgFlag(1);
     }
 
-    console.log(index, extension);
   },[]);
 
-  console.log(revData);
-  console.log(imgFlag)
 
   return (
     <div>

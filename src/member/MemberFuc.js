@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
-import {call, sseSource} from "../common/ApiService";
+import {call, deleteCookie, getCookie, setCookie, sseSource} from "../common/ApiService";
 import {API_BASE_URL} from "../common/ApiConfig";
+import moment from "moment";
 
 // 이메일 중복 확인
 export function userChk(chkUser) {
@@ -24,30 +25,26 @@ export function userChk(chkUser) {
          return 0;
        }
      }).catch((error => {
-       console.log(error);
+
      }));
 }
 
 // 이메일 인증
 export function emailValidate(chkUser) {
-  console.log(chkUser);
   return call("/joinUser/email/validateSend", "POST", chkUser)
      .then(response => {
-       console.log(response);
      }).catch((error => {
-       console.log(error);
+      
      }));
 }
 
 // 이메일 인증 확인
 export function emailValidateCheck(chkUser) {
-  console.log(chkUser);
   return call("/joinUser/email/validateCheck", "POST", chkUser)
      .then(response => {
-       console.log(response);
        window.close();
      }).catch((error => {
-       console.log(error);
+      
      }));
 }
 
@@ -55,7 +52,6 @@ export function emailValidateCheck(chkUser) {
 export function joinUser(memberDto) {
   return call("/joinUser", "POST", memberDto)
      .then(response => {
-      console.log("join response : ",response);
        if (response !== undefined) { 
         Swal.fire({
           icon: 'success',
@@ -76,7 +72,7 @@ export function joinUser(memberDto) {
 }
 
 // 로그인
-export function signin(loginDto) {
+export function signin(loginDto, id, idSave) {
 
   const url = API_BASE_URL + "/login";
   const body = JSON.stringify(loginDto);
@@ -90,7 +86,6 @@ export function signin(loginDto) {
     credentials: 'include'
   })
   .then(response => {
-      console.log("signin response : ",response);
       
       if(response.status === 401) { // unauthorized
         Swal.fire({
@@ -100,9 +95,29 @@ export function signin(loginDto) {
         })
       }
       else if(response !== undefined) {
-          // localStorage.setItem("ACCESS_TOKEN", response.accessToken);
-          // localStorage.setItem("REFRESH_TOKEN", response.refreshToken);
+        const infoUrl = API_BASE_URL + "/login/info";
+        fetch(infoUrl, {
+          method: 'POST',
+          body: body,
+          headers: {"Content-Type": "application/json"}
+        }).then(resultInfo => resultInfo.json())
+        .then(result => {
+          const loginTime = moment(result);
+          const resultTime = loginTime.add(1, 'hours').format();
+
+          localStorage.setItem("loginTime",resultTime);
+
+          if(idSave) {
+            const saveCookie = getCookie('save_id');
+            if(saveCookie !== null || saveCookie !== undefined) 
+              deleteCookie('save_id');
+            
+            setCookie('save_id',id);
+          } 
+
           window.location.href = "/";
+        })
+        
       } 
   })
 

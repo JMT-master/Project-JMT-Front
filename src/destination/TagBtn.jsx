@@ -32,12 +32,18 @@ const TagBtn = (tag) => {
 
   //태그 버튼
     const btnList = []
-    const num = 4;
+    const num = 10;
     let tagSet = [...new Set(tagList)];
     // console.log('tagSet: ', tagSet);
+    console.log("전체 태그 갯수 : " + tagSet.length);
+    console.log("전체 태그 갯수 : " + Math.floor(tagSet.length/10));
+    console.log("전체 태그 갯수 : " + tagSet.length/(tagSet.length/10));
+    console.log("전체 태그 갯수 : " + tagSet.length%(Math.floor(tagSet.length/10)));
+    let ranNum = Math.floor(Math.random() * (tagSet.length/10));
+    let ranNumMax = Math.floor(Math.random() * tagSet.length/(tagSet.length/10));
 
-    for (let i = 0; i < 40; i += num) {
-      btnList.push(<button key={i / num} className={`oBtn ${btn.includes(i / num) ? 'Focused' : ''}`} value={tagSet[i]}
+    for (let i = ranNum; i < tagSet.length; i += Math.floor(tagSet.length/10)) {
+      btnList.push(<button key={i / num} className={`oBtn ${btn.includes(i / num) ? 'Focused' : ''}`} value={tagSet[i-ranNumMax]}
         onClick={(e) => {
           setPage(1);
           clickFilter(e);

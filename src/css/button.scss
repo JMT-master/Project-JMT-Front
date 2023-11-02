@@ -1,4 +1,4 @@
-$jOrange: #f3a344;
+$jOrange: #f3a444;
 // $jOrange: #fc8c03;
 //버튼
 @mixin btnSet ($width:auto, $height:auto){
@@ -8,10 +8,13 @@ $jOrange: #f3a344;
   border: 1px solid;
   border-radius: 5px;
   padding: 3px 5px;
-  margin: 0 5px;
+  margin: 1px 5px;
   color: $jOrange;
   font-size: 0.95rem;
-  font-weight: bold;
+  //font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
   
 
   &:hover {
@@ -30,6 +33,10 @@ $jOrange: #f3a344;
 .oBtn {
   @include btnSet;
   // @include btnSet(30px,50px);
+  &:active{
+    color: black;
+    border: 1px $jOrange solid;
+  }
 }
 
 .twentySize{
@@ -44,7 +51,6 @@ $jOrange: #f3a344;
 
 .noBorder{
   border: 0;
-  font-weight: normal;
 }
 
 .onMapBtn{

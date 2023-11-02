@@ -15,6 +15,7 @@ import { BsPeopleFill } from 'react-icons/bs'
 import { BiTime } from 'react-icons/bi'
 import { AiOutlineLoading } from 'react-icons/ai'
 import {MdNavigateNext} from 'react-icons/md'
+import { call } from '../common/ApiService'
 
 
 const SelectSchedule = () => {
@@ -32,6 +33,33 @@ const SelectSchedule = () => {
       key: "selection",
     },
   ]);
+const [travelYn, setTravelYn] = useState('N');
+
+function test(){
+
+  const selectForm = {
+    travelTitle : document.getElementById("title").value,
+    travelYn : travelYn,
+    travelPnum : peopleNum,
+    travelStartTime : startTime,
+    travelEndTime : endTime,
+    travelStartDate : state[0].startDate,
+    travelEndDate : state[0].endDate,
+  }
+console.log("selectForm555555555555555555555555",selectForm);
+  call("/travel/saveSchedule","POST",
+    selectForm
+  ).then((response) => {
+    console.log("response",response);
+    console.log("으앜",response.travelId);
+    let travelId = response.travelId;
+    window.location.href = '/travelSchedule?id='+travelId;
+
+  })
+    .catch((error) => {
+      console.log(error);
+    })
+}
 
   // 일정 바뀔시 임의로 사진 뿌리게끔
   useEffect(() => {
@@ -56,7 +84,6 @@ const SelectSchedule = () => {
       setList(visit.items.map((item,i) => {
           return (<SelectpageList data={item} key={i}></SelectpageList>)
       }));
-
       setLoading(false);
     }
     
@@ -78,14 +105,14 @@ const SelectSchedule = () => {
     let diff = item.selection.startDate - item.selection.endDate;
     diff = Math.abs(diff / (1000 * 60 * 60 * 24));
 
-    if (diff <= 10) {
+    if (diff <= 3) {
       setState([item.selection]);
     } else {
       Swal.fire(
         {
           icon: 'warning',
           title: '경고',
-          text: '날짜는 10일까지만 선택 가능.',
+          text: '날짜는 3일까지만 선택 가능.',
           confirmButtonText: 'OK'
         }
       );
@@ -97,11 +124,15 @@ const SelectSchedule = () => {
     setSelectIndex(index);
   };
 
+  function selectTravelYn(e){ 
+    setTravelYn(e.target.value);
+  }
+
   if(loading) {
     return <div className='loading'><AiOutlineLoading className='loadingIcon'></AiOutlineLoading></div>
   } else {
     return (
-      <div className='container'>
+      <div className='ScheduleContainer'>
         <div className='selectContainer-menu'>
           {/* <Link to="/"><h1 className='Logo'>JMT</h1></Link> */}
           <Link to="/select">
@@ -116,7 +147,7 @@ const SelectSchedule = () => {
               <p>여행지 선택</p>
             </div>
           </Link>
-          <Link to="/travelSchedule"><MdNavigateNext className='SelectBtn'>다음</MdNavigateNext></Link>
+          <Link to="/travelSchedule"><MdNavigateNext className='SelectBtn' onClick={test}>다음</MdNavigateNext></Link>
         </div>
         <div className='selectContainer-Form'>
           <div className='selectInfo-Form'>
@@ -132,29 +163,36 @@ const SelectSchedule = () => {
               </div>
               <div className='selectItem'>
                 <PiSubtitlesBold className='selectItem-icon'></PiSubtitlesBold>
-                <label className='selectItem-label'>제목</label>
-                <input className='selectItem-input' placeholder='내용을 입력해주세요.'></input>
+                <label className='selectItem-label' >제목</label>
+                <input className='selectItem-input'id="title" placeholder='내용을 입력해주세요.'></input>
               </div>
               <div className='selectItem'>
                 <BsPeopleFill className='selectItem-icon'></BsPeopleFill>
                 <label className='selectItem-label'>인원</label>
-                <input className='selectItem-input selectItem-input-people' type='number' value={peopleNum} onChange={numberChange}></input>
+                <input className='selectItem-input selectItem-input-people' type='number'id="pNum" value={peopleNum} onChange={numberChange}></input>
               </div>
               <div className='selectItem'>
                 <BiTime className='selectItem-icon'></BiTime>
                 <label className='selectItem-label'>출발시간</label>
-                <input className='inputTime' type='time' value={startTime} onChange={onStartTime}></input>
+                <input className='inputTime' type='time' id="startTime" value={startTime} onChange={onStartTime}></input>
               </div>
               <div className='selectItem'>
                 <BiTime className='selectItem-icon'></BiTime>
                 <label className='selectItem-label'>도착시간</label>
-                <input className='inputTime' type='time' value={endTime} onChange={onEndTime}></input>
+                <input className='inputTime' type='time' id="endTime" value={endTime} onChange={onEndTime}></input>
               </div>
               <div className='selectItem'>
+                {/* <RadioGroup>
                 {/* <RadioGroup>
                   <Radio name="public">공개</Radio>
                   <Radio name="public" defaultChecked="true">비공개</Radio>
                 </RadioGroup> */}
+                <fieldset>
+                  <label for="travelYn">공개</label>
+                  <input type="radio" id="travelYn" value="Y" checked={travelYn === 'Y'} onChange={selectTravelYn}/>
+                  <label for="travelYn">비공개</label>
+                  <input type="radio" id="travelYn" value="N" checked={travelYn === 'N'} onChange={selectTravelYn}/>
+                </fieldset>
               </div>
             </div>
           </div>

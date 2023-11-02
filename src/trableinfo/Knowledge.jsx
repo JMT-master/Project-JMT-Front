@@ -13,11 +13,7 @@ const Trkn = (props) => {
   const regDateFormat = setDateFormat(regDate);
 
   return (
-    <tr onClick={() => navigate('/knowledgeDetail/' + num, {
-      state : {
-        data : props.data
-      }
-    })}>
+    <tr onClick={() => navigate('/knowledgeDetail/' + num)}>
       <td>{num}</td>
       <td>{category}</td>
       <td>{title}</td>
@@ -46,7 +42,8 @@ const Knowledge = () => {
     call("/knowledge","GET")
     .then(response => {
       setCurrentItems(response);
-      setTotalPage((response.length/itemsPerPage) + 1);
+      const totalpage = (response.length%itemsPerPage) === 0 ? (response.length/itemsPerPage) : (response.length/itemsPerPage) + 1;
+      setTotalPage(totalpage);
       setItemsLength(response.length);
     });
   },[]);
@@ -54,7 +51,8 @@ const Knowledge = () => {
 
   const handleSelect = (e) =>{
     setItemsPerPage(e.target.value);
-    setTotalPage((itemsLength/e.target.value) + 1);
+    const totalpage = (itemsLength%e.target.value) === 0 ? (itemsLength/e.target.value) : (itemsLength/e.target.value) + 1;
+    setTotalPage(totalpage);
     setCurrentPage(1);
   }
 
@@ -62,7 +60,9 @@ const Knowledge = () => {
     call("/knowledge/category?name="+e.target.value,"GET")
     .then(response => {
       setCurrentItems(response.data);
-      setTotalPage((response.data.length/itemsPerPage) + 1);
+      const totalpage = (response.data.length%itemsPerPage) === 0 ? (response.data.length/itemsPerPage) : (response.data.length/itemsPerPage)+1;
+      setTotalPage(totalpage);
+      setItemsLength(response.data.length);
       setCurrentPage(1);
     });
 
