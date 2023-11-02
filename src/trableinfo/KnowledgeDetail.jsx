@@ -11,7 +11,7 @@ import AnswerDetail from '../common/AnswerDetail';
 import Swal from 'sweetalert2';
 import KnowledgeWrite from './KnowledgeWrite';
 
-const KnowledgeDetail = ({ data }) => {
+const KnowledgeDetail = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [dbData, setDbdata] = useState();
@@ -20,14 +20,14 @@ const KnowledgeDetail = ({ data }) => {
   const showModal = () => {
     setModalOpen(true);
   }
-  const {state} = useLocation();
-  const detail = state;
+  // const {state} = useLocation();
+  // const detail = state;
   // const detail = data[params.id - 1]
 
   useEffect(() => {
     let revData = null;
     setLoading(true);
-    call("/knowledgeDetail?id="+params.id,"POST", detail.data)
+    call("/knowledgeDetail?id="+params.id,"POST", null)
     .then(response => {
       revData = response;
 
@@ -62,7 +62,7 @@ const KnowledgeDetail = ({ data }) => {
     })
 
     window.scrollTo(0,0);
-  },[]);
+  },[params.id]);
 
   // knowledge 수정
   function onKnowledgeUpdate() {
@@ -106,7 +106,6 @@ const KnowledgeDetail = ({ data }) => {
               title: '삭제 중 에러 발생!',
               showCloseButton: true,
               confirmButtonText: '확인',
-        
             });
             return;
           } else {
@@ -116,8 +115,8 @@ const KnowledgeDetail = ({ data }) => {
               showCloseButton: true,
               confirmButtonText: '확인',        
             }).then(
-              () => {window.location.href = "/knowledge";}
-            );            
+              () => {navigate("/knowledge")}
+            );
           }
         });
       } else {
@@ -164,7 +163,7 @@ const KnowledgeDetail = ({ data }) => {
           </div>
         </div>
         <AttachFile data = {dbData !== null ? dbData : '' }></AttachFile>
-        <AnswerDetail data = {dbData !== null ? dbData[0].num : '' }></AnswerDetail>
+        <AnswerDetail data = {dbData !== null ? dbData[0] : '' }></AnswerDetail>
         <button className='back-to-knin'  onClick={()=>navigate(-1)}>목록으로 가기</button>
   
       </div>

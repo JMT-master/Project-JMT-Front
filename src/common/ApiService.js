@@ -112,7 +112,7 @@ export const getCookie = (name) => {
 }
 
 export const deleteCookie = (name) => {
-  const cookies = new Cookies();  
+  const cookies = new Cookies();
   cookies.remove(name);
   cookies.remove('adminChk');
 }

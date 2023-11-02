@@ -8,10 +8,10 @@ $jOrange: #f3a444;
   border: 1px solid;
   border-radius: 5px;
   padding: 3px 5px;
-  margin: 0 5px;
+  margin: 1px 5px;
   color: $jOrange;
   font-size: 0.95rem;
-  font-weight: bold;
+  //font-weight: bold;
   align-items: center;
   justify-content: center;
   cursor: pointer;
@@ -51,7 +51,6 @@ $jOrange: #f3a444;
 
 .noBorder{
   border: 0;
-  font-weight: normal;
 }
 
 .onMapBtn{

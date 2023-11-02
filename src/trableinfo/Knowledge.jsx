@@ -13,11 +13,7 @@ const Trkn = (props) => {
   const regDateFormat = setDateFormat(regDate);
 
   return (
-    <tr onClick={() => navigate('/knowledgeDetail/' + num, {
-      state : {
-        data : props.data
-      }
-    })}>
+    <tr onClick={() => navigate('/knowledgeDetail/' + num)}>
       <td>{num}</td>
       <td>{category}</td>
       <td>{title}</td>

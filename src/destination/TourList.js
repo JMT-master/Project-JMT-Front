@@ -16,12 +16,14 @@ const TourList = () => {
   const [loading, setLoading] = useState(true);
   const [rawData, setRawData] = useState([]);
   const [dataList, setDataList] = useState([]);
+  const apiPageCount = useRef(1);
 
   //Nav용
   const nav = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const {pageId} = useParams();
+  const prevCategory = useRef(1);
   const pageType = searchParams.get('type') === null ? 'list' : searchParams.get('type');
 
   //태그용
@@ -34,6 +36,8 @@ const TourList = () => {
   const pageNum = (page - 1) * offset;
   const lastPage = useRef(1);
 
+  const dataNum = useRef(0);
+
   const [gps, setGps] = useState({
     lat: 33.3764981,
     lng: 126.5193789,
@@ -45,7 +49,6 @@ const TourList = () => {
     phoneno: '',
     content: '',
   });
-
 
   const onNav = () => {
     console.log(gps);
@@ -61,9 +64,6 @@ const TourList = () => {
     })
   }
 
-// const [latitude, setLatitude] = useState();
-// const [longitude, setLongitude] = useState();
-
   function checkCategory(cate) {
     switch (cate) {
       case 'tour':
@@ -77,29 +77,42 @@ const TourList = () => {
     }
   }
 
-
   const category = checkCategory(pageId);
 //데이터 받아오기
 
-  const testData = async () => {
-    let rawDatas = [];
-    for (let i = 1; i < 3; i++) {
+  useEffect(() => {
+    if (page >= (lastPage.current - 2) && dataNum.current < apiPageCount.current) {
+      dataNum.current += 1;
+    }
+  }, [page]);
+  const callApi = async () => {
+    let rawDatas = rawData && [...rawData];
+    for (let i = dataNum.current; i < (dataNum.current + 1); i++) {
       const res = await axios.get(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=${category}&page=${i}`)
+      console.log("Res : " + res.data.pageCount);
       rawDatas = rawDatas.concat(res.data.items);
+      apiPageCount.current = res.data.pageCount;
     }
     setRawData(rawDatas);
     setTagFilter('');
   }
+  console.log("page : ", page)
+  console.log("dataNum : " , dataNum)
+  console.log("비교 : " , page >= (lastPage.current - 2));
+
+
+
 
   useEffect(() => {
     setLoading(true);
-    testData();
-  }, [category]);
+    callApi();
+  }, [category, dataNum.current]);
 
 //카테고리 변경으로 데이터 변경시 사용할 데이터 리스트 새로 셋
   useEffect(() => {
     setDataList(rawData.filter(item => item.tag.includes(tagFilter)));
     lastPage.current = Math.floor(dataList.length % offset > 0 ? (dataList.length / offset) + 1 : dataList.length / offset)
+    console.log("useEffect : " + lastPage.current)
     let tag = [];
 
     rawData.map((item) => {
@@ -118,9 +131,6 @@ const TourList = () => {
     })
     return itemList;
   }
-
-  console.log("page : " + page);
-  console.log("lastP : " + lastPage.current);
 
   if (loading === true || !dataList[0]) {
     return <div className='loading'><AiOutlineLoading className='loadingIcon'></AiOutlineLoading></div>

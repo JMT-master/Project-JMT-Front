@@ -1,9 +1,11 @@
 import React from 'react'
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from 'react-icons/md'
 import { useTheme } from 'styled-components'
+import {useNavigate} from "react-router-dom";
 
 const ListPaging = (pageprops) => {
   const {page, setPage, lastPage} = pageprops
+  const lPage = lastPage;
   const theme = useTheme();
 
   console.log("page : ",page);
@@ -21,7 +23,7 @@ const ListPaging = (pageprops) => {
     for (let i = page<3 ? 1 : pages-2 ; pages+2>=lastPage ? i<=lastPage : i <= page+2; i++) {
       if(pages===i) cN='currentPage'
       else cN ='';
-      arr.push(<a id={i} className={`pagingNumBtn ${cN} ${theme.body === "#FFF" ? 'blackText' : 'whiteText'} oBtn noBorder`} key={i} href={i} onClick={onSetPage}>{i}</a>)
+      arr.push(<a id={i} className={`pagingNumBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'} oBtn noBorder ${cN}`} key={i} href={i} onClick={onSetPage}>{i}</a>)
     } return arr;
   }
 
@@ -42,7 +44,8 @@ const ListPaging = (pageprops) => {
       </button>
       <button className='oBtn'
         disabled={page === lastPage && true}
-        onClick={() => { setPage(lastPage) }}><MdKeyboardDoubleArrowRight className='twentySize'/>
+        onClick={() => { setPage(lastPage);
+        }}><MdKeyboardDoubleArrowRight className='twentySize'/>
       </button>
     </div>
   )
