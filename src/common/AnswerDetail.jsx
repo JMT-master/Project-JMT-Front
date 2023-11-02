@@ -15,10 +15,9 @@ const AnswerDetail = (props) => {
   const [modifyKey, setModifyKey] = useState();
 
   useEffect(() => {
-    call('/knowledgeDetail/answer/?num='+props.data,'GET')
+    call('/knowledgeDetail/answer/?num='+props.data.num,'GET')
     .then(response => {
       setAnswerList(response);
-      // setAnswerList()
       setContentValue('');
     });
   },[]);
@@ -37,7 +36,7 @@ const AnswerDetail = (props) => {
     }
     
     const create = {
-      knNum : props.data,
+      knNum : props.data.num,
       content : content,
       answerLike : 0
     }
@@ -57,6 +56,12 @@ const AnswerDetail = (props) => {
       } else {
         setAnswerList(response.data);
         setContentValue('');
+        call("/notification/send","POST", {
+          userid : props.data.userid,
+          url : '/knowledgeDetail/'+props.data.num,
+          content : content,
+          yn : "Y"
+        })
       }
       
     });
@@ -209,7 +214,7 @@ const AnswerDetail = (props) => {
                 <button className='oBtn' onClick={() => onAnswerDelete(answer)}>삭제</button>
               </div>
               <div className='answerDetail-review-content'>
-                <input className='answerDetail-review-content-text' id='' type='text' 
+                <input className='answerDetail-review-content-text' id='' type='text'
                 value={modifyFlg === true && modifyKey == answer.answerId ? compareText : answer.content} onChange={onAnswerChange}></input>
                 {
                   modifyFlg === true && modifyKey == answer.answerId ?
@@ -221,7 +226,7 @@ const AnswerDetail = (props) => {
                 }
                 
                 <div className='answerDetail-review-content-like'>
-                  <BsHandThumbsUp className='answerDetail-review-content-thumbs' 
+                  <BsHandThumbsUp className='answerDetail-review-content-thumbs'
                   onClick={() => thumbsAdd(answer)}></BsHandThumbsUp>
                   <span className='answerDetail-review-content-count'>
                     {answer.answerLike !== 0 ? answer.answerLike : ''}

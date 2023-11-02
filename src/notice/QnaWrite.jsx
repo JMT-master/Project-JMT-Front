@@ -78,7 +78,7 @@ const QnaWrite = (props) => {
             type: "application/json"
         }));
 
-        const accessToken = getCookie();
+        const accessToken = getCookie("ACCESS_TOKEN");
 
         axios({
             method : 'post',
