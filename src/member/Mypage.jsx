@@ -25,6 +25,44 @@ const Mypage = () => {
   const [totalCount, setTotalCount] = useState(0);
   const navigate = useNavigate();
   const [member, setMember] = useState();
+  const [myTravelItem,setMyTravelItem] = useState(null);
+
+
+  function selectTravelScehdule(){
+    call("/travel/selectTravelSchedule", "GET",
+    null
+    ).then((response) => {
+      console.log("실행됨?2");
+      console.log("selectTravelScehdule.response.data",response.data);
+      setMyTravelItem(response.data);
+      // window.location.href = '/';
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
+  function selectWishTravelScehdule(){
+    call("/travel/selectTravelSchedule", "GET",
+    null
+    ).then((response) => {
+      console.log("response.data",response.data);
+      // window.location.href = '/';
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
+  function selectTravelDes(){
+    call("/travel/selectTravelSchedule", "GET",
+    null
+    ).then((response) => {
+      console.log("response.data",response.data);
+      // window.location.href = '/';
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
 
   //member의 정보 가져와서 화면에 보여줘야함
   const getMember = () => {
@@ -37,33 +75,23 @@ const Mypage = () => {
 
   // Big page에서 Title 클릭시
   const onChangeTitle = (index) => {
+    if(index === 0){
+      selectTravelScehdule();
+    }else if(index === 1){
+      selectWishTravelScehdule();
+    }else{
+      selectTravelDes();
+    }
     setIndex(index);
     setTitle(titleArray[index]);
   }
 
-  // 일정 바뀔시 임의로 사진 뿌리게끔
-  useEffect(() => {
-    setLoading(true);
-    let num = 0;
-    if (index === 0) num = 1;
-    else if (index === 1) num = 4;
-    else if (index === 2) num = 3;
-
-    fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=c${num}&page=1`)
-      .then(res => {
-        return res.json();
-      })
-      .then(data => {
-        setVisit(data);
-      });
-  }, [title]);
-
-  // data가 변경되었을 때, tag와 List 변경
   useEffect(() => {
     let count = 0;
     getMember();
-    if (visit != null) {
-      setList(visit.items.map((item, i) => {
+    console.log('myTravelItem',myTravelItem);
+    if (myTravelItem != null) {
+      setList(myTravelItem.map((item, i) => {
         count++;
         return (<MypageList className='myPage-Big-Image-li' data={item}></MypageList>)
       }));
@@ -72,7 +100,40 @@ const Mypage = () => {
       setLoading(false);
     }
 
-  }, [visit]);
+  }, [myTravelItem]);
+
+  // 일정 바뀔시 임의로 사진 뿌리게끔
+  // useEffect(() => {
+  //   setLoading(true);
+  //   let num = 0;
+  //   if (index === 0) num = 1;
+  //   else if (index === 1) num = 4;
+  //   else if (index === 2) num = 3;
+
+  //   fetch(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=c${num}&page=1`)
+  //     .then(res => {
+  //       return res.json();
+  //     })
+  //     .then(data => {
+  //       setVisit(data);
+  //     });
+  // }, [title]);
+
+  // data가 변경되었을 때, tag와 List 변경
+  // useEffect(() => {
+  //   let count = 0;
+  //   getMember();
+  //   if (visit != null) {
+  //     setList(visit.items.map((item, i) => {
+  //       count++;
+  //       return (<MypageList className='myPage-Big-Image-li' data={item}></MypageList>)
+  //     }));
+
+  //     setTotalCount(count);
+  //     setLoading(false);
+  //   }
+
+  // }, [visit]);
 
   const width = useWindowDimensions().width;
   if (loading) {

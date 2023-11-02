@@ -122,7 +122,7 @@ const TravelSchedule = (props) => {
     call("/travel/dayFormatSave?id="+id, "POST",
       dtoList
     ).then((response) => {
-      // window.location.href = '/';
+      window.location.href = '/';
     })
       .catch((error) => {
         console.log(error);
