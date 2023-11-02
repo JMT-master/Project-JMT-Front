@@ -129,7 +129,7 @@ function HeaderTop(props) {
   const accessToken = localStorage.getItem('ACCESS_TOKEN');
   const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   const {notifications, setNotifications, send} = props;
-  const [currentTime, setCurrentTime] = useState();
+  const [chkTime, setChkTime] = useState();
 
   //알람 모달 관련
 
@@ -159,7 +159,7 @@ function HeaderTop(props) {
     $(".notice-list").hide();
   };
 
-  const state = getCookie();
+  const state = getCookie('ACCESS_TOKEN');
   
   // token 처리
   const handleClick = () => {
@@ -168,7 +168,8 @@ function HeaderTop(props) {
       navigate("/login");
     } else { // logout
       console.log('pathname : ', pathname);
-      deleteCookie();
+      deleteCookie('ACCESS_TOKEN');
+      localStorage.removeItem("loginTime");
       window.location.reload();
     }
   };
@@ -177,7 +178,7 @@ function HeaderTop(props) {
       sseSource("sub", setNotifications);
       if(localStorage.getItem("loginTime")) {
         console.log("탔어?");
-        setCurrentTime(moment(localStorage.getItem("loginTime")));
+        setChkTime(moment(localStorage.getItem("loginTime")));
       }
   }, [accessToken]);
 
@@ -189,10 +190,10 @@ function HeaderTop(props) {
          </button>
          <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
          {
-          currentTime === undefined || currentTime === '' ?
+          chkTime === undefined || chkTime === '' ?
           <></> :
           <>
-            <LoginTimer loginTime = {currentTime}></LoginTimer>
+            <LoginTimer theme = {props.theme} chkTime = {chkTime}></LoginTimer>
           </>
          }
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>

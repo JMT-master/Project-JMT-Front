@@ -14,7 +14,6 @@ const AttachFile = (props) => {
   const [imgModal, setImgModal] = useState(true);
   const [modalFlag, setModalFlag] = useState(false);
   const [sendData, setSendData] = useState();
-  console.log("attach : ", attach);
 
   useEffect(() => {
     setImgModal(true);

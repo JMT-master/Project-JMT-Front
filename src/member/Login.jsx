@@ -13,6 +13,7 @@ const Login = (props) => {
   const {setNotifications} = props;
   const [id,setId] = useState("");
   const [pwd,setPwd] = useState("");
+  const [idSave, setIdSave] = useState(false);
   const clientId = '1921d336e78e0f12cb65133fb93aeab0';
   const clientUri = 'http://localhost:3000/login/auth';
   const KakaoLoginAPI = 'https://kauth.kakao.com/oauth/authorize?client_id='+clientId+'&redirect_uri='
@@ -30,13 +31,17 @@ const Login = (props) => {
     setPwd(e.target.value);
   }
 
+  const onChangeIdSave = (e) => {
+    setIdSave(!idSave);
+  }
+
   const logBtn = () => {
     const loginDto = {
       email : id,
       password : pwd
     };
 
-    signin(loginDto);
+    signin(loginDto,id,idSave);
 
   }
 
@@ -44,6 +49,8 @@ const Login = (props) => {
     // window.open(KakaoLoginAPI,'_self');
     window.location.href = KakaoLoginAPI;
   }
+
+  console.log('idSave : ', idSave);
 
   return (
     <div className='login-content'>
@@ -58,7 +65,7 @@ const Login = (props) => {
           <p ><input type="id" className='id' placeholder='아이디를 입력해주세요' onChange={saveId} /></p>
           <p ><input type="password" className='pw' placeholder='비밀번호를 입력해주세요' onChange={savePwd} /></p>
         </div>
-        <p className='id-save'>아이디 저장 <input type="checkbox" /></p>
+        <p className='id-save'>아이디 저장<input type="checkbox" onChange={onChangeIdSave} /></p>
         <p className='login-btn' onClick={logBtn}>로그인</p>
         <p className='membership' onClick={()=>navigate('/joinUser')}><button>회원가입</button></p>
         <p className='memberCheck'><button onClick={showModal}>아이디/비밀번호찾기</button>

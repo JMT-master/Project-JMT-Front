@@ -3,11 +3,12 @@ import { EventSourcePolyfill } from 'event-source-polyfill';
 import { Cookies } from "react-cookie";
 import moment from "moment/moment";
 import { useCallback } from "react";
+import { useState } from "react";
 
 export function call(api, method, request) {
   let headers = new Headers({
     "Content-Type": "application/json",
-    Authorization: "Bearer " + getCookie()
+    Authorization: "Bearer " + getCookie('ACCESS_TOKEN')
   });
 
   let options = {
@@ -33,7 +34,7 @@ export function call(api, method, request) {
 }
 
 export function sseSource(url, setNotifications) {
-  const accessToken = getCookie();
+  const accessToken = getCookie('ACCESS_TOKEN');
   // SSE 지원
   if (typeof EventSource !== "undefined") {
     const eventSource = new EventSourcePolyfill(API_BASE_URL + '/notification/' + url, {
@@ -70,14 +71,20 @@ export function sseSource(url, setNotifications) {
 }
 
 // 쿠기 관련
-export const getCookie = () => {
+export const setCookie = (name, value) => {
   const cookies = new Cookies();
-  return cookies.get('ACCESS_TOKEN');
+  cookies.set(name, value, {path:'/', expires:moment().add(7,'days')});
+  console.log("들어옴?");
 }
 
-export const deleteCookie = () => {
+export const getCookie = (name) => {
+  const cookies = new Cookies();
+  return cookies.get(name);
+}
+
+export const deleteCookie = (name) => {
   const cookies = new Cookies();  
-  cookies.remove('ACCESS_TOKEN');
+  cookies.remove(name);
 }
 
 // Date 관련
@@ -94,9 +101,3 @@ export const setDateTimeFormat = (data) => {
   const chnDate = moment(revDate).format('YYYY-MM-DD HH:mm');
   return chnDate;
 }
-
-// export const countDownTimer = useCallback(date => {
-//   let revDate = moment();
-//   // let leftTime = 
-
-// })

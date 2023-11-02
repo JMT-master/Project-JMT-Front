@@ -14,10 +14,8 @@ const KakaoLogin = () => {
     const url = API_BASE_URL + "/login/auth?code=" + code;
 
     return fetch(url).then((response) => {
-      console.log("call_response : ", response);
       window.location.href("/");
     }).catch((error) => {
-      console.log(error);
       window.location.href("/login");
     });
     
