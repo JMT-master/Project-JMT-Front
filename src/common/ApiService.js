@@ -73,7 +73,7 @@ export function sseSource(url, setNotifications) {
 // 쿠기 관련
 export const setCookie = (name, value) => {
   const cookies = new Cookies();
-  cookies.set(name, value, {path:'/', expires:moment().add(7,'days')});
+  cookies.set(name, value, {path:'/', expires:moment().add(7,'days').toDate()});
   console.log("들어옴?");
 }
 

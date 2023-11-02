@@ -46,13 +46,24 @@ import LoginTimer from './member/LoginTimer';
 import Moment from 'react-moment';
 import moment from 'moment';
 import { useInterval } from 'react-use';
+import { loginExpired } from './member/MemberFuc';
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
   const [newQnaData, setNewQnaData] = useState(qnaData);
   const [theme, themeToggler] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
-  const [notifications, setNotifications] = useState()
+  const [notifications, setNotifications] = useState();
+  const [loading, setLoading] = useState();
+
+  useEffect(() => {
+    const localStorage =  sessionStorage.getItem('loginState');
+    const cookie = getCookie('ACCESS_TOKEN');
+    if(localStorage === 'false' && cookie !== null && cookie !== undefined) {
+      sessionStorage.setItem('ACCESS_TOKEN', getCookie('ACCESS_TOKEN'));
+      deleteCookie('ACCESS_TOKEN');
+    }
+  }, []);
 
   const send = async (type, nav) => {
     const accessToken = getCookie("ACCESS_TOKEN");
@@ -87,10 +98,16 @@ function App() {
        });
   };
 
+  if(loading === true) {
+    return(
+      <></>
+    )
+  }
+
   return (
     <ThemeProvider theme={themeMode}>
-       <GlobalStyles/>
-       <HeaderTop theme={theme} themeToggler={themeToggler} notifications={notifications}
+        <GlobalStyles/>
+        <HeaderTop theme={theme} themeToggler={themeToggler} notifications={notifications}
                   setNotifications={setNotifications} send={send} />
       <Routes>
         <Route path='/' element={<Header></Header>}></Route>
@@ -126,8 +143,8 @@ function App() {
 function HeaderTop(props) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('ACCESS_TOKEN');
-  const refreshToken = localStorage.getItem('REFRESH_TOKEN');
+  const accessToken = getCookie("ACCESS_TOKEN");
+  // const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   const {notifications, setNotifications, send} = props;
   const [chkTime, setChkTime] = useState();
 
@@ -175,11 +192,15 @@ function HeaderTop(props) {
   };
 
   useEffect(() => {
-      sseSource("sub", setNotifications);
-      if(localStorage.getItem("loginTime")) {
-        console.log("탔어?");
-        setChkTime(moment(localStorage.getItem("loginTime")));
-      }
+    if(accessToken !== undefined && accessToken !== null) {
+      // loginExpired().then(() => {
+      //   console.log('탐???????');
+        sseSource("sub", setNotifications);
+        if(localStorage.getItem("loginTime")) {
+          setChkTime(moment(localStorage.getItem("loginTime")));
+        }
+      // });
+    }
   }, [accessToken]);
 
   return (
