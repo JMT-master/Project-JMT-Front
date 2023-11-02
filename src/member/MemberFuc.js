@@ -102,16 +102,27 @@ export function signin(loginDto, id, idSave) {
           headers: {"Content-Type": "application/json"}
         }).then(resultInfo => resultInfo.json())
         .then(result => {
+          console.log('login response : ',result);
+          
+          // 로그인 상태 유지 x
+          if(loginDto.loginState === false) {
+            sessionStorage.setItem("loginState", loginDto.loginState);
+            window.location.href = "/";
+            return;
+          }
+
           const loginTime = moment(result);
           const resultTime = loginTime.add(1, 'hours').format();
 
           localStorage.setItem("loginTime",resultTime);
 
+          console.log('loginTime : ', loginTime);
+
           if(idSave) {
             const saveCookie = getCookie('save_id');
             if(saveCookie !== null || saveCookie !== undefined) 
               deleteCookie('save_id');
-            
+
             setCookie('save_id',id);
           } 
 
@@ -119,6 +130,35 @@ export function signin(loginDto, id, idSave) {
         })
         
       } 
+  })
+
+}
+
+// 로그인 만료시간 확인
+export function loginExpired() {
+
+  console.log("loginExpired, 들어옴?????");
+  console.log("getCookie('ACCESS_TOKEN')",getCookie('ACCESS_TOKEN'));
+
+  const url = API_BASE_URL + "/login/expired";
+
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie('ACCESS_TOKEN')
+    },
+    
+  })
+  .then(response => {
+    console.log('response' , response);
+      
+      if(response.status === 401) { // unauthorized
+        if(localStorage.getItem("loginTime")) {
+          localStorage.removeItem("loginTime");
+        };
+        deleteCookie("ACCESS_TOKEN");
+      }
   })
 
 }
