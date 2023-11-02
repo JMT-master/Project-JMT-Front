@@ -19,7 +19,8 @@
     font-size: larger;
 }
 .chat-list-container > .create-chat-room {
-    text-align: center;    
+    text-align: center;
+    width: 90%;
 }
 .create-chat-room > input {
     padding: 10px 20px;

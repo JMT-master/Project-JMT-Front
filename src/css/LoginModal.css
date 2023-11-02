@@ -76,7 +76,8 @@
   margin-top: 50px;
   width: 80%; height: 30px;
   border: none;
-
+  cursor: pointer;
+  text-align: center;
 }
 .moid-submit {
   margin: 0 auto;

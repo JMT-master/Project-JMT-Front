@@ -52,9 +52,15 @@ const ChatRoomComponent = () => {
   return (
     <div className="chat-list-container">
       <h1 className="chat-list-title">전체 채팅방 목록</h1>
-      <ul className="chat-list">
+      <ul 
+      // className="chat-list"
+      className="list-group"
+      >
         {chatRooms.map((room) => (
-          <li key={room.roomId} className="chat-room">
+          <li key={room.roomId} 
+          // className="chat-room"
+          class="list-group-item list-group-item-warning text-center"
+          >
             <span
               style={{ cursor: "pointer" }}
               onClick={() => enterRoom(room.roomId, room.roomName)}

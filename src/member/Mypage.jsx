@@ -65,7 +65,12 @@ const Mypage = () => {
     if (visit != null) {
       setList(visit.items.map((item, i) => {
         count++;
-        return (<MypageList className='myPage-Big-Image-li' data={item}></MypageList>)
+        return (
+        <div>
+            <TravelPdf></TravelPdf>
+          <MypageList className='myPage-Big-Image-li' data={item}></MypageList>
+        </div>
+        )
       }));
 
       setTotalCount(count);
