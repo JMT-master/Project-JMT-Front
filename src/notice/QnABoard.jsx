@@ -27,11 +27,11 @@ export const Tr = (props) => {
       <td onClick={() => navigate('/qna/' + props.data.qnaNum)}>{props.data.qnaTitle}</td>
       <td>{modDate}</td>
       <td>{props.data.qnaView}</td>
-      <td>
+      <td style={isAdmin.current == "Y" ? null : { display: "none" }}>
         <button type='button' 
         className='oBtn'
           onClick={deleteHandler}
-          style={isAdmin.current == "Y" ? null : { display: "none" }}
+          // style={isAdmin.current == "Y" ? null : { display: "none" }}
         >삭제</button>
       </td>
     </tr>
@@ -44,12 +44,16 @@ const QnABoard = () => {
   const [pagingInfo, setPagingInfo] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const isAdmin = useRef(getCookie("adminChk"));
-  const [theme, setTheme] = useState("");
+  const theme = localStorage.getItem("theme");
   useEffect(() => {
 
     fetchData(currentPage);
 
   }, [currentPage]);
+
+  useEffect(() => {
+
+  },[theme]);
 
   const fetchData = (page) => {
 
@@ -80,15 +84,6 @@ const QnABoard = () => {
     navigate("/qna/admin/write");
   }
 
-  //테마에 따라서 부트스트랩 변화
-  const changeTheme = () => {
-    if(localStorage.getItem("theme") === "dark"){
-      setTheme("dark");
-    }else{
-      setTheme("");
-    }
-  }
-
   return (
     <div className='content'>
       <h1 style={{ textAlign: 'left' }}>
@@ -111,7 +106,7 @@ const QnABoard = () => {
             <option value={20}>20개씩</option>
           </select>
         </div>
-        <Table striped bordered hover>
+        <Table striped bordered hover variant={theme}>
           <thead>
             <tr>
               <th>Q</th>
