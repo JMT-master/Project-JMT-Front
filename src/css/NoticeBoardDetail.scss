@@ -1,0 +1,106 @@
+.noticeDetail-content{
+  margin: 10px 30px;
+}
+.noticeDetail-title{
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+.noticeDetail-title h1{
+  text-align: left;
+  width: 85vw;
+  margin-left: 20px;
+}
+.noticeDetail-title span{
+  text-align: right;
+  line-height: 86px;
+  margin-right: 10px;
+
+}
+.noticeDetail-box {
+  text-align: left;
+  margin: 30px auto;
+  height: 500px;
+  border-top: 2px solid black;
+  border-bottom: 1px solid #ccc;
+  padding: 30px;
+  & .noticeDetail-img{
+    display: flex;
+    padding: 10px;
+  }
+  .noticeDetail-boxTitle{
+    display: flex;
+    padding: 10px;
+  }
+  .noticeDetail-inside{
+    display: flex;
+    padding: 10px;
+  }
+}
+
+.noticeDetail-img img{
+  margin-right: 20px;
+}
+.noticeDetail-img p{
+  width: 240px;
+  text-align: center;
+  font-size: x-large;
+  height: 120px;
+  line-height: 120px;
+}
+.noticeDetail-boxTitle{
+  border-top: 1px solid black;
+  border-bottom: 1px rgb(128, 128, 128) solid ;
+    min-width: 550px;
+  margin: 10px auto;
+  position: relative;
+}
+.noticeDetail-boxTitle h3{
+  width: 80vw;
+  margin-right: 20px;
+  text-align: center;
+}
+.noticeDetail-boxTitle .no{
+    min-width: 50px;
+  margin-left: 3px;
+  font-size: large;
+  margin-right: 10px;
+}
+
+.noticeDetail-boxTitle .noticeContent{
+    text-align: center;
+    width: 60%;
+    min-width: 300px;
+    font-weight: bold;
+}
+.noticeDetail-boxTitle .date{
+  position: absolute;
+  right: 5px;
+}
+.noticeDetail-inside textarea{
+  width: 100%;
+  margin: 20px 10px;
+  border: none;
+  resize: none;
+}
+.noticeDetail-inside textarea:focus{
+  outline: none;
+}
+//.noticeDetail-box button{
+//  position: absolute;
+//  right: 5vw;
+//  margin-bottom: 10px;
+//}
+.noticeDetail-btnBox{
+  display: flex;
+  justify-content: flex-end;
+  button{
+    margin: 0 3px;
+  }
+}
+@media screen and (max-width:1024px) {
+  .noticeDetail-title h1{
+    text-align: left;
+    width: 75vw;
+    margin-left: 20px;
+  }
+}
