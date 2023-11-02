@@ -40,17 +40,23 @@ const TravelSchedule = (props) => {
     })
   }
   function travelSave(){
+
+    const tableDataAll ={
+      tableData1: tableData1,
+      tableData2: tableData2,
+    }
+
     console.log("param",param);
-    console.log("tableData1555555555555555555555555",tableData1);
+    console.log("tableData",tableDataAll);
     call("/travel/dayFormatSave","POST",
-    tableData1
+    tableDataAll
     ).then((response) => {
       console.log("response",response);
-      window.location.href = '/';
+      // window.location.href = '/';
     })
-      .catch((error) => {
-        console.log(error);
-      })
+    .catch((error) => {
+      console.log(error);
+    })
   }
 
   const markers = [];
