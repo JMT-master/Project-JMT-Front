@@ -4,12 +4,13 @@ import { Cookies } from "react-cookie";
 import moment from "moment/moment";
 import {connect} from "react-redux";
 import { useCallback } from "react";
+import { useState } from "react";
 
 export function call(api, method, request) {
   let headers = new Headers({
     "Content-Type": "application/json",
   });
-  getCookie() && headers.append("Authorization", "Bearer " + getCookie());
+  getCookie('ACCESS_TOKEN') && headers.append("Authorization", "Bearer " + getCookie('ACCESS_TOKEN'));
   // if(request.accessToken && request.accessToken != null) {
   //   headers.append("Authorization", "Bearer " + getCookie());
   // }
@@ -60,7 +61,7 @@ export function signin(loginDto) {
 }
 
 export function sseSource(url, setNotifications) {
-  const accessToken = getCookie();
+  const accessToken = getCookie('ACCESS_TOKEN');
   // SSE 지원
   if (typeof EventSource !== "undefined") {
     const eventSource = new EventSourcePolyfill(API_BASE_URL + '/notification/' + url, {
@@ -98,15 +99,21 @@ export function sseSource(url, setNotifications) {
   }
 }
 
+// 쿠기 관련
+export const setCookie = (name, value) => {
+  const cookies = new Cookies();
+  cookies.set(name, value, {path:'/', expires:moment().add(7,'days')});
+  console.log("들어옴?");
+}
 
 export const getCookie = (name) => {
   const cookies = new Cookies();
-  return name != 'adminChk' ? cookies.get('ACCESS_TOKEN') : cookies.get('adminChk');
+  return name != 'adminChk' ? cookies.get(name) : cookies.get('adminChk');
 }
 
-export const deleteCookie = () => {
+export const deleteCookie = (name) => {
   const cookies = new Cookies();  
-  cookies.remove('ACCESS_TOKEN');
+  cookies.remove(name);
   cookies.remove('adminChk');
 }
 
@@ -125,9 +132,3 @@ export const setDateTimeFormat = (data) => {
   const chnDate = moment(revDate).format('YYYY-MM-DD HH:mm');
   return chnDate;
 }
-
-// export const countDownTimer = useCallback(date => {
-//   let revDate = moment();
-//   // let leftTime =
-
-// })

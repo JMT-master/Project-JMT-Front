@@ -175,11 +175,15 @@ function HeaderTop(props) {
   const accessToken = getCookie();
   const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   const {notifications, setNotifications, send} = props;
-  const [currentTime, setCurrentTime] = useState();
+  const [chkTime, setChkTime] = useState();
 
 
   useEffect(() => {
     sseSource("sub", setNotifications);
+    if(localStorage.getItem("loginTime")) {
+      console.log("탔어?");
+      setChkTime(moment(localStorage.getItem("loginTime")));
+    }
 }, [accessToken]);
   //알람 모달 관련
 
@@ -214,8 +218,8 @@ function HeaderTop(props) {
     $(".notice-list").hide();
   };
 
-  const state = getCookie();
-
+  const state = getCookie('ACCESS_TOKEN');
+  
   // token 처리
   const handleClick = () => {
     
@@ -223,7 +227,8 @@ function HeaderTop(props) {
       navigate("/login");
     } else { // logout
       console.log('pathname : ', pathname);
-      deleteCookie();
+      deleteCookie('ACCESS_TOKEN');
+      localStorage.removeItem("loginTime");
       window.location.reload();
     }
   };
@@ -242,7 +247,20 @@ function HeaderTop(props) {
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
        <div className="headerTop">
-         <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
+         <button type="button" onClick={showModal} style={{justifyContent: "left"}}>
+           <AiOutlineBell className="headerNotification"/>
+         </button>
+         <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
+         {
+          chkTime === undefined || chkTime === '' ?
+          <></> :
+          <>
+            <LoginTimer theme = {props.theme} chkTime = {chkTime}></LoginTimer>
+          </>
+         }
+         <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>
+          {(state === undefined || state === null) ? '' : '마이페이지'}
+          </Link>
         <span>
           <a href={() => false} onClick={() => handleClick()}
              className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"

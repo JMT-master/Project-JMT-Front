@@ -31,7 +31,6 @@ const KnowledgeDetail = ({ data }) => {
     .then(response => {
       revData = response;
 
-      console.log('post 타기 전',revData);
       
       if(revData !== undefined && revData !== null && revData[0].originalName !== null && revData[0].originalName !== undefined) {
           revData.map((data,i) => {
@@ -41,7 +40,6 @@ const KnowledgeDetail = ({ data }) => {
             data: data,
             responseType : 'blob',
           }).then(responseFile => {
-            console.log('response.data : ', responseFile.data);
             const blob = new Blob([responseFile.data]);
       
             const reader = new FileReader();
@@ -53,13 +51,11 @@ const KnowledgeDetail = ({ data }) => {
           });
         })
 
-        console.log('revData : ',revData);
 
         setDbdata(revData);
         
       } else {
 
-        console.log('revData : ',revData);
         setLoading(false);
         setDbdata(revData);
       }      
@@ -91,7 +87,6 @@ const KnowledgeDetail = ({ data }) => {
 
   // Knowledge 삭제
   function onKnowledgeDelete() {
-    console.log('dbData : ',dbData);
     Swal.fire({
       icon : 'question',
       title: '삭제하시겠습니까?',

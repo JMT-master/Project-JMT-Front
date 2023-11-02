@@ -73,7 +73,6 @@ const JoinUser = () => {
 
   const checkPwd = (e) => {
     const pwdVal = document.getElementById('LoginPwd').value;
-    console.log(e.target.value === pwdVal);
     if(e.target.value === pwdVal){
       return setPwdPop('비밀번호가 일치합니다');
     }else {
@@ -150,14 +149,12 @@ const JoinUser = () => {
   // 메일 인증 받기
   function onEmailHandler(e) {
     e.preventDefault();
-    console.log("들어옴?");
     const userid = document.getElementById('email').value;
     
     const chkUser = {
       userid : userid
     };
 
-    console.log("chkUser : ", chkUser);
 
     emailValidate(chkUser);
 

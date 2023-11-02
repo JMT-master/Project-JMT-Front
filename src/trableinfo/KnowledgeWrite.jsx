@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'react-icons/ai';
 import axios from 'axios';
 import { API_BASE_URL } from '../common/ApiConfig';
-import { getCookie } from '../common/ApiService'; 
+import { call, getCookie } from '../common/ApiService'; 
 import Swal from 'sweetalert2';
 import { TiDeleteOutline } from 'react-icons/ti';
 
@@ -18,7 +18,6 @@ const KnowledgeWrite = () => {
 
   const location = useLocation();
   const revData = location.state;
-  console.log('revData : ', revData);
 
   // 수정버튼 클릭시 Data 삽입
   useEffect(() => {
@@ -49,13 +48,15 @@ const KnowledgeWrite = () => {
       setContentFiles(files);
     }
   }
+
+  console.log('revData : ',revData);
   
   // 지식인 create
   const onSubmitKnowledge = (e) => {
     e.preventDefault();
     
     const formData = new FormData();
-
+    
     const data = {
       "category" : category,
       "title" : title,
@@ -63,45 +64,77 @@ const KnowledgeWrite = () => {
       "view" : "0"
     }
 
-    console.log(title);
-    console.log(content);
     if(title === null || title === undefined ||
       content === null || content === undefined || title === '' || content === '') {
-        Swal.fire({
-          icon: 'warning',
-          title: '내용',
-          text: '제목 혹은 내용이 비었습니다.'
-        });
+      Swal.fire({
+        icon: 'warning',
+        title: '내용',
+        text: '제목 혹은 내용이 비었습니다.'
+      });
 
-        return;
-      }
-
-    if(contentFiles !== undefined && contentFiles != null) {
-      for(let i = 0; i < contentFiles.length; i++) {
-        formData.append('file',contentFiles[i]);
-      }
+      return;
     }
-    
-    formData.append('data',new Blob([JSON.stringify(data)], {
-      type: "application/json"
-    }));
 
-    const accessToken = getCookie();
+    const accessToken = getCookie('ACCESS_TOKEN');
 
-    axios({
-      method : 'post',
-      url : API_BASE_URL + '/knowledgeWrite/send',
-      headers : {
-        "Content-Type" : "multipart/form-data",
-        "Authorization": 'Bearer ' + accessToken
-      },
-      data : formData
-    }).then(response => {
-      console.log("knowledgeWrite :",response)
-      if(response.status === 200) {
-        window.location.href="/knowledge";
+    if(revData === null) { // 작성완료
+      if(contentFiles !== undefined && contentFiles != null) {
+        for(let i = 0; i < contentFiles.length; i++) {
+          formData.append('file',contentFiles[i]);
+        }
       }
-    });
+      
+      formData.append('data',new Blob([JSON.stringify(data)], {
+        type: "application/json"
+      }));
+  
+      axios({
+        method : 'post',
+        url : API_BASE_URL + '/knowledgeWrite/send',
+        headers : {
+          "Content-Type" : "multipart/form-data",
+          "Authorization": 'Bearer ' + accessToken
+        },
+        data : formData
+      }).then(response => {
+        if(response.status === 200) {
+          window.location.href="/knowledge";
+        }
+      });
+    } else { // 수정완료
+      console.log('contentFiles : ',contentFiles);
+      const sendData = {...data, 
+        num : revData[0].num,
+        files : Array.from(contentFiles).map(data => data.name)
+      };
+
+      console.log('sendData', sendData);
+
+      call('/knowledgeWrite/update', "POST", sendData);
+      // if(contentFiles !== undefined && contentFiles != null) {
+      //   for(let i = 0; i < contentFiles.length; i++) {
+      //     formData.append('file',contentFiles[i]);
+      //   }
+      // }
+      
+      // formData.append('data',new Blob([JSON.stringify(data)], {
+      //   type: "application/json"
+      // }));
+  
+      // axios({
+      //   method : 'post',
+      //   url : API_BASE_URL + '/knowledgeWrite/send',
+      //   headers : {
+      //     "Content-Type" : "multipart/form-data",
+      //     "Authorization": 'Bearer ' + accessToken
+      //   },
+      //   data : formData
+      // }).then(response => {
+      //   if(response.status === 200) {
+      //     window.location.href="/knowledge";
+      //   }
+      // });
+    }
   }
 
   // 
@@ -140,7 +173,6 @@ const KnowledgeWrite = () => {
     window.location.href = "/knowledge";
   }
 
-  console.log('files : ',contentFiles && contentFiles);
 
   return (
     <div className='knowledge-content'>
@@ -192,7 +224,6 @@ const KnowledgeWrite = () => {
             {
               contentFiles !== null && contentFiles !== undefined ?
               Array.from(contentFiles).map(file => {
-                console.log(file);
                   return (
                   <div style={{margin:0, padding:0, borderBottom : 'none', display : 'flex'}}>
                     <input placeholder='첨부파일' className='file-attach-text'
