@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import {call, deleteCookie, getCookie, setCookie, sseSource} from "../common/ApiService";
+import {call, deleteCookie, extensionCookie, getCookie, setCookie, sseSource} from "../common/ApiService";
 import {API_BASE_URL} from "../common/ApiConfig";
 import moment from "moment";
 
@@ -101,14 +101,10 @@ export function signin(loginDto, id, idSave) {
           body: body,
           headers: {"Content-Type": "application/json"}
         }).then(resultInfo => resultInfo.json())
-        .then(result => {
-          console.log('login response : ',result);
-          
+        .then(result => {          
           // 로그인 상태 유지 x
           if(loginDto.loginState === false) {
             sessionStorage.setItem("loginState", loginDto.loginState);
-            window.location.href = "/";
-            return;
           }
 
           const loginTime = moment(result);
@@ -134,12 +130,47 @@ export function signin(loginDto, id, idSave) {
 
 }
 
+// 로그인 시간 연장
+export function loginTimeUpdate() {
+  let url = API_BASE_URL + "/login/info";
+
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie('ACCESS_TOKEN')
+    },
+  }).then(result => {
+    return result.json();
+  }).then(data => {
+    url = API_BASE_URL + "/login/extension";
+
+    fetch(url, {
+      method: 'POST',
+      body : data,
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: 'include'
+      
+    }).then(revTimeInfo => revTimeInfo.json())
+    .then(revTime => {
+        console.log('revTime', revTime);
+        const loginTime = moment(revTime);
+        const resultTime = loginTime.add(1, 'hours').format();
+    
+        localStorage.setItem("loginTime",resultTime);
+
+        extensionCookie();
+
+        window.location.href = "/";
+    })
+  });
+}
+
+
 // 로그인 만료시간 확인
 export function loginExpired() {
-
-  console.log("loginExpired, 들어옴?????");
-  console.log("getCookie('ACCESS_TOKEN')",getCookie('ACCESS_TOKEN'));
-
   const url = API_BASE_URL + "/login/expired";
 
   return fetch(url, {

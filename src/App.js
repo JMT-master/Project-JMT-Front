@@ -46,7 +46,6 @@ import LoginTimer from './member/LoginTimer';
 import Moment from 'react-moment';
 import moment from 'moment';
 import { useInterval } from 'react-use';
-import { loginExpired } from './member/MemberFuc';
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -146,7 +145,7 @@ function HeaderTop(props) {
   const accessToken = getCookie("ACCESS_TOKEN");
   // const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   const {notifications, setNotifications, send} = props;
-  const [chkTime, setChkTime] = useState();
+  const [chkTime, setChkTime] = useState(moment(localStorage.getItem("loginTime")));
 
   //알람 모달 관련
 
@@ -176,6 +175,8 @@ function HeaderTop(props) {
     $(".notice-list").hide();
   };
 
+  console.log('시간 : ', chkTime);
+
   const state = getCookie('ACCESS_TOKEN');
   
   // token 처리
@@ -193,13 +194,7 @@ function HeaderTop(props) {
 
   useEffect(() => {
     if(accessToken !== undefined && accessToken !== null) {
-      // loginExpired().then(() => {
-      //   console.log('탐???????');
         sseSource("sub", setNotifications);
-        if(localStorage.getItem("loginTime")) {
-          setChkTime(moment(localStorage.getItem("loginTime")));
-        }
-      // });
     }
   }, [accessToken]);
 
@@ -211,7 +206,7 @@ function HeaderTop(props) {
          </button>
          <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
          {
-          chkTime === undefined || chkTime === '' ?
+          chkTime === undefined || chkTime === '' || !chkTime.isValid() ?
           <></> :
           <>
             <LoginTimer theme = {props.theme} chkTime = {chkTime}></LoginTimer>
