@@ -5,9 +5,11 @@ import { useTheme } from 'styled-components'
 const ListPaging = (pageprops) => {
   const {page, setPage, lastPage} = pageprops
   const theme = useTheme();
-  
-  // console.log(lastPage);
+
+  console.log("page : ",page);
+  console.log("lastPage : ",lastPage);
   const onSetPage = (e) => {
+    console.log(e.target.text);
     e.preventDefault();
     setPage(parseInt(e.target.text));
   }

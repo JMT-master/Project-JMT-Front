@@ -1,6 +1,8 @@
 import Swal from "sweetalert2";
 import {call, sseSource} from "../common/ApiService";
 import {API_BASE_URL} from "../common/ApiConfig";
+import { redirect } from "react-router-dom";
+import moment from "moment";
 
 // 이메일 중복 확인
 export function userChk(chkUser) {
@@ -55,7 +57,16 @@ export function emailValidateCheck(chkUser) {
 export function joinUser(memberDto) {
   return call("/joinUser", "POST", memberDto)
      .then(response => {
-       if (response !== undefined) window.location.href = "/login";
+      console.log("join response : ",response);
+       if (response !== undefined) { 
+        Swal.fire({
+          icon: 'success',
+          title: '회원가입',
+          text: '가입을 축하드립니다.'
+        }).then(function() {
+           window.location.href = "/login";
+          });
+      }
        else {
          Swal.fire({
            icon: 'warning',
@@ -91,9 +102,8 @@ export function signin(loginDto) {
         })
       }
       else if(response !== undefined) {
-          // localStorage.setItem("ACCESS_TOKEN", response.accessToken);
-          // localStorage.setItem("REFRESH_TOKEN", response.refreshToken);
-          window.location.href = "/";
+        localStorage.setItem("loginTime", moment());
+        window.location.href = "/";
       } 
   })
 

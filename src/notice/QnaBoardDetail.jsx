@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import style from '../css/QnaBoardDetail.css'
 import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'react-icons/ai';
-import { call } from './../common/ApiService';
+import { call, getCookie, setDateFormat } from './../common/ApiService';
 
 const QnaBoardDetail = () => {
   const [item, setItem] = useState({});
   const params = useParams();
   const navigate = useNavigate();
   const qnaColNum = params.id;
+  const isAdmin = useRef(getCookie("adminChk"));
 
   useEffect(() => {
     // qnaColNum을 사용하여 API를 호출하고 데이터를 가져옵니다.
     call("/qna/"+qnaColNum, "GET", null)
-      .then((response) => setItem(response.data[0]));
+      .then((response) => 
+      setItem(response)
+      );
     // console.log("item {} : ", item);
   }, [qnaColNum]); // qnaColNum이 변경될 때마다 useEffect가 실행됩니다.
 
@@ -35,13 +38,15 @@ const QnaBoardDetail = () => {
         <div className='qnaDetail-boxTitle'>
           <p className='no'>{qnaColNum}</p>
           <h3>{item.qnaTitle}</h3>
-          <p className='date'>{item.modDate}</p>
+          <p className='date'>{setDateFormat(item.modDate)}</p>
         </div>
         <div className='qnaDetail-inside'>
           <textarea cols="30" rows="10" readOnly placeholder='qna 내용' value={item.qnaContent}></textarea>
-        <button  onClick={() => navigate("/qna/admin/"+qnaColNum)} >수정하기</button>
         </div>
-        <button className='back-to-qna'  onClick={()=>navigate("/qna")}>목록으로 가기</button>
+        <button className='oBtn'  
+        style={isAdmin.current == "Y" ? null : {display: "none"}}
+        onClick={() => navigate("/qna/admin/"+qnaColNum)} >수정하기</button>
+        <button className='oBtn'  onClick={()=>navigate("/qna")}>목록으로 가기</button>
       </div>
       }
     </div>
