@@ -166,7 +166,6 @@ const Mypage = () => {
         </div>
         <hr></hr>
         <div>
-        <h1>여행 계획 입력</h1>
         <TravelPdf />
         </div>
         <h1 className='myPage-h1-title'>{title}({totalCount})</h1>

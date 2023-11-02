@@ -6,13 +6,13 @@ import { qnaData } from '../data/Data';
 import Paging from '../common/Paging';
 import { call, getCookie, setDateFormat } from './../common/ApiService';
 import { Button, Table } from 'react-bootstrap';
-
+import ListPaging from '../destination/ListPaging';
 
 export const Tr = (props) => {
   const navigate = useNavigate();
   // console.log("props.data : {}",props.data);
   const modDate = setDateFormat(props.data.modDate);
-  
+
   const isAdmin = useRef(getCookie("adminChk"));
   const deleteItem = props.deleteItem;
 
@@ -27,10 +27,13 @@ export const Tr = (props) => {
       <td onClick={() => navigate('/qna/' + props.data.qnaNum)}>{props.data.qnaTitle}</td>
       <td>{modDate}</td>
       <td>{props.data.qnaView}</td>
-      <button type='button' className='oBtn'
-      onClick={deleteHandler}
-      style={isAdmin.current == "Y" ? null : {display: "none"}}
-      >삭제</button>
+      <td>
+        <button type='button' 
+        className='oBtn'
+          onClick={deleteHandler}
+          style={isAdmin.current == "Y" ? null : { display: "none" }}
+        >삭제</button>
+      </td>
     </tr>
   );
 }
@@ -41,7 +44,7 @@ const QnABoard = () => {
   const [pagingInfo, setPagingInfo] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const isAdmin = useRef(getCookie("adminChk"));
-
+  const [theme, setTheme] = useState("");
   useEffect(() => {
 
     fetchData(currentPage);
@@ -53,10 +56,10 @@ const QnABoard = () => {
     call(`/qna?page=${page}`, "GET", null)
       .then((response) => {
         // console.log("response.items : {}", response.items);
-        if(response != null) {
+        if (response != null) {
           setItems(response.items);
           setPagingInfo(response.pagingInfo);
-        }else {
+        } else {
           setItems([]);
         }
       });
@@ -75,6 +78,15 @@ const QnABoard = () => {
   const addItemPage = () => {
     localStorage.setItem('qna.length', items.length);
     navigate("/qna/admin/write");
+  }
+
+  //테마에 따라서 부트스트랩 변화
+  const changeTheme = () => {
+    if(localStorage.getItem("theme") === "dark"){
+      setTheme("dark");
+    }else{
+      setTheme("");
+    }
   }
 
   return (
@@ -99,7 +111,7 @@ const QnABoard = () => {
             <option value={20}>20개씩</option>
           </select>
         </div>
-        <Table striped bordered hover variant="dark">
+        <Table striped bordered hover>
           <thead>
             <tr>
               <th>Q</th>
@@ -108,7 +120,7 @@ const QnABoard = () => {
               <th>작성일자</th>
               <th>조회수</th>
               <th
-              style={isAdmin.current == "Y" ? null : {display: "none"}}
+                style={isAdmin.current == "Y" ? null : { display: "none" }}
               >삭제 여부</th>
             </tr>
           </thead>
@@ -120,16 +132,15 @@ const QnABoard = () => {
         </Table>
       </div>
       <div className='page'>
-      <Paging
-                currentPage={pagingInfo.currentPage}
-                totalPages={pagingInfo.totalPages}
-                onPageChange={(page) => setCurrentPage(page)}
-            />
+        <ListPaging page={pagingInfo.currentPage}
+          lastPage={pagingInfo.totalPages}
+          setPage={(page) => setCurrentPage(page)}>
+        </ListPaging>
       </div>
       <div>
         <Button type='button' className='oBtn'
-        style={isAdmin.current == "Y" ? null : {display: "none"}}
-        onClick={addItemPage}>Q&A 작성하기</Button>
+          style={isAdmin.current == "Y" ? null : { display: "none" }}
+          onClick={addItemPage}>Q&A 작성하기</Button>
       </div>
     </div>
   );

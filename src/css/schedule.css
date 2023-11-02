@@ -1,4 +1,4 @@
-.container {
+.ScheduleContainer {
   display: grid;
   grid-template-columns: 1fr 12fr;
   margin-top: 2%;

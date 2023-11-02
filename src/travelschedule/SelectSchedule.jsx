@@ -132,7 +132,7 @@ console.log("selectForm555555555555555555555555",selectForm);
     return <div className='loading'><AiOutlineLoading className='loadingIcon'></AiOutlineLoading></div>
   } else {
     return (
-      <div className='container'>
+      <div className='ScheduleContainer'>
         <div className='selectContainer-menu'>
           {/* <Link to="/"><h1 className='Logo'>JMT</h1></Link> */}
           <Link to="/select">

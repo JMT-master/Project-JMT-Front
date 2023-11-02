@@ -236,7 +236,7 @@ function HeaderTop(props) {
   const left = (window.innerWidth - width) / 2;
   const top = (window.innerHeight - height) / 2;
 
-  window.open('/chat/room', '_blank', `width=${width},height=${height},left=${left},top=${top}`);
+  window.open('/chat/room', '_blank', `width=${width},height=${height},left=${left},top=${top}, status=no,toolbar=no,scrollbars=no`);
 };
 
   return (
@@ -256,7 +256,9 @@ function HeaderTop(props) {
          </Link>
          <div className="headerSell">
            <ul id="destination" onMouseOver={handleMouseOverDes} onMouseOut={handleMouseOutDes}>
-             <div className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}><a>여행지</a></div>
+             <div >
+              <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행지</a>
+              </div>
              <div className='destination-list'>
                <li><Link to='/destination/tour'
                          className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광지</Link></li>
@@ -278,7 +280,8 @@ function HeaderTop(props) {
              </div>
            </ul>
            <ul id="myTrableInfo" onMouseOver={handleMouseOverInfo} onMouseOut={handleMouseOutInfo}>
-             <div className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}><a>여행정보</a></div>
+             <div >
+              <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행정보</a></div>
              <div className='myTrableInfo-list'>
                <li><Link to="/traffic" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통
                  혼잡도</Link></li>
@@ -293,7 +296,8 @@ function HeaderTop(props) {
              </div>
            </ul>
            <ul id="notice" onMouseOver={handleMouseOverNoti} onMouseOut={handleMouseOutNoti}>
-             <div className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}><a>공지사항</a></div>
+             <div >
+              <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</a></div>
              <div className='notice-list'>
                <li><Link to="/notice"
                          className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</Link></li>
