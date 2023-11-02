@@ -138,7 +138,7 @@ export default NoticeBoard;
 
 const NoticeRead = (props) => {
   const navigate = useNavigate();
-  const {idx, category, title, regDate,deleteHandler} = props.data;
+  const {idx, category, title, regDate, deleteHandler} = props.data;
   const dataForm = setDateFormat(props.data.modDate);
   const isAdmin = useRef(getCookie("adminChk"))
 

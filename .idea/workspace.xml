@@ -6,12 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ApiService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ApiService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/NoticeBoard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/NoticeBoard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/destination/DetailInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/DetailInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/AnswerDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/AnswerDetail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Notification.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Notification.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoardDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoardDetail.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trableinfo/Knowledge.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/trableinfo/Knowledge.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/trableinfo/KnowledgeDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/trableinfo/KnowledgeDetail.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -92,7 +91,7 @@
       <workItem from="1697695191033" duration="1217000" />
       <workItem from="1698712342669" duration="22561000" />
       <workItem from="1698798493823" duration="7891000" />
-      <workItem from="1698884188745" duration="12470000" />
+      <workItem from="1698884188745" duration="20826000" />
     </task>
     <task id="LOCAL-00001" summary="23년 10월 17일 5시 50분 안광현 프론트단 커밋">
       <option name="closed" value="true" />
@@ -118,7 +117,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698828295774</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="리뷰 Read 테스트, &#10;댓글 작성에서 call의 reqest에 dbData[0].userid도 보내기">
+      <option name="closed" value="true" />
+      <created>1698901488687</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1698901488687</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,6 +181,7 @@
     <MESSAGE value="231031 공지 수정부터 시작," />
     <MESSAGE value="231101 1418 머지" />
     <MESSAGE value="231101 페이지 순차 로딩&#10;태그 랜덤화" />
-    <option name="LAST_COMMIT_MESSAGE" value="231101 페이지 순차 로딩&#10;태그 랜덤화" />
+    <MESSAGE value="리뷰 Read 테스트, &#10;댓글 작성에서 call의 reqest에 dbData[0].userid도 보내기" />
+    <option name="LAST_COMMIT_MESSAGE" value="리뷰 Read 테스트, &#10;댓글 작성에서 call의 reqest에 dbData[0].userid도 보내기" />
   </component>
 </project>

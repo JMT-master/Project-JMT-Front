@@ -11,9 +11,10 @@ const AnswerDetail = (props) => {
   const [answerList, setAnswerList] = useState();
   const [contentValue, setContentValue] = useState();
   const [modifyFlag, setModifyFlag] = useState(false);
+  console.log("props.data.num : " + props.data.num)
 
   useEffect(() => {
-    call('/knowledgeDetail/answer/?num='+props.data,'GET')
+    call('/knowledgeDetail/answer/?num='+props.data.num,'GET')
     .then(response => {
       setAnswerList(response);
       setContentValue('');
@@ -34,7 +35,7 @@ const AnswerDetail = (props) => {
     }
     
     const create = {
-      knNum : props.data,
+      knNum : props.data.num,
       content : content,
       answerLike : 0
     }
@@ -55,6 +56,12 @@ const AnswerDetail = (props) => {
       } else {
         setAnswerList(response.data);
         setContentValue('');
+        call("/notification/send","POST", {
+          userid : props.data.userid,
+          url : '/knowledgeDetail/'+props.data.num,
+          content : content,
+          yn : "Y"
+        })
       }
       
     });

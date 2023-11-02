@@ -55,7 +55,7 @@ function App(factory, deps) {
   const notifyCount = useMemo(() => {
     let count = 0;
     notifications && notifications.length != 0 && notifications.forEach((notify) => {
-      if (notify.yn === "y") {
+      if (notify.yn === "Y") {
         count += 1;
       }
     });
