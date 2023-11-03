@@ -108,7 +108,7 @@ export const setCookie = (name, value) => {
 
 export const getCookie = (name) => {
   const cookies = new Cookies();
-  return name != 'adminChk' ? cookies.get(name) : cookies.get('adminChk');
+  return cookies.get(name);
 }
 
 export const deleteCookie = (name) => {
