@@ -22,6 +22,7 @@ const QnaWrite = (props) => {
         qnaView: 0,
     });
 
+    const accessToken = getCookie("ACCESS_TOKEN");
     const navigate = useNavigate();
     const location = useLocation();
     const isContainingWrite = location.pathname.includes('write');
@@ -78,7 +79,7 @@ const QnaWrite = (props) => {
             type: "application/json"
         }));
 
-        const accessToken = getCookie("ACCESS_TOKEN");
+
 
         axios({
             method : 'post',
@@ -111,7 +112,6 @@ const QnaWrite = (props) => {
             type: "application/json"
         }));
 
-        const accessToken = getCookie();
 
         axios({
             method : 'post',

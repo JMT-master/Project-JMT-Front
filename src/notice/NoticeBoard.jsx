@@ -3,7 +3,6 @@ import '../css/NoticeBoard.css'
 import {VscSearch} from 'react-icons/vsc';
 import {useNavigate} from 'react-router-dom';
 import {noticeData} from '../data/Data';
-import Paging from '../common/Paging';
 import {call, getCookie, setDateFormat} from "../common/ApiService";
 import ListPaging from "../destination/ListPaging";
 import Swal from "sweetalert2";
@@ -21,7 +20,7 @@ const NoticeBoard = () => {
   const idxNum = useRef(0);
   const isAdmin = useRef(getCookie("adminChk"));
 
-  console.log("총 페이지  :" +  totalPages);
+  console.log("총 페이지  :" + totalPages);
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -36,21 +35,23 @@ const NoticeBoard = () => {
        .then(response => {
          console.log("delete 호출!!")
          setCurrentItems(response);
-         if(response === undefined) {
+         if (response === undefined) {
            Swal.fire({
-             icon : 'warning',
+             icon: 'warning',
              title: '삭제 중 에러 발생!',
              showCloseButton: true,
              confirmButtonText: '확인',
            });
          } else {
            Swal.fire({
-             icon : 'info',
+             icon: 'info',
              title: '삭제되었습니다!',
              showCloseButton: true,
              confirmButtonText: '확인',
            }).then(
-              () => {navigate("/notice")}
+              () => {
+                navigate("/notice")
+              }
            );
          }
        })
@@ -72,7 +73,7 @@ const NoticeBoard = () => {
        "GET",
        null
     ).then((response) => {
-      if(response != null)setCurrentItems(response);
+      if (response != null) setCurrentItems(response);
       idxNum.current = parseInt(JSON.stringify(response[0].idx));
     })
        .catch((error) => {
@@ -114,7 +115,7 @@ const NoticeBoard = () => {
            <tbody>
            {currentItems && currentItems.map((item) => {
              return (
-                <NoticeRead data={item} key={item.id}  deleteHandler={deleteHandler}></NoticeRead>
+                <NoticeRead data={item} key={item.id} deleteHandler={deleteHandler}></NoticeRead>
              )
            })}
            </tbody>
@@ -138,11 +139,11 @@ export default NoticeBoard;
 
 const NoticeRead = (props) => {
   const navigate = useNavigate();
-  const {idx, category, title, regDate, deleteHandler} = props.data;
+  const {idx, category, title, regDate } = props.data;
   const dataForm = setDateFormat(props.data.modDate);
   const isAdmin = useRef(getCookie("adminChk"))
-
-  const deleteNotice = (idx) =>{
+  const {deleteHandler} = props;
+  const deleteNotice = (idx) => {
     deleteHandler(idx);
     console.log("마사카!")
   }
@@ -157,11 +158,12 @@ const NoticeRead = (props) => {
        <td>{dataForm}</td>
        <td>
          <button type='button' className='oBtn'
-                 onClick={()=> {
+                 onClick={() => {
                    deleteNotice(idx)
                  }}
                  style={isAdmin.current == "Y" ? null : {display: "none"}}
-         >삭제</button>
+         >삭제
+         </button>
        </td>
      </tr>
   );
