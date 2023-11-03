@@ -7,7 +7,6 @@
     <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notice/QnaWrite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/QnaWrite.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +91,7 @@
       <workItem from="1698712342669" duration="22561000" />
       <workItem from="1698798493823" duration="7891000" />
       <workItem from="1698884188745" duration="20826000" />
-      <workItem from="1698970916395" duration="1654000" />
+      <workItem from="1698970916395" duration="1841000" />
     </task>
     <task id="LOCAL-00001" summary="23년 10월 17일 5시 50분 안광현 프론트단 커밋">
       <option name="closed" value="true" />
@@ -134,7 +133,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698971113300</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="qna getcookie 수리">
+      <option name="closed" value="true" />
+      <created>1698972623346</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1698972623346</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -192,6 +199,7 @@
     <MESSAGE value="리뷰 Read 테스트, &#10;댓글 작성에서 call의 reqest에 dbData[0].userid도 보내기" />
     <MESSAGE value="231026.front" />
     <MESSAGE value="231102 태종님이랑 머지" />
-    <option name="LAST_COMMIT_MESSAGE" value="231102 태종님이랑 머지" />
+    <MESSAGE value="qna getcookie 수리" />
+    <option name="LAST_COMMIT_MESSAGE" value="qna getcookie 수리" />
   </component>
 </project>

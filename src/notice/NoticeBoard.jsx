@@ -5,6 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import {noticeData} from '../data/Data';
 import {call, getCookie, setDateFormat} from "../common/ApiService";
 import ListPaging from "../destination/ListPaging";
+import { Button, Table } from 'react-bootstrap';
 import Swal from "sweetalert2";
 
 
@@ -19,6 +20,7 @@ const NoticeBoard = () => {
   const totalPages = currentItems && Math.ceil(currentItems.length / itemsPerPage);
   const idxNum = useRef(0);
   const isAdmin = useRef(getCookie("adminChk"));
+  const theme = localStorage.getItem("theme");
 
   console.log("총 페이지  :" + totalPages);
   const handlePageChange = (page) => {
@@ -103,7 +105,7 @@ const NoticeBoard = () => {
              <option value={20}>20개씩</option>
            </select>
          </div>
-         <table>
+         <Table striped bordered hover variant={theme}>
            <thead>
            <tr>
              <th>No.</th>
@@ -119,7 +121,7 @@ const NoticeBoard = () => {
              )
            })}
            </tbody>
-         </table>
+         </Table>
          <div className='plus-notice'>
            <button style={isAdmin.current == "Y" ? null : {display: "none"}}
                    onClick={() => navigate('/notice/admin/write', {state: {idx: idxNum.current}})}>글쓰기
