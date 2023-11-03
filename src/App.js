@@ -121,8 +121,8 @@ function App(factory, deps) {
   };
   useEffect(() => {
     // 231103, 추후 수정
-    // if (isSub.current) sseSource("sub", setNotifications, notifyCount);
-    // isSub.current = false;
+    if (isSub.current) sseSource("sub", setNotifications, notifyCount);
+    isSub.current = false;
   }, []);
 
   if (loading === true) {
@@ -201,7 +201,7 @@ function HeaderTop(props) {
   useEffect(() => {
     if(accessToken !== undefined && accessToken !== null) {
       // 231103, 추후 수정
-      // sseSource("sub", setNotifications);
+      sseSource("sub", setNotifications);
     }
   }, [accessToken]);
 
