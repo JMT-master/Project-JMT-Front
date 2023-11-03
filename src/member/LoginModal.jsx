@@ -79,6 +79,8 @@ const LoginModal = ({ setModalOpen, id, title, content, writer }) => {
       setEmail(e.target.value);
     }
     const sendEmailCode = (e) => {
+      console.log("username : " + username);
+      console.log("email : " + email);
       e.preventDefault();
       const sendEmailDto = {
         username: username,
