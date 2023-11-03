@@ -3,6 +3,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube} from "react-icons/ai";
 import {call, getCookie} from "../common/ApiService";
 import '../css/NoticeBoardDetail.scss'
+import Swal from "sweetalert2";
 
 const NoticeBoardDetail = ({data}) => {
   const navigate = useNavigate();
@@ -23,7 +24,24 @@ const NoticeBoardDetail = ({data}) => {
   const deleteNotice = () => {
     call("/notice/admin", "DELETE", {idx: item.idx})
        .then(response => {
-         navigate("/notice");
+         if(response === undefined) {
+           Swal.fire({
+             icon : 'warning',
+             title: '삭제 중 에러 발생!',
+             showCloseButton: true,
+             confirmButtonText: '확인',
+           });
+           return;
+         } else {
+           Swal.fire({
+             icon : 'info',
+             title: '삭제되었습니다!',
+             showCloseButton: true,
+             confirmButtonText: '확인',
+           }).then(
+              () => {navigate("/notice")}
+           );
+         }
        })
   }
 

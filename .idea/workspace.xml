@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="231031 머지 후 커밋">
-      <change afterPath="$PROJECT_DIR$/src/notice/NoticeUpdate.jsx" afterDir="false" />
+    <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ApiService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ApiService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoardDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoardDetail.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/destination/DetailInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/DetailInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/destination/ReviewBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/ReviewBox.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/destination/TourList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/TourList.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,22 +50,31 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "WebServerToolWindowFactoryState": "false",
     "android.gradle.sync.needed": "true",
     "git-widget-placeholder": "park",
-    "last_opened_file_path": "D:/workspace/PJ/Project-JMT-Front/src/notice",
+    "jdk.selected.JAVA_MODULE": "11",
+    "last_opened_file_path": "D:/workspace/PJ/Project-JMT-Front",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "yarn",
+    "project.structure.last.edited": "모듈",
+    "project.structure.proportion": "0.15039062",
+    "project.structure.side.proportion": "0.50747985",
     "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\workspace\PJ\Project-JMT-Front\src\notice" />
       <recent name="D:\second-project\src\notice" />
     </key>
   </component>
@@ -91,6 +97,8 @@
       <workItem from="1697695191033" duration="1217000" />
       <workItem from="1698712342669" duration="22561000" />
       <workItem from="1698798493823" duration="7891000" />
+      <workItem from="1698884188745" duration="20826000" />
+      <workItem from="1698970916395" duration="1841000" />
     </task>
     <task id="LOCAL-00001" summary="23년 10월 17일 5시 50분 안광현 프론트단 커밋">
       <option name="closed" value="true" />
@@ -100,15 +108,55 @@
       <option name="project" value="LOCAL" />
       <updated>1697532542815</updated>
     </task>
-    <task id="LOCAL-00002" summary="231031 17:36">
+    <task id="LOCAL-00002" summary="231101 페이지 순차 로딩&#10;태그 랜덤화">
       <option name="closed" value="true" />
-      <created>1698741378970</created>
+      <created>1698828183229</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1698741378970</updated>
+      <updated>1698828183230</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="231101 페이지 순차 로딩&#10;태그 랜덤화">
+      <option name="closed" value="true" />
+      <created>1698828295774</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1698828295774</updated>
+    </task>
+    <task id="LOCAL-00004" summary="리뷰 Read 테스트, &#10;댓글 작성에서 call의 reqest에 dbData[0].userid도 보내기">
+      <option name="closed" value="true" />
+      <created>1698901488687</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1698901488687</updated>
+    </task>
+    <task id="LOCAL-00005" summary="231102 태종님이랑 머지">
+      <option name="closed" value="true" />
+      <created>1698971113300</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1698971113300</updated>
+    </task>
+    <task id="LOCAL-00006" summary="qna getcookie 수리">
+      <option name="closed" value="true" />
+      <created>1698972623346</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1698972623346</updated>
+    </task>
+    <task id="LOCAL-00007" summary="리뷰 업데이트 반환시 전체 리스트 반환으로 뷰 업데이트하게 수정중">
+      <option name="closed" value="true" />
+      <created>1698994995373</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1698994995373</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -145,7 +193,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/park" />
+                        <option value="Deb" />
                       </list>
                     </value>
                   </entry>
@@ -159,9 +207,15 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="23년 10월 17일 5시 50분 안광현 프론트단 커밋" />
-    <MESSAGE value="231026.front" />
     <MESSAGE value="231031 공지Delete 및 버튼 배치 끝, 수정부터 시작하면됨" />
     <MESSAGE value="231031 공지 수정부터 시작," />
-    <option name="LAST_COMMIT_MESSAGE" value="231031 공지 수정부터 시작," />
+    <MESSAGE value="231101 1418 머지" />
+    <MESSAGE value="231101 페이지 순차 로딩&#10;태그 랜덤화" />
+    <MESSAGE value="리뷰 Read 테스트, &#10;댓글 작성에서 call의 reqest에 dbData[0].userid도 보내기" />
+    <MESSAGE value="231026.front" />
+    <MESSAGE value="231102 태종님이랑 머지" />
+    <MESSAGE value="qna getcookie 수리" />
+    <MESSAGE value="리뷰 업데이트 반환시 전체 리스트 반환으로 뷰 업데이트하게 수정중" />
+    <option name="LAST_COMMIT_MESSAGE" value="리뷰 업데이트 반환시 전체 리스트 반환으로 뷰 업데이트하게 수정중" />
   </component>
 </project>

@@ -13,11 +13,7 @@ const Trkn = (props) => {
   const regDateFormat = setDateFormat(regDate);
 
   return (
-    <tr onClick={() => navigate('/knowledgeDetail/' + num, {
-      state : {
-        data : props.data
-      }
-    })}>
+    <tr onClick={() => navigate('/knowledgeDetail/' + num)}>
       <td>{num}</td>
       <td>{category}</td>
       <td>{title}</td>
@@ -46,9 +42,6 @@ const Knowledge = () => {
     call("/knowledge","GET")
     .then(response => {
       setCurrentItems(response);
-      console.log(response.length%itemsPerPage);
-      console.log(response.length%itemsPerPage);
-      console.log(response.length%itemsPerPage);
       const totalpage = (response.length%itemsPerPage) === 0 ? (response.length/itemsPerPage) : (response.length/itemsPerPage) + 1;
       setTotalPage(totalpage);
       setItemsLength(response.length);

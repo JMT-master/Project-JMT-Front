@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-const TravelPdf = () => {
+const TravelPdf = (props) => {
   const [travelPlan, setTravelPlan] = useState([]);
   const [travel, setTravel] = useState({
     startTime: Date.now(),
@@ -21,11 +21,10 @@ const TravelPdf = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     generatePdf();
-    console.log("Submitted Travel Plan:", travelPlan);
-    console.log("JSON.stringify(travelPlan):", JSON.stringify(travelPlan));
   };
 
   const generatePdf = () => {
+    
     fetch("http://localhost:8888/travel/generate-pdf", {
       method: "POST",
       headers: {
@@ -52,37 +51,7 @@ const TravelPdf = () => {
     <div>
       {/* 필요한 입력 폼 또는 컴포넌트 */}
       <form onSubmit={handleSubmit}>
-        <label>
-          시작 시간:
-          <input
-            type="datetime-local"
-            name="startTime"
-            value={travel.startTime}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <label>
-          장소:
-          <input
-            type="text"
-            name="place"
-            value={travel.place}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <label>
-          장소 이름:
-          <input
-            type="text"
-            name="placeName"
-            value={travel.placeName}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <button type="submit">제출</button>
+        <button type="submit" className="oBtn">제출</button>
       </form>
     </div>
   );

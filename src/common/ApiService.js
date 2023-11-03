@@ -4,12 +4,13 @@ import { Cookies } from "react-cookie";
 import moment from "moment/moment";
 import {connect} from "react-redux";
 import { useCallback } from "react";
+import { useState } from "react";
 
 export function call(api, method, request) {
   let headers = new Headers({
     "Content-Type": "application/json",
   });
-  getCookie() && headers.append("Authorization", "Bearer " + getCookie());
+  getCookie('ACCESS_TOKEN') && headers.append("Authorization", "Bearer " + getCookie('ACCESS_TOKEN'));
   // if(request.accessToken && request.accessToken != null) {
   //   headers.append("Authorization", "Bearer " + getCookie());
   // }
@@ -60,7 +61,7 @@ export function signin(loginDto) {
 }
 
 export function sseSource(url, setNotifications) {
-  const accessToken = getCookie();
+  const accessToken = getCookie('ACCESS_TOKEN');
   // SSE 지원
   if (typeof EventSource !== "undefined") {
     const eventSource = new EventSourcePolyfill(API_BASE_URL + '/notification/' + url, {
@@ -98,16 +99,47 @@ export function sseSource(url, setNotifications) {
   }
 }
 
+// 쿠기 관련
+export const setCookie = (name, value) => {
+  const cookies = new Cookies();
+  cookies.set(name, value, {path:'/', expires:moment().add(7,'days').toDate()});
+  console.log("들어옴?");
+}
 
 export const getCookie = (name) => {
   const cookies = new Cookies();
-  return name != 'adminChk' ? cookies.get('ACCESS_TOKEN') : cookies.get('adminChk');
+  const sessionValue = sessionStorage.getItem(name);
+
+  // 로그인 상태 유지 x
+  if(name === "ACCESS_TOKEN" && sessionValue !== null && sessionValue !== undefined) {
+    return sessionStorage.getItem(name);
+  } else {
+    return cookies.get(name);
+  }
 }
 
-export const deleteCookie = () => {
-  const cookies = new Cookies();  
-  cookies.remove('ACCESS_TOKEN');
-  cookies.remove('adminChk');
+export const deleteCookie = (name) => {
+  const cookies = new Cookies();
+  const sessionValue = sessionStorage.getItem(name);
+
+  // 로그인 상태 유지 x
+  if(name === "ACCESS_TOKEN" && sessionValue !== null && sessionValue !== undefined) {
+    sessionStorage.removeItem('loginState');
+    sessionStorage.removeItem(name);
+  } else {
+    cookies.remove(name);
+    cookies.remove('adminChk');
+  }
+}
+
+// 쿠키 갱신용
+// 기존 ACCESS_TOKEN으로 넘기면 된다는 글이 많지만 아직 원인을 찾지 못함
+// EXTENSION_TOKEN은 받아오므로 받아와서 덮어쓰기 하는 형식으로 작성
+export const extensionCookie = () => {
+  const cookies = new Cookies();
+  deleteCookie('ACCESS_TOKEN');
+  cookies.set("ACCESS_TOKEN", getCookie('EXTENSION_TOKEN'));
+  deleteCookie('EXTENSION_TOKEN');
 }
 
 
@@ -125,9 +157,3 @@ export const setDateTimeFormat = (data) => {
   const chnDate = moment(revDate).format('YYYY-MM-DD HH:mm');
   return chnDate;
 }
-
-// export const countDownTimer = useCallback(date => {
-//   let revDate = moment();
-//   // let leftTime =
-
-// })

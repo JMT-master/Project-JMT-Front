@@ -1,9 +1,8 @@
-import React from 'react';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube} from 'react-icons/ai';
-import {VscSearch} from 'react-icons/vsc';
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import {call} from "../common/ApiService";
+import Swal from "sweetalert2";
 
 const NoticeWrite = () => {
   const navigate = useNavigate();
@@ -24,17 +23,35 @@ const NoticeWrite = () => {
     const content = formData.get('content');
 
     const jsonForm = {
-      idx : idx,
+      idx: idx,
       category: category,
-      title : title,
-      content :content
+      title: title,
+      content: content
     }
 
     call("/notice/admin", "POST", jsonForm)
-       .then(reponse => {
-         navigate("/notice/" + idx)
+       .then(response => {
+         if (response === undefined) {
+           Swal.fire({
+             icon: 'warning',
+             title: '작성 중 에러 발생!',
+             showCloseButton: true,
+             confirmButtonText: '확인',
+           });
+           return;
+         } else {
+           Swal.fire({
+             icon: 'info',
+             title: '작성되었습니다!',
+             showCloseButton: true,
+             confirmButtonText: '확인',
+           }).then(
+              () => {
+                navigate("/notice/" + idx)
+              }
+           );
+         }
        })
-
   }
 
   return (
@@ -78,7 +95,6 @@ const NoticeWrite = () => {
            <button className='back-to-knlist' onClick={() => navigate("/notice")}>목록으로 돌아가기</button>
          </div>
        </form>
-
      </div>
   );
 };

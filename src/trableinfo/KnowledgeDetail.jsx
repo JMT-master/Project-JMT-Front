@@ -11,7 +11,7 @@ import AnswerDetail from '../common/AnswerDetail';
 import Swal from 'sweetalert2';
 import KnowledgeWrite from './KnowledgeWrite';
 
-const KnowledgeDetail = ({ data }) => {
+const KnowledgeDetail = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [dbData, setDbdata] = useState();
@@ -20,18 +20,17 @@ const KnowledgeDetail = ({ data }) => {
   const showModal = () => {
     setModalOpen(true);
   }
-  const {state} = useLocation();
-  const detail = state;
+  // const {state} = useLocation();
+  // const detail = state;
   // const detail = data[params.id - 1]
 
   useEffect(() => {
     let revData = null;
     setLoading(true);
-    call("/knowledgeDetail?id="+params.id,"POST", detail.data)
+    call("/knowledgeDetail?id="+params.id,"POST", null)
     .then(response => {
       revData = response;
 
-      console.log('post 타기 전',revData);
       
       if(revData !== undefined && revData !== null && revData[0].originalName !== null && revData[0].originalName !== undefined) {
           revData.map((data,i) => {
@@ -41,7 +40,6 @@ const KnowledgeDetail = ({ data }) => {
             data: data,
             responseType : 'blob',
           }).then(responseFile => {
-            console.log('response.data : ', responseFile.data);
             const blob = new Blob([responseFile.data]);
       
             const reader = new FileReader();
@@ -53,20 +51,18 @@ const KnowledgeDetail = ({ data }) => {
           });
         })
 
-        console.log('revData : ',revData);
 
         setDbdata(revData);
         
       } else {
 
-        console.log('revData : ',revData);
         setLoading(false);
         setDbdata(revData);
       }      
     })
 
     window.scrollTo(0,0);
-  },[]);
+  },[params.id]);
 
   // knowledge 수정
   function onKnowledgeUpdate() {
@@ -91,7 +87,6 @@ const KnowledgeDetail = ({ data }) => {
 
   // Knowledge 삭제
   function onKnowledgeDelete() {
-    console.log('dbData : ',dbData);
     Swal.fire({
       icon : 'question',
       title: '삭제하시겠습니까?',
@@ -111,7 +106,6 @@ const KnowledgeDetail = ({ data }) => {
               title: '삭제 중 에러 발생!',
               showCloseButton: true,
               confirmButtonText: '확인',
-        
             });
             return;
           } else {
@@ -121,8 +115,8 @@ const KnowledgeDetail = ({ data }) => {
               showCloseButton: true,
               confirmButtonText: '확인',        
             }).then(
-              () => {window.location.href = "/knowledge";}
-            );            
+              () => {navigate("/knowledge")}
+            );
           }
         });
       } else {
@@ -169,7 +163,7 @@ const KnowledgeDetail = ({ data }) => {
           </div>
         </div>
         <AttachFile data = {dbData !== null ? dbData : '' }></AttachFile>
-        <AnswerDetail data = {dbData !== null ? dbData[0].num : '' }></AnswerDetail>
+        <AnswerDetail data = {dbData !== null ? dbData[0] : '' }></AnswerDetail>
         <button className='back-to-knin'  onClick={()=>navigate(-1)}>목록으로 가기</button>
   
       </div>

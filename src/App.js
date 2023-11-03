@@ -10,7 +10,7 @@ import Login from './member/Login';
 import NoticeBoard from './notice/NoticeBoard';
 import NoticeBoardDetail from './notice/NoticeBoardDetail';
 import {useEffect, useMemo, useRef, useState} from 'react';
-import {noticeData, qnaData} from './data/Data';
+import {noticeData} from './data/Data';
 import QnABoard from './notice/QnABoard';
 import QnaBoardDetail from './notice/QnaBoardDetail';
 import {FesListNoImg} from './trableinfo/Festival';
@@ -37,14 +37,14 @@ import ChatDetail from './trableinfo/ChatDetail';
 import JoinUserValidateChk from './member/JoinUserValidateChk';
 import NotificationList from "./common/Notification";
 import axios from "axios";
-import {call, deleteCookie, getCookie, sseSource} from "./common/ApiService";
+import {deleteCookie, getCookie, sseSource} from "./common/ApiService";
 import NoticeWrite from './notice/NoticeWrite';
 import TravelPdf from './travelschedule/TravelPdf';
 import LoginTimer from './member/LoginTimer';
-import Moment from 'react-moment';
 import moment from 'moment';
-import { useInterval } from 'react-use';
 import NoticeUpdate from "./notice/NoticeUpdate";
+import { useInterval } from 'react-use';
+import ChangePasswd from './member/ChangePasswd';
 
 function App(factory, deps) {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -55,7 +55,7 @@ function App(factory, deps) {
   const notifyCount = useMemo(() => {
     let count = 0;
     notifications && notifications.length != 0 && notifications.forEach((notify) => {
-      if (notify.yn === "y") {
+      if (notify.yn === "Y") {
         count += 1;
       }
     });
@@ -71,9 +71,20 @@ function App(factory, deps) {
   const modalToggle = () => {
     setModalOpen(!modalOpen);
   }
+  const [loading, setLoading] = useState();
+
+  useEffect(() => {
+    const localStorage = sessionStorage.getItem('loginState');
+    const cookie = getCookie('ACCESS_TOKEN');
+    if (localStorage === 'false' && cookie !== null && cookie !== undefined) {
+      sessionStorage.setItem('ACCESS_TOKEN', getCookie('ACCESS_TOKEN'));
+      deleteCookie('ACCESS_TOKEN');
+    }
+  }, []);
 
   const send = async (type, nav) => {
-    const accessToken = getCookie();
+    const accessToken = getCookie("ACCESS_TOKEN");
+    console.log("accesTK : " + accessToken)
     await axios({
       method: 'POST',
       url: `http://localhost:8888/${type}/send`,
@@ -110,10 +121,16 @@ function App(factory, deps) {
     isSub.current = false;
   }, []);
 
+  if (loading === true) {
+    return (
+       <></>
+    )
+  }
+
   return (
-     <ThemeProvider theme={themeMode}>
-       <GlobalStyles/>
-       <HeaderTop theme={theme} themeToggler={themeToggler} notifications={notifications}
+    <ThemeProvider theme={themeMode}>
+        <GlobalStyles/>
+        <HeaderTop theme={theme} themeToggler={themeToggler} notifications={notifications}
                   setNotifications={setNotifications} send={send}/>
        <Routes>
          <Route path='/' element={<Header></Header>}></Route>
@@ -124,7 +141,8 @@ function App(factory, deps) {
          <Route path="/travelSchedule/:id?" element={<TravelSchedule></TravelSchedule>}></Route>
          <Route path="/mypage" element={<Mypage></Mypage>}></Route>
          <Route path="/login" element={<Login></Login>}></Route>
-         <Route path="/notice" element={<NoticeBoard></NoticeBoard>}></Route>
+         <Route path="/notice" element={<NoticeBoard send={send}></NoticeBoard>}></Route>
+         <Route path="/notice/admin/write" element={<NoticeWrite></NoticeWrite>}></Route>
          <Route path="/notice/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
          <Route path="/notice/admin/write" element={<NoticeWrite></NoticeWrite>}></Route>
          <Route path="/notice/admin/update" element={<NoticeUpdate></NoticeUpdate>}></Route>
@@ -144,6 +162,7 @@ function App(factory, deps) {
          <Route path='/chat/room/:roomId?' element={<ChatDetail/>}></Route>
          <Route path='/travel-schedule' element={<TravelPdf></TravelPdf>}></Route>
          <Route path='/member/update' element={<JoinUser></JoinUser>}></Route>
+         <Route path='/myInfo/ChangePasswd' element={<ChangePasswd></ChangePasswd>}></Route>
        </Routes>
 
        {isChatRoom ? null : (
@@ -158,10 +177,6 @@ function App(factory, deps) {
          <OnModalComp setModalOpen={setModalOpen}
                       comp={<NotificationList notifications={notifications} setNotifications={setNotifications}
                                               modalOpen={modalOpen}/>}></OnModalComp>
-         <button type="button" className="testBtn" onClick={() => {
-           send("notification")
-         }}>테스트용 send
-         </button>
        </div>
        )}
 
@@ -172,15 +187,18 @@ function App(factory, deps) {
 function HeaderTop(props) {
   const {pathname} = useLocation();
   const navigate = useNavigate();
-  const accessToken = getCookie();
-  const refreshToken = localStorage.getItem('REFRESH_TOKEN');
+  const accessToken = getCookie("ACCESS_TOKEN");
+  // const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   const {notifications, setNotifications, send} = props;
-  const [currentTime, setCurrentTime] = useState();
+  const [chkTime, setChkTime] = useState(moment(localStorage.getItem("loginTime")));
 
 
   useEffect(() => {
-    sseSource("sub", setNotifications);
-}, [accessToken]);
+    if(accessToken !== undefined && accessToken !== null) {
+      sseSource("sub", setNotifications);
+    }
+  }, [accessToken]);
+
   //알람 모달 관련
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -214,16 +232,19 @@ function HeaderTop(props) {
     $(".notice-list").hide();
   };
 
-  const state = getCookie();
+  console.log('시간 : ', chkTime);
+
+  const state = getCookie('ACCESS_TOKEN');
 
   // token 처리
   const handleClick = () => {
-    
+
     if (state === undefined || state === null) { // login
       navigate("/login");
     } else { // logout
       console.log('pathname : ', pathname);
-      deleteCookie();
+      deleteCookie('ACCESS_TOKEN');
+      localStorage.removeItem("loginTime");
       window.location.reload();
     }
   };
@@ -236,14 +257,32 @@ function HeaderTop(props) {
   const left = (window.innerWidth - width) / 2;
   const top = (window.innerHeight - height) / 2;
 
-  window.open('/chat/room', '_blank', `width=${width},height=${height},left=${left},top=${top}`);
+  window.open('/chat/room', '_blank', `width=${width},height=${height},left=${left},top=${top}, status=no,toolbar=no,scrollbars=no`);
 };
+
+
 
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
        <div className="headerTop">
-         <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>마이페이지</Link>
-        <span>
+         <button type="button" onClick={showModal} style={{justifyContent: "left"}}>
+           <AiOutlineBell className="headerNotification"/>
+         </button>
+         <button type="button" className="testBtn" onClick={() => {
+           send("notification")
+         }}>테스트용 send
+         </button>
+         {
+          chkTime === undefined || chkTime === '' || !chkTime.isValid() ?
+          <></> :
+          <>
+            <LoginTimer theme = {props.theme} chkTime = {chkTime}></LoginTimer>
+          </>
+         }
+         <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>
+           {(state === undefined || state === null) ? '' : '마이페이지'}
+         </Link>
+         <span>
           <a href={() => false} onClick={() => handleClick()}
              className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
           >{(state === undefined || state === null) ? '로그인' : '로그아웃'}</a>
@@ -256,7 +295,9 @@ function HeaderTop(props) {
          </Link>
          <div className="headerSell">
            <ul id="destination" onMouseOver={handleMouseOverDes} onMouseOut={handleMouseOutDes}>
-             <div className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}><a>여행지</a></div>
+             <div >
+              <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행지</a>
+              </div>
              <div className='destination-list'>
                <li><Link to='/destination/tour'
                          className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광지</Link></li>
@@ -278,13 +319,14 @@ function HeaderTop(props) {
              </div>
            </ul>
            <ul id="myTrableInfo" onMouseOver={handleMouseOverInfo} onMouseOut={handleMouseOutInfo}>
-             <div className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}><a>여행정보</a></div>
+             <div >
+              <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행정보</a></div>
              <div className='myTrableInfo-list'>
                <li><Link to="/traffic" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통
                  혼잡도</Link></li>
                <li>
-                <span onClick={handleChatLinkClick} className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
-                  </span>
+                <a onClick={handleChatLinkClick} className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
+                  </a>
                 {/* <Link to="/chat/room" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
                  </Link> */}
                  </li>
@@ -293,7 +335,8 @@ function HeaderTop(props) {
              </div>
            </ul>
            <ul id="notice" onMouseOver={handleMouseOverNoti} onMouseOut={handleMouseOutNoti}>
-             <div className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}><a>공지사항</a></div>
+             <div >
+              <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</a></div>
              <div className='notice-list'>
                <li><Link to="/notice"
                          className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</Link></li>

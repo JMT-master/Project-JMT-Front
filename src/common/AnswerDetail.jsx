@@ -10,10 +10,12 @@ import Swal from 'sweetalert2'
 const AnswerDetail = (props) => {
   const [answerList, setAnswerList] = useState();
   const [contentValue, setContentValue] = useState();
-  const [modifyFlag, setModifyFlag] = useState(false);
+  const [compareText, setCompareText] = useState('');
+  const [modifyFlg, setModifyFlg] = useState(false);
+  const [modifyKey, setModifyKey] = useState();
 
   useEffect(() => {
-    call('/knowledgeDetail/answer/?num='+props.data,'GET')
+    call('/knowledgeDetail/answer/?num='+props.data.num,'GET')
     .then(response => {
       setAnswerList(response);
       setContentValue('');
@@ -34,14 +36,13 @@ const AnswerDetail = (props) => {
     }
     
     const create = {
-      knNum : props.data,
+      knNum : props.data.num,
       content : content,
       answerLike : 0
     }
 
     call('/knowledgeDetail/answer/create','POST',create)
     .then(response => {
-      console.log(response);
       // 유효성 검사 에러
       if(response === undefined) {
         Swal.fire({
@@ -55,6 +56,13 @@ const AnswerDetail = (props) => {
       } else {
         setAnswerList(response.data);
         setContentValue('');
+        call("/notification/send","POST", {
+          title : props.data.title,
+          userid : props.data.userid,
+          url : '/knowledgeDetail/'+props.data.num,
+          content : content,
+          yn : "Y"
+        })
       }
       
     });
@@ -67,7 +75,6 @@ const AnswerDetail = (props) => {
 
   // thumbs 클릭 시 좋아요 증가
   function thumbsAdd(data) {
-    console.log('thumbsAdd data',data);
     call('/knowledgeDetail/answer/likeUp','POST', data)
     .then(response => {
       setAnswerList(response);
@@ -110,13 +117,12 @@ const AnswerDetail = (props) => {
   }
 
   function onAnswerChange(e) {
-
+    setCompareText(e.target.value);
   }
 
   // 답글 삭제
   function onAnswerDelete(answer) {
 
-    console.log("answer : ", answer);
 
     Swal.fire({
       icon : 'question',
@@ -130,7 +136,6 @@ const AnswerDetail = (props) => {
       if(result.isConfirmed) { // 확인버튼
         call("/knowledgeDetail/answer/delete","POST",answer)
         .then(response => {
-          console.log('answer response : ',response)
           // 에러 발생
           if(response === undefined || response.status === 400) {
             Swal.fire({
@@ -159,8 +164,33 @@ const AnswerDetail = (props) => {
     })
   }
 
-  function onAnswerUpdate(result) {
-    setModifyFlag(true);
+  // 수정버튼 클릭
+  function onAnswerUpdate(e) {
+    setCompareText(e.target.value);
+    setModifyFlg(true);
+    setModifyKey(e.target.id);
+  }
+
+  // 수정 완료
+  function onAnserComfirm(data) {
+    const revDate = {...data, content : compareText}
+    call('/knowledgeDetail/answer/update','POST', revDate)
+    .then(response => {
+      setAnswerList(response.data);
+      setContentValue('');
+      window.location.href = "/knowledge"
+    });
+
+    setCompareText();
+    setModifyFlg(false);
+    setModifyKey();
+  }
+
+  // 수정 취소
+  function onAnserCancel() {
+    setCompareText();
+    setModifyFlg(false);
+    setModifyKey();
   }
 
   return (
@@ -175,24 +205,33 @@ const AnswerDetail = (props) => {
         {
           answerList !== null && answerList !== undefined ? 
           answerList.map((answer,i) => {
-            let showDate = reviewDateCal(answer.regDate);            
-
+            let showDate = reviewDateCal(answer.regDate);
             return (
             <div key={i}>
               <div className='answerDetail-review-info'>
                 <div className='answerDetail-review-info-writer'>{answer.answerWriter}</div>
                 <div className='answerDetail-review-info-date'>{showDate}</div>
-                <button className='oBtn' onClick={() => onAnswerUpdate(answer)}>수정</button>
+                <button className='oBtn' id={answer.answerId} value={answer.content} onClick={onAnswerUpdate}>수정</button>
                 <button className='oBtn' onClick={() => onAnswerDelete(answer)}>삭제</button>
               </div>
               <div className='answerDetail-review-content'>
-                <input className='answerDetail-review-content-text' type='text' value={answer.content} onChange={onAnswerChange}></input>
-                <button className='oBtn'>확인</button>
-                <button className='oBtn'>취소</button>
+                <input className='answerDetail-review-content-text' id='' type='text'
+                value={modifyFlg === true && modifyKey == answer.answerId ? compareText : answer.content} onChange={onAnswerChange}></input>
+                {
+                  modifyFlg === true && modifyKey == answer.answerId ?
+                  <>
+                      <button value={answer.content} className='oBtn' onClick={() => onAnserComfirm(answer)}>확인</button>
+                      <button value={answer.content} className='oBtn' onClick={onAnserCancel}>취소</button>
+                  </> :
+                  <></>
+                }
                 
                 <div className='answerDetail-review-content-like'>
-                  <BsHandThumbsUp className='answerDetail-review-content-thumbs' onClick={() => thumbsAdd(answer)}></BsHandThumbsUp>
-                  <span className='answerDetail-review-content-count'>{answer.answerLike !== 0 ? answer.answerLike : ''}</span>
+                  <BsHandThumbsUp className='answerDetail-review-content-thumbs'
+                  onClick={() => thumbsAdd(answer)}></BsHandThumbsUp>
+                  <span className='answerDetail-review-content-count'>
+                    {answer.answerLike !== 0 ? answer.answerLike : ''}
+                  </span>
                   </div>
               </div>
             </div>
