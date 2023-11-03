@@ -4,7 +4,7 @@ import '../css/TourList.scss'
 import ImageList from './ImageList';
 import TagBtn from './TagBtn';
 import ListPaging from '../destination/ListPaging';
-import {AiOutlineLoading, AiOutlineCheck, AiFillCamera,AiOutlineClear} from 'react-icons/ai';
+import {AiOutlineLoading, AiOutlineCheck, AiFillCamera,AiOutlineClear, AiOutlineStar} from 'react-icons/ai';
 import {BsFillCalendarCheckFill} from 'react-icons/bs';
 import { useTheme } from 'styled-components';
 
@@ -35,6 +35,14 @@ const Curator = () => {
     fontWeight : "500",
     transition : "all 1s linear"
   };
+
+  function goToTravelTdn(){
+
+  }
+
+  function wishTdnInsert(){
+
+  }
 
   if(theme.body !== onChnTheme) setChnTheme(theme.body);
   
@@ -70,6 +78,7 @@ const Curator = () => {
         if(item.tag !== null) visitTag = visitTag.concat(item.tag.replace(/, /gi, ',').split(','));
         
         // if(i <= 10){
+          <button className='oBtn sf ra' onClick={()=>{wishTdnInsert()}}><AiOutlineStar/></button>
           return <ImageList key={i} number={i} className='curatorResult-img-li' 
           data={item.repPhoto !== null ? item.repPhoto.photoid.imgpath : null} title={item.title}></ImageList>
         // }
@@ -141,8 +150,9 @@ const Curator = () => {
   };
 
   // content 선택(관광지, 여행일정)
-  const onContent = () => {
-    selectContent === 1 ? setSelectContent(0) : setSelectContent(1);
+  const onContent = (index) => {
+    // selectContent === 1 ? setSelectContent(0) : setSelectContent(1);
+    setSelectContent(index);
   }
 
   // Loading 화면
@@ -168,11 +178,11 @@ const Curator = () => {
         <div className='curatorResult'>
           <div className='curatorResult-Content'>
             <ul className='curatorContent-ul'>
-              <li className={`curatorContent-li ${selectContent === 1 ? 'curatorContent-li-unCheck' : ''}`} onClick={onContent}>
+              <li className={`curatorContent-li ${selectContent === 1 ? 'curatorContent-li-unCheck' : ''}`} onClick={()=>onContent(0)}>
                 <AiFillCamera className='curatorContent-icon'></AiFillCamera>
                 <div className='curatorContent-title'>관광지</div>
               </li>
-              <li className={`curatorContent-li ${selectContent === 0 ? 'curatorContent-li-unCheck' : ''}`} onClick={onContent}>
+              <li className={`curatorContent-li ${selectContent === 0 ? 'curatorContent-li-unCheck' : ''}`} onClick={()=>onContent(1)}>
                 <BsFillCalendarCheckFill className='curatorContent-icon'></BsFillCalendarCheckFill>
                 <div className='curatorContent-title'>여행일정</div>
                 </li>
