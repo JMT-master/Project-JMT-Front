@@ -24,8 +24,12 @@ const LoginTimer = (props) => {
 
       let times = moment().hour(0).minute(minutes).second(seconds);
       setLeftTimes(times);
-      if (seconds < 1) {
+      if (minutes <= 0 && seconds <= 0) {
         console.log("들어옴?");
+        console.log("비교 시간 : ", props.chkTime);
+        console.log("현재 시간 : ", moment());
+        console.log("seconds : ", seconds);
+        console.log("minutes : ", minutes);
         clearInterval(intervalRef.current); // interval을 강제로 종료
         Swal.fire({
           icon : 'question',
@@ -34,7 +38,12 @@ const LoginTimer = (props) => {
           confirmButtonText: '확인',
         }).then(() => {
           setLeftTimes(moment().hour(0).minute(0).second(0));
-          localStorage.removeItem("loginTime");
+          if(sessionStorage.getItem('loginState') === false){
+            sessionStorage.removeItem('loginTime');
+          } else {
+            localStorage.removeItem("loginTime");
+          }
+          
           deleteCookie('ACCESS_TOKEN');
           // navigate 사용시 시간이 0시0분0초로 남아있음
           window.location.href = '/';

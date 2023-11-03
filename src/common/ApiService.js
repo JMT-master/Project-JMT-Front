@@ -46,20 +46,6 @@ export function call(api, method, request) {
 
 }
 
-export function signin(loginDto) {
-  console.log("loginDto : ", loginDto);
-  return call("/login", "POST", loginDto)
-    .then(response => {
-      console.log("signin response : ", response);
-
-      if (response !== undefined) {
-        localStorage.setItem("ACCESS_TOKEN", response.accessToken);
-        localStorage.setItem("REFRESH_TOKEN", response.refreshToken);
-        window.location.href = "/";
-      }
-    })
-}
-
 export function sseSource(url, setNotifications) {
   const accessToken = getCookie('ACCESS_TOKEN');
   // SSE 지원
@@ -130,6 +116,12 @@ export const deleteCookie = (name) => {
     cookies.remove(name);
     cookies.remove('adminChk');
   }
+}
+
+export const loginStateCookie = () => {
+  const cookies = new Cookies();
+  sessionStorage.setItem('ACCESS_TOKEN', getCookie('ACCESS_TOKEN'));
+  cookies.remove('ACCESS_TOKEN');
 }
 
 // 쿠키 갱신용
