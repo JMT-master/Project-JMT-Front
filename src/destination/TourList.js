@@ -51,7 +51,7 @@ const TourList = () => {
   });
 
   const onNav = () => {
-    console.log(gps);
+    console.log("asd"+gps);
     nav(`/destination/detail/${gps.contentsid}`, {
       state: {
         title: gps.title,

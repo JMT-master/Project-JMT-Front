@@ -77,7 +77,7 @@ const DetailInfo = () => {
     let reviews = []
     reviewList.forEach((item) => {
       reviews.push(
-         <ReviewBox item={item} deleteHandler={deleteHandler}/>
+         <ReviewBox item={item} deleteHandler={deleteHandler} updateHanlder={updateHanlder}/>
       )})
     return reviews
   }
