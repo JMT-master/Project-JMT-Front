@@ -108,13 +108,38 @@ export const setCookie = (name, value) => {
 
 export const getCookie = (name) => {
   const cookies = new Cookies();
-  return cookies.get(name);
+  const sessionValue = sessionStorage.getItem(name);
+
+  // 로그인 상태 유지 x
+  if(name === "ACCESS_TOKEN" && sessionValue !== null && sessionValue !== undefined) {
+    return sessionStorage.getItem(name);
+  } else {
+    return cookies.get(name);
+  }
 }
 
 export const deleteCookie = (name) => {
   const cookies = new Cookies();
-  cookies.remove(name);
-  cookies.remove('adminChk');
+  const sessionValue = sessionStorage.getItem(name);
+
+  // 로그인 상태 유지 x
+  if(name === "ACCESS_TOKEN" && sessionValue !== null && sessionValue !== undefined) {
+    sessionStorage.removeItem('loginState');
+    sessionStorage.removeItem(name);
+  } else {
+    cookies.remove(name);
+    cookies.remove('adminChk');
+  }
+}
+
+// 쿠키 갱신용
+// 기존 ACCESS_TOKEN으로 넘기면 된다는 글이 많지만 아직 원인을 찾지 못함
+// EXTENSION_TOKEN은 받아오므로 받아와서 덮어쓰기 하는 형식으로 작성
+export const extensionCookie = () => {
+  const cookies = new Cookies();
+  deleteCookie('ACCESS_TOKEN');
+  cookies.set("ACCESS_TOKEN", getCookie('EXTENSION_TOKEN'));
+  deleteCookie('EXTENSION_TOKEN');
 }
 
 

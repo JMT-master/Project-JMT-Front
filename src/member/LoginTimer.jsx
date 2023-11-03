@@ -8,6 +8,7 @@ import Moment from 'react-moment';
 import { useInterval } from 'react-use';
 import { deleteCookie } from '../common/ApiService';
 import Swal from 'sweetalert2';
+import { loginTimeUpdate } from './MemberFuc';
 
 
 const LoginTimer = (props) => {
@@ -19,14 +20,25 @@ const LoginTimer = (props) => {
     intervalRef.current = setInterval(() => {
       let minutes = moment(props.chkTime).diff(moment(), 'minutes');
       let seconds = (moment(props.chkTime).diff(moment(), 'seconds')) % 60;
+      // console.log("props.chkTime : ", props.chkTime);
 
       let times = moment().hour(0).minute(minutes).second(seconds);
       setLeftTimes(times);
-      if (!localStorage.getItem("loginTime") || seconds < 0) {
-        setLeftTimes(moment().hour(0).minute(0).second(0));
-        localStorage.removeItem("loginTime");
-        deleteCookie('ACCESS_TOKEN');
+      if (seconds < 1) {
+        console.log("들어옴?");
         clearInterval(intervalRef.current); // interval을 강제로 종료
+        Swal.fire({
+          icon : 'question',
+          title: '로그아웃 되었습니다.',
+          showCloseButton: true,
+          confirmButtonText: '확인',
+        }).then(() => {
+          setLeftTimes(moment().hour(0).minute(0).second(0));
+          localStorage.removeItem("loginTime");
+          deleteCookie('ACCESS_TOKEN');
+          // navigate 사용시 시간이 0시0분0초로 남아있음
+          window.location.href = '/';
+        });
       }
     }, 1000);
 
@@ -35,23 +47,13 @@ const LoginTimer = (props) => {
       if (intervalRef.current) {
         console.log('intervalRef.current : ',intervalRef.current);
         clearInterval(intervalRef.current);
-        // Swal.fire({
-        //   icon: 'info',
-        //   title: '로그아웃',
-        //   text: '로그아웃 시간이 만료하였습니다.'
-        // })
-        // .then(() =>
-        //   window.location.href = "/";
-        // );
       }
     };
   }, [props.chkTime]);
 
   function loginExtension() {
-
+    loginTimeUpdate();
   }
-
-  console.log("들어옴???");
 
   return (
     <>

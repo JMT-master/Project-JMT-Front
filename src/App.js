@@ -43,6 +43,8 @@ import TravelPdf from './travelschedule/TravelPdf';
 import LoginTimer from './member/LoginTimer';
 import moment from 'moment';
 import NoticeUpdate from "./notice/NoticeUpdate";
+import { useInterval } from 'react-use';
+import ChangePasswd from './member/ChangePasswd';
 
 function App(factory, deps) {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -160,6 +162,7 @@ function App(factory, deps) {
          <Route path='/chat/room/:roomId?' element={<ChatDetail/>}></Route>
          <Route path='/travel-schedule' element={<TravelPdf></TravelPdf>}></Route>
          <Route path='/member/update' element={<JoinUser></JoinUser>}></Route>
+         <Route path='/myInfo/ChangePasswd' element={<ChangePasswd></ChangePasswd>}></Route>
        </Routes>
 
        {isChatRoom ? null : (
@@ -191,18 +194,12 @@ function HeaderTop(props) {
   const accessToken = getCookie("ACCESS_TOKEN");
   // const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   const {notifications, setNotifications, send} = props;
-  const [chkTime, setChkTime] = useState();
+  const [chkTime, setChkTime] = useState(moment(localStorage.getItem("loginTime")));
 
 
   useEffect(() => {
     if(accessToken !== undefined && accessToken !== null) {
-      // loginExpired().then(() => {
-      //   console.log('탐???????');
       sseSource("sub", setNotifications);
-      if(localStorage.getItem("loginTime")) {
-        setChkTime(moment(localStorage.getItem("loginTime")));
-      }
-      // });
     }
   }, [accessToken]);
 
@@ -238,6 +235,8 @@ function HeaderTop(props) {
   const handleMouseOutNoti = () => {
     $(".notice-list").hide();
   };
+
+  console.log('시간 : ', chkTime);
 
   const state = getCookie('ACCESS_TOKEN');
 
@@ -278,11 +277,11 @@ function HeaderTop(props) {
          }}>테스트용 send
          </button>
          {
-           chkTime === undefined || chkTime === '' ?
-              <></> :
-              <>
-                <LoginTimer theme={props.theme} chkTime={chkTime}></LoginTimer>
-              </>
+          chkTime === undefined || chkTime === '' || !chkTime.isValid() ?
+          <></> :
+          <>
+            <LoginTimer theme = {props.theme} chkTime = {chkTime}></LoginTimer>
+          </>
          }
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>
            {(state === undefined || state === null) ? '' : '마이페이지'}

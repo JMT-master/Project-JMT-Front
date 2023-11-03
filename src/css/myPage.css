@@ -265,6 +265,14 @@
   }
 }
 
+/* ChangePasswd css */
+.password-container {
+  /* position: absolute; */
+  left: 50%;
+  width: 500px;
+
+}
+
 @media screen and (max-width: 1100px) {
   .myPage-tagList-ul {
     grid-template-columns: repeat(4, 160px);
