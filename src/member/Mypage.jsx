@@ -26,9 +26,12 @@ const Mypage = () => {
   const navigate = useNavigate();
   const [member, setMember] = useState();
   const [myTravelItem,setMyTravelItem] = useState(null);
+  const [gubun,setGubun] = useState(0);
 
 
+  //나의 일정
   function selectTravelScehdule(){
+    setGubun(0);
     call("/travel/selectTravelSchedule", "GET",
     null
     ).then((response) => {
@@ -40,22 +43,28 @@ const Mypage = () => {
       console.log(error);
     })
   }
+  //찜한 일정
   function selectWishTravelScehdule(){
-    call("/travel/selectTravelSchedule", "GET",
+    setGubun(1);
+    call("/wish/wishTpsSelect", "GET",
     null
     ).then((response) => {
-      console.log("response.data",response.data);
+      console.log("wishTpsSelect.response.data",response.data);
+      setMyTravelItem(response.data);
       // window.location.href = '/';
     })
     .catch((error) => {
       console.log(error);
     })
   }
+  //찜한 여행지
   function selectTravelDes(){
-    call("/travel/selectTravelSchedule", "GET",
+    setGubun(2);
+    call("/wish/wishTdnSelect", "GET",
     null
     ).then((response) => {
-      console.log("response.data",response.data);
+      console.log("wishTdnSelect.response.data",response.data);
+      setMyTravelItem(response.data);
       // window.location.href = '/';
     })
     .catch((error) => {
@@ -89,10 +98,11 @@ const Mypage = () => {
     let count = 0;
     getMember();
     console.log('myTravelItem',myTravelItem);
+    console.log("gubun의 값:",gubun);
     if (myTravelItem != null) {
       setList(myTravelItem.map((item, i) => {
         count++;
-        return (<MypageList className='myPage-Big-Image-li' data={item}></MypageList>)
+        return (<MypageList className='myPage-Big-Image-li' data={item} gubun={gubun}></MypageList>)
       }));
 
       setTotalCount(count);
