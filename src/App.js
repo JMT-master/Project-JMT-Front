@@ -69,7 +69,6 @@ function App(factory, deps) {
   const modalToggle = () => {
     setModalOpen(!modalOpen);
   }
-  const [notifications, setNotifications] = useState();
   const [loading, setLoading] = useState();
 
   useEffect(() => {
@@ -196,12 +195,17 @@ function HeaderTop(props) {
 
 
   useEffect(() => {
-    sseSource("sub", setNotifications);
-    if(localStorage.getItem("loginTime")) {
-      console.log("탔어?");
-      setChkTime(moment(localStorage.getItem("loginTime")));
+    if(accessToken !== undefined && accessToken !== null) {
+      // loginExpired().then(() => {
+      //   console.log('탐???????');
+      sseSource("sub", setNotifications);
+      if(localStorage.getItem("loginTime")) {
+        setChkTime(moment(localStorage.getItem("loginTime")));
+      }
+      // });
     }
-}, [accessToken]);
+  }, [accessToken]);
+
   //알람 모달 관련
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -260,17 +264,8 @@ function HeaderTop(props) {
 
   window.open('/chat/room', '_blank', `width=${width},height=${height},left=${left},top=${top}, status=no,toolbar=no,scrollbars=no`);
 };
-  useEffect(() => {
-    if(accessToken !== undefined && accessToken !== null) {
-      // loginExpired().then(() => {
-      //   console.log('탐???????');
-        sseSource("sub", setNotifications);
-        if(localStorage.getItem("loginTime")) {
-          setChkTime(moment(localStorage.getItem("loginTime")));
-        }
-      // });
-    }
-  }, [accessToken]);
+
+
 
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
