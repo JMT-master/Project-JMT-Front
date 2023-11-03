@@ -28,10 +28,10 @@ export const Tr = (props) => {
       <td>{modDate}</td>
       <td>{props.data.qnaView}</td>
       <td style={isAdmin.current == "Y" ? null : { display: "none" }}>
-        <button type='button' 
-        className='oBtn'
+        <button type='button'
+          className='oBtn'
           onClick={deleteHandler}
-          // style={isAdmin.current == "Y" ? null : { display: "none" }}
+        // style={isAdmin.current == "Y" ? null : { display: "none" }}
         >삭제</button>
       </td>
     </tr>
@@ -43,26 +43,30 @@ const QnABoard = () => {
   const navigate = useNavigate();
   const [pagingInfo, setPagingInfo] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const isAdmin = useRef(getCookie("adminChk"));
   const theme = localStorage.getItem("theme");
+  const [searchResult, setSearchResult] = useState('');
+  const [searchSelect, setSearchSelect] = useState('title');
   useEffect(() => {
 
-    fetchData(currentPage);
-
-  }, [currentPage]);
+    fetchData({ currentPage, pageSize });
+    console.log("pageSize : " + pageSize);
+  }, [currentPage, pageSize]);
 
   useEffect(() => {
 
-  },[theme]);
+  }, [theme]);
 
-  const fetchData = (page) => {
+  const fetchData = (props) => {
 
-    call(`/qna?page=${page}`, "GET", null)
+    call(`/qna?page=${props.currentPage}&size=${props.pageSize}`, "GET", null)
       .then((response) => {
         // console.log("response.items : {}", response.items);
         if (response != null) {
           setItems(response.items);
           setPagingInfo(response.pagingInfo);
+          console.log("처음 response.pagingInfo.pageSize : " + response.pagingInfo.pageSize);
         } else {
           setItems([]);
         }
@@ -75,7 +79,7 @@ const QnABoard = () => {
       .then((response) => {
         console.log("response : {}", response);
         setItems(response.data);
-        fetchData(currentPage);
+        fetchData({currentPage, pageSize});
       });
   }
 
@@ -84,6 +88,30 @@ const QnABoard = () => {
     navigate("/qna/admin/write");
   }
 
+  const changePageSize = (e) => {
+    setPageSize(e.target.value);
+  }
+
+  function onChangeSearchSelect(e) {
+    setSearchSelect(e.target.options[e.target.selectedIndex].value);
+  }
+  function onChangeSearchResult(e) {
+    setSearchResult(e.target.value);
+  }
+
+  function handleOnKeyDown(e) {
+    if(e.key === 'Enter') {
+      onClickSearch();
+    }
+  }
+
+  function onClickSearch() {
+    call("/qna/search?select=" + searchSelect + "&result=" + searchResult,"GET")
+    .then(response => {
+      setItems(response.data);
+      console.log("response.data : {}", response.data);
+    });
+  }
   return (
     <div className='content'>
       <h1 style={{ textAlign: 'left' }}>
@@ -93,13 +121,17 @@ const QnABoard = () => {
         <h2>Q & A
         </h2>
         <div className='QnA'>
-          <input type="text" placeholder='검색어를 입력하세요' />
-          <button><VscSearch /></button>
+          <select className='searchKnowledge-select' onChange={onChangeSearchSelect}>
+            <option value='title'>제목</option>
+            <option value='content'>내용</option>
+          </select>
+          <input type="text" placeholder='검색어를 입력하세요' onChange={onChangeSearchResult} onKeyDown={handleOnKeyDown} />
+          <button onClick={onClickSearch}><VscSearch /></button>
         </div>
       </div>
       <div className='qna-table'>
         <div className='page-choice'>
-          <select >
+          <select onChange={changePageSize}>
             <option value={5}>5개씩</option>
             <option value={10} selected>10개씩</option>
             <option value={15}>15개씩</option>
