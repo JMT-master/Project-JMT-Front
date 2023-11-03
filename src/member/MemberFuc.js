@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import {call, deleteCookie, extensionCookie, getCookie, setCookie, sseSource} from "../common/ApiService";
+import {call, deleteCookie, extensionCookie, getCookie, loginStateCookie, setCookie} from "../common/ApiService";
 import {API_BASE_URL} from "../common/ApiConfig";
 import moment from "moment";
 
@@ -103,16 +103,18 @@ export function signin(loginDto, id, idSave) {
         }).then(resultInfo => resultInfo.json())
         .then(result => {          
           // 로그인 상태 유지 x
-          if(loginDto.loginState === false) {
-            sessionStorage.setItem("loginState", loginDto.loginState);
-          }
+          console.log('loginDto.loginState',loginDto.loginState)
+          sessionStorage.setItem("loginState", loginDto.loginState);
 
           const loginTime = moment(result);
           const resultTime = loginTime.add(1, 'hours').format();
 
-          localStorage.setItem("loginTime",resultTime);
-
-          console.log('loginTime : ', loginTime);
+          if(loginDto.loginState === false) {
+            loginStateCookie();
+            sessionStorage.setItem("loginTime",resultTime);
+          } else {
+            localStorage.setItem("loginTime",resultTime);
+          }
 
           if(idSave) {
             const saveCookie = getCookie('save_id');
@@ -159,7 +161,11 @@ export function loginTimeUpdate() {
         const loginTime = moment(revTime);
         const resultTime = loginTime.add(1, 'hours').format();
     
-        localStorage.setItem("loginTime",resultTime);
+        if(sessionStorage.getItem('loginState') === false) {
+          sessionStorage.setItem("loginTime",resultTime);
+        } else {
+          localStorage.setItem("loginTime",resultTime);
+        }        
 
         extensionCookie();
 
@@ -185,9 +191,13 @@ export function loginExpired() {
     console.log('response' , response);
       
       if(response.status === 401) { // unauthorized
-        if(localStorage.getItem("loginTime")) {
+        if(sessionStorage.getItem('loginState') === false
+        && sessionStorage.getItem('loginTime')) {
+          sessionStorage.removeItem("loginTime");
+        } else if(localStorage.getItem("loginTime")) {
           localStorage.removeItem("loginTime");
-        };
+        } 
+
         deleteCookie("ACCESS_TOKEN");
       }
   })
