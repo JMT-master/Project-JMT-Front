@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-const TravelPdf = () => {
+const TravelPdf = (props) => {
   const [travelPlan, setTravelPlan] = useState([]);
   const [travel, setTravel] = useState({
     startTime: Date.now(),
@@ -24,6 +24,7 @@ const TravelPdf = () => {
   };
 
   const generatePdf = () => {
+    
     fetch("http://localhost:8888/travel/generate-pdf", {
       method: "POST",
       headers: {

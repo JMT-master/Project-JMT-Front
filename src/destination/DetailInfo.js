@@ -61,22 +61,22 @@ const DetailInfo = () => {
   }, []);
 
   return (
-     <div className='detail'>
-       <div className='detail-header'>
-         <div className='detail-headerPhoto' style={{
-           backgroundImage: `url(${img})`
-         }}></div>
-         <div className='detail-headerInfo'>
-           <h1>{title}</h1>
-           <p className='detail-headerInfo-p gray sf'>{tag.replace(/, /gi, ',').split(',').map(tag => ('#' + tag + ' '))}</p>
-           <div className='detail-headerInfo-baseInfo'>
-             <h3>기본 정보</h3>
-             <hr />
-             <p><span className='gray sf'>주소 : </span>{address}</p>
-             <p><span className='gray sf'>연락처 : </span>{phoneno !== '--' || null ? phoneno : ''}</p>
-           </div>
-         </div>
-       </div>
+    <div className='detail'>
+      <div className='detail-header'>
+        <div className='detail-headerPhoto' style={{
+          backgroundImage: `url(${img&&img})`
+        }}></div>
+        <div className='detail-headerInfo'>
+          <h1>{title&&title}</h1>
+          <p className='detail-headerInfo-p gray sf'>{tag&&tag.replace(/, /gi, ',').split(',').map(tag => ('#' + tag + ' '))}</p>
+          <div className='detail-headerInfo-baseInfo'>
+            <h3>기본 정보</h3>
+            <hr />
+            <p><span className='gray sf'>주소 : </span>{address&&address}</p>
+            <p><span className='gray sf'>연락처 : </span>{phoneno&&phoneno !== '--' || null ? phoneno&&phoneno : ''}</p>
+          </div>
+        </div>
+      </div>
 
        <div className='detail-content'>
          <div className='detail-contentInfo'>

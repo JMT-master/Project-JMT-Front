@@ -106,9 +106,7 @@ const TravelSchedule = (props) => {
         tableData2[selectItem.dayIndex] = selectItem;
         table2FontColor[selectItem.dayIndex] = 1;
       }
-
       console.log('tableData2 : ',tableData2);
-
       setTableData2([...tableData2]);
       setTable2FontColor([...table2FontColor]);      
     })
@@ -116,21 +114,7 @@ const TravelSchedule = (props) => {
         console.log(error);
       })
   }
-
-
-  // function travelDelete() {
-  //   console.log("삭제");
-    
-  //   call("/travel/dayFormatSave", "POST",
-  //     tableData1
-  //   ).then((response) => {
-  //     console.log("response", response);
-  //   })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     })
-  // }
-  
+  //저장
   function travelSave() {
     const dtoList = castingTravel();
     console.log("dtoList", dtoList);
@@ -138,14 +122,24 @@ const TravelSchedule = (props) => {
     call("/travel/dayFormatSave?id="+id, "POST",
       dtoList
     ).then((response) => {
-      console.log("responseSaveData", response);
-      // window.location.href = '/';
+      window.location.href = '/';
     })
       .catch((error) => {
         console.log(error);
       })
   }
-
+  //삭제
+  function travelDelete() {
+    const dtoList = castingTravel();
+    call("/travel/dayFormatDelete", "POST",
+    dtoList
+    ).then((response) => {
+      console.log("response", response);
+    })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
 
 
   const markers = [];
@@ -498,6 +492,8 @@ const TravelSchedule = (props) => {
 
   // 전체 삭제
   const onScheduleReset = () => {
+
+    travelDelete();
     setTableData1([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
     setTableData2([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
     setTable1FontColor([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
