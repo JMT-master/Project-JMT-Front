@@ -1,6 +1,7 @@
 import React from 'react'
 import { AiOutlineStar } from 'react-icons/ai';
 import {MdOutlineFindInPage} from 'react-icons/md'
+import { call } from '../common/ApiService';
 
 const TourItem = ({ spot, pageType, nav, setGps }) => {
   const photo = spot.repPhoto;
@@ -31,6 +32,29 @@ const TourItem = ({ spot, pageType, nav, setGps }) => {
     })
   }
 
+  const wishTdnInsert = () => {
+    const photo = spot.repPhoto;
+    let dto ={
+      wishTitle : spot.title,
+      wishApiId : spot.contentsid,
+      wishImg : photo.photoid.imgpath,
+      wishGubun : 'tdn',
+      address:spot.address,
+      phoneno:spot.phoneno,
+      content:spot.phoneno,
+      tag:spot.tag
+    }
+    console.log("dto",dto);
+    call("/wish/wishTdnInsert","POST",
+    dto
+    ).then((response) => {
+      console.log("responseWishData : ",response.data);
+    })
+    .catch((error) => {
+      console.log("wishTdnInsertErr",error);
+    })
+  }
+
   return (
     <li className={`${pageType}-itemGrid`} onClick={()=>{
       // onNav();
@@ -43,7 +67,7 @@ const TourItem = ({ spot, pageType, nav, setGps }) => {
         <h3>
           <span>{spot.title}</span>
           <button className='oBtn sf ra' onClick={()=>{onNav()}}><MdOutlineFindInPage/></button>
-          <button className='oBtn sf ra' onClick={()=>{onNav()}}><AiOutlineStar/></button>
+          <button className='oBtn sf ra' onClick={()=>{wishTdnInsert()}}><AiOutlineStar/></button>
         </h3>
         <div className={`${pageType}-itemGrid-contentText`}>
           <p className='sf'>{spot.region1cd.label} > {spot.region2cd.label}</p>
