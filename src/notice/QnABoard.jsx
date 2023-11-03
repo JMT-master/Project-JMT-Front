@@ -43,7 +43,7 @@ const QnABoard = () => {
   const navigate = useNavigate();
   const [pagingInfo, setPagingInfo] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(document.getElementsByClassName("select").value);
+  const [pageSize, setPageSize] = useState(10);
   const isAdmin = useRef(getCookie("adminChk"));
   const theme = localStorage.getItem("theme");
   const [searchResult, setSearchResult] = useState('');
