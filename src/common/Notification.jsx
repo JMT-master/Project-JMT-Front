@@ -92,7 +92,7 @@ const Notification = ({notification, setNotifications, navigate}) => {
      <div onClick={readNotify} className="notificationOne">
        <div id="notifyContent" className={yn == "Y" ? "noRead" : "read"} onClick={() => {
          goUrl(url);
-       }}>{content}+{url}</div>
+       }}>{content}</div>
        <button className={"oBtn notifyDeleteBtn"} onClick={deleteNotify}>X</button>
      </div>)
 }

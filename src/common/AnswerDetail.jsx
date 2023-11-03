@@ -57,6 +57,7 @@ const AnswerDetail = (props) => {
         setAnswerList(response.data);
         setContentValue('');
         call("/notification/send","POST", {
+          title : props.data.title,
           userid : props.data.userid,
           url : '/knowledgeDetail/'+props.data.num,
           content : content,

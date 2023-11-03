@@ -177,10 +177,6 @@ function App(factory, deps) {
          <OnModalComp setModalOpen={setModalOpen}
                       comp={<NotificationList notifications={notifications} setNotifications={setNotifications}
                                               modalOpen={modalOpen}/>}></OnModalComp>
-         <button type="button" className="testBtn" onClick={() => {
-           send("notification")
-         }}>테스트용 send
-         </button>
        </div>
        )}
 
