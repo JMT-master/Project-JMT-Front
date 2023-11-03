@@ -46,6 +46,7 @@ import LoginTimer from './member/LoginTimer';
 import Moment from 'react-moment';
 import moment from 'moment';
 import { useInterval } from 'react-use';
+import ChangePasswd from './member/ChangePasswd';
 
 function App() {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -134,6 +135,7 @@ function App() {
         <Route path='/chat/rooms' ></Route>
         <Route path='/chat/room/:roomId?' element={<ChatDetail />}></Route>
         <Route path='/travel-schedule' element={<TravelPdf></TravelPdf>}></Route>
+        <Route path='/myInfo/ChangePasswd' element={<ChangePasswd></ChangePasswd>}></Route>
       </Routes>
     </ThemeProvider>
   );

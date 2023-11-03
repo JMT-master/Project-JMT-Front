@@ -36,7 +36,8 @@ const LoginModal = ({setModalOpen, id, title, content, writer}) => {
       style={{width:'400px' , height:'400px'}}>
         <input className='mopwd-id' type="id" placeholder='아이디를 입력해주세요' />
         <input className='moid-tel' type="id" placeholder='이메일 인증' />
-        <button className='mopwd-submit'>인증번호 전송</button>
+        {/* 231103, 추후 수정 */}
+        <button className='mopwd-submit'><a href='/myInfo/ChangePasswd'>인증번호 전송</a></button> 
       </div>
     )
   }
