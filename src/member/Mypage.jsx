@@ -32,7 +32,6 @@ const Mypage = () => {
     call("/travel/selectTravelSchedule", "GET",
     null
     ).then((response) => {
-      console.log("실행됨?2");
       console.log("selectTravelScehdule.response.data",response.data);
       setMyTravelItem(response.data);
       // window.location.href = '/';
