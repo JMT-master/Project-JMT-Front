@@ -50,25 +50,34 @@ export function emailValidateCheck(chkUser) {
 
 // 회원 가입
 export function joinUser(memberDto) {
-  return call("/joinUser", "POST", memberDto)
-     .then(response => {
-       if (response !== undefined) { 
-        Swal.fire({
-          icon: 'success',
-          title: '회원가입',
-          text: '가입을 축하드립니다.'
-        }).then(function() {
-           window.location.href = "/login";
-          });
-      }
-       else {
-         Swal.fire({
-           icon: 'warning',
-           title: '회원가입',
-           text: '가입 확인'
-         })
-       }
-     });
+  const url = API_BASE_URL + "/joinUser";
+  const body = JSON.stringify(memberDto);
+
+  fetch(url, {
+    method: 'POST',
+    body: body,
+    headers: {"Content-Type": "application/json"},
+  })
+  .then(response => response.json())
+  .then(result => {
+    console.log('회원가입 response', result)
+    if (result.error !== 'error') {
+     Swal.fire({
+       icon: 'success',
+       title: '회원가입',
+       text: '가입을 축하드립니다.'
+     }).then(function() {
+        window.location.href = "/login";
+       });
+   }
+    else {
+      Swal.fire({
+        icon: 'warning',
+        title: '회원가입',
+        text: result.data[0]
+      })
+    }
+  });
 }
 
 // 로그인
@@ -95,41 +104,47 @@ export function signin(loginDto, id, idSave) {
         })
       }
       else if(response !== undefined) {
-        const infoUrl = API_BASE_URL + "/login/info";
-        fetch(infoUrl, {
-          method: 'POST',
-          body: body,
-          headers: {"Content-Type": "application/json"}
-        }).then(resultInfo => resultInfo.json())
-        .then(result => {          
-          // 로그인 상태 유지 x
-          console.log('loginDto.loginState',loginDto.loginState)
-          sessionStorage.setItem("loginState", loginDto.loginState);
-
-          const loginTime = moment(result);
-          const resultTime = loginTime.add(1, 'hours').format();
-
-          if(loginDto.loginState === false) {
-            loginStateCookie();
-            sessionStorage.setItem("loginTime",resultTime);
-          } else {
-            localStorage.setItem("loginTime",resultTime);
-          }
-
-          if(idSave) {
-            const saveCookie = getCookie('save_id');
-            if(saveCookie !== null || saveCookie !== undefined) 
-              deleteCookie('save_id');
-
-            setCookie('save_id',id);
-          } 
-
-          window.location.href = "/";
-        })
-        
+        loginInfo(loginDto, body, id, idSave)
       } 
   })
 
+}
+
+// 로그인 정보 확인
+export function loginInfo(loginDto, body, id, idSave) {
+  const infoUrl = API_BASE_URL + "/login/info";
+  fetch(infoUrl, {
+    method: 'POST',
+    body: body,
+    headers: {"Content-Type": "application/json"}
+  }).then(resultInfo => resultInfo.json())
+  .then(result => {          
+    // 로그인 상태 유지 x
+    console.log('loginDto.loginState',loginDto.loginState)
+    sessionStorage.setItem("loginState", loginDto.loginState);
+
+    const loginTime = moment(result);
+    const resultTime = loginTime.add(1, 'hours').format();
+
+    if(loginDto.loginState === false) {
+      loginStateCookie();
+      sessionStorage.setItem("loginTime",resultTime);
+      sessionStorage.setItem("social",loginDto.socialYn);
+    } else {
+      localStorage.setItem("loginTime",resultTime);
+      localStorage.setItem("social",loginDto.socialYn);
+    }
+
+    if(idSave) {
+      const saveCookie = getCookie('save_id');
+      if(saveCookie !== null || saveCookie !== undefined) 
+        deleteCookie('save_id');
+
+      setCookie('save_id',id);
+    } 
+
+    window.location.href = "/";
+  })
 }
 
 // 로그인 시간 연장

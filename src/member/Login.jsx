@@ -55,7 +55,8 @@ const Login = (props) => {
         const loginDto = {
           email : id,
           password : pwd,
-          loginState : loginState
+          loginState : loginState,
+          socialYn : "N"
         };
     
         signin(loginDto,id,idSave);
@@ -67,7 +68,8 @@ const Login = (props) => {
     const loginDto = {
       email : id,
       password : pwd,
-      loginState : loginState
+      loginState : loginState,
+      socialYn : "N"
     };
 
     signin(loginDto,id,idSave);
@@ -76,6 +78,7 @@ const Login = (props) => {
 
   const openKakaoLogin = () => {
     // window.open(KakaoLoginAPI,'_self');
+    console.log("여기?");
     window.location.href = KakaoLoginAPI;
   }
 

@@ -45,6 +45,8 @@ import moment from 'moment';
 import NoticeUpdate from "./notice/NoticeUpdate";
 import { useInterval } from 'react-use';
 import ChangePasswd from './member/ChangePasswd';
+import KakaoLogin from './member/KakaoLogin';
+import { API_BASE_URL } from './common/ApiConfig';
 
 function App(factory, deps) {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -121,8 +123,8 @@ function App(factory, deps) {
   };
   useEffect(() => {
     // 231103, 추후 수정
-    if (isSub.current) sseSource("sub", setNotifications, notifyCount);
-    isSub.current = false;
+    // if (isSub.current) sseSource("sub", setNotifications, notifyCount);
+    // isSub.current = false;
   }, []);
 
   if (loading === true) {
@@ -164,9 +166,10 @@ function App(factory, deps) {
          <Route path='/chat/room' element={<ChatRoom/>}></Route>
          <Route path='/chat/rooms'></Route>
          <Route path='/chat/room/:roomId?' element={<ChatDetail/>}></Route>
-         <Route path='/travel-schedule' element={<TravelPdf></TravelPdf>}></Route>
+         <Route path='/travel-schedule' element={<TravelPdf></TravelPdf>}></Route>?
          <Route path='/member/update' element={<JoinUser></JoinUser>}></Route>
          <Route path='/myInfo/ChangePasswd' element={<ChangePasswd></ChangePasswd>}></Route>
+         <Route path='/login/auth' element={<KakaoLogin></KakaoLogin>}></Route>
        </Routes>
 
        {isChatRoom ? null : (
@@ -201,7 +204,7 @@ function HeaderTop(props) {
   useEffect(() => {
     if(accessToken !== undefined && accessToken !== null) {
       // 231103, 추후 수정
-      sseSource("sub", setNotifications);
+      // sseSource("sub", setNotifications);
     }
   }, [accessToken]);
 
@@ -244,18 +247,57 @@ function HeaderTop(props) {
 
   // token 처리
   const handleClick = () => {
+    const infoUrl = API_BASE_URL + "/logout/kakao";
 
     if (state === undefined || state === null) { // login
       navigate("/login");
     } else { // logout
-      console.log('pathname : ', pathname);
-      deleteCookie('ACCESS_TOKEN');
+      console.log('pathname : ', pathname);      
+
       if(sessionStorage.getItem('loginState') === false){
-        sessionStorage.removeItem('loginTime');
+         // 카카오 로그아웃 처리
+        if(sessionStorage.getItem('social') === 'Y') {
+          fetch(infoUrl, {
+            method: 'GET',
+            headers : {
+              Authorization: "Bearer " + getCookie('ACCESS_TOKEN')
+            }
+          }).then(() => {
+            sessionStorage.removeItem('loginTime');
+            sessionStorage.removeItem('social');
+            deleteCookie('ACCESS_TOKEN');
+            window.location.reload();
+          });
+        } else {
+          sessionStorage.removeItem('loginTime');
+          sessionStorage.removeItem('social');
+          deleteCookie('ACCESS_TOKEN');
+          window.location.reload();
+        }
       } else {
-        localStorage.removeItem("loginTime");
+         // 카카오 로그아웃 처리
+        if(localStorage.getItem('social') === 'Y') {
+          console.log("로그아웃 처리?")
+          fetch(infoUrl, {
+            method: 'GET',
+            headers : {
+              Authorization: "Bearer " + getCookie('ACCESS_TOKEN')
+            }
+          }).then(() => {
+            localStorage.removeItem("loginTime");
+            localStorage.removeItem('social');
+            deleteCookie('ACCESS_TOKEN');
+            window.location.reload();
+          });
+        } else{
+          localStorage.removeItem("loginTime");
+          localStorage.removeItem('social');
+          deleteCookie('ACCESS_TOKEN');
+          window.location.reload();
+        }
       }
-      window.location.reload();
+
+      
     }
   };
 
