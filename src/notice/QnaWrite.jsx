@@ -7,6 +7,7 @@ import { call, getCookie } from '../common/ApiService';
 import { useState } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from '../common/ApiConfig';
+import Swal from 'sweetalert2';
 
 const QnaWrite = (props) => {
     const { id } = useParams(); // 브라우저 주소에서 동적 세그먼트 값 읽어오기
@@ -22,6 +23,7 @@ const QnaWrite = (props) => {
         qnaView: 0,
     });
 
+    const accessToken = getCookie("ACCESS_TOKEN");
     const navigate = useNavigate();
     const location = useLocation();
     const isContainingWrite = location.pathname.includes('write');
@@ -78,7 +80,7 @@ const QnaWrite = (props) => {
             type: "application/json"
         }));
 
-        const accessToken = getCookie("ACCESS_TOKEN");
+
 
         axios({
             method : 'post',
@@ -91,7 +93,16 @@ const QnaWrite = (props) => {
           }).then(response => {
             console.log("/qna/admin/write :", response)
             if(response.status === 200) {
-              window.location.href="/qna";
+                Swal.fire({
+                    icon: 'info',
+                    title: '작성되었습니다!',
+                    showCloseButton: true,
+                    confirmButtonText: '확인',
+                  }).then(
+                     () => {
+                       navigate("/qna")
+                     }
+                  );
             }
           });
     }
@@ -111,7 +122,6 @@ const QnaWrite = (props) => {
             type: "application/json"
         }));
 
-        const accessToken = getCookie();
 
         axios({
             method : 'post',
@@ -124,7 +134,16 @@ const QnaWrite = (props) => {
           }).then(response => {
             console.log("/qna/admin/id :", response)
             if(response.status === 200) {
-              window.location.href="/qna/"+id;
+                Swal.fire({
+                    icon: 'info',
+                    title: '작성되었습니다!',
+                    showCloseButton: true,
+                    confirmButtonText: '확인',
+                  }).then(
+                     () => {
+                       navigate("/qna/"+id)
+                     }
+                  );
             }
           });
     };

@@ -33,14 +33,16 @@ const LoginTimer = (props) => {
     // 컴포넌트가 언마운트될 때 인터벌을 정리
     return () => {
       if (intervalRef.current) {
+        console.log('intervalRef.current : ',intervalRef.current);
         clearInterval(intervalRef.current);
-        Swal.fire({
-          icon: 'info',
-          title: '로그아웃',
-          text: '로그아웃 시간이 만료하였습니다.'
-        }).then(() =>
-          window.location.href("/")
-        );
+        // Swal.fire({
+        //   icon: 'info',
+        //   title: '로그아웃',
+        //   text: '로그아웃 시간이 만료하였습니다.'
+        // })
+        // .then(() =>
+        //   window.location.href = "/";
+        // );
       }
     };
   }, [props.chkTime]);
@@ -48,6 +50,8 @@ const LoginTimer = (props) => {
   function loginExtension() {
 
   }
+
+  console.log("들어옴???");
 
   return (
     <>

@@ -10,7 +10,7 @@ import Login from './member/Login';
 import NoticeBoard from './notice/NoticeBoard';
 import NoticeBoardDetail from './notice/NoticeBoardDetail';
 import {useEffect, useMemo, useRef, useState} from 'react';
-import {noticeData, qnaData} from './data/Data';
+import {noticeData} from './data/Data';
 import QnABoard from './notice/QnABoard';
 import QnaBoardDetail from './notice/QnaBoardDetail';
 import {FesListNoImg} from './trableinfo/Festival';
@@ -37,13 +37,11 @@ import ChatDetail from './trableinfo/ChatDetail';
 import JoinUserValidateChk from './member/JoinUserValidateChk';
 import NotificationList from "./common/Notification";
 import axios from "axios";
-import {call, deleteCookie, getCookie, sseSource} from "./common/ApiService";
+import {deleteCookie, getCookie, sseSource} from "./common/ApiService";
 import NoticeWrite from './notice/NoticeWrite';
 import TravelPdf from './travelschedule/TravelPdf';
 import LoginTimer from './member/LoginTimer';
-import Moment from 'react-moment';
 import moment from 'moment';
-import { useInterval } from 'react-use';
 import NoticeUpdate from "./notice/NoticeUpdate";
 
 function App(factory, deps) {
@@ -71,9 +69,20 @@ function App(factory, deps) {
   const modalToggle = () => {
     setModalOpen(!modalOpen);
   }
+  const [loading, setLoading] = useState();
+
+  useEffect(() => {
+    const localStorage = sessionStorage.getItem('loginState');
+    const cookie = getCookie('ACCESS_TOKEN');
+    if (localStorage === 'false' && cookie !== null && cookie !== undefined) {
+      sessionStorage.setItem('ACCESS_TOKEN', getCookie('ACCESS_TOKEN'));
+      deleteCookie('ACCESS_TOKEN');
+    }
+  }, []);
 
   const send = async (type, nav) => {
-    const accessToken = getCookie();
+    const accessToken = getCookie("ACCESS_TOKEN");
+    console.log("accesTK : " + accessToken)
     await axios({
       method: 'POST',
       url: `http://localhost:8888/${type}/send`,
@@ -110,10 +119,16 @@ function App(factory, deps) {
     isSub.current = false;
   }, []);
 
+  if (loading === true) {
+    return (
+       <></>
+    )
+  }
+
   return (
-     <ThemeProvider theme={themeMode}>
-       <GlobalStyles/>
-       <HeaderTop theme={theme} themeToggler={themeToggler} notifications={notifications}
+    <ThemeProvider theme={themeMode}>
+        <GlobalStyles/>
+        <HeaderTop theme={theme} themeToggler={themeToggler} notifications={notifications}
                   setNotifications={setNotifications} send={send}/>
        <Routes>
          <Route path='/' element={<Header></Header>}></Route>
@@ -124,7 +139,8 @@ function App(factory, deps) {
          <Route path="/travelSchedule/:id?" element={<TravelSchedule></TravelSchedule>}></Route>
          <Route path="/mypage" element={<Mypage></Mypage>}></Route>
          <Route path="/login" element={<Login></Login>}></Route>
-         <Route path="/notice" element={<NoticeBoard></NoticeBoard>}></Route>
+         <Route path="/notice" element={<NoticeBoard send={send}></NoticeBoard>}></Route>
+         <Route path="/notice/admin/write" element={<NoticeWrite></NoticeWrite>}></Route>
          <Route path="/notice/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
          <Route path="/notice/admin/write" element={<NoticeWrite></NoticeWrite>}></Route>
          <Route path="/notice/admin/update" element={<NoticeUpdate></NoticeUpdate>}></Route>
@@ -172,19 +188,24 @@ function App(factory, deps) {
 function HeaderTop(props) {
   const {pathname} = useLocation();
   const navigate = useNavigate();
-  const accessToken = getCookie();
-  const refreshToken = localStorage.getItem('REFRESH_TOKEN');
+  const accessToken = getCookie("ACCESS_TOKEN");
+  // const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   const {notifications, setNotifications, send} = props;
   const [chkTime, setChkTime] = useState();
 
 
   useEffect(() => {
-    sseSource("sub", setNotifications);
-    if(localStorage.getItem("loginTime")) {
-      console.log("탔어?");
-      setChkTime(moment(localStorage.getItem("loginTime")));
+    if(accessToken !== undefined && accessToken !== null) {
+      // loginExpired().then(() => {
+      //   console.log('탐???????');
+      sseSource("sub", setNotifications);
+      if(localStorage.getItem("loginTime")) {
+        setChkTime(moment(localStorage.getItem("loginTime")));
+      }
+      // });
     }
-}, [accessToken]);
+  }, [accessToken]);
+
   //알람 모달 관련
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -219,10 +240,10 @@ function HeaderTop(props) {
   };
 
   const state = getCookie('ACCESS_TOKEN');
-  
+
   // token 처리
   const handleClick = () => {
-    
+
     if (state === undefined || state === null) { // login
       navigate("/login");
     } else { // logout
@@ -244,24 +265,29 @@ function HeaderTop(props) {
   window.open('/chat/room', '_blank', `width=${width},height=${height},left=${left},top=${top}, status=no,toolbar=no,scrollbars=no`);
 };
 
+
+
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
        <div className="headerTop">
          <button type="button" onClick={showModal} style={{justifyContent: "left"}}>
            <AiOutlineBell className="headerNotification"/>
          </button>
-         <button type="button" className="testBtn" onClick={()=>{send("notification")}}>테스트용 send</button>
+         <button type="button" className="testBtn" onClick={() => {
+           send("notification")
+         }}>테스트용 send
+         </button>
          {
-          chkTime === undefined || chkTime === '' ?
-          <></> :
-          <>
-            <LoginTimer theme = {props.theme} chkTime = {chkTime}></LoginTimer>
-          </>
+           chkTime === undefined || chkTime === '' ?
+              <></> :
+              <>
+                <LoginTimer theme={props.theme} chkTime={chkTime}></LoginTimer>
+              </>
          }
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>
-          {(state === undefined || state === null) ? '' : '마이페이지'}
-          </Link>
-        <span>
+           {(state === undefined || state === null) ? '' : '마이페이지'}
+         </Link>
+         <span>
           <a href={() => false} onClick={() => handleClick()}
              className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} id="loginToggle"
           >{(state === undefined || state === null) ? '로그인' : '로그아웃'}</a>

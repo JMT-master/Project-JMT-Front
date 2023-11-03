@@ -50,7 +50,7 @@ const TravelPdf = () => {
     <div>
       {/* 필요한 입력 폼 또는 컴포넌트 */}
       <form onSubmit={handleSubmit}>
-        <button type="submit">제출</button>
+        <button type="submit" className="oBtn">제출</button>
       </form>
     </div>
   );
