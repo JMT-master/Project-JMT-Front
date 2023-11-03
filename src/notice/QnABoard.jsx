@@ -43,7 +43,7 @@ const QnABoard = () => {
   const navigate = useNavigate();
   const [pagingInfo, setPagingInfo] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(document.getElementsByClassName("select").value);
   const isAdmin = useRef(getCookie("adminChk"));
   const theme = localStorage.getItem("theme");
   const [searchResult, setSearchResult] = useState('');
@@ -106,10 +106,14 @@ const QnABoard = () => {
   }
 
   function onClickSearch() {
+    
     call("/qna/search?select=" + searchSelect + "&result=" + searchResult,"GET")
     .then(response => {
       setItems(response.data);
+      setCurrentPage(1);
+      setPageSize(10);
       console.log("response.data : {}", response.data);
+      console.log('document.getElementsByClassName("select").value : '+document.getElementsByClassName("select").value);
     });
   }
   return (
@@ -131,7 +135,9 @@ const QnABoard = () => {
       </div>
       <div className='qna-table'>
         <div className='page-choice'>
-          <select onChange={changePageSize}>
+          <select className='select' 
+          onChange={changePageSize}
+          >
             <option value={5}>5개씩</option>
             <option value={10} selected>10개씩</option>
             <option value={15}>15개씩</option>
