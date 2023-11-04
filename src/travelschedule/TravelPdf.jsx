@@ -2,21 +2,11 @@ import axios from "axios";
 import React, { useState } from "react";
 
 const TravelPdf = (props) => {
-  const [travelPlan, setTravelPlan] = useState([]);
-  const [travel, setTravel] = useState({
-    startTime: Date.now(),
-    place: "",
-    placeName: "",
-  });
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setTravel((prevState) => ({
-      ...prevState,
-      [name]: value
-    }));
-    setTravelPlan([travel,travel]);
-  };
+  const travelPdfDto = {
+    travelId : props.data.travelId,
+    userId : props.data.travelUserId
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -24,13 +14,14 @@ const TravelPdf = (props) => {
   };
 
   const generatePdf = () => {
-    
+    console.log("travelplan.travelId : "+travelPdfDto.travelId);
+    console.log("travelplan.travelUserId : "+travelPdfDto.travelUserId);
     fetch("http://localhost:8888/travel/generate-pdf", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(travelPlan),
+      body: JSON.stringify(travelPdfDto),
     })
       .then((response) => response.blob()) // 응답 데이터를 Blob 객체로 변환합니다.
       .then((blob) => {
@@ -49,7 +40,6 @@ const TravelPdf = (props) => {
 
   return (
     <div>
-      {/* 필요한 입력 폼 또는 컴포넌트 */}
       <form onSubmit={handleSubmit}>
         <button type="submit" className="oBtn">제출</button>
       </form>

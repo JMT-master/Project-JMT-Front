@@ -162,7 +162,7 @@ function App(factory, deps) {
          <Route path='/chat/room/:roomId?' element={<ChatDetail/>}></Route>
          <Route path='/travel-schedule' element={<TravelPdf></TravelPdf>}></Route>
          <Route path='/member/update' element={<JoinUser></JoinUser>}></Route>
-         <Route path='/myInfo/ChangePasswd' element={<ChangePasswd></ChangePasswd>}></Route>
+         <Route path='/myInfo/ChangePasswd/:id?' element={<ChangePasswd></ChangePasswd>}></Route>
        </Routes>
 
        {isChatRoom ? null : (

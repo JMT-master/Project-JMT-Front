@@ -235,9 +235,6 @@ const Mypage = () => {
           </ul>
         </div>
         <hr></hr>
-        <div>
-        <TravelPdf />
-        </div>
         <h1 className='myPage-h1-title'>{title}({totalCount})</h1>
         <ul className='myPage-Big-Image-ul'>
           {list}
