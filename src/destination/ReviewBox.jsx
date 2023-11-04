@@ -1,12 +1,38 @@
-import React, {useState} from 'react'
-import {setDateFormat} from "../common/ApiService";
+import React, {useEffect, useState} from 'react'
+import {call, getCookie, setDateFormat} from "../common/ApiService";
 import {BsTrash} from "react-icons/bs";
+import {API_BASE_URL} from "../common/ApiConfig";
+import axios from "axios";
 
 const ReviewBox = ({item, deleteHandler, updateHanlder}) => {
   const regDate = setDateFormat(item.regDate);
   const modDate = setDateFormat(item.modDate);
   const [isUpdate, setIsUpdate] = useState(false);
   let content = item.reviewContent;
+  const [image, setImage] = useState(null)
+
+
+  console.log("리뷰 인덱스 : "+item.reviewIdx)
+  useEffect(() => {
+    let tmpData = null
+    axios({
+      method: 'POST',
+      url: API_BASE_URL + "/review/viewFile",
+      data: item,
+      responseType: 'blob',
+    }).then(responseFile => {
+      console.log('responseFile : ', responseFile);
+
+      const blob = new Blob([responseFile.data]);
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => {
+        setImage(reader.result);
+        console.log("reader.result : " + reader.result);
+      }
+    })
+  }, []);
+
   const deleteReview = () => {
     deleteHandler(item.reviewIdx);
   }
@@ -33,7 +59,7 @@ const ReviewBox = ({item, deleteHandler, updateHanlder}) => {
        {isUpdate == false ?
           <div className='reviewBox-content'>
             <p>{content}</p>
-            <img src={item.img} alt=""/>
+            {image && <img src={image} alt="Image" />}
           </div>
           :
           <div className='reviewBox-content'>

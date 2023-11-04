@@ -91,11 +91,6 @@ function App(factory, deps) {
     await axios({
       method: 'POST',
       url: `http://localhost:8888/${type}/send`,
-      data: {
-        "content": "테스트3",
-        "url": "테스트용url",
-        "yn": "y"
-      },
       headers: {
         Authorization: "Bearer " + accessToken,
       }
@@ -275,13 +270,6 @@ function HeaderTop(props) {
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
        <div className="headerTop">
-         <button type="button" onClick={showModal} style={{justifyContent: "left"}}>
-           <AiOutlineBell className="headerNotification"/>
-         </button>
-         <button type="button" className="testBtn" onClick={() => {
-           send("notification")
-         }}>테스트용 send
-         </button>
          {
           chkTime === undefined || chkTime === '' || !chkTime.isValid() ?
           <></> :
@@ -472,58 +460,58 @@ function Header() {
          </div>
          <ul className='header-Youtube-ul'>
            <li className='header-Youtube-li'>
-             <YouTube className='header-Youtube-content'
-                      videoId="nPuJ9QXGB8E" //동영상 주소
-                      opts={{
-                        width: "400px",
-                        height: "250px",
-                        playerVars: {
-                          autoplay: 0, //자동 재생 여부
-                          modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부
-                          loop: 0, //반복 재생
-                          // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트
-                        },
-                      }}
-                      onReady={(e) => {
-                        e.target.mute(); //소리 끔
-                      }}
-             />
-           </li>
-           <li className='header-Youtube-li'>
-             <YouTube className='header-Youtube-content'
-                      videoId="ESF7SDWBtH0" //동영상 주소
-                      opts={{
-                        width: "400px",
-                        height: "250px",
-                        playerVars: {
-                          autoplay: 0, //자동 재생 여부
-                          modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부
-                          loop: 0, //반복 재생
-                          // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트
-                        },
-                      }}
-                      onReady={(e) => {
-                        e.target.mute(); //소리 끔
-                      }}
-             />
-           </li>
-           <li className='header-Youtube-li'>
-             <YouTube className='header-Youtube-content'
-                      videoId="PMBa2F44jxU" //동영상 주소
-                      opts={{
-                        width: "400px",
-                        height: "250px",
-                        playerVars: {
-                          autoplay: 0, //자동 재생 여부
-                          modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부
-                          loop: 0, //반복 재생
-                          // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트
-                        },
-                      }}
-                      onReady={(e) => {
-                        e.target.mute(); //소리 끔
-                      }}
-             />
+           {/*  <YouTube className='header-Youtube-content'*/}
+           {/*           videoId="nPuJ9QXGB8E" //동영상 주소*/}
+           {/*           opts={{*/}
+           {/*             width: "400px",*/}
+           {/*             height: "250px",*/}
+           {/*             playerVars: {*/}
+           {/*               autoplay: 0, //자동 재생 여부*/}
+           {/*               modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부*/}
+           {/*               loop: 0, //반복 재생*/}
+           {/*               // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트*/}
+           {/*             },*/}
+           {/*           }}*/}
+           {/*           onReady={(e) => {*/}
+           {/*             e.target.mute(); //소리 끔*/}
+           {/*           }}*/}
+           {/*  />*/}
+           {/*</li>*/}
+           {/*<li className='header-Youtube-li'>*/}
+           {/*  <YouTube className='header-Youtube-content'*/}
+           {/*           videoId="ESF7SDWBtH0" //동영상 주소*/}
+           {/*           opts={{*/}
+           {/*             width: "400px",*/}
+           {/*             height: "250px",*/}
+           {/*             playerVars: {*/}
+           {/*               autoplay: 0, //자동 재생 여부*/}
+           {/*               modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부*/}
+           {/*               loop: 0, //반복 재생*/}
+           {/*               // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트*/}
+           {/*             },*/}
+           {/*           }}*/}
+           {/*           onReady={(e) => {*/}
+           {/*             e.target.mute(); //소리 끔*/}
+           {/*           }}*/}
+           {/*  />*/}
+           {/*</li>*/}
+           {/*<li className='header-Youtube-li'>*/}
+           {/*  <YouTube className='header-Youtube-content'*/}
+           {/*           videoId="PMBa2F44jxU" //동영상 주소*/}
+           {/*           opts={{*/}
+           {/*             width: "400px",*/}
+           {/*             height: "250px",*/}
+           {/*             playerVars: {*/}
+           {/*               autoplay: 0, //자동 재생 여부*/}
+           {/*               modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부*/}
+           {/*               loop: 0, //반복 재생*/}
+           {/*               // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트*/}
+           {/*             },*/}
+           {/*           }}*/}
+           {/*           onReady={(e) => {*/}
+           {/*             e.target.mute(); //소리 끔*/}
+           {/*           }}*/}
+           {/*  />*/}
            </li>
          </ul>
        </div>

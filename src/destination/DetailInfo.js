@@ -4,10 +4,14 @@ import '../css/DetailInfo.scss'
 import {ReveiwList} from '../data/ReviewList'
 import ReviewBox from './ReviewBox'
 import ListPaging from './ListPaging'
-import {call} from "../common/ApiService";
+import {call, getCookie} from "../common/ApiService";
+import axios from "axios";
+import {API_BASE_URL} from "../common/ApiConfig";
+import Swal from "sweetalert2";
 
 
 const DetailInfo = () => {
+  const accessToken = getCookie("ACCESS_TOKEN");
   const location = useLocation();
   const [tabState, setTabState] = useState({
     contentVisible: true,
@@ -38,35 +42,113 @@ const DetailInfo = () => {
   const pageNum = (page - 1) * offset;
   const lastPage = useRef(1);
 
-  lastPage.current = Math.floor(size % offset > 0 ? (size / offset) + 1 : size / offset);
+  const [file, setFile] = useState([]);
+
+
+  //파일 업로드
+  const fileUpload = (e) => {
+
+    const files = e.target.files;
+
+    const uploadFile = e.target.files[0];
+    console.log("files : ", files[0]);
+    console.log("uploadFile : ", uploadFile);
+
+    if (files.length === 1) {
+      let value = e.target.value;
+      let result = value.split('\\').reverse()[0];
+      document.getElementById('review-file-text').value = result;
+    } else
+      document.getElementById('review-file-text').value = '첨부파일 : ' + files.length + '개';
+
+    setFile(uploadFile);
+
+  }
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const content = formData.get('review-content');
+    const file = formData.get('file');
+
+    console.log("file : " + file)
+
+    file && file.forEach((one) => {
+      formData.append('file', one)
+    })
 
     const jsonForm = {
       // idx: idx,
       reviewContent: content,
-      reviewContentId : id,
+      reviewContentId: id,
       // reviewImg : img
     }
 
-    call("/review", "POST", jsonForm).then(response =>{
+
+    call("/review", "POST", jsonForm).then(response => {
       let tmpList = reviewList;
-      setReviewList([response,...tmpList]);
+      setReviewList([response, ...tmpList]);
     })
   }
 
+  //리뷰 작성 버튼용 핸들러
+  const onSubmitClick = () => {
+    const newItem = {
+      reviewContent: document.getElementById('review-content').value,
+      reviewContentId: id,
+    };
+    writeReview(newItem);
+  };
+
+  //리뷰 작성
+  const writeReview = (item) => {
+    const formData = new FormData();
+
+    console.log("add item : {}", item);
+
+    file&&formData.append('file', file);
+    console.log("1")
+    formData.append('data', new Blob([JSON.stringify(item)], {
+      type: "application/json"
+    }));
+    console.log("2")
+
+    axios({
+      method: 'POST',
+      url: API_BASE_URL + '/review',
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Authorization": 'Bearer ' + accessToken
+      },
+      data: formData
+    }).then(response => {
+      console.log("/review :", response)
+      let tmpList = reviewList;
+
+      setReviewList([response.data, ...tmpList]);
+      document.getElementById('review-file-text').value = null;
+      document.getElementById('review-content').value = "";
+      if (response.status === 200) {
+        Swal.fire({
+          icon: 'info',
+          title: '작성되었습니다!',
+          showCloseButton: true,
+          confirmButtonText: '확인',
+        })
+      }
+    });
+  }
+
+
   const deleteHandler = (idx) => {
     call("/review", "Delete", {reviewIdx: idx})
-       .then(response =>{
+       .then(response => {
          let tmpList = reviewList.filter(review => (review.reviewIdx !== response.reviewIdx))
          setReviewList([...tmpList])
        })
   }
 
-  const updateHanlder = (reviewForm) =>{
+  const updateHanlder = (reviewForm) => {
     call("/review", "Put", reviewForm)
        .then(response => {
          setReviewList(response);
@@ -78,36 +160,45 @@ const DetailInfo = () => {
     reviewList.forEach((item) => {
       reviews.push(
          <ReviewBox item={item} deleteHandler={deleteHandler} updateHanlder={updateHanlder}/>
-      )})
+      )
+    })
     return reviews
   }
 
+  //ㅣ전체 글 읽어오기
   useEffect(() => {
     call("/review/read", "POST", {reviewContentId: id})
        .then((response) => {
+         const data = JSON.stringify(response[0]);
+         console.log("출력되는 리뷰data" + data[0]);
+         // data.map((item, i)=>{
+         //   console.log("출력되는 리뷰" + item[i]);
+         // })
          console.log("responsereview: " + JSON.stringify(response));
          setReviewList(response);
          console.log("나와라 리뷰 :" + reviewList);
+         lastPage.current = Math.floor(size % offset > 0 ? (size / offset) + 1 : size / offset);
        })
   }, []);
 
   return (
-    <div className='detail'>
-      <div className='detail-header'>
-        <div className='detail-headerPhoto' style={{
-          backgroundImage: `url(${img&&img})`
-        }}></div>
-        <div className='detail-headerInfo'>
-          <h1>{title&&title}</h1>
-          <p className='detail-headerInfo-p gray sf'>{tag&&tag.replace(/, /gi, ',').split(',').map(tag => ('#' + tag + ' '))}</p>
-          <div className='detail-headerInfo-baseInfo'>
-            <h3>기본 정보</h3>
-            <hr />
-            <p><span className='gray sf'>주소 : </span>{address&&address}</p>
-            <p><span className='gray sf'>연락처 : </span>{phoneno&&phoneno !== '--' || null ? phoneno&&phoneno : ''}</p>
-          </div>
-        </div>
-      </div>
+     <div className='detail'>
+       <div className='detail-header'>
+         <div className='detail-headerPhoto' style={{
+           backgroundImage: `url(${img && img})`
+         }}></div>
+         <div className='detail-headerInfo'>
+           <h1>{title && title}</h1>
+           <p className='detail-headerInfo-p gray sf'>{tag && tag.replace(/, /gi, ',').split(',').map(tag => ('#' + tag + ' '))}</p>
+           <div className='detail-headerInfo-baseInfo'>
+             <h3>기본 정보</h3>
+             <hr/>
+             <p><span className='gray sf'>주소 : </span>{address && address}</p>
+             <p><span className='gray sf'>연락처 : </span>{phoneno && phoneno !== '--' || null ? phoneno && phoneno : ''}
+             </p>
+           </div>
+         </div>
+       </div>
 
        <div className='detail-content'>
          <div className='detail-contentInfo'>
@@ -151,14 +242,22 @@ const DetailInfo = () => {
                toggleTab('reviewWriteVisible')
              }}>리뷰 작성하기
              </button>
-             <form onSubmit={handleFormSubmit} className="review-writeBox"
+             <div className="review-writeBox"
                    style={{border: "1px black", display: tabState.reviewWriteVisible ? 'grid' : 'none'}}>
                <div>리뷰 작성</div>
                <textarea style={{display: "flex"}} name="review-content" id="review-content" cols="80"
                          rows="5"></textarea>
-               <input style={{justifySelf: "end"}} type="file"/>
-               <button type="submit">리뷰 올리기</button>
-             </form>
+               <div style={{justifySelf: "start"}} className='file-attach'>
+                 <input placeholder='첨부파일' id='review-file-text' readOnly></input>
+                 <label htmlFor='review-file' className='btn-upload'>파일 업로드</label>
+                 <input type="file" name='review-file' id='review-file'
+                        accept='image/*'  // image 파일만 허용
+                        onChange={fileUpload}
+                 />
+               </div>
+
+               <button onClick={onSubmitClick} type="submit">리뷰 올리기</button>
+             </div>
              <hr/>
              <div className='reviewListBox'>
                {

@@ -6,9 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/AttachFile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/AttachFile.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/destination/DetailInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/DetailInfo.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/destination/ReviewBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/ReviewBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/destination/TourList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/TourList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/QnaBoardDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/QnaBoardDetail.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +66,7 @@
     "project.structure.last.edited": "모듈",
     "project.structure.proportion": "0.15039062",
     "project.structure.side.proportion": "0.50747985",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "ts.external.directory.path": "D:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -99,6 +101,7 @@
       <workItem from="1698798493823" duration="7891000" />
       <workItem from="1698884188745" duration="20826000" />
       <workItem from="1698970916395" duration="1841000" />
+      <workItem from="1699066347605" duration="16411000" />
     </task>
     <task id="LOCAL-00001" summary="23년 10월 17일 5시 50분 안광현 프론트단 커밋">
       <option name="closed" value="true" />
@@ -193,7 +196,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="Deb" />
+                        <option value="park" />
                       </list>
                     </value>
                   </entry>
