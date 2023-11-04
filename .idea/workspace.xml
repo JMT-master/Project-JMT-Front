@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/AttachFile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/AttachFile.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/destination/DetailInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/DetailInfo.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/destination/ReviewBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/ReviewBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/notice/QnaBoardDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/QnaBoardDetail.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +97,7 @@
       <workItem from="1698798493823" duration="7891000" />
       <workItem from="1698884188745" duration="20826000" />
       <workItem from="1698970916395" duration="1841000" />
-      <workItem from="1699066347605" duration="16411000" />
+      <workItem from="1699066347605" duration="17056000" />
     </task>
     <task id="LOCAL-00001" summary="23년 10월 17일 5시 50분 안광현 프론트단 커밋">
       <option name="closed" value="true" />
@@ -159,7 +155,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698994995373</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="리뷰 이미지 나옴">
+      <option name="closed" value="true" />
+      <created>1699084574591</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1699084574591</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,6 +223,7 @@
     <MESSAGE value="231102 태종님이랑 머지" />
     <MESSAGE value="qna getcookie 수리" />
     <MESSAGE value="리뷰 업데이트 반환시 전체 리스트 반환으로 뷰 업데이트하게 수정중" />
-    <option name="LAST_COMMIT_MESSAGE" value="리뷰 업데이트 반환시 전체 리스트 반환으로 뷰 업데이트하게 수정중" />
+    <MESSAGE value="리뷰 이미지 나옴" />
+    <option name="LAST_COMMIT_MESSAGE" value="리뷰 이미지 나옴" />
   </component>
 </project>

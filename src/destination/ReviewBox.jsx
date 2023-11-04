@@ -31,7 +31,7 @@ const ReviewBox = ({item, deleteHandler, updateHanlder}) => {
         console.log("reader.result : " + reader.result);
       }
     })
-  }, []);
+  }, [item.reviewIdx]);
 
   const deleteReview = () => {
     deleteHandler(item.reviewIdx);
