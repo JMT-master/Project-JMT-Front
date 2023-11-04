@@ -48,21 +48,17 @@ const DetailInfo = () => {
   //파일 업로드
   const fileUpload = (e) => {
 
-    const files = e.target.files;
+    let files = e.target.files;
+    let uploadFile = e.target.files[0];
 
-    const uploadFile = e.target.files[0];
-    console.log("files : ", files[0]);
-    console.log("uploadFile : ", uploadFile);
+    // console.log("files : ", files[0]);
+    // console.log("uploadFile : ", uploadFile);
 
-    if (files.length === 1) {
-      let value = e.target.value;
-      let result = value.split('\\').reverse()[0];
-      document.getElementById('review-file-text').value = result;
-    } else
-      document.getElementById('review-file-text').value = '첨부파일 : ' + files.length + '개';
-
+    let value = e.target.value;
+    let result = value.split('\\').reverse()[0];
+    document.getElementById('review-file-text').value = result;
+   console.log("호출!");
     setFile(uploadFile);
-
   }
 
   const handleFormSubmit = async (event) => {
@@ -71,7 +67,7 @@ const DetailInfo = () => {
     const content = formData.get('review-content');
     const file = formData.get('file');
 
-    console.log("file : " + file)
+    // console.log("file : " + file)
 
     file && file.forEach((one) => {
       formData.append('file', one)
@@ -104,14 +100,14 @@ const DetailInfo = () => {
   const writeReview = (item) => {
     const formData = new FormData();
 
-    console.log("add item : {}", item);
+    // console.log("add item : {}", item);
 
-    file&&formData.append('file', file);
-    console.log("1")
+    file && formData.append('file', file);
+    // console.log("1")
     formData.append('data', new Blob([JSON.stringify(item)], {
       type: "application/json"
     }));
-    console.log("2")
+    // console.log("2")
 
     axios({
       method: 'POST',
@@ -122,12 +118,14 @@ const DetailInfo = () => {
       },
       data: formData
     }).then(response => {
-      console.log("/review :", response)
+      // console.log("/review :", response)
       let tmpList = reviewList;
 
       setReviewList([response.data, ...tmpList]);
+      setFile([])
       document.getElementById('review-file-text').value = null;
       document.getElementById('review-content').value = "";
+      document.getElementById('review-file').value = null;
       if (response.status === 200) {
         Swal.fire({
           icon: 'info',
@@ -170,14 +168,17 @@ const DetailInfo = () => {
     call("/review/read", "POST", {reviewContentId: id})
        .then((response) => {
          const data = JSON.stringify(response[0]);
-         console.log("출력되는 리뷰data" + data[0]);
-         // data.map((item, i)=>{
+         // console.log("출력되는 리뷰data" + data[0]);
+         // // data.map((item, i)=>{
          //   console.log("출력되는 리뷰" + item[i]);
          // })
-         console.log("responsereview: " + JSON.stringify(response));
+         // console.log("responsereview: " + JSON.stringify(response));
          setReviewList(response);
-         console.log("나와라 리뷰 :" + reviewList);
+         // console.log("나와라 리뷰 :" + reviewList);
          lastPage.current = Math.floor(size % offset > 0 ? (size / offset) + 1 : size / offset);
+       })
+       .catch((error) =>{
+         console.log(error);
        })
   }, []);
 
@@ -243,7 +244,7 @@ const DetailInfo = () => {
              }}>리뷰 작성하기
              </button>
              <div className="review-writeBox"
-                   style={{border: "1px black", display: tabState.reviewWriteVisible ? 'grid' : 'none'}}>
+                  style={{border: "1px black", display: tabState.reviewWriteVisible ? 'grid' : 'none'}}>
                <div>리뷰 작성</div>
                <textarea style={{display: "flex"}} name="review-content" id="review-content" cols="80"
                          rows="5"></textarea>
@@ -251,7 +252,7 @@ const DetailInfo = () => {
                  <input placeholder='첨부파일' id='review-file-text' readOnly></input>
                  <label htmlFor='review-file' className='btn-upload'>파일 업로드</label>
                  <input type="file" name='review-file' id='review-file'
-                        accept='image/*'  // image 파일만 허용
+                        accept='.jpg, .jpeg, .png'  // image 파일만 허용
                         onChange={fileUpload}
                  />
                </div>

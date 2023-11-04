@@ -21,14 +21,14 @@ const ReviewBox = ({item, deleteHandler, updateHanlder}) => {
       data: item,
       responseType: 'blob',
     }).then(responseFile => {
-      console.log('responseFile : ', responseFile);
+      // console.log('responseFile : ', responseFile);
 
       const blob = new Blob([responseFile.data]);
       const reader = new FileReader();
       reader.readAsDataURL(blob);
       reader.onloadend = () => {
         setImage(reader.result);
-        console.log("reader.result : " + reader.result);
+        // console.log("reader.result : " + reader.result);
       }
     })
   }, [item.reviewIdx]);
@@ -59,7 +59,7 @@ const ReviewBox = ({item, deleteHandler, updateHanlder}) => {
        {isUpdate == false ?
           <div className='reviewBox-content'>
             <p>{content}</p>
-            {image && <img src={image} alt="Image" />}
+            {item.reviewImg && <img src={image} alt="Image" />}
           </div>
           :
           <div className='reviewBox-content'>
