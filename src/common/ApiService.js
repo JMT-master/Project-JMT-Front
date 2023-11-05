@@ -85,6 +85,17 @@ export function sseSource(url, setNotifications) {
   }
 }
 
+// localStorage 관련
+export const getLocal = (name) => {
+  const sessionValue = sessionStorage.getItem(name);
+
+  if(sessionValue !== null && sessionValue !== undefined) {
+    return sessionStorage.getItem(name);
+  } else {
+    return localStorage.getItem(name);
+  }
+}
+
 // 쿠기 관련
 export const setCookie = (name, value) => {
   const cookies = new Cookies();

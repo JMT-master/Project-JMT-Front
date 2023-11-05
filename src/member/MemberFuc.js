@@ -1,11 +1,14 @@
 import Swal from "sweetalert2";
-import {call, deleteCookie, extensionCookie, getCookie, loginStateCookie, setCookie} from "../common/ApiService";
+import {call, deleteCookie, extensionCookie, getCookie, getLocal, loginStateCookie, setCookie} from "../common/ApiService";
 import {API_BASE_URL} from "../common/ApiConfig";
 import moment from "moment";
 
 // 이메일 중복 확인
-export function userChk(chkUser) {
-  return call("/joinUser/email", "POST", chkUser)
+export function userChk(chkUser,setDuplicate) {
+
+  console.log('chkUser : ',chkUser);
+  console.log('setDuplicate : ',setDuplicate);
+  call("/joinUser/email", "POST", chkUser)
      .then(response => {
        if (response !== undefined) {
          Swal.fire({
@@ -14,7 +17,7 @@ export function userChk(chkUser) {
            text: '사용 가능'
          });
 
-         return 1;
+         return setDuplicate(true);
        } else {
          Swal.fire({
            icon: 'error',
@@ -22,7 +25,7 @@ export function userChk(chkUser) {
            text: '이미 있는 회원입니다.'
          });
 
-         return 0;
+         return setDuplicate(false);
        }
      }).catch((error => {
 
@@ -149,22 +152,31 @@ export function loginInfo(loginDto, body, id, idSave) {
 
 // 로그인 시간 연장
 export function loginTimeUpdate() {
-  let url = API_BASE_URL + "/login/info";
+  let url = API_BASE_URL + "/login/info?socialYn=" + getLocal('social');
+
 
   return fetch(url, {
     method: 'GET',
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + getCookie('ACCESS_TOKEN')
-    },
+    }
   }).then(result => {
     return result.json();
   }).then(data => {
     url = API_BASE_URL + "/login/extension";
+    console.log('data : ', data)
+
+    const result = {
+      email : data.data[0],
+      socialYn : getLocal('social')
+    }
+
+    const body = JSON.stringify(result);
 
     fetch(url, {
       method: 'POST',
-      body : data,
+      body : body,
       headers: {
         "Content-Type": "application/json"
       },

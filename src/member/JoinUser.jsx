@@ -2,67 +2,51 @@ import React from 'react';
 import { useState } from 'react'
 import { useEffect } from 'react'
 import '../css/JoinUser.css';
-import DaumPostcode from 'react-daum-postcode';
 import Post from './Post';
 import { useNavigate } from 'react-router';
-import { call } from '../common/ApiService';
+import { call, getLocal } from '../common/ApiService';
 import Swal from 'sweetalert2';
 import { emailValidate, joinUser, userChk } from './MemberFuc';
-import { Form, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 
 const JoinUser = () => {
-  const [enroll_company, setEnroll_company] = useState({
-    address:'',
-  });
   const navigate = useNavigate();
+  const {pathname} = useLocation();
   const [pwdPop, setPwdPop] = useState('');
   const [popup, setPopup] = useState(false);
-  const {pathname} = useLocation();
-  const [upMember, setUpMember] = useState({});
+  const [duplicate, setDuplicate] = useState(false);
+  const isUpdate = pathname.includes("/member/update");
+
+  const [member, setMember] = useState({
+    email : '',
+    username : '',
+    password : '',
+    passwordChk : '',
+    zipcode : '',
+    address : '',
+    addressDetail : '',
+    phone : '',
+    adminYn : 'N',
+    socialYn : 'N'
+  })
 
   useEffect(() => {
     if(pathname.includes("/member/update")){
-      call("/member/update", "GET")
+      call("/member/update?socialYn="+getLocal('social'), "GET")
       .then((response) => {
-          setUpMember(response);
-          console.log("response : {}", response);
+        console.log('response : ',response);
+          if(response !== undefined && response !== null) setMember(response);
       })
     }
   }, []);
 
-  //update인지 아닌지에 따라 style에 none 주기
-  const isUpdate = pathname.includes("/member/update");
   //updateHandler
-  const updateHandler = (member) => {
+  const updateHandler = () => {
     call("/member/update", "POST", member)
     .then((response) => {
       console.log("response : "+response);
       navigate("/mypage");
-    })
-  }
-  //값 변경하는거 가져오기
-  const valueChange = () => {
-    const newMember = {
-      email : document.getElementById('email').value,
-      username : document.getElementById('NameId').value,
-      password : document.getElementById('LoginPwd').value,
-      passwordChk : document.getElementById('LoginPwdChk').value,
-      zipcode : document.getElementById('zipcode').value,
-      address : document.getElementById('address').value,
-      addressDetail : document.getElementById('addressDetail').value,
-      phone : document.getElementById('LoginPhone').value,
-      adminYn : 'N',
-      socialYn : 'N'
-    }
-    console.log("upMember : {}", newMember);
-    updateHandler(newMember);
-  }
-
-  const handleInput = (e) => {
-    setEnroll_company({
-      ...enroll_company,
-      [e.target.name]:e.target.value,
     })
   }
 
@@ -71,33 +55,33 @@ const JoinUser = () => {
     setPopup(!popup);
   }
 
-  const checkPwd = (e) => {
-    const pwdVal = document.getElementById('LoginPwd').value;
-    if(e.target.value === pwdVal){
-      return setPwdPop('비밀번호가 일치합니다');
-    }else {
-      return setPwdPop('비밀번호가 일치하지 않습니다.');
-    }
-  }
-
   // 가입 완료
   function onSubmitHandler(e) {
-    const formId = ['email', 'NameId', 'LoginPwd', 'LoginPwdChk', 'zipcode', 'address', 'addressDetail', 'LoginPhone'];
-    const text   = ['아이디', '이름', '비밀번호', '비밀번호 확인', '우편번호', '집주소', '상세주소', '휴대폰 번호'];
+    const text   = {
+      email : '이메일',
+      username : '이름',
+      password : '비밀번호',
+      passwordChk : '비밀번호 확인 ',
+      zipcode : '우편번호',
+      address : '집주소',
+      addressDetail : '상세 주소',
+      phone : '휴대폰 번호'
+    }
     let nullFlag = 0, nullValue = '';
 
     // null값 처리
-    formId.map((chkId,i) => {
-      if(document.getElementById(chkId).value === '') {
-
-        if(text[i] !== '상세주소' && nullFlag === 0) {
-          nullValue = text[i];
+    for(let data in member) {
+      let validateDate = member[data].replaceAll(' ', '');
+      if( validateDate.length === 0) {
+        if(data !== 'addressDetail' && nullFlag === 0) {
+          nullValue = text[data];
           nullFlag = 1;
+          break;
         }
       }
-    });
+    }
 
-    if(nullFlag === 1) { 
+    if(nullFlag === 1) {
       Swal.fire({
         icon: 'warning',
         title: '회원가입',
@@ -106,28 +90,13 @@ const JoinUser = () => {
       return;
     }
 
-    // const userid = document.getElementById('email').value;
-    const email = document.getElementById('email').value;
-    const username = document.getElementById('NameId').value;
-    const password = document.getElementById('LoginPwd').value;
-    const passwordChk = document.getElementById('LoginPwdChk').value;
-    const zipcode = document.getElementById('zipcode').value;
-    const address = document.getElementById('address').value;
-    const addressDetail = document.getElementById('addressDetail').value;
-    const phone = document.getElementById('LoginPhone').value;
-
-    const member = {
-      // userid : userid,
-      email : email,
-      username : username,
-      password : password,
-      passwordChk : passwordChk,
-      zipcode : zipcode,
-      address : address,
-      addressDetail : addressDetail,
-      phone : phone,
-      adminYn : 'N',
-      socialYn : 'N'
+    if(member.password !== member.passwordChk) {
+      Swal.fire({
+        icon: 'warning',
+        title: '회원가입',
+        text: '비밀번호가 같지 않습니다.'
+      })
+      return;
     }
 
     joinUser(member);
@@ -137,37 +106,56 @@ const JoinUser = () => {
   function dupliEmail(e) {
     e.preventDefault();
 
-    const userid = document.getElementById('email').value;
-
     const chkUser = {
-      userid : userid
+      email : member.email,
+      socialYn : 'N'
     };
 
-    userChk(chkUser)
+    userChk(chkUser, setDuplicate)
   }
 
   // 메일 인증 받기
   function onEmailHandler(e) {
     e.preventDefault();
-    const userid = document.getElementById('email').value;
     
     const chkUser = {
-      userid : userid
+      email : member.email,
+      socialYn : 'N'
     };
 
-
     emailValidate(chkUser);
-
   }
-  function onNameHandler() {
 
+  // member항목 변경
+  function onChangeMember(e) {
+    console.log(e.target.name);
+    setMember({...member, [e.target.name] : e.target.value});
   }
-  function onPasswordHandler() {
 
-  }
-  function onConfirmPasswordHandler() {
+  // 비밀번호
+  function onChangePw(e) {
+    setMember({...member, [e.target.name] : e.target.value});
 
+    if(member.passwordChk === e.target.value) {
+      return setPwdPop('비밀번호가 일치합니다');
+    } else {
+      return setPwdPop('비밀번호가 일치하지 않습니다.');
+    }
   }
+
+  // 비밀번호 확인
+  function onChangePwChk(e) {
+    setMember({...member, [e.target.name] : e.target.value});
+
+    if(member.password === e.target.value) {
+      return setPwdPop('비밀번호가 일치합니다');
+    } else {
+      return setPwdPop('비밀번호가 일치하지 않습니다.');
+    }
+  }
+
+  console.log('duplicate : ',duplicate);
+  console.log('member : ',member);
 
   return (
     <div className='join-container'>
@@ -188,61 +176,99 @@ const JoinUser = () => {
                   <td>
                     <div className='brd'><input type="email" id='email' name='email' 
                      style={{width : isUpdate ? "95%" : ""}} 
-                    //  value={isUpdate ? upMember.email : ""}
+                     value = {member.email}
+                     onChange={onChangeMember}
+                     readOnly = {isUpdate ? true : false}
                       className='brd-ipt-email' placeholder='아이디는 이메일 형식 입니다.' /> </div>
                     <div className='brd-txt'><span id='LoginIdMsg'></span></div>
-                    <button className='email-check-btn' onClick={dupliEmail} style={{display : isUpdate ? "none" : "block"}}>중복확인</button>
+                    <button className='email-check-btn btn btn-outline-warning btn-lg' onClick={dupliEmail} style={{display : isUpdate ? "none" : "block"}}><strong>중복확인</strong></button>
                     <div className='email-check-txt' style={{display : isUpdate ? "none" : "block"}}>
-                      <span>이메일 도용 피해 방지를 위해 메일 인증을 받아주세요</span>
-                      <button className='commit-email-btn' onClick={onEmailHandler}><span>메일 인증받기</span></button>
+                      <span>이메일 도용 피해 방지를 위해 메일 인증을 받아주세요   </span>
+                      <button className='btn btn-outline-warning btn-sm' onClick={onEmailHandler}><span><strong>메일 인증받기</strong></span></button>
                     </div>
                   </td>
                 </tr>
                 <tr>
                   <th><strong>이름</strong></th>
                   <td>
-                    <div className='brd'><input type="id" id='NameId' name='NameId'
-                      maxLength='12' className='brd-ipt' required /> </div>
+                    <div className='brd'>
+                      <input type="id" id='username' name='username'
+                      maxLength='12' className='brd-ipt' 
+                      value = {member.username}
+                      onChange={onChangeMember}
+                      required /> </div>
                   </td>
                 </tr>
-                <tr>
+                {
+                  isUpdate === true ? <></>
+                  :
+                  <tr>
                   <th><strong>비밀번호</strong></th>
                   <td>
-                    <div className='brd'><input type="password" id='LoginPwd' name='LoginPwd'
-                      maxLength='12' className='brd-ipt' placeholder='영문, 숫자 혼합하여 8자~15자로 입력해주세요.' /></div>
+                    <div className='brd'>
+                      <input type="password" id='password' name='password'
+                      maxLength='12' className='brd-ipt' placeholder='영문, 숫자 혼합하여 8자~15자로 입력해주세요.' 
+                      value = {member.password}
+                      onChange={onChangePw}
+                      /></div>
                     {/* <div className='brd-txt'><span id='LoginIdMsg'>영문, 숫자 혼합하여 8자~15자로 입력해주세요.</span></div> */}
                   </td>
                 </tr>
-                <tr>
+                }
+                {
+                  isUpdate === true ? <></>
+                  :
+                  <tr>
                   <th><strong>비밀번호 확인</strong></th>
                   <td>
-                    <div className='brd'><input type="password" id='LoginPwdChk' name='LoginPwdChk'
-                      maxLength='12' className='brd-ipt' onChange={checkPwd} /> </div>
+                    <div className='brd'>
+                      <input type="password" id='passwordChk' name='passwordChk'
+                      maxLength='12' className='brd-ipt'
+                      value = {member.passwordChk}
+                      onChange={onChangePwChk}
+                      /> </div>
                     <div className='brd-txt'><span className={pwdPop === '비밀번호가 일치합니다' ? 'successPwd' : 'failPwd'} >{pwdPop}</span></div>
                   </td>
                 </tr>
+                }
                 <tr>
                   <th><strong>집 주소</strong></th>
                   <td>
-                    <div className='brd'><input type="text"  id='zipcode' name='zipcode'
+                    <div className='brd'>
+                      <input type="text"  id='zipcode' name='zipcode'
                       maxLength='12' className={popup ? 'brd-ipt' : 'input-hidden'}
-                      onChange={handleInput} value={enroll_company.zonecode} /></div>
-                    <div className='brd'><input type="text"  id='address' name='address'
+                      onChange={onChangeMember} value={member.zipcode} 
+                      />
+                    </div>
+                    <div className='brd'>
+                      <input type="text"  id='address' name='address'
                       maxLength='12' className='brd-ipt'
-                      onChange={handleInput} value={enroll_company.address} /></div>
-                    <div className='brd'><input type="text"  id='addressDetail' name='addressDetail'
+                      onChange={onChangeMember} value={member.address}
+                       /></div>
+                    <div className='brd'>
+                      <input type="text"  id='addressDetail' name='addressDetail'
                       maxLength='12' className={popup ? 'brd-ipt' : 'input-hidden'}
-                      onChange={handleInput} placeholder='상세주소를 입력해주세요'/></div>
+                      value={member.addressDetail}
+                      onChange={onChangeMember} placeholder='상세주소를 입력해주세요'/>
+                    </div>
                     <div className='brd-txt'><span id='LoginIdMsg'></span></div>
-                    <div className='phone-chk'><button className='phone-btn' onClick={handleComplete} ><span>집 주소 검색하기</span></button></div>
-                    <div>{popup && <Post company={enroll_company} setcompany={setEnroll_company}></Post>}</div>
+                    <div className='phone-chk'>
+                      <button className='btn btn-outline-warning btn-sm' onClick={handleComplete} >
+                        <span><strong>집 주소 검색하기</strong></span>
+                      </button>
+                    </div>
+                    <div>{popup && <Post company={member} setcompany={setMember}></Post>}</div>
                   </td>
                 </tr>
                 <tr>
                   <th><strong>휴대폰 번호</strong></th>
                   <td>
-                    <div className='brd'><input type="tell" id='LoginPhone' name='LoginPhone'
-                      maxLength='12' className='brd-ipt' /> </div>
+                    <div className='brd'>
+                      <input type="number" id='phone' name='phone'
+                      maxLength='12' className='brd-ipt' 
+                      value = {member.phone}
+                      onChange={onChangeMember}
+                      /> </div>
                     {/* <div className='brd-txt'><span id='LoginIdMsg'></span></div>
                     <di className='phone-chk'><button className='phone-btn'><span>핸드폰 인증하기</span></button></di> */}
                   </td>
@@ -255,23 +281,30 @@ const JoinUser = () => {
               <br />입력된 정보는 개인정보취급방침에 의해 안전하게 보호받습니다.
             </p>
           </div>
-          <div className='joinUser-btn'>
-            <ul className='type2'>
-              <li className='lt'><button id='joinUser-Success' style={{display : isUpdate ? "none" : "block"}}
-              onClick={(e) => {
-                return onSubmitHandler();
-                }}>
-                  <span>가입완료</span>
-                  </button></li>
-              <li className='lt'><button id='joinUser-Success' style={{display : isUpdate ? "block" : "none"}}
-              onClick={() => {
-                return valueChange();
-                }}>
-                  <span>수정완료</span>
-                  </button></li>
-              <li className='rt' onClick={()=>navigate(-1)} ><button id='joinUser-Cancel'><span>취소</span></button></li>
-            </ul>
-          </div>
+          {
+            isUpdate === true ? // Update
+            <div className='d-flex flex-row bd-highlight gap-3'>
+              <div className='bd-highlight'>
+                <button className='btn btn-outline-warning' id='joinUser-Success' onClick={updateHandler}><strong>수정완료</strong></button>
+              </div>
+              <div className='bd-highlight'>
+                <button className='btn btn-outline-warning' id='joinUser-Success' onClick={() => navigate('/myInfo/ChangePasswd')}><strong>비밀번호 변경</strong></button>
+              </div>
+              <div className='bd-highlight'>
+                <button className='btn btn-outline-secondary' id='joinUser-Cancel' onClick={() => navigate(-1)}><strong>취소</strong></button>
+              </div>
+
+            </div> 
+            : // 회원가입
+            <div className='d-flex flex-row bd-highlight gap-3'>
+              <div className='bd-highlight'>
+                <button className='btn btn-outline-warning' id='joinUser-Success' onClick={onSubmitHandler}><strong>가입완료</strong></button>
+              </div>
+              <div className='bd-highlight'>
+                <button className='btn btn-outline-secondary' id='joinUser-Cancel' onClick={() => navigate(-1)}><strong>취소</strong></button>
+              </div>
+            </div>          
+          }
         </div>
     </div>
   );

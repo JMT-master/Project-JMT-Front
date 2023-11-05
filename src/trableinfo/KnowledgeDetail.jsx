@@ -4,7 +4,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import OnModal from '../common/OnModal';
 import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube, AiOutlineLoading } from 'react-icons/ai';
 import AttachFile from '../common/AttachFile';
-import { call, setDateTimeFormat } from '../common/ApiService';
+import { call, getLocal, setDateTimeFormat } from '../common/ApiService';
 import axios from 'axios';
 import { API_BASE_URL } from '../common/ApiConfig';
 import AnswerDetail from '../common/AnswerDetail';
@@ -45,11 +45,13 @@ const KnowledgeDetail = () => {
             const reader = new FileReader();
             reader.readAsDataURL(blob);
             reader.onloadend = () => {
-              revData[i] = {...revData[i], data : reader.result}; 
+              revData[i] = {...revData[i], data : reader.result, socialYn : getLocal('social')}; 
               if((i+1) === revData.length) setLoading(false);
             }
           });
         })
+
+        console.log(revData);
 
 
         setDbdata(revData);
@@ -134,8 +136,8 @@ const KnowledgeDetail = () => {
       <div className='knowledgeDetail-content'>
         <div className='knowledgeDetail-title'>
           <h1 onClick={() => navigate('/info/knowledge')}>Jhat JPT 지식in</h1>
-          <span><button className='knowledgeDetail-title-btn' onClick={onKnowledgeUpdate}>수정</button></span>
-          <span><button className='knowledgeDetail-title-btn' onClick={onKnowledgeDelete}>삭제</button></span>
+          <button className='knowledgeDetail-title-btn' onClick={onKnowledgeUpdate}>수정</button>
+          <button className='knowledgeDetail-title-btn' onClick={onKnowledgeDelete}>삭제</button>
           {/* <span><AiFillPrinter style={{width:'50px', height:'30px'}}></AiFillPrinter> </span> */}
           {/* <span><AiFillFilePdf style={{width:'50px', height:'30px'}}></AiFillFilePdf> </span> */}
           {/* <span> <AiFillYoutube style={{width:'50px', height:'30px'}}></AiFillYoutube> </span> */}

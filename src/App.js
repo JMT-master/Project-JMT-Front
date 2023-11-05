@@ -248,11 +248,15 @@ function HeaderTop(props) {
   // token 처리
   const handleClick = () => {
     const infoUrl = API_BASE_URL + "/logout/kakao";
+    const state = getCookie('ACCESS_TOKEN');
+    console.log('state : ',state);
 
     if (state === undefined || state === null) { // login
       navigate("/login");
     } else { // logout
-      console.log('pathname : ', pathname);      
+      console.log('pathname : ', pathname);  
+      const value = sessionStorage.getItem('loginState');
+      console.log('value', value);
 
       if(sessionStorage.getItem('loginState') === false){
          // 카카오 로그아웃 처리
@@ -266,13 +270,13 @@ function HeaderTop(props) {
             sessionStorage.removeItem('loginTime');
             sessionStorage.removeItem('social');
             deleteCookie('ACCESS_TOKEN');
-            window.location.reload();
+            window.location.href = '/';
           });
         } else {
           sessionStorage.removeItem('loginTime');
           sessionStorage.removeItem('social');
           deleteCookie('ACCESS_TOKEN');
-          window.location.reload();
+          window.location.href = '/';
         }
       } else {
          // 카카오 로그아웃 처리
@@ -287,13 +291,13 @@ function HeaderTop(props) {
             localStorage.removeItem("loginTime");
             localStorage.removeItem('social');
             deleteCookie('ACCESS_TOKEN');
-            window.location.reload();
+            window.location.href = '/';
           });
         } else{
           localStorage.removeItem("loginTime");
           localStorage.removeItem('social');
           deleteCookie('ACCESS_TOKEN');
-          window.location.reload();
+          window.location.href = '/';
         }
       }
 
@@ -312,7 +316,7 @@ function HeaderTop(props) {
   window.open('/chat/room', '_blank', `width=${width},height=${height},left=${left},top=${top}, status=no,toolbar=no,scrollbars=no`);
 };
 
-
+console.log('state',state);
 
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
