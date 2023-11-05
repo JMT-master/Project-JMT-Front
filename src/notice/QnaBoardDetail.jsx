@@ -37,8 +37,10 @@ const QnaBoardDetail = () => {
               const reader = new FileReader();
               reader.readAsDataURL(blob);
               reader.onloadend = () => {
+                console.log("details[i] : " + JSON.stringify(details[i]));
                 details[i] = { ...details[i], data: reader.result };
                 console.log("reader.result : " + reader.result);
+                console.log("details[i] : " + JSON.stringify(details[i]));
               }
             })
           })

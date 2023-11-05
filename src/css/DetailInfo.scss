@@ -8,7 +8,7 @@ $jOrange: #f3a444;
     line-height: 20px;
     font-size: $tabFontSize;
     border-top: 1px solid;
-    margin-bottom: 0.5 px;
+    margin-bottom: 0.5px;
   }
 
   &-content {
@@ -104,18 +104,18 @@ $jOrange: #f3a444;
       &-content {
         width: 80%;
         margin: 0 auto;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: 300px;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 210px;
         gap: 10px;
 
-        div {
-          padding: 0;
-
+        .review-imgBox {
+          width: 200px;
+          height: 200px;
 
           img {
             width: 100%;
-            height: 300px;
-            object-fit: cover;
+            height: 100%;
+            object-fit: contain;
             border-radius: 10%;
           }
         }
@@ -138,38 +138,78 @@ $jOrange: #f3a444;
       @include contentHeight(200px);
 
       &-content {
-        .reviewBox {
-          display: grid;
-          grid-template-columns: 150px 80%;
-          height: 160px;
-          align-items: center;
-
-          &-header {
-            justify-items: center;
-            /* 수평 중앙 정렬 */
+        .reviewListBox {
+          .reviewBox {
+            width: 98%;
             display: grid;
-            // grid-template-rows: 100px 10% 10%;
-            
-            img,div{
-              margin-bottom: 5px;
-            }
-            
-            img {
-              width: 100px;
-              height: 100px;
-            }
-          }
-          &-content{
-            padding: 10px;
-            line-height: 1.4rem;
-            img{
-              float: right;
+            grid-template-columns: 150px 60% 10% 10%;
+            height: 150px;
+            align-items: center;
+            margin: 0 auto;
 
+            &-header {
+              justify-items: center;
+              /* 수평 중앙 정렬 */
+              display: grid;
+              // grid-template-rows: 100px 10% 10%;
+
+              img, div {
+                margin-bottom: 5px;
+              }
+
+              img {
+                width: 100px;
+                height: 100px;
+              }
+            }
+
+            &-content {
+              height: 130px;
+              position: relative;
+              padding: 10px;
+              border-left: 1px #cccccc solid;
+
+              line-height: 1.4rem;
+
+              img {
+                float: right;
+
+              }
+            }
+
+            &-footer {
+              justify-content: right;
+            }
+
+            .marginBottomBtn {
+              width: 50px;
             }
           }
         }
       }
     }
+  }
+
+  .review-writeBox {
+    //background: #bbbbbb;
+    display: grid;
+    grid-template-rows: 30px 100px 30px 40px;
+
+    .reviewUpload {
+      margin-top: 5px;
+    }
+
+    .review-btnBox {
+      position: relative;
+
+      .review-writeBtn {
+        width: 100px;
+        position: absolute;
+        right: 1px;
+        top: 3px;
+      }
+    }
+
   }
 
   img {
@@ -185,4 +225,49 @@ img {
 
 hr {
   margin: 3px;
+}
+
+.modalBox{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* 검은 배경색 및 투명도 조절 가능 */
+  z-index: 999;
+  .modalBody{
+    display: grid;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left :50%;
+    width: 550px;
+    height: auto;
+    background: white;
+    border : 5px $jOrange solid;
+    border-radius: 10%;
+    transform: translate(-50%, -50%);
+    grid-template-rows: 500px auto;
+
+    img{
+      height: 500px;
+      width: 500px;
+      border-radius: 10%;
+    }
+
+    .reviewBox{
+      display: grid;
+      grid-template-rows: 30px auto;
+      margin: 5px 0;
+      padding : 10px 5px;
+      border-top: 3px $jOrange solid;
+      &-header{
+        display: grid;
+        grid-template-columns: 68% 32%;
+      }
+      &-content{
+        padding : 0 3px;
+      }
+    }
+  }
 }

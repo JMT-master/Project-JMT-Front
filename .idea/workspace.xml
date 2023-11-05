@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/DetailInfo.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/DetailInfo.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/destination/DetailInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/DetailInfo.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/destination/ReviewBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/ReviewBox.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/QnaBoardDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/QnaBoardDetail.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,33 +48,34 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;android.gradle.sync.needed&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;park&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;11&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/workspace/PJ/Project-JMT-Front&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;모듈&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15039062&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.50747985&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "android.gradle.sync.needed": "true",
+    "git-widget-placeholder": "park",
+    "jdk.selected.JAVA_MODULE": "11",
+    "last_opened_file_path": "D:/workspace/PJ/Project-JMT-Front",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "project.structure.last.edited": "모듈",
+    "project.structure.proportion": "0.15039062",
+    "project.structure.side.proportion": "0.50747985",
+    "settings.editor.selected.configurable": "terminal",
+    "ts.external.directory.path": "D:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\second-project\src\notice" />
@@ -99,7 +103,9 @@
       <workItem from="1698884188745" duration="20826000" />
       <workItem from="1698970916395" duration="1841000" />
       <workItem from="1699066347605" duration="17226000" />
-      <workItem from="1699086120440" duration="2902000" />
+      <workItem from="1699086120440" duration="3806000" />
+      <workItem from="1699157277884" duration="13657000" />
+      <workItem from="1699171824638" duration="8075000" />
     </task>
     <task id="LOCAL-00001" summary="23년 10월 17일 5시 50분 안광현 프론트단 커밋">
       <option name="closed" value="true" />
@@ -173,7 +179,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699085330074</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="리뷰 이미지 나옴 수리">
+      <option name="closed" value="true" />
+      <created>1699089036500</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1699089036500</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -236,5 +250,9 @@
     <MESSAGE value="리뷰 이미지 나옴" />
     <MESSAGE value="리뷰 이미지 나옴 수리" />
     <option name="LAST_COMMIT_MESSAGE" value="리뷰 이미지 나옴 수리" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

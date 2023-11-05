@@ -1,37 +1,24 @@
-import React, {useEffect, useState} from 'react'
-import {call, getCookie, setDateFormat} from "../common/ApiService";
+import React, {useEffect, useRef, useState} from 'react'
+import {call, getCookie, setDateFormat, setDateTimeFormat} from "../common/ApiService";
 import {BsTrash} from "react-icons/bs";
 import {API_BASE_URL} from "../common/ApiConfig";
 import axios from "axios";
 
-const ReviewBox = ({item, deleteHandler, updateHanlder}) => {
+
+const ReviewBox = ({item,modal, deleteHandler, updateHanlder}) => {
   const regDate = setDateFormat(item.regDate);
   const modDate = setDateFormat(item.modDate);
+
   const [isUpdate, setIsUpdate] = useState(false);
   let content = item.reviewContent;
   const [image, setImage] = useState(null)
-
-
-  console.log("리뷰 인덱스 : "+item.reviewIdx)
+  const [sameWriter,setSameWriter] = useState(false)
   useEffect(() => {
-    let tmpData = null
-    axios({
-      method: 'POST',
-      url: API_BASE_URL + "/review/viewFile",
-      data: item,
-      responseType: 'blob',
-    }).then(responseFile => {
-      // console.log('responseFile : ', responseFile);
-
-      const blob = new Blob([responseFile.data]);
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
-      reader.onloadend = () => {
-        setImage(reader.result);
-        // console.log("reader.result : " + reader.result);
-      }
+    call("/review/userChk", "Post", {reviewWriter : item.reviewWriter})
+       .then(response=>{
+         setSameWriter(response)
     })
-  }, [item.reviewIdx]);
+  }, []);
 
   const deleteReview = () => {
     deleteHandler(item.reviewIdx);
@@ -43,9 +30,9 @@ const ReviewBox = ({item, deleteHandler, updateHanlder}) => {
 
   const updateReview = () => {
     updateHanlder({
-      reviewIdx : item.reviewIdx,
+      reviewIdx: item.reviewIdx,
       reviewContent: content,
-      reviewContentId : item.reviewContentId
+      reviewContentId: item.reviewContentId
     })
     setIsUpdate(false);
   }
@@ -54,12 +41,12 @@ const ReviewBox = ({item, deleteHandler, updateHanlder}) => {
      <div className='reviewBox'>
        <div className='reviewBox-header'>
          <div>{item.reviewWriter}</div>
-         <div>{regDate + " : " + modDate}</div>
+         <div>{"작성일 : " + regDate}</div>
+         {/*<div>{"수정일 : " + modDate}</div>*/}
        </div>
        {isUpdate == false ?
           <div className='reviewBox-content'>
             <p>{content}</p>
-            {item.reviewImg && <img src={image} alt="Image" />}
           </div>
           :
           <div className='reviewBox-content'>
@@ -69,9 +56,12 @@ const ReviewBox = ({item, deleteHandler, updateHanlder}) => {
             <button onClick={updateReview}>수정 완료</button>
           </div>
        }
-       <div className='reviewBox-footer'>
+       <div className='reviewBox-image' style={{display : modal ? "none" : "block"}}>
+         {item.reviewImg && <img src={item.imgData} alt="Image"/>}
+       </div>
+       <div className='reviewBox-footer' style={{display : sameWriter || !modal ? "grid" : "none"}}>
          <button className="oBtn marginBottomBtn" onClick={updateToggle}>수정</button>
-         <button className="oBtn marginBottomBtn" onClick={deleteReview}><BsTrash/></button>
+         <button className="oBtn marginBottomBtn" onClick={deleteReview}>삭제</button>
        </div>
      </div>
   )

@@ -43,7 +43,7 @@ import TravelPdf from './travelschedule/TravelPdf';
 import LoginTimer from './member/LoginTimer';
 import moment from 'moment';
 import NoticeUpdate from "./notice/NoticeUpdate";
-import { useInterval } from 'react-use';
+import {useInterval} from 'react-use';
 import ChangePasswd from './member/ChangePasswd';
 
 function App(factory, deps) {
@@ -127,9 +127,9 @@ function App(factory, deps) {
   }
 
   return (
-    <ThemeProvider theme={themeMode}>
-        <GlobalStyles/>
-        <HeaderTop theme={theme} themeToggler={themeToggler} notifications={notifications}
+     <ThemeProvider theme={themeMode}>
+       <GlobalStyles/>
+       <HeaderTop theme={theme} themeToggler={themeToggler} notifications={notifications}
                   setNotifications={setNotifications} send={send}/>
        <Routes>
          <Route path='/' element={<Header></Header>}></Route>
@@ -166,17 +166,17 @@ function App(factory, deps) {
 
        {isChatRoom ? null : (
           <div>
-         <div className="notifyContainer">
-           {<div className="numOfNotify">{notifyCount}</div>}
-           <button className={modalOpen === false ? "notifyToggleBtn" : "notifyToggleBtnOff"} type="button"
-                   onClick={modalToggle}>
-             <AiOutlineBell className="notifyIcon"/>
-           </button>
-         </div>
-         <OnModalComp setModalOpen={setModalOpen}
-                      comp={<NotificationList notifications={notifications} setNotifications={setNotifications}
-                                              modalOpen={modalOpen}/>}></OnModalComp>
-       </div>
+            <div className="notifyContainer">
+              {<div className="numOfNotify">{notifyCount}</div>}
+              <button className={modalOpen === false ? "notifyToggleBtn" : "notifyToggleBtnOff"} type="button"
+                      onClick={modalToggle}>
+                <AiOutlineBell className="notifyIcon"/>
+              </button>
+            </div>
+            <OnModalComp setModalOpen={setModalOpen}
+                         comp={<NotificationList notifications={notifications} setNotifications={setNotifications}
+                                                 modalOpen={modalOpen}/>}></OnModalComp>
+          </div>
        )}
 
      </ThemeProvider>
@@ -189,12 +189,12 @@ function HeaderTop(props) {
   const accessToken = getCookie("ACCESS_TOKEN");
   // const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   const {notifications, setNotifications, send} = props;
-  const [chkTime, setChkTime] = useState(sessionStorage.getItem('loginState') === 'false' 
-                                        ? moment(sessionStorage.getItem("loginTime")) 
-                                        : moment(localStorage.getItem("loginTime")));
+  const [chkTime, setChkTime] = useState(sessionStorage.getItem('loginState') === 'false'
+     ? moment(sessionStorage.getItem("loginTime"))
+     : moment(localStorage.getItem("loginTime")));
 
   useEffect(() => {
-    if(accessToken !== undefined && accessToken !== null) {
+    if (accessToken !== undefined && accessToken !== null) {
       // 231103, 추후 수정
       sseSource("sub", setNotifications);
     }
@@ -208,7 +208,7 @@ function HeaderTop(props) {
   }
 
   //채팅 화면 관련
-  if(pathname.includes("/chat/room")) {
+  if (pathname.includes("/chat/room")) {
     return <div></div>;
   }
 
@@ -245,7 +245,7 @@ function HeaderTop(props) {
     } else { // logout
       console.log('pathname : ', pathname);
       deleteCookie('ACCESS_TOKEN');
-      if(sessionStorage.getItem('loginState') === false){
+      if (sessionStorage.getItem('loginState') === false) {
         sessionStorage.removeItem('loginTime');
       } else {
         localStorage.removeItem("loginTime");
@@ -255,27 +255,26 @@ function HeaderTop(props) {
   };
 
 
- //채팅 관련 새 창 띄우는 코드
- const handleChatLinkClick = () => {
-  const width = 800; // 원하는 너비
-  const height = 600; // 원하는 높이
-  const left = (window.innerWidth - width) / 2;
-  const top = (window.innerHeight - height) / 2;
+  //채팅 관련 새 창 띄우는 코드
+  const handleChatLinkClick = () => {
+    const width = 800; // 원하는 너비
+    const height = 600; // 원하는 높이
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - height) / 2;
 
-  window.open('/chat/room', '_blank', `width=${width},height=${height},left=${left},top=${top}, status=no,toolbar=no,scrollbars=no`);
-};
-
+    window.open('/chat/room', '_blank', `width=${width},height=${height},left=${left},top=${top}, status=no,toolbar=no,scrollbars=no`);
+  };
 
 
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
        <div className="headerTop">
          {
-          chkTime === undefined || chkTime === '' || !chkTime.isValid() ?
-          <></> :
-          <>
-            <LoginTimer theme = {props.theme} chkTime = {chkTime}></LoginTimer>
-          </>
+           chkTime === undefined || chkTime === '' || !chkTime.isValid() ?
+              <></> :
+              <>
+                <LoginTimer theme={props.theme} chkTime={chkTime}></LoginTimer>
+              </>
          }
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>
            {(state === undefined || state === null) ? '' : '마이페이지'}
@@ -293,9 +292,9 @@ function HeaderTop(props) {
          </Link>
          <div className="headerSell">
            <ul id="destination" onMouseOver={handleMouseOverDes} onMouseOut={handleMouseOutDes}>
-             <div >
-              <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행지</a>
-              </div>
+             <div>
+               <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행지</a>
+             </div>
              <div className='destination-list'>
                <li><Link to='/destination/tour'
                          className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광지</Link></li>
@@ -317,24 +316,25 @@ function HeaderTop(props) {
              </div>
            </ul>
            <ul id="myTrableInfo" onMouseOver={handleMouseOverInfo} onMouseOut={handleMouseOutInfo}>
-             <div >
-              <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행정보</a></div>
+             <div>
+               <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행정보</a></div>
              <div className='myTrableInfo-list'>
                <li><Link to="/traffic" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통
                  혼잡도</Link></li>
                <li>
-                <a onClick={handleChatLinkClick} className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
-                  </a>
-                {/* <Link to="/chat/room" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
+                 <a onClick={handleChatLinkClick} className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅
+                   제주
+                 </a>
+                 {/* <Link to="/chat/room" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
                  </Link> */}
-                 </li>
+               </li>
                <li><Link to="/knowledge" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광
                  지식in</Link></li>
              </div>
            </ul>
            <ul id="notice" onMouseOver={handleMouseOverNoti} onMouseOut={handleMouseOutNoti}>
-             <div >
-              <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</a></div>
+             <div>
+               <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</a></div>
              <div className='notice-list'>
                <li><Link to="/notice"
                          className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</Link></li>
@@ -460,58 +460,58 @@ function Header() {
          </div>
          <ul className='header-Youtube-ul'>
            <li className='header-Youtube-li'>
-           {/*  <YouTube className='header-Youtube-content'*/}
-           {/*           videoId="nPuJ9QXGB8E" //동영상 주소*/}
-           {/*           opts={{*/}
-           {/*             width: "400px",*/}
-           {/*             height: "250px",*/}
-           {/*             playerVars: {*/}
-           {/*               autoplay: 0, //자동 재생 여부*/}
-           {/*               modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부*/}
-           {/*               loop: 0, //반복 재생*/}
-           {/*               // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트*/}
-           {/*             },*/}
-           {/*           }}*/}
-           {/*           onReady={(e) => {*/}
-           {/*             e.target.mute(); //소리 끔*/}
-           {/*           }}*/}
-           {/*  />*/}
-           {/*</li>*/}
-           {/*<li className='header-Youtube-li'>*/}
-           {/*  <YouTube className='header-Youtube-content'*/}
-           {/*           videoId="ESF7SDWBtH0" //동영상 주소*/}
-           {/*           opts={{*/}
-           {/*             width: "400px",*/}
-           {/*             height: "250px",*/}
-           {/*             playerVars: {*/}
-           {/*               autoplay: 0, //자동 재생 여부*/}
-           {/*               modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부*/}
-           {/*               loop: 0, //반복 재생*/}
-           {/*               // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트*/}
-           {/*             },*/}
-           {/*           }}*/}
-           {/*           onReady={(e) => {*/}
-           {/*             e.target.mute(); //소리 끔*/}
-           {/*           }}*/}
-           {/*  />*/}
-           {/*</li>*/}
-           {/*<li className='header-Youtube-li'>*/}
-           {/*  <YouTube className='header-Youtube-content'*/}
-           {/*           videoId="PMBa2F44jxU" //동영상 주소*/}
-           {/*           opts={{*/}
-           {/*             width: "400px",*/}
-           {/*             height: "250px",*/}
-           {/*             playerVars: {*/}
-           {/*               autoplay: 0, //자동 재생 여부*/}
-           {/*               modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부*/}
-           {/*               loop: 0, //반복 재생*/}
-           {/*               // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트*/}
-           {/*             },*/}
-           {/*           }}*/}
-           {/*           onReady={(e) => {*/}
-           {/*             e.target.mute(); //소리 끔*/}
-           {/*           }}*/}
-           {/*  />*/}
+             {/*  <YouTube className='header-Youtube-content'*/}
+             {/*           videoId="nPuJ9QXGB8E" //동영상 주소*/}
+             {/*           opts={{*/}
+             {/*             width: "400px",*/}
+             {/*             height: "250px",*/}
+             {/*             playerVars: {*/}
+             {/*               autoplay: 0, //자동 재생 여부*/}
+             {/*               modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부*/}
+             {/*               loop: 0, //반복 재생*/}
+             {/*               // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트*/}
+             {/*             },*/}
+             {/*           }}*/}
+             {/*           onReady={(e) => {*/}
+             {/*             e.target.mute(); //소리 끔*/}
+             {/*           }}*/}
+             {/*  />*/}
+             {/*</li>*/}
+             {/*<li className='header-Youtube-li'>*/}
+             {/*  <YouTube className='header-Youtube-content'*/}
+             {/*           videoId="ESF7SDWBtH0" //동영상 주소*/}
+             {/*           opts={{*/}
+             {/*             width: "400px",*/}
+             {/*             height: "250px",*/}
+             {/*             playerVars: {*/}
+             {/*               autoplay: 0, //자동 재생 여부*/}
+             {/*               modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부*/}
+             {/*               loop: 0, //반복 재생*/}
+             {/*               // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트*/}
+             {/*             },*/}
+             {/*           }}*/}
+             {/*           onReady={(e) => {*/}
+             {/*             e.target.mute(); //소리 끔*/}
+             {/*           }}*/}
+             {/*  />*/}
+             {/*</li>*/}
+             {/*<li className='header-Youtube-li'>*/}
+             {/*  <YouTube className='header-Youtube-content'*/}
+             {/*           videoId="PMBa2F44jxU" //동영상 주소*/}
+             {/*           opts={{*/}
+             {/*             width: "400px",*/}
+             {/*             height: "250px",*/}
+             {/*             playerVars: {*/}
+             {/*               autoplay: 0, //자동 재생 여부*/}
+             {/*               modestbranding: 1, //컨트롤 바에 유튜브 로고 표시 여부*/}
+             {/*               loop: 0, //반복 재생*/}
+             {/*               // playlist: "auAQ_A--c5I", //반복 재생으로 재생할 플레이 리스트*/}
+             {/*             },*/}
+             {/*           }}*/}
+             {/*           onReady={(e) => {*/}
+             {/*             e.target.mute(); //소리 끔*/}
+             {/*           }}*/}
+             {/*  />*/}
            </li>
          </ul>
        </div>
@@ -522,7 +522,7 @@ function Header() {
 
 function Footer() {
   const {pathname} = useLocation();
-  if(pathname.includes("/chat/room")) {
+  if (pathname.includes("/chat/room")) {
     return <div></div>;
   }
 
