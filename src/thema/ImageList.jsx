@@ -8,8 +8,6 @@ const ImageList = (props) => {
 
   }
   return (
-    
-    
     <li key={props.number} className={props.className} style={ {borderRadius: "20px", position: "relative"} }>
       <div style={{ position: "relative" }}>
         <button  style={{ position: "absolute", top: "10px", left: "10px", zIndex:'9999' }} className='oBtn sf ra' onClick={()=>{wishTdnInsert()}}><AiOutlineStar/></button>
