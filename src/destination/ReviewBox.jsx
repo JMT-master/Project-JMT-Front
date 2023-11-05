@@ -5,7 +5,7 @@ import {API_BASE_URL} from "../common/ApiConfig";
 import axios from "axios";
 
 
-const ReviewBox = ({item,modal, deleteHandler, updateHanlder}) => {
+const ReviewBox = ({item,modal, imgModal,setImgModal, deleteHandler, updateHanlder}) => {
   const regDate = setDateFormat(item.regDate);
   const modDate = setDateFormat(item.modDate);
 
@@ -56,7 +56,10 @@ const ReviewBox = ({item,modal, deleteHandler, updateHanlder}) => {
             <button onClick={updateReview}>수정 완료</button>
           </div>
        }
-       <div className='reviewBox-image' style={{display : modal ? "none" : "block"}}>
+       <div className='reviewBox-image' style={{display : modal ? "none" : "block"}}
+       onClick={()=>{
+         setImgModal(!imgModal)
+       }}>
          {item.reviewImg && <img src={item.imgData} alt="Image"/>}
        </div>
        <div className='reviewBox-footer' style={{display : sameWriter || !modal ? "grid" : "none"}}>

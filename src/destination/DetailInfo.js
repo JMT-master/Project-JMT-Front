@@ -36,6 +36,7 @@ const DetailInfo = () => {
 
 
   const [modal, setModal] = useState(false);
+  const [imgModal, setImgModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const openModal = (item) => {
     setSelectedItem(item);
@@ -153,7 +154,7 @@ const DetailInfo = () => {
     reviewList.forEach((item) => {
       reviews.push(
          <div>
-           <ReviewBox item={item} deleteHandler={deleteHandler} updateHanlder={updateHanlder}/>
+           <ReviewBox item={item} imgModal={imgModal} setImgModal={setImgModal} deleteHandler={deleteHandler} updateHanlder={updateHanlder}/>
            <hr/>
          </div>
       )
@@ -296,6 +297,13 @@ const DetailInfo = () => {
             <div className="modalBody">
               <img src={selectedItem.imgData} alt="Selected" />
               <ReviewBox item={selectedItem} modal={true}/>
+            </div>
+          </div>
+       }
+       {imgModal &&
+          <div className="modalBox" onClick={closeModal}>
+            <div className="modalBody">
+              <img src={selectedItem.imgData} alt="Selected" />
             </div>
           </div>
        }
