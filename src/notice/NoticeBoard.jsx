@@ -58,25 +58,23 @@ const NoticeBoard = () => {
          }
        })
   }
-
-
   useEffect(() => {
     console.log("admin? " + isAdmin.current)
 
     call("/notice",
        "GET",
-       null, page - 1, 10
+       null, page - 1, itemsPerPage
     ).then((response) => {
       if (response != null) setCurrentItems(response.content);
       console.log("notice response : " + JSON.stringify(response.content))
       setLastPage(response.totalPages)
-      console.log("alstpage : " + response.totalPages)
+      // console.log("alstpage : " + response.totalPages)
       idxNum.current = parseInt(JSON.stringify(response.content[0].idx));
     })
        .catch((error) => {
          console.log(error);
        })
-  }, [page]);
+  }, [page,itemsPerPage]);
 
 
   return (
@@ -93,7 +91,7 @@ const NoticeBoard = () => {
        <br/>
        <div className='notice-table'>
          <div className='page-choice'>
-           <select onChange={handleSelect}>
+           <select onChange={handleSelect} id="noticePageSelect">
              <option value={5}>5개씩</option>
              <option value={10} selected>10개씩</option>
              <option value={15}>15개씩</option>
@@ -107,6 +105,7 @@ const NoticeBoard = () => {
              <th>구분</th>
              <th>제목</th>
              <th>작성일자</th>
+             <th>조회수</th>
            </tr>
            </thead>
            <tbody>
@@ -117,9 +116,10 @@ const NoticeBoard = () => {
            })}
            </tbody>
          </Table>
-         <div className='plus-notice'>
-           <button style={isAdmin.current == "Y" ? null : {display: "none"}}
-                   onClick={() => navigate('/notice/admin/write', {state: {idx: idxNum.current}})}>글쓰기
+         <div className='plus-notice' style={{display:"flex",justifyContent: "flex-end"}}>
+           <button className="oBtn"
+              style={{display: isAdmin.current === "Y" ? "flex" : "none", marginRight:"20px" }}
+                   onClick={() => navigate('/notice/admin/write')}>글쓰기
            </button>
          </div>
        </div>
@@ -136,7 +136,7 @@ export default NoticeBoard;
 
 const NoticeRead = (props) => {
   const navigate = useNavigate();
-  const {idx, category, title, regDate} = props.data;
+  const {idx, category, title, regDate, view} = props.data;
   const dataForm = setDateFormat(props.data.modDate);
   const isAdmin = useRef(getCookie("adminChk"))
   const {deleteHandler} = props;
@@ -150,9 +150,11 @@ const NoticeRead = (props) => {
        <td>{idx}</td>
        <td>{category}</td>
        <td onClick={() => {
+
          navigate('/notice/' + idx)
        }} className='cursor'>{title}</td>
        <td>{dataForm}</td>
+       <td>{view}</td>
        <td>
          <button type='button' className='oBtn'
                  onClick={() => {

@@ -6,19 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="공지 검색 및 파일 첨부 남음">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ApiService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ApiService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Notification.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Notification.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/DetailInfo.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/DetailInfo.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/KnowledgeWrite.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/KnowledgeWrite.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/TourList.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/TourList.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/destination/DetailInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/DetailInfo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/destination/ListPaging.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/ListPaging.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/destination/ReviewBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/ReviewBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/destination/TagBtn.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/TagBtn.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/AttachFile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/AttachFile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/NoticeBoardDetail.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/NoticeBoardDetail.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/attachFile.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/attachFile.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoardDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoardDetail.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trableinfo/Knowledge.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/trableinfo/Knowledge.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trableinfo/KnowledgeWrite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/trableinfo/KnowledgeWrite.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
