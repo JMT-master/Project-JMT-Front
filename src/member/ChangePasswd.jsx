@@ -55,9 +55,7 @@ const ChangePasswd = () => {
   };
   return (
     <div className="container-sm">
-      <div class="row g-3">
-        <div class="col-sm"></div>
-
+      <div class="g-3">
         <div class="col-sm-4">
           <h3 className="mb-5">비밀번호 변경</h3>
           <div class="form-floating">
