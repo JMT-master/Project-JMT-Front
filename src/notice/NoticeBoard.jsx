@@ -5,26 +5,25 @@ import {useNavigate} from 'react-router-dom';
 import {noticeData} from '../data/Data';
 import {call, getCookie, setDateFormat} from "../common/ApiService";
 import ListPaging from "../destination/ListPaging";
-import { Button, Table } from 'react-bootstrap';
+import {Table} from 'react-bootstrap';
 import Swal from "sweetalert2";
 
 
 const NoticeBoard = () => {
   const navigate = useNavigate();
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
+  // const startIndex = (currentPage - 1) * itemsPerPage;
+  // const endIndex = startIndex + itemsPerPage;
   const [currentItems, setCurrentItems] = useState([])
-  const totalPages = currentItems && Math.ceil(currentItems.length / itemsPerPage);
+  const [lastPage, setLastPage] = useState(0);
   const idxNum = useRef(0);
   const isAdmin = useRef(getCookie("adminChk"));
   const theme = localStorage.getItem("theme");
 
-  console.log("총 페이지  :" + totalPages);
   const handlePageChange = (page) => {
-    setCurrentPage(page);
+    setPage(page);
   };
 
 
@@ -36,7 +35,8 @@ const NoticeBoard = () => {
     call("/notice/admin", "DELETE", {idx: idx})
        .then(response => {
          console.log("delete 호출!!")
-         setCurrentItems(response);
+         setCurrentItems(response.content);
+         setLastPage(response.totalPages)
          if (response === undefined) {
            Swal.fire({
              icon: 'warning',
@@ -61,27 +61,22 @@ const NoticeBoard = () => {
 
 
   useEffect(() => {
-    //   call("/checkUser","POST",{
-    //     userid : "1234"
-    //   })
-    //      .then(response =>{
-    //        console.log("checkUser : " + response)
-    //        console.log("checkUser u : " + response.isSameUser)
-    //        console.log("checkUser a : " + response.isAdmin)
-    //      })
     console.log("admin? " + isAdmin.current)
 
     call("/notice",
        "GET",
-       null
+       null, page - 1, 10
     ).then((response) => {
-      if (response != null) setCurrentItems(response);
-      idxNum.current = parseInt(JSON.stringify(response[0].idx));
+      if (response != null) setCurrentItems(response.content);
+      console.log("notice response : " + JSON.stringify(response.content))
+      setLastPage(response.totalPages)
+      console.log("alstpage : " + response.totalPages)
+      idxNum.current = parseInt(JSON.stringify(response.content[0].idx));
     })
        .catch((error) => {
          console.log(error);
        })
-  }, []);
+  }, [page]);
 
 
   return (
@@ -130,8 +125,8 @@ const NoticeBoard = () => {
        </div>
        <div className='page'>
          <ListPaging
-            lastpage={totalPages} page={currentPage}
-            setPage={handlePageChange}></ListPaging>
+            lastPage={lastPage} page={page}
+            setPage={setPage}></ListPaging>
        </div>
      </div>
   );
@@ -141,7 +136,7 @@ export default NoticeBoard;
 
 const NoticeRead = (props) => {
   const navigate = useNavigate();
-  const {idx, category, title, regDate } = props.data;
+  const {idx, category, title, regDate} = props.data;
   const dataForm = setDateFormat(props.data.modDate);
   const isAdmin = useRef(getCookie("adminChk"))
   const {deleteHandler} = props;

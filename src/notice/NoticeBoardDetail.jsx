@@ -1,14 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube} from "react-icons/ai";
-import {call, getCookie} from "../common/ApiService";
+import {call, getCookie, setDateTimeFormat} from "../common/ApiService";
 import '../css/NoticeBoardDetail.scss'
 import Swal from "sweetalert2";
 
 const NoticeBoardDetail = ({data}) => {
   const navigate = useNavigate();
   const params = useParams();
-  const detail = data[params.id - 1];
   const [item, setItem] = useState({});
   const isAdmin = useRef(getCookie("adminChk"));
 
@@ -62,7 +61,7 @@ const NoticeBoardDetail = ({data}) => {
          <div className='noticeDetail-boxTitle'>
            <p className='no'>No. {item.idx}</p>
            <p className='noticeContent'>{item.title}</p>
-           <p className='date'>{item.regDate}</p>
+           <p className='date'>{setDateTimeFormat(item.regDate)}</p>
          </div>
          <div className='noticeDetail-inside'>
            <textarea cols="30" rows="10" readOnly placeholder='공지사항 내용' value={item.content}></textarea>

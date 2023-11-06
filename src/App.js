@@ -97,18 +97,6 @@ function App(factory, deps) {
     })
        .then(function (response) {
          console.log("현재 로그인된 아이디 " + JSON.stringify(response.data))
-         // call("/notification",
-         //    "POST",
-         //    null
-         //    // 아이디는 백에서 토큰으로 확인
-         // )
-         //    .then((response) => {
-         //      setNotifications(response);
-         //
-         //    })
-         //    .catch((error) => {
-         //      console.log(error);
-         //    })
        })
        .catch(function (error) {
          console.log('error', error);
@@ -118,7 +106,7 @@ function App(factory, deps) {
     // 231103, 추후 수정
     if (isSub.current) sseSource("sub", setNotifications, notifyCount);
     isSub.current = false;
-  }, []);
+  }, [getCookie("ACCESS_TOKEN")]);
 
   if (loading === true) {
     return (
@@ -193,12 +181,12 @@ function HeaderTop(props) {
      ? moment(sessionStorage.getItem("loginTime"))
      : moment(localStorage.getItem("loginTime")));
 
-  useEffect(() => {
-    if (accessToken !== undefined && accessToken !== null) {
-      // 231103, 추후 수정
-      sseSource("sub", setNotifications);
-    }
-  }, [accessToken]);
+  // useEffect(() => {
+  //   if (accessToken !== undefined && accessToken !== null) {
+  //     // 231103, 추후 수정
+  //     sseSource("sub", setNotifications);
+  //   }
+  // }, [accessToken]);
 
   //알람 모달 관련
 

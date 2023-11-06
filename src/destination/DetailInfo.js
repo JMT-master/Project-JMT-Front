@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useLocation, useParams} from 'react-router-dom'
 import '../css/DetailInfo.scss'
 import ReviewBox from './ReviewBox'
@@ -7,8 +7,6 @@ import {call, getCookie} from "../common/ApiService";
 import axios from "axios";
 import {API_BASE_URL} from "../common/ApiConfig";
 import Swal from "sweetalert2";
-import NotificationList from "../common/Notification";
-import OnModalComp from "../common/OnModalComp";
 
 
 const DetailInfo = () => {
@@ -24,7 +22,6 @@ const DetailInfo = () => {
   const {id} = useParams();
   const [reviewList, setReviewList] = useState([]);
   const [reviewLength, setReviewLength] = useState(0)
-  const [needRender, setNeedRender] = useState(true);
   // const modal
 
   const toggleTab = (tab) => {
@@ -48,20 +45,18 @@ const DetailInfo = () => {
     setModal(false);
   }
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const offset = 5;
   const pageNum = (page - 1) * offset;
-  const lastPage = useRef(1);
+  const [lastPage, setLastPage] = useState(0);
 
   const [file, setFile] = useState([]);
 
 
   //파일 업로드
-  const fileUpload = (e) => {
-
-    let files = e.target.files;
-    let uploadFile = e.target.files[0];
-
+  const fileUpload = (e, data) => {
+    let uploadFile = null
+    uploadFile = e.target.files[0];
     let value = e.target.value;
     let result = value.split('\\').reverse()[0];
     document.getElementById('review-file-text').value = result;
@@ -81,7 +76,6 @@ const DetailInfo = () => {
   const writeReview = (item) => {
     const formData = new FormData();
 
-
     file && formData.append('file', file);
     formData.append('data', new Blob([JSON.stringify(item)], {
       type: "application/json"
@@ -96,9 +90,11 @@ const DetailInfo = () => {
       },
       data: formData
     }).then(response => {
-      console.log("resss : " + JSON.stringify(response.data))
       setReviewList([]);
-      response.data.forEach((item, i) => {
+      let data = []
+      data = response.data.content
+      data.forEach((item) => {
+        console.log("image item : " + item)
         axios({
           method: 'POST',
           url: API_BASE_URL + "/review/viewFile",
@@ -113,12 +109,10 @@ const DetailInfo = () => {
             item = {...item, imgData: reader.result}
             setReviewList((prevReviewList) => [...prevReviewList, item]);
           }
-
         }).catch((error) => {
           console.log(error);
         });
       });
-      lastPage.current = Math.floor(reviewList.length % offset > 0 ? (reviewList.length / offset) + 1 : reviewList.length / offset);
       document.getElementById('review-file-text').value = null;
       document.getElementById('review-content').value = "";
       document.getElementById('review-file').value = null;
@@ -137,16 +131,72 @@ const DetailInfo = () => {
   const deleteHandler = (idx) => {
     call("/review", "Delete", {reviewIdx: idx})
        .then(response => {
+         console.log("delete response : " + JSON.stringify(response))
          let tmpList = reviewList.filter(review => (review.reviewIdx !== response.reviewIdx))
          setReviewList([...tmpList])
        })
   }
 
+  // const updateHanlder = (reviewForm) => {
+  //   call("/review", "Put", reviewForm)
+  //      .then(response => {
+  //        console.log("update response : " + JSON.stringify(response))
+  //        setReviewList(response.content);
+  //      })
+  // }
   const updateHanlder = (reviewForm) => {
-    call("/review", "Put", reviewForm)
-       .then(response => {
-         setReviewList(response);
-       })
+    const formData = new FormData();
+
+    file && formData.append('file', file);
+    formData.append('data', new Blob([JSON.stringify(reviewForm)], {
+      type: "application/json"
+    }));
+
+    axios({
+      method: 'PUT',
+      url: API_BASE_URL + '/review',
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Authorization": 'Bearer ' + accessToken
+      },
+      data: formData
+    }).then(response => {
+      setReviewList([]);
+      let data = []
+      data = response.data.content
+      data.forEach((item) => {
+        console.log("image item : " + item)
+        axios({
+          method: 'POST',
+          url: API_BASE_URL + "/review/viewFile",
+          data: item,
+          responseType: 'blob',
+        }).then(responseFile => {
+          const blob = new Blob([responseFile.data]);
+          console.log("blob : " + blob)
+          const reader = new FileReader();
+          reader.readAsDataURL(blob);
+          reader.onloadend = () => {
+            item = {...item, file: file, imgData: reader.result}
+            setReviewList((prevReviewList) => [...prevReviewList, item]);
+          }
+
+        }).catch((error) => {
+          console.log(error);
+        });
+      });
+      document.getElementById('review-file-text').value = null;
+      document.getElementById('review-content').value = "";
+      document.getElementById('review-file').value = null;
+      if (response.status === 200) {
+        Swal.fire({
+          icon: 'info',
+          title: '수정되었습니다!',
+          showCloseButton: true,
+          confirmButtonText: '확인',
+        })
+      }
+    });
   }
 
   const makeReviewList = () => {
@@ -154,7 +204,8 @@ const DetailInfo = () => {
     reviewList.forEach((item) => {
       reviews.push(
          <div>
-           <ReviewBox item={item} imgModal={imgModal} setImgModal={setImgModal} deleteHandler={deleteHandler} updateHanlder={updateHanlder}/>
+           <ReviewBox item={item} setFile={setFile} fileUpload={fileUpload} setSelectedItem={setSelectedItem}
+                      deleteHandler={deleteHandler} updateHanlder={updateHanlder}/>
            <hr/>
          </div>
       )
@@ -164,10 +215,13 @@ const DetailInfo = () => {
 
   //ㅣ전체 글 읽어오기
   useEffect(() => {
-    call("/review/read", "POST", {reviewContentId: id})
+    call("/review/read", "POST", {reviewContentId: id}, page - 1, 10)
        .then((response) => {
+         // console.log("페이징 response : "+JSON.stringify(response))
          setReviewList([]);
-         response.forEach((item) => {
+         setLastPage(response.totalPages)
+         response.content.forEach((item) => {
+           // console.log("페이징 item : "+JSON.stringify(item))
            axios({
              method: 'POST',
              url: API_BASE_URL + "/review/viewFile",
@@ -182,23 +236,26 @@ const DetailInfo = () => {
                item = {...item, imgData: reader.result}
                setReviewList((prevReviewList) => [...prevReviewList, item]);
              }
+             // console.log("페이징 List : "+JSON.stringify(reviewList))
            }).catch((error) => {
              console.log(error);
            });
          });
-         lastPage.current = Math.floor(reviewList.length % offset > 0 ? (reviewList.length / offset) + 1 : reviewList.length / offset);
        })
        .catch((error) => {
          console.log(error);
        });
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     setReviewLength(reviewList.length);
   }, [reviewList.length]);
 
-  // console.log("selectedImage : " + selectedImage)
-  console.log(modal)
+  // console.log(modal)
+  reviewList.forEach(item => {
+    console.log("현재 페이지" + item.page)
+  })
+
   return (
      <div className='detail'>
        <div className='detail-header'>
@@ -264,7 +321,7 @@ const DetailInfo = () => {
            <div className='detail-contentReview-content' id='review'
                 style={{display: tabState.reviewVisible ? 'grid' : 'none'}}>
              <div className="review-writeBox" style={{display: accessToken ? 'grid' : 'none'}}>
-               <div>리뷰 작성</div>
+               <div></div>
                <textarea name="review-content" id="review-content" cols="60"
                          rows="3"></textarea>
                <div style={{justifySelf: "start"}} className='file-attach reviewUpload'>
@@ -288,14 +345,14 @@ const DetailInfo = () => {
                }
              </div>
              <hr/>
-             <ListPaging page={page} setPage={setPage} lastPage={lastPage.current}></ListPaging>
+             <ListPaging page={page} setPage={setPage} lastPage={lastPage}></ListPaging>
            </div>
          </div>
        </div>
        {modal &&
           <div className="modalBox" onClick={closeModal}>
             <div className="modalBody">
-              <img src={selectedItem.imgData} alt="Selected" />
+              <img src={selectedItem.imgData} alt="Selected"/>
               <ReviewBox item={selectedItem} modal={true}/>
             </div>
           </div>
@@ -303,7 +360,7 @@ const DetailInfo = () => {
        {imgModal &&
           <div className="modalBox" onClick={closeModal}>
             <div className="modalBody">
-              <img src={selectedItem.imgData} alt="Selected" />
+              <img src={selectedItem.imgData} alt="Selected"/>
             </div>
           </div>
        }
