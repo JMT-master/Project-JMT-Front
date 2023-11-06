@@ -1,6 +1,6 @@
 .modal-container{
-  width: 400px;
-  height: 600px;
+  width: 450px;
+  height: 550px;
   z-index: 999;
   position: absolute;
   top: 50%;
@@ -56,7 +56,7 @@
 
 .modal-container-click {
   position: absolute;
-  width: 400px; height: 400px;
+  width: 600px; height: 400px;
 }
 
 .moid-name{
@@ -75,7 +75,7 @@
 }
 .moid-result {
   margin-top: 50px;
-  width: 80%; height: 30px;
+  height: 30px;
   border: none;
   cursor: pointer;
   text-align: center;

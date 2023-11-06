@@ -33,14 +33,31 @@ export function userChk(chkUser,setDuplicate) {
 }
 
 // 이메일 인증
-export function emailValidate(chkUser) {
+export function emailValidate(chkUser,setEmailVali) {
   return call("/joinUser/email/validateSend", "POST", chkUser)
-     .then(response => {
-     }).catch((error => {
-      
-     }));
+    .then(response => {
+      console.log('response : ', response);
+      if(response.error === 'success') {
+        setEmailVali(true);
+        Swal.fire({
+          icon: 'info',
+          title: '메일 인증',
+          text: '전송이 완료되었습니다.'
+        });
+      } else {
+        setEmailVali(false);
+        Swal.fire({
+          icon: 'warning',
+          title: '메일 인증',
+          text: '메일이 없습니다.'
+        });
+      }
+    }).catch((error => {
+
+    }));
 }
 
+// 추후 db데이터 만들어서 설정
 // 이메일 인증 확인
 export function emailValidateCheck(chkUser) {
   return call("/joinUser/email/validateCheck", "POST", chkUser)
