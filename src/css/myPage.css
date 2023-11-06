@@ -167,6 +167,8 @@
   color: #f3a344;
 }
 
+
+
 .myPage-Big-Image-ul {
   display: grid;
   grid-template-columns: repeat(8, 200px);
@@ -185,7 +187,7 @@
   z-index: 33;
 }
 
-.myPage-Big-Image-li-img {
+/* .myPage-Big-Image-li-img {
   position: absolute;
   width: 100%; height: 100%;
   object-fit: cover;
@@ -212,7 +214,42 @@
 
 .myPage-Big-Image-li:hover .myPage-Big-Image-li-img-hover {
   display: block;
-  /* opacity: 1; */
+} */
+
+.image-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 투명한 배경색 */
+  z-index: 1;
+}
+
+.myPage-Big-Image-li-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 2px 3px 5px 0px;
+  z-index: 2;
+}
+
+.myPage-Big-Image-li-img-hover {
+  position: absolute;
+  top: 20%;
+  left: 5%;
+  color: white;
+  font-weight: bold;
+  font-size: x-large;
+  z-index: 3;
 }
 
 @media screen and (max-width: 1700px) {

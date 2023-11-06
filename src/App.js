@@ -125,7 +125,7 @@ function App(factory, deps) {
     // 231103, 추후 수정
     if (isSub.current) sseSource("sub", setNotifications, notifyCount);
     isSub.current = false;
-  }, []);
+  }, [getCookie("ACCESS_TOKEN")]);
 
   if (loading === true) {
     return (
@@ -166,8 +166,9 @@ function App(factory, deps) {
          <Route path='/chat/room' element={<ChatRoom/>}></Route>
          <Route path='/chat/rooms'></Route>
          <Route path='/chat/room/:roomId?' element={<ChatDetail/>}></Route>
-         <Route path='/travel-schedule' element={<TravelPdf></TravelPdf>}></Route>?
-         <Route path='/myInfo/ChangePasswd' element={<ChangePasswd></ChangePasswd>}></Route>
+         <Route path='/travel-schedule' element={<TravelPdf></TravelPdf>}></Route>
+         <Route path='/member/update' element={<JoinUser></JoinUser>}></Route>
+         <Route path='/myInfo/ChangePasswd/:id?' element={<ChangePasswd></ChangePasswd>}></Route>
          <Route path='/login/auth' element={<KakaoLogin></KakaoLogin>}></Route>
        </Routes>
 
@@ -200,12 +201,12 @@ function HeaderTop(props) {
                                         ? moment(sessionStorage.getItem("loginTime")) 
                                         : moment(localStorage.getItem("loginTime")));
 
-  useEffect(() => {
-    if(accessToken !== undefined && accessToken !== null) {
-      // 231103, 추후 수정
-      sseSource("sub", setNotifications);
-    }
-  }, [accessToken]);
+  // useEffect(() => {
+  //   if(accessToken !== undefined && accessToken !== null) {
+  //     // 231103, 추후 수정
+  //     sseSource("sub", setNotifications);
+  //   }
+  // }, [accessToken]);
 
   //알람 모달 관련
 

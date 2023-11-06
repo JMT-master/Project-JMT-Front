@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import '../css/LoginModal.css'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
-import { call } from '../common/ApiService';
 import axios from 'axios';
 import { API_BASE_URL } from '../common/ApiConfig';
+import ChangePasswd from './ChangePasswd';
 import Swal from 'sweetalert2';
 
 const LoginModal = ({ setModalOpen, id, title, content, writer }) => {
@@ -95,22 +95,9 @@ const LoginModal = ({ setModalOpen, id, title, content, writer }) => {
         },
         data: sendEmailDto
       })
-      .then((response) => {
-          Swal.fire({
-            icon: 'info',
-            title: '이메일',
-            text: '비밀번호 변경 후 사용바랍니다.'
-          })
-          return;
-        }).catch(error => {
-          if(error.response.status === 400) {
-            Swal.fire({
-              icon: 'warning',
-              title: '이메일',
-              text: '이메일 형식이 맞지 않습니다.'
-            })
-            return;
-          }
+        .then((response) => {
+          console.log("response : " + response.data);
+          closeModal();
         })
     }
     return (
