@@ -41,7 +41,7 @@ const TourItem = ({ spot, pageType, nav, setGps }) => {
       wishGubun : 'tdn',
       address:spot.address,
       phoneno:spot.phoneno,
-      content:spot.phoneno,
+      content:spot.introduction,
       tag:spot.tag
     }
     console.log("dto",dto);

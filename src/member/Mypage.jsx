@@ -30,9 +30,9 @@ const Mypage = () => {
 
 
   //나의 일정
-  function selectTravelScehdule(){
+  function selectMyTravelScehdule(){
     setGubun(0);
-    call("/travel/selectTravelSchedule", "GET",
+    call("/travel/selectMyTravelScehdule", "GET",
     null
     ).then((response) => {
       console.log("selectTravelScehdule.response.data",response.data);
@@ -84,7 +84,7 @@ const Mypage = () => {
   // Big page에서 Title 클릭시
   const onChangeTitle = (index) => {
     if(index === 0){
-      selectTravelScehdule();
+      selectMyTravelScehdule();
     }else if(index === 1){
       selectWishTravelScehdule();
     }else{

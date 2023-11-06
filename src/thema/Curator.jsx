@@ -7,6 +7,7 @@ import ListPaging from '../destination/ListPaging';
 import {AiOutlineLoading, AiOutlineCheck, AiFillCamera,AiOutlineClear, AiOutlineStar} from 'react-icons/ai';
 import {BsFillCalendarCheckFill} from 'react-icons/bs';
 import { useTheme } from 'styled-components';
+import { call } from '../common/ApiService';
 
 const Curator = () => {
   const [categoryNum, setCategoryNum] = useState("c1");
@@ -22,6 +23,7 @@ const Curator = () => {
   const [loading, setLoading] = useState(true);
   const theme = useTheme();
   const [onChnTheme, setChnTheme] = useState(theme.body);
+  const [travelItem,setTravelItem] = useState();
 
   let tagStyle = null;
   tagStyle = theme.body === "#FFF" ? {
@@ -36,13 +38,14 @@ const Curator = () => {
     transition : "all 1s linear"
   };
 
-  function goToTravelTdn(){
-
-  }
-
-  function wishTdnInsert(){
-
-  }
+  //테마에 여행일정 버튼 클릭시 호출
+  useEffect(() => {
+    if(travelItem != null) {
+      setList(travelItem.map((item,i) => {
+          return <ImageList key={i} number={i} className='curatorResult-img-li' data={item}></ImageList>
+      }));
+    }
+  }, [travelItem]);
 
   if(theme.body !== onChnTheme) setChnTheme(theme.body);
   
@@ -76,9 +79,7 @@ const Curator = () => {
       setList(visit.items.map((item,i) => {
 
         if(item.tag !== null) visitTag = visitTag.concat(item.tag.replace(/, /gi, ',').split(','));
-        
         // if(i <= 10){
-          <button className='oBtn sf ra' onClick={()=>{wishTdnInsert()}}><AiOutlineStar/></button>
           return <ImageList key={i} number={i} className='curatorResult-img-li' 
           data={item.repPhoto !== null ? item.repPhoto.photoid.imgpath : null} title={item.title}></ImageList>
         // }
@@ -151,8 +152,21 @@ const Curator = () => {
 
   // content 선택(관광지, 여행일정)
   const onContent = (index) => {
-    // selectContent === 1 ? setSelectContent(0) : setSelectContent(1);
-    setSelectContent(index);
+    selectContent === 1 ? setSelectContent(0) : setSelectContent(1);
+    if(index === 1){
+      call("/travel/selectTravelSchedule", "GET",
+      null
+      ).then((response) => {
+        console.log("selectTravelSchedule.response.data",response.data);
+        setTravelItem(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }else{
+      setCategoryNum("c1");
+      setCurrentPage(1);
+    }
   }
 
   // Loading 화면
