@@ -113,13 +113,13 @@
   position: absolute;
   right: 0;
   top: 0;
-  border: 1px solid #f6a143;
-  background-color: #f6a143;
+  /* border: 1px solid #f6a143;
+  background-color: #f6a143; */
   border-radius: 4px;
-  color: white;
+  /* color: white; */
   font-size: 18px;
   width: 120px;
-  height: 40px;
+  /* height: 40px; */
 }
 .email-check-btn:hover {
   cursor: pointer;

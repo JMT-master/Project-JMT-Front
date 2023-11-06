@@ -1,11 +1,14 @@
 import Swal from "sweetalert2";
-import {call, deleteCookie, extensionCookie, getCookie, setCookie, sseSource} from "../common/ApiService";
+import {call, deleteCookie, extensionCookie, getCookie, getLocal, loginStateCookie, setCookie} from "../common/ApiService";
 import {API_BASE_URL} from "../common/ApiConfig";
 import moment from "moment";
 
 // 이메일 중복 확인
-export function userChk(chkUser) {
-  return call("/joinUser/email", "POST", chkUser)
+export function userChk(chkUser,setDuplicate) {
+
+  console.log('chkUser : ',chkUser);
+  console.log('setDuplicate : ',setDuplicate);
+  call("/joinUser/email", "POST", chkUser)
      .then(response => {
        if (response !== undefined) {
          Swal.fire({
@@ -14,7 +17,7 @@ export function userChk(chkUser) {
            text: '사용 가능'
          });
 
-         return 1;
+         return setDuplicate(true);
        } else {
          Swal.fire({
            icon: 'error',
@@ -22,7 +25,7 @@ export function userChk(chkUser) {
            text: '이미 있는 회원입니다.'
          });
 
-         return 0;
+         return setDuplicate(false);
        }
      }).catch((error => {
 
@@ -50,25 +53,34 @@ export function emailValidateCheck(chkUser) {
 
 // 회원 가입
 export function joinUser(memberDto) {
-  return call("/joinUser", "POST", memberDto)
-     .then(response => {
-       if (response !== undefined) { 
-        Swal.fire({
-          icon: 'success',
-          title: '회원가입',
-          text: '가입을 축하드립니다.'
-        }).then(function() {
-           window.location.href = "/login";
-          });
-      }
-       else {
-         Swal.fire({
-           icon: 'warning',
-           title: '회원가입',
-           text: '가입 확인'
-         })
-       }
-     });
+  const url = API_BASE_URL + "/joinUser";
+  const body = JSON.stringify(memberDto);
+
+  fetch(url, {
+    method: 'POST',
+    body: body,
+    headers: {"Content-Type": "application/json"},
+  })
+  .then(response => response.json())
+  .then(result => {
+    console.log('회원가입 response', result)
+    if (result.error !== 'error') {
+     Swal.fire({
+       icon: 'success',
+       title: '회원가입',
+       text: '가입을 축하드립니다.'
+     }).then(function() {
+        window.location.href = "/login";
+       });
+   }
+    else {
+      Swal.fire({
+        icon: 'warning',
+        title: '회원가입',
+        text: result.data[0]
+      })
+    }
+  });
 }
 
 // 로그인
@@ -95,59 +107,76 @@ export function signin(loginDto, id, idSave) {
         })
       }
       else if(response !== undefined) {
-        const infoUrl = API_BASE_URL + "/login/info";
-        fetch(infoUrl, {
-          method: 'POST',
-          body: body,
-          headers: {"Content-Type": "application/json"}
-        }).then(resultInfo => resultInfo.json())
-        .then(result => {          
-          // 로그인 상태 유지 x
-          if(loginDto.loginState === false) {
-            sessionStorage.setItem("loginState", loginDto.loginState);
-          }
-
-          const loginTime = moment(result);
-          const resultTime = loginTime.add(1, 'hours').format();
-
-          localStorage.setItem("loginTime",resultTime);
-
-          console.log('loginTime : ', loginTime);
-
-          if(idSave) {
-            const saveCookie = getCookie('save_id');
-            if(saveCookie !== null || saveCookie !== undefined) 
-              deleteCookie('save_id');
-
-            setCookie('save_id',id);
-          } 
-
-          window.location.href = "/";
-        })
-        
+        loginInfo(loginDto, body, id, idSave)
       } 
   })
 
 }
 
+// 로그인 정보 확인
+export function loginInfo(loginDto, body, id, idSave) {
+  const infoUrl = API_BASE_URL + "/login/info";
+  fetch(infoUrl, {
+    method: 'POST',
+    body: body,
+    headers: {"Content-Type": "application/json"}
+  }).then(resultInfo => resultInfo.json())
+  .then(result => {          
+    // 로그인 상태 유지 x
+    console.log('loginDto.loginState',loginDto.loginState)
+    sessionStorage.setItem("loginState", loginDto.loginState);
+
+    const loginTime = moment(result);
+    const resultTime = loginTime.add(1, 'hours').format();
+
+    if(loginDto.loginState === false) {
+      loginStateCookie();
+      sessionStorage.setItem("loginTime",resultTime);
+      sessionStorage.setItem("social",loginDto.socialYn);
+    } else {
+      localStorage.setItem("loginTime",resultTime);
+      localStorage.setItem("social",loginDto.socialYn);
+    }
+
+    if(idSave) {
+      const saveCookie = getCookie('save_id');
+      if(saveCookie !== null || saveCookie !== undefined) 
+        deleteCookie('save_id');
+
+      setCookie('save_id',id);
+    } 
+
+    window.location.href = "/";
+  })
+}
+
 // 로그인 시간 연장
 export function loginTimeUpdate() {
-  let url = API_BASE_URL + "/login/info";
+  let url = API_BASE_URL + "/login/info?socialYn=" + getLocal('social');
+
 
   return fetch(url, {
     method: 'GET',
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + getCookie('ACCESS_TOKEN')
-    },
+    }
   }).then(result => {
     return result.json();
   }).then(data => {
     url = API_BASE_URL + "/login/extension";
+    console.log('data : ', data)
+
+    const result = {
+      email : data.data[0],
+      socialYn : getLocal('social')
+    }
+
+    const body = JSON.stringify(result);
 
     fetch(url, {
       method: 'POST',
-      body : data,
+      body : body,
       headers: {
         "Content-Type": "application/json"
       },
@@ -159,7 +188,11 @@ export function loginTimeUpdate() {
         const loginTime = moment(revTime);
         const resultTime = loginTime.add(1, 'hours').format();
     
-        localStorage.setItem("loginTime",resultTime);
+        if(sessionStorage.getItem('loginState') === false) {
+          sessionStorage.setItem("loginTime",resultTime);
+        } else {
+          localStorage.setItem("loginTime",resultTime);
+        }        
 
         extensionCookie();
 
@@ -185,9 +218,13 @@ export function loginExpired() {
     console.log('response' , response);
       
       if(response.status === 401) { // unauthorized
-        if(localStorage.getItem("loginTime")) {
+        if(sessionStorage.getItem('loginState') === false
+        && sessionStorage.getItem('loginTime')) {
+          sessionStorage.removeItem("loginTime");
+        } else if(localStorage.getItem("loginTime")) {
           localStorage.removeItem("loginTime");
-        };
+        } 
+
         deleteCookie("ACCESS_TOKEN");
       }
   })

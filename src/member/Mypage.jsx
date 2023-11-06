@@ -213,11 +213,10 @@ const Mypage = () => {
       <div className='myPageBigContainer'>
         <div className='myPage-tagList'>
           <ul className='myPage-tagList-ul'>
-            <li className='myPage-tagList-li'>
+            <li className='myPage-tagList-li' onClick={()=>navigate("/member/update")}>
               {/* <img className='myPage-tagList-li-profile-img' src="../images/user.jpg" alt="" /> */}
               <BiUser className='myPage-tagList-li-icon'></BiUser>
               <div className='myPage-tagList-li-name'
-              onClick={()=>navigate("/member/update")}
               >회원정보수정</div>
             </li>
             <li className='myPage-tagList-li' data-value='0' onClick={() => onChangeTitle(0)}>

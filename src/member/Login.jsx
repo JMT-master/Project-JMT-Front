@@ -4,7 +4,7 @@ import style from '../css/Login.css'
 import { Link, useNavigate } from 'react-router-dom';
 import OnModal from '../common/OnModal';
 import LoginModal from './LoginModal';
-import {call, getCookie, sseSource} from '../common/ApiService';
+import {call, getCookie} from '../common/ApiService';
 import { signin } from './MemberFuc';
 import Swal from 'sweetalert2';
 
@@ -55,7 +55,8 @@ const Login = (props) => {
         const loginDto = {
           email : id,
           password : pwd,
-          loginState : loginState
+          loginState : loginState,
+          socialYn : "N"
         };
     
         signin(loginDto,id,idSave);
@@ -67,7 +68,8 @@ const Login = (props) => {
     const loginDto = {
       email : id,
       password : pwd,
-      loginState : loginState
+      loginState : loginState,
+      socialYn : "N"
     };
 
     signin(loginDto,id,idSave);
@@ -76,6 +78,7 @@ const Login = (props) => {
 
   const openKakaoLogin = () => {
     // window.open(KakaoLoginAPI,'_self');
+    console.log("여기?");
     window.location.href = KakaoLoginAPI;
   }
 

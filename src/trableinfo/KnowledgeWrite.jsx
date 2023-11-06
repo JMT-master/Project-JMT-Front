@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'react-icons/ai';
 import axios from 'axios';
 import { API_BASE_URL } from '../common/ApiConfig';
-import { call, getCookie } from '../common/ApiService'; 
+import { call, getCookie, getLocal } from '../common/ApiService'; 
 import Swal from 'sweetalert2';
 import { TiDeleteOutline } from 'react-icons/ti';
 
@@ -61,7 +61,8 @@ const KnowledgeWrite = () => {
       "category" : category,
       "title" : title,
       "content" : content,
-      "view" : "0"
+      "view" : "0",
+      "socialYn" : getLocal('social')
     }
 
     if(title === null || title === undefined ||
@@ -110,7 +111,8 @@ const KnowledgeWrite = () => {
 
       console.log('sendData', sendData);
 
-      call('/knowledgeWrite/update', "POST", sendData);
+      call('/knowledgeWrite/update', "POST", sendData)
+      .then(() => navigate('/knowledge'));
       // if(contentFiles !== undefined && contentFiles != null) {
       //   for(let i = 0; i < contentFiles.length; i++) {
       //     formData.append('file',contentFiles[i]);
