@@ -49,26 +49,29 @@ const ImageList = (props) => {
     })
   }
 
+  console.log('props.data.dayImage : ', props.data.dayImage);
+
   return (
-    <li key={props.number} className={props.className} style={ {borderRadius: "20px", position: "relative"} }>
-          {props.data.dayImage === null ? (
-          <div>
-            <div style={{ position: "relative" }}>
-              <button  style={{ position: "absolute", top: "10px", left: "10px", zIndex:'9999' }} className='oBtn sf ra' onClick={() => wishTdnInsert()}><AiOutlineStar/></button>
-            </div>
-            <img src={props.data !== null ? props.data : ""} alt={props.number} style={{borderRadius : "20px"}}></img>
-            <p className='img-tag-hover'>{props.title}</p>
-        </div>
-      ) : 
-        <div>
-          <div style={{ position: "relative" }}>
-            <button  style={{ position: "absolute", top: "10px", left: "10px", zIndex:'9999' }} className='oBtn sf ra' onClick={()=>{wishTpsInsert()}}><AiOutlineStar/></button>
-          </div>
-          <img src={props.data.dayImage} alt={props.data.travelTitle} style={{borderRadius : "20px"}}></img>
-          <p className='img-tag-hover'>{props.data.travelTitle}</p>
-        </div>
+    <>
+      {
+        props.data.dayImage === null || props.data.dayImage === undefined ?
+          <li key={props.number} className={props.className} style={{ borderRadius: "20px", position: "relative" }}>
+              <div style={{ position: "relative" }}>
+                <button style={{ position: "absolute", top: "10px", left: "10px", zIndex: '9999' }} className='oBtn sf ra' onClick={() => wishTdnInsert()}><AiOutlineStar /></button>
+                {/* <button style={{ position: "absolute", top: "10px", left: "10px", zIndex: '9999' }} className='converse-oBtn sf ra' onClick={() => wishTdnInsert()}><AiOutlineStar /></button> */}
+              </div>
+              <img src={props.data !== null ? props.data : ""} alt={props.number} style={{ borderRadius: "20px" }}></img>
+              <p className='img-tag-hover'>{props.title}</p>
+          </li> :
+          <li key={props.number} className={props.className} style={{ borderRadius: "20px", position: "relative" }}>
+              <div style={{ position: "relative" }}>
+                <button style={{ position: "absolute", top: "10px", left: "10px", zIndex: '9999' }} className='oBtn sf ra' onClick={() => { wishTpsInsert() }}><AiOutlineStar /></button>
+              </div>
+              <img src={props.data.dayImage} alt={props.data.travelTitle} style={{ borderRadius: "20px" }}></img>
+              <p className='img-tag-hover'>{props.data.travelTitle}</p>
+          </li>
       }
-    </li>
+    </>
   );
 }
 
