@@ -3,12 +3,22 @@ import { API_BASE_URL } from '../common/ApiConfig'
 import { useState } from 'react'
 import { LoadCanvasTemplate } from 'react-simple-captcha';
 import Captcha from './Captcha';
+import { useNavigate } from 'react-router-dom';
 
 const ChangePasswd = () => {
+  const navigate = useNavigate();
   const [result, setResult] = useState('');
   const inputRef = useRef(null);
   const [confirm, setConfirm] = useState(false);
+  const [pwdPop, setPwdPop] = useState(false);
+  const [currentPw, setCurrentPw] = useState('');
+  const [newPw, setNewPw] = useState('');
+  const [newPwChk, setNewPwChk] = useState('');
 
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
+  
   useEffect(() => {
     console.log("ChangePasswd???");
 
@@ -47,15 +57,21 @@ const ChangePasswd = () => {
         <div className="col-sm-4">
           <h2 className='mb-5'>비밀번호 변경</h2>
           <div className="form-floating">
-            <input type="password" className="form-control mb-3" id="floatingPassword" placeholder="현재 비밀번호" />
+            <input type="password" className="form-control mb-3" id="floatingPassword" 
+            value={currentPw}
+            placeholder="현재 비밀번호" />
             <label for="floatingPassword">현재 비밀번호</label>
           </div>
           <div className="form-floating">
-            <input type="password" className="form-control mb-3" id="floatingPassword" placeholder="새 비밀번호" />
+            <input type="password" className="form-control mb-3" id="floatingPassword" 
+            value={newPw}
+            placeholder="새 비밀번호" />
             <label for="floatingPassword">새 비밀번호</label>
           </div>
           <div className="form-floating">
-            <input type="password" className="form-control mb-5" id="floatingPassword" placeholder="새 비밀번호 확인" />
+            <input type="password" className="form-control mb-5" id="floatingPassword" 
+            value={newPwChk}
+            placeholder="새 비밀번호 확인" />
             <label for="floatingPassword">새 비밀번호 확인</label>
           </div>
           <div className='mb-5'>
@@ -63,8 +79,11 @@ const ChangePasswd = () => {
           </div>
 
           <div className="d-grid gap-2">
-            <button className="btn btn-outline-warning btn-lg" type="button">확인</button>
-            <button className="btn btn-outline-warning btn-lg" type="button">취소</button>
+            <button className="btn btn-outline-warning btn-lg" 
+            type="button">확인</button>
+            <button className="btn btn-outline-warning btn-lg" type="button"
+            onClick={() => navigate(-1)}
+            >취소</button>
           </div>
 
 

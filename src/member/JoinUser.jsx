@@ -10,13 +10,13 @@ import { emailValidate, joinUser, userChk } from './MemberFuc';
 import { useLocation } from 'react-router-dom';
 
 
-const JoinUser = () => {
+const JoinUser = (props) => {
   const navigate = useNavigate();
   const {pathname} = useLocation();
   const [pwdPop, setPwdPop] = useState('');
   const [popup, setPopup] = useState(false);
   const [duplicate, setDuplicate] = useState(false);
-  const isUpdate = pathname.includes("/member/update");
+  const isUpdate = props.isUpdate;
 
   const [member, setMember] = useState({
     email : '',
@@ -32,7 +32,8 @@ const JoinUser = () => {
   })
 
   useEffect(() => {
-    if(pathname.includes("/member/update")){
+    console.log("들어옴???");
+    if(isUpdate){
       call("/member/update?socialYn="+getLocal('social'), "GET")
       .then((response) => {
         console.log('response : ',response);
@@ -45,9 +46,24 @@ const JoinUser = () => {
   const updateHandler = () => {
     call("/member/update", "POST", member)
     .then((response) => {
-      console.log("response : "+response);
-      navigate("/mypage");
-    })
+      console.log("response : "+response.error);
+
+      if(response.error !== 'success') {
+        Swal.fire({
+          icon : 'warning',
+          title: response.error,
+          showCloseButton: true,
+          confirmButtonText: '확인',        
+        });
+      } else {
+        Swal.fire({
+          icon : 'info',
+          title: '수정되었습니다!',
+          showCloseButton: true,
+          confirmButtonText: '확인',        
+        });
+      }      
+    });
   }
 
   const handleComplete = (e) => {
@@ -156,12 +172,12 @@ const JoinUser = () => {
 
   console.log('duplicate : ',duplicate);
   console.log('member : ',member);
+  console.log('isUpdate : ', isUpdate);
 
   return (
     <div className='join-container'>
-        <div className='item-title'>
-          <h2 style={{display : isUpdate ? "none" : "block"}}>JMT로의 회원가입을 통해<br /> 더 다양한 서비스를 만나보세요</h2>
-          <h2 style={{display : isUpdate ? "block" : "none"}}>회원 정보 수정<br /> 필요한건 공지사항을 확인해주세요</h2>
+        <div className='item-title' style={{display : isUpdate ? "none" : "block"}}>
+          <h2>JMT로의 회원가입을 통해<br /> 더 다양한 서비스를 만나보세요</h2>
         </div>
         <div className='join-item'>
           <div className='user-item-tb'>
@@ -236,7 +252,7 @@ const JoinUser = () => {
                   <td>
                     <div className='brd'>
                       <input type="text"  id='zipcode' name='zipcode'
-                      maxLength='12' className={popup ? 'brd-ipt' : 'input-hidden'}
+                      maxLength='12' className={isUpdate ? 'brd-ipt' : popup ? 'brd-ipt' : 'input-hidden'}
                       onChange={onChangeMember} value={member.zipcode} 
                       />
                     </div>
@@ -247,7 +263,7 @@ const JoinUser = () => {
                        /></div>
                     <div className='brd'>
                       <input type="text"  id='addressDetail' name='addressDetail'
-                      maxLength='12' className={popup ? 'brd-ipt' : 'input-hidden'}
+                      maxLength='12' className={isUpdate ? 'brd-ipt' : popup ? 'brd-ipt' : 'input-hidden'}
                       value={member.addressDetail}
                       onChange={onChangeMember} placeholder='상세주소를 입력해주세요'/>
                     </div>
@@ -264,7 +280,7 @@ const JoinUser = () => {
                   <th><strong>휴대폰 번호</strong></th>
                   <td>
                     <div className='brd'>
-                      <input type="number" id='phone' name='phone'
+                      <input type="tel" id='phone' name='phone'
                       maxLength='12' className='brd-ipt' 
                       value = {member.phone}
                       onChange={onChangeMember}
@@ -289,9 +305,6 @@ const JoinUser = () => {
               </div>
               <div className='bd-highlight'>
                 <button className='btn btn-outline-warning' id='joinUser-Success' onClick={() => navigate('/myInfo/ChangePasswd')}><strong>비밀번호 변경</strong></button>
-              </div>
-              <div className='bd-highlight'>
-                <button className='btn btn-outline-secondary' id='joinUser-Cancel' onClick={() => navigate(-1)}><strong>취소</strong></button>
               </div>
 
             </div> 

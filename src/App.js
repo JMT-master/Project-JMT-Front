@@ -140,7 +140,7 @@ function App(factory, deps) {
                   setNotifications={setNotifications} send={send}/>
        <Routes>
          <Route path='/' element={<Header></Header>}></Route>
-         <Route path="/joinUser" element={<JoinUser></JoinUser>}></Route>
+         <Route path="/joinUser" element={<JoinUser isUpdate = {false}></JoinUser>}></Route>
          <Route path="/joinUser/email/validateCheck/:userid"
                 element={<JoinUserValidateChk></JoinUserValidateChk>}></Route>
          <Route path="/curator" element={<Curator></Curator>}></Route>
@@ -167,7 +167,6 @@ function App(factory, deps) {
          <Route path='/chat/rooms'></Route>
          <Route path='/chat/room/:roomId?' element={<ChatDetail/>}></Route>
          <Route path='/travel-schedule' element={<TravelPdf></TravelPdf>}></Route>?
-         <Route path='/member/update' element={<JoinUser></JoinUser>}></Route>
          <Route path='/myInfo/ChangePasswd' element={<ChangePasswd></ChangePasswd>}></Route>
          <Route path='/login/auth' element={<KakaoLogin></KakaoLogin>}></Route>
        </Routes>
