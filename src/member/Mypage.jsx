@@ -12,6 +12,7 @@ import axios from 'axios'
 import TravelPdf from '../travelschedule/TravelPdf'
 import { useNavigate } from 'react-router'
 import { call } from '../common/ApiService'
+import JoinUser from './JoinUser'
 
 
 
@@ -81,6 +82,14 @@ const Mypage = () => {
     })
   }
 
+  // 회원 정보 수정
+  function memberUpdate() {
+    setTitle('회원 정보 수정');
+    setTotalCount('');
+    setIndex(4);
+    setList(<JoinUser isUpdate = {true}></JoinUser>);
+  }
+
   // Big page에서 Title 클릭시
   const onChangeTitle = (index) => {
     if(index === 0){
@@ -93,6 +102,10 @@ const Mypage = () => {
     setIndex(index);
     setTitle(titleArray[index]);
   }
+
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, []);
 
   useEffect(() => {
     let count = 0;
@@ -157,7 +170,7 @@ const Mypage = () => {
             {/* <img className='myPageHeader-profile-img' src="../images/user.jpg" alt="" /> */}
             <BiUser className='myPage-tagList-li-icon'></BiUser>
             <div className='myPageHeader-profile-name' 
-            onClick={()=>navigate("/member/update")}
+            onClick={memberUpdate}
             >회원정보수정</div>
           </div>
           <div>
@@ -213,7 +226,7 @@ const Mypage = () => {
       <div className='myPageBigContainer'>
         <div className='myPage-tagList'>
           <ul className='myPage-tagList-ul'>
-            <li className='myPage-tagList-li' onClick={()=>navigate("/member/update")}>
+            <li className='myPage-tagList-li' onClick={memberUpdate}>
               {/* <img className='myPage-tagList-li-profile-img' src="../images/user.jpg" alt="" /> */}
               <BiUser className='myPage-tagList-li-icon'></BiUser>
               <div className='myPage-tagList-li-name'
@@ -237,7 +250,12 @@ const Mypage = () => {
         <div>
         <TravelPdf />
         </div>
-        <h1 className='myPage-h1-title'>{title}({totalCount})</h1>
+        {
+          index === 4 ?
+          <h1 className='myPage-h1-title'> {title}</h1> :
+          <h1 className='myPage-h1-title'>{title}({totalCount})</h1>
+        }
+        
         <ul className='myPage-Big-Image-ul'>
           {list}
         </ul>
