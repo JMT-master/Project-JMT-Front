@@ -97,6 +97,11 @@ const LoginModal = ({ setModalOpen, id, title, content, writer }) => {
       })
         .then((response) => {
           console.log("response : " + response.data);
+          Swal.fire({
+            icon: "info",
+            title: "이메일 전송",
+            text: "이메일 전송 완료 되었습니다.",
+          });
           closeModal();
         })
     }
