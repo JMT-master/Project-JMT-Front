@@ -16,6 +16,7 @@ const JoinUser = (props) => {
   const [pwdPop, setPwdPop] = useState('');
   const [popup, setPopup] = useState(false);
   const [duplicate, setDuplicate] = useState(false);
+  const [emailVali, setEmailVali] = useState(false);
   const isUpdate = props.isUpdate;
 
   const [member, setMember] = useState({
@@ -97,6 +98,15 @@ const JoinUser = (props) => {
       }
     }
 
+    if(duplicate === false) {
+      Swal.fire({
+        icon: 'warning',
+        title: '회원가입',
+        text: '중복확인 하십시오.'
+      })
+      return;
+    }
+
     if(nullFlag === 1) {
       Swal.fire({
         icon: 'warning',
@@ -111,6 +121,17 @@ const JoinUser = (props) => {
         icon: 'warning',
         title: '회원가입',
         text: '비밀번호가 같지 않습니다.'
+      })
+      return;
+    }
+
+    if(localStorage.getItem("emailValidate") === member.email) {
+      localStorage.removeItem('emailValidate');
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        title: '회원가입',
+        text: '메일인증을 하십시오.'
       })
       return;
     }
@@ -139,7 +160,7 @@ const JoinUser = (props) => {
       socialYn : 'N'
     };
 
-    emailValidate(chkUser);
+    emailValidate(chkUser,setEmailVali);
   }
 
   // member항목 변경
@@ -304,7 +325,9 @@ const JoinUser = (props) => {
                 <button className='btn btn-outline-warning' id='joinUser-Success' onClick={updateHandler}><strong>수정완료</strong></button>
               </div>
               <div className='bd-highlight'>
-                <button className='btn btn-outline-warning' id='joinUser-Success' onClick={() => navigate('/myInfo/ChangePasswd')}><strong>비밀번호 변경</strong></button>
+                <button className='btn btn-outline-warning' id='joinUser-Success' onClick={() => {
+                  navigate('/myInfo/ChangePasswd', {state : {data : member.email}})
+                  }}><strong>비밀번호 변경</strong></button>
               </div>
 
             </div> 

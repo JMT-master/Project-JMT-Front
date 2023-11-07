@@ -163,7 +163,8 @@ const Curator = () => {
       })
     }else{
       setCategoryNum("c1");
-      setCurrentPage(1);
+      currentPage === 1 ? setCurrentPage(2) : setCurrentPage(1);
+      
     }
   }
 

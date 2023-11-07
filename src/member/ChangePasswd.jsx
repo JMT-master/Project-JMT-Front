@@ -1,103 +1,130 @@
-import React, { useEffect, useRef } from 'react'
-import { API_BASE_URL } from '../common/ApiConfig'
-import { useState } from 'react'
+import axios from "axios";
+import React, { useEffect } from "react";
+import { useState } from "react";
+import Swal from "sweetalert2";
+import { API_BASE_URL } from "../common/ApiConfig";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { LoadCanvasTemplate } from 'react-simple-captcha';
 import Captcha from './Captcha';
-import { useNavigate } from 'react-router-dom';
 
 const ChangePasswd = () => {
-  const navigate = useNavigate();
-  const [result, setResult] = useState('');
-  const inputRef = useRef(null);
+  const [pwdPop, setPwdPop] = useState("새 비밀번호 확인");
+  const { email } = useParams();
   const [confirm, setConfirm] = useState(false);
-  const [pwdPop, setPwdPop] = useState(false);
-  const [currentPw, setCurrentPw] = useState('');
-  const [newPw, setNewPw] = useState('');
-  const [newPwChk, setNewPwChk] = useState('');
+  const navigate = useNavigate();
+  const data = useLocation();
+  let sendData = {};
 
-  useEffect(() => {
-    window.scrollTo(0,0);
-  }, []);
-  
-  useEffect(() => {
-    console.log("ChangePasswd???");
+  const checkPwd = (e) => {
 
-  },[inputRef.current]);
+    const pwdVal = document.getElementById("floatingPassword").value;
+    if (e.target.value === pwdVal) {
+      return setPwdPop("비밀번호가 일치합니다");
+    } else {
+      return setPwdPop("비밀번호가 일치하지 않습니다.");
+    }
+  };
 
-  // const getImage = (e) => {
-  //   e.preventDefault();
-  //   let url = API_BASE_URL+'/changepw/captchaImg';
-  //   document.getElementById('captchaImg').setAttribute("src", url);
-  // }
-
-  // const captchaValidate = () => {
-  //   const url = API_BASE_URL + "/changepw/validate?result=" + result;
-  //   fetch(url, {
-  //     method : 'POST',
-  //     headers: {"Content-Type": "application/json"}
-  //   }).then(result => {
-  //     console.log('result : ', result);
-  //   });
-
-  // }
-
-  // const chnResult = (e) => {
-  //   setResult(e.target.value);
-  // }
-
-  // const chnImg = () => {
-  //   console.log("바뀜?>??");
-  // }
-
+  const changeNewPwd = () => {
+    if (email) {
+      sendData = {
+        preId: email,
+        prePwd: document.getElementById("sendingPassword").value,
+        newPwd: document.getElementById("floatingPassword").value,
+        newPwdChk: document.getElementById("floatingPasswordCK").value
+      }
+    } else {
+      sendData = {
+        preId: data.state.data,
+        prePwd: document.getElementById("sendingPassword").value,
+        newPwd: document.getElementById("floatingPassword").value,
+        newPwdChk: document.getElementById("floatingPasswordCK").value
+      }
+    }
+    axios({
+      method: "POST",
+      url: API_BASE_URL + "/myInfo/ChangePasswd",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: sendData
+    })
+      .then((response) => {
+        console.log("response : " + response.data);
+        window.location.href = "/login";
+      })
+  };
   return (
-    <div className='container-sm'>
-      <div className="row g-3">
-        <div className="col-sm"></div>
+    <div className="container-sm">
+      <div class="row g-3">
+        <div class="col-sm"></div>
 
-        <div className="col-sm-4">
-          <h2 className='mb-5'>비밀번호 변경</h2>
-          <div className="form-floating">
-            <input type="password" className="form-control mb-3" id="floatingPassword" 
-            value={currentPw}
-            placeholder="현재 비밀번호" />
-            <label for="floatingPassword">현재 비밀번호</label>
+        <div class="col-sm-4">
+          <h3 className="mb-5">비밀번호 변경</h3>
+          <div class="form-floating">
+            <input
+              type="id"
+              class="form-control mb-3"
+              id="sendingId"
+              placeholder="아이디"
+              style={{ display: email ? "block" : "none" }}
+              value={email}
+              readOnly
+            />
+            <label
+              style={{ display: email ? "block" : "none" }}
+              for="sendingId">아이디</label>
           </div>
-          <div className="form-floating">
-            <input type="password" className="form-control mb-3" id="floatingPassword" 
-            value={newPw}
-            placeholder="새 비밀번호" />
+          <div class="form-floating">
+            <input
+              type="password"
+              class="form-control mb-3"
+              id="sendingPassword"
+              placeholder="현재 비밀번호"
+            />
+            <label for="sendingPassword">현재 비밀번호</label>
+          </div>
+          <div class="form-floating">
+            <input
+              type="password"
+              class="form-control mb-3"
+              id="floatingPassword"
+              placeholder="새 비밀번호"
+            />
             <label for="floatingPassword">새 비밀번호</label>
           </div>
-          <div className="form-floating">
-            <input type="password" className="form-control mb-5" id="floatingPassword" 
-            value={newPwChk}
-            placeholder="새 비밀번호 확인" />
-            <label for="floatingPassword">새 비밀번호 확인</label>
+          <div class="form-floating">
+            <input
+              type="password"
+              class="form-control mb-5"
+              id="floatingPasswordCK"
+              onChange={checkPwd}
+              placeholder={pwdPop}
+            />
+            <label for="floatingPasswordCK">{pwdPop}</label>
           </div>
           <div className='mb-5'>
-            <Captcha setConfirm = {setConfirm} confirm = {confirm}></Captcha>
+            <Captcha setConfirm={setConfirm} confirm={confirm}></Captcha>
           </div>
-
-          <div className="d-grid gap-2">
-            <button className="btn btn-outline-warning btn-lg" 
-            type="button">확인</button>
-            <button className="btn btn-outline-warning btn-lg" type="button"
-            onClick={() => navigate(-1)}
-            >취소</button>
+          <div class="d-grid gap-2">
+            <button
+              class="btn btn-outline-warning btn-lg"
+              onClick={changeNewPwd}
+              type="button"
+            >
+              확인
+            </button>
+            <button class="btn btn-outline-warning btn-lg" type="button"
+              onClick={() => navigate(-1)}
+            >
+              취소
+            </button>
           </div>
-
-
         </div>
-
-        <div className="col-sm"></div>
+        <div class="col-sm"></div>
       </div>
-      {/* <img id='captchaImg' title='캡차이미지' src={API_BASE_URL+'/changepw/captchaImg'} onChange={chnImg}></img>
-                <button ref={inputRef} onClick={getImage}>새로고침</button>
-                <input value={result} onChange={chnResult}></input>
-                <button onClick={captchaValidate}>문자 확인</button> */}
-                
     </div>
-  )
-}
+  );
+};
 
-export default ChangePasswd
+export default ChangePasswd;

@@ -49,6 +49,8 @@ const ImageList = (props) => {
     })
   }
 
+  console.log('props.data.dayImage : ', props.data.dayImage);
+
   return (
     <>
       {

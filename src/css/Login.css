@@ -119,3 +119,18 @@
     grid-template-rows: repeat(6, 80px);
   }
 }
+
+#login-container {
+  height: 450px;
+}
+
+#loginTitle {
+  font-size: 55px;
+  font-family: "DancingScript";
+
+}
+
+#inlineCheckbox1:checked {
+  background-color: #f3a344;
+  border-color: #f3a344;
+}

@@ -25,6 +25,7 @@ const QnaBoardDetail = () => {
           details[0] && details[0].originalName !== null &&
           details[0].originalName !== undefined) {
           details.map((data, i) => {
+            console.log("이 데이터는 무엇 : " + JSON.stringify(details))
             axios({
               method: 'POST',
               url: API_BASE_URL + "/qna/viewFile",
@@ -36,8 +37,10 @@ const QnaBoardDetail = () => {
               const reader = new FileReader();
               reader.readAsDataURL(blob);
               reader.onloadend = () => {
+                console.log("details[i] : " + JSON.stringify(details[i]));
                 details[i] = { ...details[i], data: reader.result };
                 console.log("reader.result : " + reader.result);
+                console.log("details[i] : " + JSON.stringify(details[i]));
               }
             })
           })

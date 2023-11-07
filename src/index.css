@@ -2,3 +2,8 @@
 	font-family: 'Nanum Pen Script';
   src: url(./fonts/NotoSansKR-VariableFont_wght.ttf);
 }
+
+@font-face {
+	font-family: 'DancingScript';
+  src: url(./fonts/DancingScript-VariableFont_wght.ttf);
+}
