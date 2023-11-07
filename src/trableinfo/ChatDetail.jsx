@@ -170,9 +170,20 @@ const ChatDetail = () => {
   
   const outSocket = () => {
     disConnect();
+    localStorage.setItem("wschat.sender", "");
+    localStorage.setItem("wschat.roomId", "");
+    localStorage.setItem("wschat.roomName", "");
     navigate("/chat/room");
   };
 
+  window.onbeforeunload = function() {
+    localStorage.setItem("wschat.sender", "");
+    localStorage.setItem("wschat.roomId", "");
+    localStorage.setItem("wschat.roomName", "");
+    // 웹 소켓 연결을 닫습니다.
+    disConnect();
+  };
+  
   return (
     <div className="chat-detail-container">
       {/* 나가기 버튼 */}
