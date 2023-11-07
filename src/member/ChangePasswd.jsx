@@ -16,7 +16,7 @@ const ChangePasswd = () => {
   let sendData = {};
 
   const checkPwd = (e) => {
-    
+
     const pwdVal = document.getElementById("floatingPassword").value;
     if (e.target.value === pwdVal) {
       return setPwdPop("비밀번호가 일치합니다");
@@ -26,21 +26,21 @@ const ChangePasswd = () => {
   };
 
   const changeNewPwd = () => {
-    if(email){
-    sendData = {
-      preId: email,
-      prePwd: document.getElementById("sendingPassword").value,
-      newPwd: document.getElementById("floatingPassword").value,
-      newPwdChk: document.getElementById("floatingPasswordCK").value
+    if (email) {
+      sendData = {
+        preId: email,
+        prePwd: document.getElementById("sendingPassword").value,
+        newPwd: document.getElementById("floatingPassword").value,
+        newPwdChk: document.getElementById("floatingPasswordCK").value
+      }
+    } else {
+      sendData = {
+        preId: data.state.data,
+        prePwd: document.getElementById("sendingPassword").value,
+        newPwd: document.getElementById("floatingPassword").value,
+        newPwdChk: document.getElementById("floatingPasswordCK").value
+      }
     }
-  }else{
-    sendData = {
-      preId: data.state.data,
-      prePwd: document.getElementById("sendingPassword").value,
-      newPwd: document.getElementById("floatingPassword").value,
-      newPwdChk: document.getElementById("floatingPasswordCK").value
-    }
-  }
     axios({
       method: "POST",
       url: API_BASE_URL + "/myInfo/ChangePasswd",
@@ -67,13 +67,13 @@ const ChangePasswd = () => {
               class="form-control mb-3"
               id="sendingId"
               placeholder="아이디"
-              style={{display : email ? "block" : "none"}}
+              style={{ display: email ? "block" : "none" }}
               value={email}
               readOnly
             />
-            <label 
-            style={{display : email ? "block" : "none"}}
-            for="sendingId">아이디</label>
+            <label
+              style={{ display: email ? "block" : "none" }}
+              for="sendingId">아이디</label>
           </div>
           <div class="form-floating">
             <input
@@ -104,8 +104,8 @@ const ChangePasswd = () => {
             <label for="floatingPasswordCK">{pwdPop}</label>
           </div>
           <div className='mb-5'>
-              <Captcha setConfirm={setConfirm} confirm={confirm}></Captcha>
-            </div>
+            <Captcha setConfirm={setConfirm} confirm={confirm}></Captcha>
+          </div>
           <div class="d-grid gap-2">
             <button
               class="btn btn-outline-warning btn-lg"
@@ -115,7 +115,7 @@ const ChangePasswd = () => {
               확인
             </button>
             <button class="btn btn-outline-warning btn-lg" type="button"
-            onClick={()=>navigate(-1)}
+              onClick={() => navigate(-1)}
             >
               취소
             </button>
