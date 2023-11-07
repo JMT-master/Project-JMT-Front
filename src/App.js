@@ -123,8 +123,7 @@ function App(factory, deps) {
   };
   useEffect(() => {
     // 231103, 추후 수정
-    if (getCookie("ACCESS_TOKEN") !== undefined && getCookie("ACCESS_TOKEN") !== null && 
-    isSub.current)
+    if (getCookie("ACCESS_TOKEN") !== undefined && getCookie("ACCESS_TOKEN") !== null && isSub.current)
      sseSource("sub", setNotifications, notifyCount);
     isSub.current = false;
   }, [getCookie("ACCESS_TOKEN")]);

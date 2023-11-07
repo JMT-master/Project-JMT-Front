@@ -9,10 +9,7 @@ import Captcha from './Captcha';
 
 const ChangePasswd = () => {
   const [pwdPop, setPwdPop] = useState("새 비밀번호 확인");
-  const { id } = useParams();
   const [confirm, setConfirm] = useState(false);
-
-  console.log("sendPwd : " + id);
 
   const checkPwd = (e) => {
     const pwdVal = document.getElementById("floatingPassword").value;
@@ -23,15 +20,6 @@ const ChangePasswd = () => {
     }
   };
   const changeNewPwd = () => {
-    console.log('document.getElementById("sendingPassword").value : ' + document.getElementById("sendingPassword").value);
-    if (id !== ":" + document.getElementById("sendingPassword").value) {
-      Swal.fire({
-        icon: "warning",
-        title: "비밀번호 변경",
-        text: "비밀번호를 체크하시오.",
-      });
-      return;
-    }
 
     const sendData = {
       preId: document.getElementById("sendingId").value,
