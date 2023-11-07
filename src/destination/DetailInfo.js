@@ -125,6 +125,7 @@ const DetailInfo = () => {
         })
       }
     });
+    setFile();
   }
 
 

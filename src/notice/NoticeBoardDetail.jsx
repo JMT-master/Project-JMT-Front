@@ -22,7 +22,7 @@ const NoticeBoardDetail = ({data}) => {
        .then(response => {
          revData = response;
 
-         if(revData !== undefined && revData !== null && revData[0].originalName !== null && revData[0].originalName !== undefined) {
+         if(revData && revData[0].originalName) {
            revData.map((data,i) => {
              axios({
                method: 'POST',
@@ -124,7 +124,7 @@ const NoticeBoardDetail = ({data}) => {
            }}>삭제</button>
            <button className='oBtn' onClick={() => navigate("/notice")}>목록으로 가기</button>
          </div>
-         <AttachFile data={item}></AttachFile>
+         <AttachFile data={item !== null ? item : '' }></AttachFile>
        </div>
      </div>);
 };

@@ -10,25 +10,17 @@ const NoticeWrite = () => {
   const navigate = useNavigate();
   const params = useParams();
   const location = useLocation();
-  // const [category, setCategory] = useState("관광지");
-  // const [title, setTitle] = useState("");
-  // const [content, setContent] = useState("");
-  // const [contentFiles, setContentFiles] = useState();
-  // const handleSelect = (e) => {
-  //   setCategory(e.target.value);
-  // }
   const updateData = location.state;
   const [file, setFile] = useState([]);
 
-  console.log("updateData : " + JSON.stringify(updateData))
+  //수정 데이터 관리용
   const [body, setBody] = useState({
     category: "관광지",
     idx: 0,
     title: "",
     content: "",
-    contentFiles: []
+    contentFiles: [],
   });
-
   let {category, title, content, contentFiles, idx} = body;
   const setBodyTab = (e) => {
     setBody((prevState) => ({
@@ -37,10 +29,11 @@ const NoticeWrite = () => {
     }));
   };
 
+  //수정시 가져오는 데이터
   useEffect(() => {
     if (updateData !== null) {
       setBody({
-        title: updateData[0].title, contentFiles: Object.values(updateData).map(value => {
+        title: updateData[0].title, contentFiles: updateData[0].originalName === null ? [] : Object.values(updateData).map(value => {
           let file = new File([value.data],value.originalName);
           return file;
         }),
@@ -66,13 +59,19 @@ const NoticeWrite = () => {
     }
   }
 
+  const onDeleteItem = (e) => {
+    e.preventDefault();
+
+    setBody({...body, contentFiles: contentFiles
+       .filter(data => data.name !== e.target.value)
+       .map(value => value)});
+  }
 
   // 지식인 create
   const onSubmitKnowledge = (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    const form = e.target;
 
     const data = {
       "category": category,
@@ -96,8 +95,10 @@ const NoticeWrite = () => {
 
 // 작성완료
     if (updateData === null) { // 작성완료
+      console.log("write contentFiles : " + contentFiles)
       if (contentFiles !== undefined && contentFiles != null) {
         for (let i = 0; i < contentFiles.length; i++) {
+          console.log("널인데?")
           formData.append('file', contentFiles[i]);
         }
       }
@@ -126,8 +127,9 @@ const NoticeWrite = () => {
       const sendData = {
         ...data,
         idx: idx,
-        files: Array.from(contentFiles).map(data => data.name)
+        files: Array.from(contentFiles).map(data => data.name != null ? data.name : "")
       };
+      console.log("sendData.files" + sendData.files)
 
       console.log('sendData', sendData);
 
@@ -166,13 +168,41 @@ const NoticeWrite = () => {
            <textarea cols="80" rows="10" name="content" onChange={setBodyTab} value={content}></textarea>
          </div>
          <div className='file-attach'>
-           <div style={{margin: 0, padding: 0, borderBottom: 'none'}}>
-             <label htmlFor='notice-file' className='btn-upload'>파일 업로드</label>
-             <input type="file" name='notice-file' id='notice-file'
-                    accept='.xlsx, .xls, .doc, .pdf, image/*'  // doc, pdf, image 파일만 허용
-                    multiple
-                    onChange={fileUpload}
-             />
+           {
+             updateData === null ?
+                <div style={{margin:0, padding:0, borderBottom : 'none'}}>
+                  <label for='knowledgeWrite-file' className='btn-upload'>파일 업로드</label>
+                  <input type="file" name='knowledgeWrite-file' id='knowledgeWrite-file'
+                         accept='.xlsx, .xls, .doc, .pdf, image/*'  // doc, pdf, image 파일만 허용
+                         multiple
+                         onChange={fileUpload}
+                  />
+                </div> :
+                <></>
+           }
+           <div className='file-attach-container' style={{margin:0, padding:0, borderBottom : 'none'}}>
+             {
+               contentFiles !== null && contentFiles !== undefined ?
+                  Array.from(contentFiles).map(file => {
+                    return (
+                       <div style={{margin:0, padding:0, borderBottom : 'none', display : 'flex'}}>
+                         <input placeholder='첨부파일' className='file-attach-text'
+                                id='notice-file-text' name='notice-file-text'
+                                value={file.name}
+                                style={{width : '200px'}}
+                                readOnly>
+                         </input>
+                         {
+                           updateData === null ? <></> :
+                              <button className='oBtn' value={file.name} onClick={onDeleteItem}
+                                      style={{width : '70px', height : '30px', textAlign : 'center'}}>삭 제</button>
+                         }
+
+                       </div>
+                    );
+                  }) :
+                  <></>
+             }
            </div>
          </div>
          <div className='button-box'>

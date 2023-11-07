@@ -16,15 +16,17 @@ const AttachFile = (props) => {
   const [sendData, setSendData] = useState();
   console.log("props : " + JSON.stringify(props))
   console.log("AttacH : " + JSON.stringify(attach))
-  useEffect(() => {
-    setImgModal(true);
-  },[modalFlag]);
+
 
   const showImgModal = (data) => {
     setImgModal(false);
     setSendData(data);
     setModalFlag(!modalFlag);
   };
+
+  useEffect(() => {
+    setImgModal(true);
+  },[modalFlag]);
   
   return (
     <div className='attachfile-container'>

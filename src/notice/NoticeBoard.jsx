@@ -21,14 +21,37 @@ const NoticeBoard = () => {
   const idxNum = useRef(0);
   const isAdmin = useRef(getCookie("adminChk"));
   const theme = localStorage.getItem("theme");
+  const [searchResult, setSearchResult] = useState('');
+  const [searchSelect, setSearchSelect] = useState('title');
 
-  const handlePageChange = (page) => {
-    setPage(page);
-  };
 
 
   const handleSelect = (e) => {
     setItemsPerPage(e.target.value);
+  }
+
+  function onChangeSearchSelect(e) {
+    setSearchSelect(e.target.options[e.target.selectedIndex].value);
+  }
+
+  //검색
+  function onChangeSearchResult(e) {
+    setSearchResult(e.target.value);
+  }
+
+  function handleOnKeyDown(e) {
+    if(e.key === 'Enter') {
+      onClickSearch();
+    }
+  }
+
+  function onClickSearch() {
+    call("/notice/search?select=" + searchSelect + "&result=" + searchResult,"GET")
+       .then(response => {
+         console.log(JSON.stringify(response))
+         setCurrentItems(response.content)
+       });
+
   }
 
   const deleteHandler = (idx) => {
@@ -84,8 +107,13 @@ const NoticeBoard = () => {
          <h2>공지사항
          </h2>
          <div className='searchNotice'>
-           <input type="text" placeholder='검색어를 입력하세요'/>
-           <button><VscSearch/></button>
+
+           <select className='searchKnowledge-select' onChange={onChangeSearchSelect}>
+             <option value='title'>제목</option>
+             <option value='content'>내용</option>
+           </select>
+           <input type="text" placeholder='검색어를 입력하세요' value={searchResult} onChange={onChangeSearchResult} onKeyDown={handleOnKeyDown} />
+           <button onClick={onClickSearch}><VscSearch/></button>
          </div>
        </div>
        <br/>
