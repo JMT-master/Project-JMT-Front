@@ -197,7 +197,7 @@ const KnowledgeWrite = () => {
             <select className='category' onChange={onChangeCategory} value={category}>
               <option value="관광지">관광지</option>
               <option value="음식">음식</option>
-              <option value="축제">축제</option>
+              <option value="숙박">숙박</option>
             </select>
           </div>
           <div className='ask-textarea'>
@@ -253,7 +253,7 @@ const KnowledgeWrite = () => {
             revData === null ? <button className='submit-knowledge'>작성완료</button>
                              : <button className='submit-knowledge'>수정완료</button>
           }
-          <button className='back-to-knlist'onClick={onClickList}>목록으로 돌아가기</button>
+          <button className='back-to-knlist' onClick={onClickList}>목록으로 돌아가기</button>
         </div>
       </form>
     </div>

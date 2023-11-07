@@ -107,7 +107,7 @@ const LoginModal = ({ setModalOpen, id, title, content, writer }) => {
     }
     return (
       <div className='modal-container-click'
-        style={{ width: '400px', height: '400px' }}>
+        style={{ width: '600px', height: '400px' }}>
         <input className='mopwd-id' type="id" value={username} onChange={onChangeUserName} placeholder='이름을 입력해주세요' />
         <input className='moid-tel' type="id" value={email} onChange={onChangeEmail} placeholder='아이디를 입력해주세요' />
         <button className='mopwd-submit' onClick={sendEmailCode}>인증번호 전송</button>

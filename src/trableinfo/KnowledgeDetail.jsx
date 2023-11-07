@@ -23,6 +23,7 @@ const KnowledgeDetail = () => {
   // const {state} = useLocation();
   // const detail = state;
   // const detail = data[params.id - 1]
+  console.log('params.id : ',params.id);
 
   useEffect(() => {
     let revData = null;

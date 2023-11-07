@@ -35,10 +35,10 @@ const TagBtn = (tag) => {
     const num = 10;
     let tagSet = [...new Set(tagList)];
     // console.log('tagSet: ', tagSet);
-    console.log("전체 태그 갯수 : " + tagSet.length);
-    console.log("전체 태그 갯수 : " + Math.floor(tagSet.length/10));
-    console.log("전체 태그 갯수 : " + tagSet.length/(tagSet.length/10));
-    console.log("전체 태그 갯수 : " + tagSet.length%(Math.floor(tagSet.length/10)));
+    // console.log("전체 태그 갯수 : " + tagSet.length);
+    // console.log("전체 태그 갯수 : " + Math.floor(tagSet.length/10));
+    // console.log("전체 태그 갯수 : " + tagSet.length/(tagSet.length/10));
+    // console.log("전체 태그 갯수 : " + tagSet.length%(Math.floor(tagSet.length/10)));
     let ranNum = Math.floor(Math.random() * (tagSet.length/10));
     let ranNumMax = Math.floor(Math.random() * tagSet.length/(tagSet.length/10));
 

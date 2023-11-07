@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/destination/DetailInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/DetailInfo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/destination/ReviewBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/ReviewBox.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/destination/TourList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/TourList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +51,7 @@
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "WebServerToolWindowFactoryState": "false",
     "android.gradle.sync.needed": "true",
-    "git-widget-placeholder": "park",
+    "git-widget-placeholder": "Deb",
     "jdk.selected.JAVA_MODULE": "11",
     "last_opened_file_path": "D:/workspace/PJ/Project-JMT-Front",
     "node.js.detected.package.eslint": "true",
@@ -64,7 +62,8 @@
     "project.structure.last.edited": "모듈",
     "project.structure.proportion": "0.15039062",
     "project.structure.side.proportion": "0.50747985",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "settings.editor.selected.configurable": "terminal",
+    "ts.external.directory.path": "D:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -99,6 +98,11 @@
       <workItem from="1698798493823" duration="7891000" />
       <workItem from="1698884188745" duration="20826000" />
       <workItem from="1698970916395" duration="1841000" />
+      <workItem from="1699066347605" duration="17226000" />
+      <workItem from="1699086120440" duration="3806000" />
+      <workItem from="1699157277884" duration="13657000" />
+      <workItem from="1699171824638" duration="8153000" />
+      <workItem from="1699180805430" duration="152000" />
     </task>
     <task id="LOCAL-00001" summary="23년 10월 17일 5시 50분 안광현 프론트단 커밋">
       <option name="closed" value="true" />
@@ -156,7 +160,39 @@
       <option name="project" value="LOCAL" />
       <updated>1698994995373</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="리뷰 이미지 나옴">
+      <option name="closed" value="true" />
+      <created>1699084574591</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1699084574591</updated>
+    </task>
+    <task id="LOCAL-00009" summary="리뷰 이미지 나옴 수리">
+      <option name="closed" value="true" />
+      <created>1699085330074</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1699085330074</updated>
+    </task>
+    <task id="LOCAL-00010" summary="리뷰 이미지 나옴 수리">
+      <option name="closed" value="true" />
+      <created>1699089036500</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1699089036500</updated>
+    </task>
+    <task id="LOCAL-00011" summary="공지 검색 및 파일 첨부 남음">
+      <option name="closed" value="true" />
+      <created>1699179952028</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1699179952028</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,7 +229,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="Deb" />
+                        <option value="park" />
                       </list>
                     </value>
                   </entry>
@@ -216,6 +252,13 @@
     <MESSAGE value="231102 태종님이랑 머지" />
     <MESSAGE value="qna getcookie 수리" />
     <MESSAGE value="리뷰 업데이트 반환시 전체 리스트 반환으로 뷰 업데이트하게 수정중" />
-    <option name="LAST_COMMIT_MESSAGE" value="리뷰 업데이트 반환시 전체 리스트 반환으로 뷰 업데이트하게 수정중" />
+    <MESSAGE value="리뷰 이미지 나옴" />
+    <MESSAGE value="리뷰 이미지 나옴 수리" />
+    <MESSAGE value="공지 검색 및 파일 첨부 남음" />
+    <option name="LAST_COMMIT_MESSAGE" value="공지 검색 및 파일 첨부 남음" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
