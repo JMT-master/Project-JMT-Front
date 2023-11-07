@@ -325,7 +325,9 @@ const JoinUser = (props) => {
                 <button className='btn btn-outline-warning' id='joinUser-Success' onClick={updateHandler}><strong>수정완료</strong></button>
               </div>
               <div className='bd-highlight'>
-                <button className='btn btn-outline-warning' id='joinUser-Success' onClick={() => navigate('/myInfo/ChangePasswd')}><strong>비밀번호 변경</strong></button>
+                <button className='btn btn-outline-warning' id='joinUser-Success' onClick={() => {
+                  navigate('/myInfo/ChangePasswd', {state : {data : member.email}})
+                  }}><strong>비밀번호 변경</strong></button>
               </div>
 
             </div> 
