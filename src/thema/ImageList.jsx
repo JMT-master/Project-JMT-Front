@@ -4,14 +4,14 @@ import { AiOutlineStar } from 'react-icons/ai'
 import { call } from '../common/ApiService'
 
 const ImageList = (props) => {
-
+  console.log("ddddd",props.data.repPhoto);
   const wishTdnInsert = () => {
-    console.log("ddddd");
+
     const photo = props.data.repPhoto;
     let dto ={
       wishTitle : props.data.title,
       wishApiId : props.data.contentsid,
-      wishImg : photo && photo.photoid.imgpath,
+      wishImg : photo.photoid.imgpath,
       wishGubun : 'tdn',
       address:props.data.address,
       phoneno:props.data.phoneno,
@@ -50,25 +50,26 @@ const ImageList = (props) => {
   }
 
   return (
-    <li key={props.number} className={props.className} style={ {borderRadius: "20px", position: "relative"} }>
-          {props.data.dayImage === null ? (
-          <div>
-            <div style={{ position: "relative" }}>
-              <button  style={{ position: "absolute", top: "10px", left: "10px", zIndex:'9999' }} className='oBtn sf ra' onClick={() => wishTdnInsert()}><AiOutlineStar/></button>
-            </div>
-            <img src={props.data !== null ? props.data : ""} alt={props.number} style={{borderRadius : "20px"}}></img>
-            <p className='img-tag-hover'>{props.title}</p>
-        </div>
-      ) : 
-        <div>
-          <div style={{ position: "relative" }}>
-            <button  style={{ position: "absolute", top: "10px", left: "10px", zIndex:'9999' }} className='oBtn sf ra' onClick={()=>{wishTpsInsert()}}><AiOutlineStar/></button>
-          </div>
-          <img src={props.data.dayImage} alt={props.data.travelTitle} style={{borderRadius : "20px"}}></img>
-          <p className='img-tag-hover'>{props.data.travelTitle}</p>
-        </div>
+    <>
+      {
+        props.data.dayImage === null || props.data.dayImage === undefined ?
+          <li key={props.number} className={props.className} style={{ borderRadius: "20px", position: "relative" }}>
+              <div style={{ position: "relative" }}>
+                <button style={{ position: "absolute", top: "10px", left: "10px", zIndex: '9999' }} className='oBtn sf ra' onClick={() => wishTdnInsert()}><AiOutlineStar /></button>
+                {/* <button style={{ position: "absolute", top: "10px", left: "10px", zIndex: '9999' }} className='converse-oBtn sf ra' onClick={() => wishTdnInsert()}><AiOutlineStar /></button> */}
+              </div>
+              <img src={props.data.repPhoto.photoid.imgpath} alt={props.number} style={{ borderRadius: "20px" }}></img>
+              <p className='img-tag-hover'>{props.title}</p>
+          </li> :
+          <li key={props.number} className={props.className} style={{ borderRadius: "20px", position: "relative" }}>
+              <div style={{ position: "relative" }}>
+                <button style={{ position: "absolute", top: "10px", left: "10px", zIndex: '9999' }} className='oBtn sf ra' onClick={() => { wishTpsInsert() }}><AiOutlineStar /></button>
+              </div>
+              <img src={props.data.dayImage} alt={props.data.travelTitle} style={{ borderRadius: "20px" }}></img>
+              <p className='img-tag-hover'>{props.data.travelTitle}</p>
+          </li>
       }
-    </li>
+    </>
   );
 }
 

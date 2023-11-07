@@ -76,12 +76,10 @@ const Curator = () => {
       setCopyVisit(visit);
       visitTag = []; tagSet = [];
 
-      setList(visit.items.map((item,i) => {
-
+      setList(visit.items.filter(data => data.repPhoto !== null && data.repPhoto !== undefined).map((item,i) => {
         if(item.tag !== null) visitTag = visitTag.concat(item.tag.replace(/, /gi, ',').split(','));
         // if(i <= 10){
-          return <ImageList key={i} number={i} className='curatorResult-img-li' 
-          data={item.repPhoto !== null ? item.repPhoto.photoid.imgpath : null} title={item.title}></ImageList>
+          return <ImageList key={i} number={i} className='curatorResult-img-li' data={item}  title={item.title}></ImageList>
         // }
       }));
 
@@ -93,7 +91,7 @@ const Curator = () => {
       setLoading(false);
     }
 
-  }, [visit,onChnTheme]);
+  }, [visit,onChnTheme,selectContent]);
 
   // tag 클릭했을 때 색상 변경 및 배열에 값 대입
   const tagAdd = (e) => {

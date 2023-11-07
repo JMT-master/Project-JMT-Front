@@ -22,6 +22,35 @@ $jOrange: #f3a444;
     color: white;
   }
 }
+@mixin converse-btnSet ($width:auto, $height:auto){
+  width: $width;
+  height: $height;
+  background-color: $jOrange;
+  color: white;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 3px 5px;
+  margin: 1px 5px;  
+  font-size: 0.95rem;
+  //font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  
+
+  &:hover {
+    background-color: transparent;
+    color: $jOrange;
+  }
+}
+.converse-oBtn {
+  @include converse-btnSet;
+  // @include btnSet(30px,50px);
+  &:active{
+    color: white;
+    border: 1px $jOrange solid;
+  }
+}
 
 @mixin sizeSet($width:auto, $height:auto){
   width: $width;
