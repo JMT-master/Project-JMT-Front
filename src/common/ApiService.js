@@ -6,24 +6,23 @@ import {connect} from "react-redux";
 import { useCallback } from "react";
 import { useState } from "react";
 
-export function call(api, method, request) {
+export function call(api, method, request, page, pageSize ) {
   let headers = new Headers({
     "Content-Type": "application/json",
   });
   getCookie('ACCESS_TOKEN') && headers.append("Authorization", "Bearer " + getCookie('ACCESS_TOKEN'));
-  // if(request.accessToken && request.accessToken != null) {
-  //   headers.append("Authorization", "Bearer " + getCookie());
-  // }
-  // return call("/auth/signin","POST", {})
-  //    .then((response) => {
-  //      localStorage.setItem("ACCESS_TOKEN", response.token)
-  //      console.log("response : " + response);
-  //      window.location.href = "/";
-  //    });
+  let url = `${API_BASE_URL}${api}`;
+  if(page !== undefined && pageSize !== undefined) {
+    const params = new URLSearchParams();
+    params.append("page", page);
+    params.append("size", pageSize);
+    url += `?${params.toString()}`;
+  }
 
   let options = {
     headers: headers,
-    url: API_BASE_URL + api,
+    // url: API_BASE_URL + api,
+    url: url,
     method: method,
   };
 
@@ -48,6 +47,7 @@ export function call(api, method, request) {
 
 export function sseSource(url, setNotifications) {
   const accessToken = getCookie('ACCESS_TOKEN');
+  console.log("sse 호출!!!!!!!!")
   // SSE 지원
   if (typeof EventSource !== "undefined") {
     const eventSource = new EventSourcePolyfill(API_BASE_URL + '/notification/' + url, {
@@ -78,7 +78,7 @@ export function sseSource(url, setNotifications) {
     });
 
     eventSource.onerror = function (event) {
-      console.error('SSE 에러 발생:', event);
+      // console.error('SSE 에러 발생:', event);
       eventSource.close();
     };
 

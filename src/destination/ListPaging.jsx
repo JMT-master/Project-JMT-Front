@@ -5,7 +5,6 @@ import {useNavigate} from "react-router-dom";
 
 const ListPaging = (pageprops) => {
   const {page, setPage, lastPage} = pageprops
-  const lPage = lastPage;
   const theme = useTheme();
 
   console.log("page : ",page);

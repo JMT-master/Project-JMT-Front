@@ -253,7 +253,7 @@ const KnowledgeWrite = () => {
             revData === null ? <button className='submit-knowledge'>작성완료</button>
                              : <button className='submit-knowledge'>수정완료</button>
           }
-          <button className='back-to-knlist'onClick={onClickList}>목록으로 돌아가기</button>
+          <button className='back-to-knlist' onClick={onClickList}>목록으로 돌아가기</button>
         </div>
       </form>
     </div>
