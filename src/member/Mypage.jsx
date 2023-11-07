@@ -11,8 +11,11 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import TravelPdf from '../travelschedule/TravelPdf'
 import { useNavigate } from 'react-router'
-import { call } from '../common/ApiService'
+import { call, getCookie, getLocal } from '../common/ApiService'
 import JoinUser from './JoinUser'
+import { Button, Modal } from 'react-bootstrap'
+import { API_BASE_URL } from '../common/ApiConfig'
+import Swal from 'sweetalert2'
 
 
 
@@ -28,6 +31,11 @@ const Mypage = () => {
   const [member, setMember] = useState();
   const [myTravelItem,setMyTravelItem] = useState(null);
   const [gubun,setGubun] = useState(0);
+  const [show, setShow] = useState(false);
+  const [checkPwd, setCheckPwd] = useState();
+
+  const handleClose = () => setShow(false);
+  const handleShow  = () => setShow(true);
 
 
   //나의 일정
@@ -73,6 +81,56 @@ const Mypage = () => {
     })
   }
 
+  // 비밀번호 확인시 넘길 비밀번호 값
+  const onChnPwd = (e) => {
+    setCheckPwd(e.target.value);
+    console.log(e.target.value);
+  }
+
+  // 회원 정보 확인
+  function memberModify() {
+    const url = API_BASE_URL + "/mypage/validate";
+    const headers = new Headers({
+      "Content-Type": "application/json"
+    });
+    getCookie('ACCESS_TOKEN') && headers.append("Authorization", "Bearer " + getCookie('ACCESS_TOKEN'));
+
+    // password, socialYn
+    const sendData = {
+      password :  checkPwd,
+      socialYn : getLocal('social')
+    }
+
+    const body = JSON.stringify(sendData);
+
+    console.log('body : ', body);
+  
+    fetch(url, {
+      method: 'POST',
+      body: body,
+      headers : headers
+    }).then(response => {
+      console.log('MyPage response : ', response);
+      if(response.status === 200) {
+        console.log('성공');
+        Swal.fire({
+          icon : 'info',
+          title: '회원수정',
+          showCloseButton: true,
+          confirmButtonText: '성공',
+        }).then(() => memberUpdate());
+      } else {
+        Swal.fire({
+          icon : 'warning',
+          title: '회원수정',
+          showCloseButton: true,
+          confirmButtonText: '비밀번호가 일치하지 않습니다.',
+        });
+      }
+    })
+
+  }
+
   //member의 정보 가져와서 화면에 보여줘야함
   const getMember = () => {
     call("/mypage", "GET")
@@ -88,6 +146,7 @@ const Mypage = () => {
     setTotalCount('');
     setIndex(4);
     setList(<JoinUser isUpdate = {true}></JoinUser>);
+    setShow(false);
   }
 
   // Big page에서 Title 클릭시
@@ -161,77 +220,100 @@ const Mypage = () => {
   if (loading) {
     return <div className='loading'><AiOutlineLoading className='loadingIcon'></AiOutlineLoading></div>
   }
-  // 작은 경우
-  else if (width <= 700) {
-    return (
-      <div className='myPageContainer'>
-        <div className='myPageHeader'>
-          <div className='myPageHeader-profile'>
-            {/* <img className='myPageHeader-profile-img' src="../images/user.jpg" alt="" /> */}
-            <BiUser className='myPage-tagList-li-icon'></BiUser>
-            <div className='myPageHeader-profile-name' 
-            onClick={memberUpdate}
-            >회원정보수정</div>
-          </div>
-          <div>
-            <ul className='myPageHeader-ul'>
-              <li className='myPageHeader-li' onClick={() => onChangeTitle(0)}>
-                <AiOutlineSchedule className='myPage-tagList-li-icon'></AiOutlineSchedule>
-                <div>나의 일정</div>
-              </li>
-              <li className='myPageHeader-li' onClick={() => onChangeTitle(1)}>
-                <MdTravelExplore className='myPage-tagList-li-icon'></MdTravelExplore>
-                <div>찜한 일정</div>
-              </li>
-              <li className='myPageHeader-li' onClick={() => onChangeTitle(2)}>
-                <GiCommercialAirplane className='myPage-tagList-li-icon'></GiCommercialAirplane>
-                <div>찜한 여행지</div>
-              </li>
-            </ul>
-          </div>
-        </div>
+  // 231107, NTJ, 추후 수정(화면 작은 경우에 대한 예외 처리 문제)
+  // // 작은 경우
+  // else if (width <= 700) {
+  //   return (
+  //     <div className='myPageContainer'>
+  //       <div className='myPageHeader'>
+  //         <div className='myPageHeader-profile'>
+  //           {/* <img className='myPageHeader-profile-img' src="../images/user.jpg" alt="" /> */}
+  //           <BiUser className='myPage-tagList-li-icon'></BiUser>
+  //           <div className='myPageHeader-profile-name' 
+  //           onClick={memberUpdate}
+  //           >회원정보수정</div>
+  //         </div>
+  //         <div>
+  //           <ul className='myPageHeader-ul'>
+  //             <li className='myPageHeader-li' onClick={() => onChangeTitle(0)}>
+  //               <AiOutlineSchedule className='myPage-tagList-li-icon'></AiOutlineSchedule>
+  //               <div>나의 일정</div>
+  //             </li>
+  //             <li className='myPageHeader-li' onClick={() => onChangeTitle(1)}>
+  //               <MdTravelExplore className='myPage-tagList-li-icon'></MdTravelExplore>
+  //               <div>찜한 일정</div>
+  //             </li>
+  //             <li className='myPageHeader-li' onClick={() => onChangeTitle(2)}>
+  //               <GiCommercialAirplane className='myPage-tagList-li-icon'></GiCommercialAirplane>
+  //               <div>찜한 여행지</div>
+  //             </li>
+  //           </ul>
+  //         </div>
+  //       </div>
 
-        <div className='myPageChap1'>
-          <button className='myPageBtn'>프로필 편집</button>
-          <button className='myPageBtn'>여행 공유</button>
-        </div>
-        <div className='myPageChap2'>
-          <ul className='myPageChap2-ul'>
-            <li className='myPageChap2-li'>
-              <button className='myPageChap2-button'>+</button>
-            </li>
-            <li className='myPageChap2-li'>
-              <img className='myPageChap2-img' src='../images/001.png' alt='img1'></img>
-              <p className='myPageChap2-title'>제목 : ....</p>
-            </li>
-            <li className='myPageChap2-li'>
-              <img className='myPageChap2-img' src='../images/002.png' alt='img2'></img>
-              <p className='myPageChap2-title'>제목 : ....</p>
-            </li>
-            <li className='myPageChap2-li'>
-              <img className='myPageChap2-img' src='../images/003.png' alt='img3'></img>
-              <p className='myPageChap2-title'>제목 : ....</p>
-            </li>
-          </ul>
-        </div>
-        <div className='myPageImage'>
-          <ul className='myPageImage-ul'>
-            {list}
-          </ul>
-        </div>
-      </div>
-    )
-  } else {
+  //       <div className='myPageChap1'>
+  //         <button className='myPageBtn'>프로필 편집</button>
+  //         <button className='myPageBtn'>여행 공유</button>
+  //       </div>
+  //       <div className='myPageChap2'>
+  //         <ul className='myPageChap2-ul'>
+  //           <li className='myPageChap2-li'>
+  //             <button className='myPageChap2-button'>+</button>
+  //           </li>
+  //           <li className='myPageChap2-li'>
+  //             <img className='myPageChap2-img' src='../images/001.png' alt='img1'></img>
+  //             <p className='myPageChap2-title'>제목 : ....</p>
+  //           </li>
+  //           <li className='myPageChap2-li'>
+  //             <img className='myPageChap2-img' src='../images/002.png' alt='img2'></img>
+  //             <p className='myPageChap2-title'>제목 : ....</p>
+  //           </li>
+  //           <li className='myPageChap2-li'>
+  //             <img className='myPageChap2-img' src='../images/003.png' alt='img3'></img>
+  //             <p className='myPageChap2-title'>제목 : ....</p>
+  //           </li>
+  //         </ul>
+  //       </div>
+  //       <div className='myPageImage'>
+  //         <ul className='myPageImage-ul'>
+  //           {list}
+  //         </ul>
+  //       </div>
+  //     </div>
+  //   )
+  // }
+   else {
     return (
       <div className='myPageBigContainer'>
         <div className='myPage-tagList'>
           <ul className='myPage-tagList-ul'>
-            <li className='myPage-tagList-li' onClick={memberUpdate}>
+            <li className='myPage-tagList-li' onClick={handleShow}>
               {/* <img className='myPage-tagList-li-profile-img' src="../images/user.jpg" alt="" /> */}
               <BiUser className='myPage-tagList-li-icon'></BiUser>
               <div className='myPage-tagList-li-name'
               >회원정보수정</div>
             </li>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header style={{ borderBottom: 'none' }}>
+                  <Modal.Title>비밀번호 확인</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <div class="input-group input-group-lg mb-2">
+                    <input type="password" className="form-control pw" aria-label="Large"
+                    value={checkPwd} onChange={onChnPwd}
+                      placeholder='비밀번호를 입력해주세요'
+                      aria-describedby="inputGroup-sizing-default" />
+                  </div>
+                </Modal.Body>
+                <Modal.Footer style={{ borderTop: 'none' }}>
+                  <Button className="btn_check" variant="outline-warning" onClick={memberModify}>
+                    확인
+                  </Button>
+                  <Button className="btn_close" variant="secondary" onClick={handleClose}>
+                    닫기
+                  </Button>
+                </Modal.Footer>
+              </Modal>
             <li className='myPage-tagList-li' data-value='0' onClick={() => onChangeTitle(0)}>
               <AiOutlineSchedule className='myPage-tagList-li-icon'></AiOutlineSchedule>
               <div value='0' className='myPage-tagList-li-name'>나의 일정</div>
