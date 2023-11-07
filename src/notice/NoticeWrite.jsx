@@ -127,7 +127,7 @@ const NoticeWrite = () => {
       const sendData = {
         ...data,
         idx: idx,
-        files: Array.from(contentFiles).map(data => data.name != null ? data.name : "")
+        files: contentFiles.map(data => data.name != null ? data.name : "")
       };
       console.log("sendData.files" + sendData.files)
 
