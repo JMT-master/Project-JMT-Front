@@ -43,7 +43,7 @@ import TravelPdf from './travelschedule/TravelPdf';
 import LoginTimer from './member/LoginTimer';
 import moment from 'moment';
 import NoticeUpdate from "./notice/NoticeUpdate";
-import { useInterval } from 'react-use';
+import {useInterval} from 'react-use';
 import ChangePasswd from './member/ChangePasswd';
 import KakaoLogin from './member/KakaoLogin';
 import { API_BASE_URL } from './common/ApiConfig';
@@ -93,29 +93,12 @@ function App(factory, deps) {
     await axios({
       method: 'POST',
       url: `http://localhost:8888/${type}/send`,
-      data: {
-        "content": "테스트3",
-        "url": "테스트용url",
-        "yn": "y"
-      },
       headers: {
         Authorization: "Bearer " + accessToken,
       }
     })
        .then(function (response) {
          console.log("현재 로그인된 아이디 " + JSON.stringify(response.data))
-         // call("/notification",
-         //    "POST",
-         //    null
-         //    // 아이디는 백에서 토큰으로 확인
-         // )
-         //    .then((response) => {
-         //      setNotifications(response);
-         //
-         //    })
-         //    .catch((error) => {
-         //      console.log(error);
-         //    })
        })
        .catch(function (error) {
          console.log('error', error);
@@ -135,9 +118,9 @@ function App(factory, deps) {
   }
 
   return (
-    <ThemeProvider theme={themeMode}>
-        <GlobalStyles/>
-        <HeaderTop theme={theme} themeToggler={themeToggler} notifications={notifications}
+     <ThemeProvider theme={themeMode}>
+       <GlobalStyles/>
+       <HeaderTop theme={theme} themeToggler={themeToggler} notifications={notifications}
                   setNotifications={setNotifications} send={send}/>
        <Routes>
          <Route path='/' element={<Header></Header>}></Route>
@@ -152,7 +135,6 @@ function App(factory, deps) {
          <Route path="/notice/admin/write" element={<NoticeWrite></NoticeWrite>}></Route>
          <Route path="/notice/:id?" element={<NoticeBoardDetail data={newNoticedata}></NoticeBoardDetail>}></Route>
          <Route path="/notice/admin/write" element={<NoticeWrite></NoticeWrite>}></Route>
-         <Route path="/notice/admin/update" element={<NoticeUpdate></NoticeUpdate>}></Route>
          <Route path="/qna" element={<QnABoard></QnABoard>}></Route>
          <Route path="/qna/:id?" element={<QnaBoardDetail></QnaBoardDetail>}></Route>
          <Route path="/qna/admin/:id?" element={<QnaWrite></QnaWrite>}></Route>
@@ -175,17 +157,17 @@ function App(factory, deps) {
 
        {isChatRoom ? null : (
           <div>
-         <div className="notifyContainer">
-           {<div className="numOfNotify">{notifyCount}</div>}
-           <button className={modalOpen === false ? "notifyToggleBtn" : "notifyToggleBtnOff"} type="button"
-                   onClick={modalToggle}>
-             <AiOutlineBell className="notifyIcon"/>
-           </button>
-         </div>
-         <OnModalComp setModalOpen={setModalOpen}
-                      comp={<NotificationList notifications={notifications} setNotifications={setNotifications}
-                                              modalOpen={modalOpen}/>}></OnModalComp>
-       </div>
+            <div className="notifyContainer">
+              {<div className="numOfNotify">{notifyCount}</div>}
+              <button className={modalOpen === false ? "notifyToggleBtn" : "notifyToggleBtnOff"} type="button"
+                      onClick={modalToggle}>
+                <AiOutlineBell className="notifyIcon"/>
+              </button>
+            </div>
+            <OnModalComp setModalOpen={setModalOpen}
+                         comp={<NotificationList notifications={notifications} setNotifications={setNotifications}
+                                                 modalOpen={modalOpen}/>}></OnModalComp>
+          </div>
        )}
 
      </ThemeProvider>
@@ -198,9 +180,9 @@ function HeaderTop(props) {
   const accessToken = getCookie("ACCESS_TOKEN");
   // const refreshToken = localStorage.getItem('REFRESH_TOKEN');
   const {notifications, setNotifications, send} = props;
-  const [chkTime, setChkTime] = useState(sessionStorage.getItem('loginState') === 'false' 
-                                        ? moment(sessionStorage.getItem("loginTime")) 
-                                        : moment(localStorage.getItem("loginTime")));
+  const [chkTime, setChkTime] = useState(sessionStorage.getItem('loginState') === 'false'
+     ? moment(sessionStorage.getItem("loginTime"))
+     : moment(localStorage.getItem("loginTime")));
 
   // useEffect(() => {
   //   if(accessToken !== undefined && accessToken !== null) {
@@ -217,7 +199,7 @@ function HeaderTop(props) {
   }
 
   //채팅 화면 관련
-  if(pathname.includes("/chat/room")) {
+  if (pathname.includes("/chat/room")) {
     return <div></div>;
   }
 
@@ -255,7 +237,7 @@ function HeaderTop(props) {
     if (state === undefined || state === null) { // login
       navigate("/login");
     } else { // logout
-      console.log('pathname : ', pathname);  
+      console.log('pathname : ', pathname);
       const value = sessionStorage.getItem('loginState');
       console.log('value', value);
 
@@ -302,7 +284,7 @@ function HeaderTop(props) {
         }
       }
 
-      
+
     }
   };
 
@@ -322,19 +304,12 @@ console.log('state',state);
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
        <div className="headerTop">
-         <button type="button" onClick={showModal} style={{justifyContent: "left"}}>
-           <AiOutlineBell className="headerNotification"/>
-         </button>
-         <button type="button" className="testBtn" onClick={() => {
-           send("notification")
-         }}>테스트용 send
-         </button>
          {
-          chkTime === undefined || chkTime === '' || !chkTime.isValid() ?
-          <></> :
-          <>
-            <LoginTimer theme = {props.theme} chkTime = {chkTime}></LoginTimer>
-          </>
+           chkTime === undefined || chkTime === '' || !chkTime.isValid() ?
+              <></> :
+              <>
+                <LoginTimer theme={props.theme} chkTime={chkTime}></LoginTimer>
+              </>
          }
          <Link to="/mypage" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>
            {(state === undefined || state === null) ? '' : '마이페이지'}
@@ -352,9 +327,9 @@ console.log('state',state);
          </Link>
          <div className="headerSell">
            <ul id="destination" onMouseOver={handleMouseOverDes} onMouseOut={handleMouseOutDes}>
-             <div >
-              <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행지</a>
-              </div>
+             <div>
+               <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행지</a>
+             </div>
              <div className='destination-list'>
                <li><Link to='/destination/tour'
                          className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광지</Link></li>
@@ -376,24 +351,25 @@ console.log('state',state);
              </div>
            </ul>
            <ul id="myTrableInfo" onMouseOver={handleMouseOverInfo} onMouseOut={handleMouseOutInfo}>
-             <div >
+             <div>
               <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행정보</a></div>
              <div className='myTrableInfo-list'>
                <li><Link to="/traffic" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통
                  혼잡도</Link></li>
                <li>
-                <a onClick={handleChatLinkClick} className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
-                  </a>
-                {/* <Link to="/chat/room" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
+                 <a onClick={handleChatLinkClick} className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅
+                   제주
+                 </a>
+                 {/* <Link to="/chat/room" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
                  </Link> */}
-                 </li>
+               </li>
                <li><Link to="/knowledge" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광
                  지식in</Link></li>
              </div>
            </ul>
            <ul id="notice" onMouseOver={handleMouseOverNoti} onMouseOut={handleMouseOutNoti}>
-             <div >
-              <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</a></div>
+             <div>
+               <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</a></div>
              <div className='notice-list'>
                <li><Link to="/notice"
                          className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</Link></li>
@@ -581,7 +557,7 @@ function Header() {
 
 function Footer() {
   const {pathname} = useLocation();
-  if(pathname.includes("/chat/room")) {
+  if (pathname.includes("/chat/room")) {
     return <div></div>;
   }
 

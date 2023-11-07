@@ -5,38 +5,61 @@ import {useNavigate} from 'react-router-dom';
 import {noticeData} from '../data/Data';
 import {call, getCookie, setDateFormat} from "../common/ApiService";
 import ListPaging from "../destination/ListPaging";
-import { Button, Table } from 'react-bootstrap';
+import {Table} from 'react-bootstrap';
 import Swal from "sweetalert2";
 
 
 const NoticeBoard = () => {
   const navigate = useNavigate();
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
+  // const startIndex = (currentPage - 1) * itemsPerPage;
+  // const endIndex = startIndex + itemsPerPage;
   const [currentItems, setCurrentItems] = useState([])
-  const totalPages = currentItems && Math.ceil(currentItems.length / itemsPerPage);
+  const [lastPage, setLastPage] = useState(0);
   const idxNum = useRef(0);
   const isAdmin = useRef(getCookie("adminChk"));
   const theme = localStorage.getItem("theme");
+  const [searchResult, setSearchResult] = useState('');
+  const [searchSelect, setSearchSelect] = useState('title');
 
-  console.log("총 페이지  :" + totalPages);
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
 
 
   const handleSelect = (e) => {
     setItemsPerPage(e.target.value);
   }
 
+  function onChangeSearchSelect(e) {
+    setSearchSelect(e.target.options[e.target.selectedIndex].value);
+  }
+
+  //검색
+  function onChangeSearchResult(e) {
+    setSearchResult(e.target.value);
+  }
+
+  function handleOnKeyDown(e) {
+    if(e.key === 'Enter') {
+      onClickSearch();
+    }
+  }
+
+  function onClickSearch() {
+    call("/notice/search?select=" + searchSelect + "&result=" + searchResult,"GET")
+       .then(response => {
+         console.log(JSON.stringify(response))
+         setCurrentItems(response.content)
+       });
+
+  }
+
   const deleteHandler = (idx) => {
     call("/notice/admin", "DELETE", {idx: idx})
        .then(response => {
          console.log("delete 호출!!")
-         setCurrentItems(response);
+         setCurrentItems(response.content);
+         setLastPage(response.totalPages)
          if (response === undefined) {
            Swal.fire({
              icon: 'warning',
@@ -58,30 +81,23 @@ const NoticeBoard = () => {
          }
        })
   }
-
-
   useEffect(() => {
-    //   call("/checkUser","POST",{
-    //     userid : "1234"
-    //   })
-    //      .then(response =>{
-    //        console.log("checkUser : " + response)
-    //        console.log("checkUser u : " + response.isSameUser)
-    //        console.log("checkUser a : " + response.isAdmin)
-    //      })
     console.log("admin? " + isAdmin.current)
 
     call("/notice",
        "GET",
-       null
+       null, page - 1, itemsPerPage
     ).then((response) => {
-      if (response != null) setCurrentItems(response);
-      idxNum.current = parseInt(JSON.stringify(response[0].idx));
+      if (response != null) setCurrentItems(response.content);
+      console.log("notice response : " + JSON.stringify(response.content))
+      setLastPage(response.totalPages)
+      // console.log("alstpage : " + response.totalPages)
+      idxNum.current = parseInt(JSON.stringify(response.content[0].idx));
     })
        .catch((error) => {
          console.log(error);
        })
-  }, []);
+  }, [page,itemsPerPage]);
 
 
   return (
@@ -91,14 +107,19 @@ const NoticeBoard = () => {
          <h2>공지사항
          </h2>
          <div className='searchNotice'>
-           <input type="text" placeholder='검색어를 입력하세요'/>
-           <button><VscSearch/></button>
+
+           <select className='searchKnowledge-select' onChange={onChangeSearchSelect}>
+             <option value='title'>제목</option>
+             <option value='content'>내용</option>
+           </select>
+           <input type="text" placeholder='검색어를 입력하세요' value={searchResult} onChange={onChangeSearchResult} onKeyDown={handleOnKeyDown} />
+           <button onClick={onClickSearch}><VscSearch/></button>
          </div>
        </div>
        <br/>
        <div className='notice-table'>
          <div className='page-choice'>
-           <select onChange={handleSelect}>
+           <select onChange={handleSelect} id="noticePageSelect">
              <option value={5}>5개씩</option>
              <option value={10} selected>10개씩</option>
              <option value={15}>15개씩</option>
@@ -112,6 +133,7 @@ const NoticeBoard = () => {
              <th>구분</th>
              <th>제목</th>
              <th>작성일자</th>
+             <th>조회수</th>
            </tr>
            </thead>
            <tbody>
@@ -122,16 +144,17 @@ const NoticeBoard = () => {
            })}
            </tbody>
          </Table>
-         <div className='plus-notice'>
-           <button style={isAdmin.current == "Y" ? null : {display: "none"}}
-                   onClick={() => navigate('/notice/admin/write', {state: {idx: idxNum.current}})}>글쓰기
+         <div className='plus-notice' style={{display:"flex",justifyContent: "flex-end"}}>
+           <button className="oBtn"
+              style={{display: isAdmin.current === "Y" ? "flex" : "none", marginRight:"20px" }}
+                   onClick={() => navigate('/notice/admin/write')}>글쓰기
            </button>
          </div>
        </div>
        <div className='page'>
          <ListPaging
-            lastpage={totalPages} page={currentPage}
-            setPage={handlePageChange}></ListPaging>
+            lastPage={lastPage} page={page}
+            setPage={setPage}></ListPaging>
        </div>
      </div>
   );
@@ -141,7 +164,7 @@ export default NoticeBoard;
 
 const NoticeRead = (props) => {
   const navigate = useNavigate();
-  const {idx, category, title, regDate } = props.data;
+  const {idx, category, title, regDate, view} = props.data;
   const dataForm = setDateFormat(props.data.modDate);
   const isAdmin = useRef(getCookie("adminChk"))
   const {deleteHandler} = props;
@@ -155,9 +178,11 @@ const NoticeRead = (props) => {
        <td>{idx}</td>
        <td>{category}</td>
        <td onClick={() => {
+
          navigate('/notice/' + idx)
        }} className='cursor'>{title}</td>
        <td>{dataForm}</td>
+       <td>{view}</td>
        <td>
          <button type='button' className='oBtn'
                  onClick={() => {

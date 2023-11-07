@@ -1,62 +1,145 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube} from 'react-icons/ai';
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
-import {call} from "../common/ApiService";
+import {call, getCookie} from "../common/ApiService";
 import Swal from "sweetalert2";
+import axios from "axios";
+import {API_BASE_URL} from "../common/ApiConfig";
 
 const NoticeWrite = () => {
   const navigate = useNavigate();
   const params = useParams();
   const location = useLocation();
-  const idx = location.state.idx + 1;
-  const [category, setCategory] = useState("");
-  const handleSelect = (e) => {
-    setCategory(e.target.value);
+  const updateData = location.state;
+  const [file, setFile] = useState([]);
+
+  //수정 데이터 관리용
+  const [body, setBody] = useState({
+    category: "관광지",
+    idx: 0,
+    title: "",
+    content: "",
+    contentFiles: [],
+  });
+  let {category, title, content, contentFiles, idx} = body;
+  const setBodyTab = (e) => {
+    setBody((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  //수정시 가져오는 데이터
+  useEffect(() => {
+    if (updateData !== null) {
+      setBody({
+        title: updateData[0].title, contentFiles: updateData[0].originalName === null ? [] : Object.values(updateData).map(value => {
+          let file = new File([value.data],value.originalName);
+          return file;
+        }),
+        category: updateData[0].category, content: updateData[0].content,
+        idx: updateData[0].idx,
+      })
+    }
+  }, []);
+
+
+  const fileUpload = (e) => {
+    // const files = document.getElementById("notice-file").files;
+    const files = e.target.files;
+
+    if (files.length > 5) {
+      Swal.fire({
+        icon: 'warning',
+        title: '파일',
+        text: '파일 최대 갯수는 5개 입니다.'
+      });
+    } else {
+      setBody({...body, contentFiles: files});
+    }
   }
 
+  const onDeleteItem = (e) => {
+    e.preventDefault();
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const category = formData.get('category');
-    const title = formData.get('title');
-    const content = formData.get('content');
+    setBody({...body, contentFiles: contentFiles
+       .filter(data => data.name !== e.target.value)
+       .map(value => value)});
+  }
 
-    const jsonForm = {
-      idx: idx,
-      category: category,
-      title: title,
-      content: content
+  // 지식인 create
+  const onSubmitKnowledge = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    const data = {
+      "category": category,
+      "title": title,
+      "content": content,
+      "view": "0"
     }
 
-    call("/notice/admin", "POST", jsonForm)
-       .then(response => {
-         if (response === undefined) {
-           Swal.fire({
-             icon: 'warning',
-             title: '작성 중 에러 발생!',
-             showCloseButton: true,
-             confirmButtonText: '확인',
-           });
-           return;
-         } else {
-           Swal.fire({
-             icon: 'info',
-             title: '작성되었습니다!',
-             showCloseButton: true,
-             confirmButtonText: '확인',
-           }).then(
-              () => {
-                navigate("/notice/" + idx)
-              }
-           );
-         }
-       })
+    if (title === null || title === undefined ||
+       content === null || content === undefined || title === '' || content === '') {
+      Swal.fire({
+        icon: 'warning',
+        title: '내용',
+        text: '제목 혹은 내용이 비었습니다.'
+      });
+
+      return;
+    }
+
+    const accessToken = getCookie('ACCESS_TOKEN');
+
+// 작성완료
+    if (updateData === null) { // 작성완료
+      console.log("write contentFiles : " + contentFiles)
+      if (contentFiles !== undefined && contentFiles != null) {
+        for (let i = 0; i < contentFiles.length; i++) {
+          console.log("널인데?")
+          formData.append('file', contentFiles[i]);
+        }
+      }
+
+      formData.append('data', new Blob([JSON.stringify(data)], {
+        type: "application/json"
+      }));
+
+      axios({
+        method: 'post',
+        url: API_BASE_URL + '/notice/admin',
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": 'Bearer ' + accessToken
+        },
+        data: formData
+      }).then(response => {
+        console.log("chkidx : " + JSON.stringify(response))
+        setBody({...body, idx: response.data.idx})
+        if (response.status === 200) {
+          navigate("/notice/" + response.data.idx);
+        }
+      });
+    } else { // 수정완료
+      console.log('contentFiles : ', contentFiles);
+      const sendData = {
+        ...data,
+        idx: idx,
+        files: Array.from(contentFiles).map(data => data.name != null ? data.name : "")
+      };
+      console.log("sendData.files" + sendData.files)
+
+      console.log('sendData', sendData);
+
+      call('/notice/admin', "PUT", sendData);
+      navigate("/notice/" + idx);
+    }
   }
 
   return (
      <div className='notice-content'>
-
        <div className='notice-write-title'>
          <h1>공지사항</h1>
          <span><AiFillPrinter style={{width: '50px', height: '30px'}}></AiFillPrinter> </span>
@@ -68,12 +151,12 @@ const NoticeWrite = () => {
          <h3>작성하기</h3>
          <span>원하는 분류에 맞게 글을 입력하여 주세요</span>
        </div>
-       <form onSubmit={handleFormSubmit} className='ask-box' id="noticeForm">
+       <form onSubmit={onSubmitKnowledge} className='ask-box' id="noticeForm">
          <input type="hidden" name="idx" value={idx}/>
          <div className='ask-category'>
            <h3>카테고리 선택</h3>
            <p>분야를 선택해주세요</p>
-           <select name="category" className='category'>
+           <select name="category" className='category' onChange={setBodyTab}>
              <option value="관광지">관광지</option>
              <option value="음식">음식</option>
              <option value="축제">축제</option>
@@ -81,17 +164,49 @@ const NoticeWrite = () => {
          </div>
          <div className='ask-textarea'>
            <h4>내용 작성</h4>
-           <input type="text" name="title" placeholder='제목을 작성해주세요'/>
-           <textarea cols="80" rows="10" name="content"></textarea>
+           <input type="text" name="title" placeholder='제목을 작성해주세요' onChange={setBodyTab} value={title}/>
+           <textarea cols="80" rows="10" name="content" onChange={setBodyTab} value={content}></textarea>
          </div>
          <div className='file-attach'>
-           <label for='file'>
-             <div className='btn-upload'>파일 업로드 하기</div>
-           </label>
-           <input type="file" name='file' id='file' multiple/>
+           {
+             updateData === null ?
+                <div style={{margin:0, padding:0, borderBottom : 'none'}}>
+                  <label for='knowledgeWrite-file' className='btn-upload'>파일 업로드</label>
+                  <input type="file" name='knowledgeWrite-file' id='knowledgeWrite-file'
+                         accept='.xlsx, .xls, .doc, .pdf, image/*'  // doc, pdf, image 파일만 허용
+                         multiple
+                         onChange={fileUpload}
+                  />
+                </div> :
+                <></>
+           }
+           <div className='file-attach-container' style={{margin:0, padding:0, borderBottom : 'none'}}>
+             {
+               contentFiles !== null && contentFiles !== undefined ?
+                  Array.from(contentFiles).map(file => {
+                    return (
+                       <div style={{margin:0, padding:0, borderBottom : 'none', display : 'flex'}}>
+                         <input placeholder='첨부파일' className='file-attach-text'
+                                id='notice-file-text' name='notice-file-text'
+                                value={file.name}
+                                style={{width : '200px'}}
+                                readOnly>
+                         </input>
+                         {
+                           updateData === null ? <></> :
+                              <button className='oBtn' value={file.name} onClick={onDeleteItem}
+                                      style={{width : '70px', height : '30px', textAlign : 'center'}}>삭 제</button>
+                         }
+
+                       </div>
+                    );
+                  }) :
+                  <></>
+             }
+           </div>
          </div>
          <div className='button-box'>
-           <button className='submit-knowledge' type='submit'>작성완료</button>
+           <button className='submit-knowledge' type='submit'>{updateData === null ? "작성 완료" : "수정 완료"}</button>
            <button className='back-to-knlist' onClick={() => navigate("/notice")}>목록으로 돌아가기</button>
          </div>
        </form>

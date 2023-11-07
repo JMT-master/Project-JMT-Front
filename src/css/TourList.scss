@@ -242,7 +242,7 @@ $jOrange: #f3a344;
 
 .iw_outter {
   width: 200px;
-  height: 166px;
+  height: auto;
   text-align: center;
   border: 2px solid $jOrange;
   border-radius: 15px;
@@ -254,10 +254,12 @@ $jOrange: #f3a344;
     background: $jOrange;
     color: #fff;
     text-align: center;
-    height: 24px;
-    line-height: 22px;
+    height: auto;
+    line-height: 20px;
     border-radius: 10px 10px 0 0;
     padding: 3px 10px;
+    font-size: 20px;
+    word-break: break-word;
   }
 
   .thumb {

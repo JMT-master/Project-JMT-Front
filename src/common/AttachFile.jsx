@@ -14,16 +14,19 @@ const AttachFile = (props) => {
   const [imgModal, setImgModal] = useState(true);
   const [modalFlag, setModalFlag] = useState(false);
   const [sendData, setSendData] = useState();
+  console.log("props : " + JSON.stringify(props))
+  console.log("AttacH : " + JSON.stringify(attach))
 
-  useEffect(() => {
-    setImgModal(true);
-  },[modalFlag]);
 
   const showImgModal = (data) => {
     setImgModal(false);
     setSendData(data);
     setModalFlag(!modalFlag);
   };
+
+  useEffect(() => {
+    setImgModal(true);
+  },[modalFlag]);
   
   return (
     <div className='attachfile-container'>
@@ -34,8 +37,11 @@ const AttachFile = (props) => {
         </div>
         <ul className='attachfile-data-ul'>
           {
-            attach !== undefined && attach[0].originalName !== null && attach[0].originalName !== undefined ? 
+            attach !== undefined && attach[0].originalName !== null && attach[0].originalName !== undefined ?
             attach.map((mapData,i) => {
+              console.log("mapData.data : " + mapData.data)
+              console.log("i : " + i)
+              console.log("mapData.originalName : " + mapData.originalName)
               return <li key={i} className='attachfile-data-li'>
                 <a href={mapData.data} download={mapData.originalName}><FaSave className='attachfile-save'></FaSave></a>
                 <div className='attachfile-data-data' onClick={() => showImgModal(mapData)}>{mapData.originalName}</div>

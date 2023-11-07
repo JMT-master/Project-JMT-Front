@@ -9,7 +9,7 @@ import ListPaging from '../destination/ListPaging';
 const Trkn = (props) => {
   const navigate = useNavigate();
   const { num, category, title, userid, regDate, view } = props.data;
-
+  console.log("noticedata : " + props.data)
   const regDateFormat = setDateFormat(regDate);
 
   return (
