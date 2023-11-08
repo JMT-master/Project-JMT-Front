@@ -12,7 +12,7 @@ const NoticeWrite = () => {
   const location = useLocation();
   const updateData = location.state;
   const [file, setFile] = useState([]);
-
+  console.log("UD : " + JSON.stringify(updateData))
   //수정 데이터 관리용
   const [body, setBody] = useState({
     category: "관광지",
@@ -133,8 +133,11 @@ const NoticeWrite = () => {
 
       console.log('sendData', sendData);
 
-      call('/notice/admin', "PUT", sendData);
-      navigate("/notice/" + idx);
+      call('/notice/admin', "PUT", sendData)
+         .then(response => {
+           navigate("/notice/" + response.idx)
+         });
+
     }
   }
 
