@@ -52,9 +52,20 @@ const MypageList = (props) => {
         <p className="myPage-Big-Image-li-img-hover">{props.data.wishTitle}</p>
       </div>
     )}
-    <div>
+    { props.gubun === 0 ? (
+      <div>
       <TravelPdf data={props.data} />
-    </div>
+      </div>
+    ) : props.gubun === 1 ? (
+      <div>
+      <TravelPdf data={props.data} />
+      </div>
+    ) : (
+      <div>
+
+      </div>
+    )
+    }
   </li>
   );
 };

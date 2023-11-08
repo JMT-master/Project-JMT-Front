@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { VscSearch } from 'react-icons/vsc';
 import style from '../css/QnABoard.css';
 import { useNavigate } from 'react-router-dom';
-import { qnaData } from '../data/Data';
 import Paging from '../common/Paging';
 import { call, getCookie, setDateFormat } from './../common/ApiService';
 import { Button, Table } from 'react-bootstrap';
@@ -10,7 +9,6 @@ import ListPaging from '../destination/ListPaging';
 
 export const Tr = (props) => {
   const navigate = useNavigate();
-  // console.log("props.data : {}",props.data);
   const modDate = setDateFormat(props.data.modDate);
 
   const isAdmin = useRef(getCookie("adminChk"));
@@ -51,7 +49,6 @@ const QnABoard = () => {
   useEffect(() => {
 
     fetchData({ currentPage, pageSize });
-    console.log("pageSize : " + pageSize);
   }, [currentPage, pageSize]);
 
   useEffect(() => {
@@ -66,7 +63,6 @@ const QnABoard = () => {
         if (response != null) {
           setItems(response.items);
           setPagingInfo(response.pagingInfo);
-          console.log("처음 response.pagingInfo.pageSize : " + response.pagingInfo.pageSize);
         } else {
           setItems([]);
         }
@@ -77,7 +73,6 @@ const QnABoard = () => {
     console.log("qnanum : {}", qnaNum);
     call("/qna/admin", "DELETE", qnaNum)
       .then((response) => {
-        console.log("response : {}", response);
         setItems(response.data);
         fetchData({currentPage, pageSize});
       });
@@ -112,8 +107,6 @@ const QnABoard = () => {
       setItems(response.data);
       setCurrentPage(1);
       setPageSize(10);
-      console.log("response.data : {}", response.data);
-      console.log('document.getElementsByClassName("select").value : '+document.getElementsByClassName("select").value);
     });
   }
   return (

@@ -1,10 +1,8 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import Swal from "sweetalert2";
 import { API_BASE_URL } from "../common/ApiConfig";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { LoadCanvasTemplate } from 'react-simple-captcha';
 import Captcha from './Captcha';
 
 const ChangePasswd = () => {
@@ -50,7 +48,6 @@ const ChangePasswd = () => {
       data: sendData
     })
       .then((response) => {
-        console.log("response : " + response.data);
         window.location.href = "/login";
       })
   };

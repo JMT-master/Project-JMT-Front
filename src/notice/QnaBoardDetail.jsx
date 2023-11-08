@@ -19,38 +19,30 @@ const QnaBoardDetail = () => {
     let details = null;
     call("/qna/" + qnaColNum, "GET", null)
       .then((response) => {
-        console.log('qna response : {}', response);
         details = response;
         if (details !== undefined && details !== null &&
           details[0] && details[0].originalName !== null &&
           details[0].originalName !== undefined) {
           details.map((data, i) => {
-            console.log("이 데이터는 무엇 : " + JSON.stringify(details))
             axios({
               method: 'POST',
               url: API_BASE_URL + "/qna/viewFile",
               data: data,
               responseType: 'blob',
             }).then(responseFile => {
-              console.log('responseFile : ', responseFile);
               const blob = new Blob([responseFile.data]);
               const reader = new FileReader();
               reader.readAsDataURL(blob);
               reader.onloadend = () => {
-                console.log("details[i] : " + JSON.stringify(details[i]));
                 details[i] = { ...details[i], data: reader.result };
-                console.log("reader.result : " + reader.result);
-                console.log("details[i] : " + JSON.stringify(details[i]));
               }
             })
           })
           setItem(details);
         } else {
-          console.log("details : {}", details);
           setItem(details);
         }
       });
-    console.log("item {} : ", item);
   }, []); // qnaColNum이 변경될 때마다 useEffect가 실행됩니다.
 
   return (

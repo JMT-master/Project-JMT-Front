@@ -15,7 +15,6 @@ const NoticeListMain = () => {
         "Content-Type": "application/json",
       },
     }).then((response) => {
-      console.log("response.data {} ", response.data.data);
       setNotice(response.data.data);
     });
   }, []);
