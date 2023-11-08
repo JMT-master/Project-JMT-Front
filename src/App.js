@@ -357,7 +357,7 @@ console.log('state',state);
              <div className='myTrableInfo-list'>
                <li><Link to="/traffic" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통
                  혼잡도</Link></li>
-               <li>
+               <li style={{cursor:"pointer"}}>
                  <a onClick={handleChatLinkClick} className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅
                    제주
                  </a>
