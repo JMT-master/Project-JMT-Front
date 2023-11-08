@@ -10,6 +10,8 @@ const ChatRoomComponent = () => {
     call("/chat/room", "GET", null)
       .then((response) => {
         setChatRooms(response.data);
+        console.log("response.data : {}", response.data);
+        console.log("chatRooms");
       })
       .catch((error) => {
         console.error("Error fetching chat rooms:", error);
@@ -32,15 +34,25 @@ const ChatRoomComponent = () => {
   };
   const enterRoom = (roomId, roomName) => {
     const sender = prompt("대화명을 입력해 주세요.");
-    if (sender !== null && sender !== "") {
+    if (sender !== null && sender.trim() !== "") {
+      console.log("sender: " + sender);
       localStorage.setItem("wschat.sender", sender);
       localStorage.setItem("wschat.roomId", roomId);
       localStorage.setItem("wschat.roomName", roomName);
+  
+      // 디버깅을 위해 저장된 값을 확인
+      console.log("localStorage wschat.sender:", localStorage.getItem("wschat.sender"));
+      console.log("localStorage wschat.roomId:", localStorage.getItem("wschat.roomId"));
+      console.log("localStorage wschat.roomName:", localStorage.getItem("wschat.roomName"));
+  
       window.location.href = "/chat/room/" + roomId;
     }
   };
+  
   useEffect(() => {
+    
     fetchChatRooms(); // 컴포넌트가 마운트될 때 방 목록을 불러옵니다.
+    
   }, [chatRooms.length]); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 실행되도록 합니다.
 
   return (

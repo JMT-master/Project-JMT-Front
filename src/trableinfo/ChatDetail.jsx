@@ -146,7 +146,7 @@ const ChatDetail = () => {
     connect();
 
     // return () => disConnect();
-  }, []);
+  }, [roomId, sender]);
 
   const handleSubmit = (e, message) => {
     e.preventDefault();
@@ -174,7 +174,9 @@ const ChatDetail = () => {
   };
   
   return (
-    <div className="chat-detail-container">
+    <div className="chat-detail-container"
+    
+    >
       {/* 나가기 버튼 */}
       <button
         type="button"
