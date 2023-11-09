@@ -189,7 +189,7 @@ const QnaWrite = (props) => {
                     <select className='category' id='category' name='category' value={category} onChange={cateSelect}>
                         <option value={"관광지"} selected>관광지</option>
                         <option value={"음식"}>음식</option>
-                        <option value={"축제"}>축제</option>
+                        <option value={"숙박"}>숙박</option>
                         <option value={"여행일정"}>여행일정</option>
                         <option value={"로그인"}>로그인</option>
                         <option value={"기타"}>기타</option>
