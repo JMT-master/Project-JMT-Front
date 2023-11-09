@@ -21,12 +21,12 @@ const NoticeBoardDetail = ({data}) => {
     call("/notice/" + params.id, "GET", null)
        .then(response => {
          revData = response;
-
-         if(revData && revData[0].originalName) {
+         console.log(JSON.stringify("revddd : " + response))
+         if(revData && revData[0].originalName && revData[0].originalName) {
            revData.map((data,i) => {
              axios({
                method: 'POST',
-               url: API_BASE_URL + '/knowledgeDetail/viewFile',
+               url: API_BASE_URL + '/notice/viewFile',
                data: data,
                responseType : 'blob',
              }).then(responseFile => {
@@ -68,7 +68,7 @@ const NoticeBoardDetail = ({data}) => {
       }
     })
   }
-
+  console.log("item :::::: " + JSON.stringify(item))
   const deleteNotice = () => {
     call("/notice/admin", "DELETE", {idx: item[0].idx})
        .then(response => {
