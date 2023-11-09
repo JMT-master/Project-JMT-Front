@@ -165,12 +165,15 @@ const JoinUser = (props) => {
 
   // member항목 변경
   function onChangeMember(e) {
-    console.log(e.target.name);
-    console.log(e.target.value);
+    setMember({...member, [e.target.name] : e.target.value});
+  }
+
+  // phone
+  function onChangePhone(e) {
     // regex는 정규식을 사용할 수 있는 method이고 .test()는 해당 문자가 정규식에 포함되는지 아닌지를 판별
     // /^ : 문자열 시작, 0~9와 back space 사용 가능, 13번째까지 앞의 해당 문자로 이루어진 정규식
     const regex = /^[0-9\b]{0,13}$/;
-    if(e.target.name === 'phone' && regex.test(e.target.value)) {
+    if(regex.test(e.target.value)) {
       setMember({...member, [e.target.name] : e.target.value});
     }
     
@@ -311,7 +314,7 @@ const JoinUser = (props) => {
                       <input type="tel" id='phone' name='phone'
                       maxLength='13' className='brd-ipt' 
                       value = {member.phone}
-                      onChange={onChangeMember}
+                      onChange={onChangePhone}
                       /> </div>
                     {/* <div className='brd-txt'><span id='LoginIdMsg'></span></div>
                     <di className='phone-chk'><button className='phone-btn'><span>핸드폰 인증하기</span></button></di> */}
