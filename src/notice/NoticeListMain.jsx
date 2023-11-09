@@ -3,6 +3,7 @@ import React from "react";
 import { useEffect } from "react";
 import { API_BASE_URL } from "../common/ApiConfig";
 import { useState } from "react";
+import "../css/Alarm.scss"
 
 const NoticeListMain = () => {
   const [notice, setNotice] = useState();
@@ -29,13 +30,13 @@ const NoticeListMain = () => {
             </div>
           </div>
         </div>
-        <div class="col-sm-6">
+        {/* <div class="col-sm-6">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">공지사항 준비중...</h5>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }
@@ -46,8 +47,9 @@ const NoticeListMain = () => {
         <div className="col-sm-6 mb-3 mb-sm-0" key={item.id}>
           <div className="card">
             <div className="card-body">
-              <h5 className="card-title">{"공지사항 "+item.idx+"번"}</h5>
-              <p className="card-text">{item.title}</p>
+              {/* <h5 className="card-title">{"공지사항 "+item.idx+"번"}</h5> */}
+              <h5 className="card-title">{item.title}</h5>
+              <p className="card-text noticeMain">{item.content}</p>
               <a href={`/notice/${item.idx}`} className="btn btn-outline-warning">
                 확인
               </a>

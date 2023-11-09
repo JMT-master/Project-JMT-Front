@@ -121,3 +121,11 @@ $jOrange: #f3a444;
   color: gray;
 }
 
+.noticeMain{
+  word-wrap: break-word;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+}
+

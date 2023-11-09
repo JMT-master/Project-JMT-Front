@@ -133,8 +133,10 @@ const NoticeWrite = () => {
 
       console.log('sendData', sendData);
 
+  
       call('/notice/admin', "PUT", sendData)
          .then(response => {
+          console.log("response !!! " + response);
            navigate("/notice/" + response.idx)
          });
 
