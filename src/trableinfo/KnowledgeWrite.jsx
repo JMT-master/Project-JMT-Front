@@ -106,7 +106,7 @@ const KnowledgeWrite = () => {
       console.log('contentFiles : ',contentFiles);
       const sendData = {...data, 
         num : revData[0].num,
-        files : Array.from(contentFiles).map(data => data.name)
+        files : contentFiles&&Array.from(contentFiles).map(data => data.name)
       };
 
       console.log('sendData', sendData);
