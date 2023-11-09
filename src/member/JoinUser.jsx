@@ -342,8 +342,8 @@ const JoinUser = (props) => {
 
             </div> 
             : // 회원가입
-            <div className='d-flex flex-row bd-highlight gap-3'>
-              <div className='bd-highlight'>
+            <div className='d-flex flex-row bd-highlight gap-3 justify-content-end'>
+              <div className='bd-highlight writeBtnBox'>
                 <button className='btn btn-outline-warning' id='joinUser-Success' onClick={onSubmitHandler}><strong>가입완료</strong></button>
               </div>
               <div className='bd-highlight'>

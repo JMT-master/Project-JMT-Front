@@ -6,7 +6,22 @@
   <component name="ChangeListManager">
     <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/DetailInfo.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/DetailInfo.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/LoginModal.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/LoginModal.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/TourList.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/TourList.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/button.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/button.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/destination/DetailInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/DetailInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/destination/ReviewBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/ReviewBox.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/member/JoinUser.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/member/JoinUser.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/member/LoginModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/member/LoginModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoardDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoardDetail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/QnABoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/QnABoard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/QnaBoardDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/QnaBoardDetail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/QnaWrite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/QnaWrite.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trableinfo/KnowledgeDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/trableinfo/KnowledgeDetail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trableinfo/KnowledgeWrite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/trableinfo/KnowledgeWrite.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +43,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="park" />
+        <entry key="$PROJECT_DIR$" value="Deb" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -51,7 +66,7 @@
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "WebServerToolWindowFactoryState": "false",
     "android.gradle.sync.needed": "true",
-    "git-widget-placeholder": "Deb",
+    "git-widget-placeholder": "park",
     "jdk.selected.JAVA_MODULE": "11",
     "last_opened_file_path": "D:/workspace/PJ/Project-JMT-Front",
     "node.js.detected.package.eslint": "true",

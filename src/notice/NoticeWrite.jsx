@@ -133,7 +133,7 @@ const NoticeWrite = () => {
 
       console.log('sendData', sendData);
 
-  
+
       call('/notice/admin', "PUT", sendData)
          .then(response => {
           console.log("response !!! " + response);
@@ -210,9 +210,9 @@ const NoticeWrite = () => {
              }
            </div>
          </div>
-         <div className='button-box'>
-           <button className='submit-knowledge' type='submit'>{updateData === null ? "작성 완료" : "수정 완료"}</button>
-           <button className='back-to-knlist' onClick={() => navigate("/notice")}>목록으로 돌아가기</button>
+         <div className='button-box writeBtnBox'>
+           <button className='submit-knowledge oBtn writeBtn' type='submit'>{updateData === null ? "작성 완료" : "수정 완료"}</button>
+           <button className='back-to-knlist  oBtn writeBtn' onClick={() => navigate("/notice")}>목록으로 돌아가기</button>
          </div>
        </form>
      </div>

@@ -7,14 +7,15 @@ $jOrange: #f3a444;
   background-color: transparent;
   border: 1px solid;
   border-radius: 5px;
-  padding: 3px 5px;
+  padding: 5px 5px;
   margin: 1px 5px;
   color: $jOrange;
-  font-size: 0.95rem;
+  font-size: 1rem;
   //font-weight: bold;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  line-height: 1rem;
   
 
   &:hover {
@@ -121,20 +122,22 @@ $jOrange: #f3a444;
 }
 
 .iwBtn{
+  margin: 0;
   position: absolute;
   background-color: white;
   margin : 0;
   left: 162px;
   bottom: 5px;
   font-size: 22px;
+  border-radius: 10px;
 }
 
 .writeBtnBox {
   display: flex;
   justify-Content: flex-end;
 
+
   .writeBtn {
-    margin-right: 40px;
-    font-size: 17px;
+    font-size: 18px;
   }
 }

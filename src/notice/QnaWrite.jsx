@@ -211,10 +211,10 @@ const QnaWrite = (props) => {
                     />
                 </div>
             </div>
-            <div className='button-box'>
-                <button type="button" className='submit-knowledge' onClick={onButtonClick} style={{ display: isContainingWrite ? "block" : "none" }}>작성완료</button>
-                <button type="button" className='submit-knowledge' onClick={onPostClick} style={{ display: isContainingWrite ? "none" : "block" }}>수정완료</button>
-                <button className='back-to-knlist' onClick={() => navigate("/qna")}>목록으로 돌아가기</button>
+            <div className='button-box writeBtnBox'>
+                <button type="button" className='submit-knowledge oBtn writeBtn' onClick={onButtonClick} style={{ display: isContainingWrite ? "block" : "none" }}>작성완료</button>
+                <button type="button" className='submit-knowledge oBtn writeBtn' onClick={onPostClick} style={{ display: isContainingWrite ? "none" : "block" }}>수정완료</button>
+                <button className='back-to-knlist oBtn writeBtn' onClick={() => navigate("/qna")}>목록으로 돌아가기</button>
             </div>
             <input type="hidden" id='qnaNum' name='qnaNum' value={index} />
         </div>
