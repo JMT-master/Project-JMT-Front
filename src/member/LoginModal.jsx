@@ -64,7 +64,7 @@ const LoginModal = ({ setModalOpen, id, title, content, writer }) => {
         className='moid-result' type='text' id='userId' 
         value={userId === undefined ? "" : "아이디 : "+userId}
         readOnly></input>
-        <button className='moid-submit' onClick={findUserId}>아이디 찾기</button>
+        <button className='oBtn' onClick={findUserId} style={{width:'70%', borderRadius : '5px'}}>아이디 찾기</button>
       </div>
     )
   }
@@ -84,29 +84,40 @@ const LoginModal = ({ setModalOpen, id, title, content, writer }) => {
         username: username,
         email: email
       };
-      axios({
+      const url = API_BASE_URL + "/sendEmailCode";
+      fetch(url,{
         method: "POST",
-        url: API_BASE_URL + "/sendEmailCode",
-        headers: {
+        headers : {
           "Content-Type": "application/json",
         },
-        data: sendEmailDto
+        body: JSON.stringify(sendEmailDto)
       })
-        .then((response) => {
+      .then(response => {
+          return response.json();
+      }).then(result => {
+        console.log('result : ', result);
+        if(result.error === 'success') {
           Swal.fire({
             icon: "info",
             title: "이메일 전송",
             text: "이메일 전송 완료 되었습니다.",
+          });          
+        } else {
+          Swal.fire({
+            icon: "warning",
+            title: "이메일 전송",
+            text: result.error
           });
           closeModal();
-        })
+      }}).catch(error => console.log('error : ', error));
     }
     return (
       <div className='modal-container-click'
         style={{ width: '600px', height: '400px' }}>
         <input className='mopwd-id' type="id" value={username} onChange={onChangeUserName} placeholder='이름을 입력해주세요' />
         <input className='moid-tel' type="id" value={email} onChange={onChangeEmail} placeholder='아이디를 입력해주세요' />
-        <button className='mopwd-submit' onClick={sendEmailCode}>인증번호 전송</button>
+        <button className='oBtn' onClick={sendEmailCode} style={{width:'70%', borderRadius : '5px',
+      marginTop : '80px'}}>인증번호 전송</button>
       </div>
     )
   }

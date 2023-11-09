@@ -19,7 +19,7 @@ const Login = (props) => {
   const clientId = '1921d336e78e0f12cb65133fb93aeab0';
   const clientUri = 'http://localhost:3000/login/auth';
   const KakaoLoginAPI = 'https://kauth.kakao.com/oauth/authorize?client_id='+clientId+'&redirect_uri='
-                         +clientUri+'&response_type=code';
+                         +clientUri+'&response_type=code&prompt=login';
 
   useEffect(() => {
     const idCookie = getCookie('save_id');
@@ -79,7 +79,8 @@ const Login = (props) => {
   const openKakaoLogin = () => {
     // window.open(KakaoLoginAPI,'_self');
     console.log("여기?");
-    window.location.href = KakaoLoginAPI;
+    window.location.reload(true);
+    window.location.href =  KakaoLoginAPI;
   }
 
   return (

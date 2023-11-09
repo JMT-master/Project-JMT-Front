@@ -18,9 +18,7 @@ const KakaoLogin = () => {
       return response.json()
     }).then(result => {
       signin(result);
-    }).then(
-      () => window.location.href = '/'
-    )    
+    });
   }
 
   return (

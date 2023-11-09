@@ -21,16 +21,10 @@ const LoginTimer = (props) => {
     intervalRef.current = setInterval(() => {
       let minutes = moment(props.chkTime).diff(moment(), 'minutes');
       let seconds = (moment(props.chkTime).diff(moment(), 'seconds')) % 60;
-      // console.log("props.chkTime : ", props.chkTime);
 
       let times = moment().hour(0).minute(minutes).second(seconds);
       setLeftTimes(times);
       if (minutes <= 0 && seconds <= 0) {
-        console.log("들어옴?");
-        console.log("비교 시간 : ", props.chkTime);
-        console.log("현재 시간 : ", moment());
-        console.log("seconds : ", seconds);
-        console.log("minutes : ", minutes);
         clearInterval(intervalRef.current); // interval을 강제로 종료
         Swal.fire({
           icon : 'question',
@@ -55,7 +49,6 @@ const LoginTimer = (props) => {
     // 컴포넌트가 언마운트될 때 인터벌을 정리
     return () => {
       if (intervalRef.current) {
-        console.log('intervalRef.current : ',intervalRef.current);
         clearInterval(intervalRef.current);
       }
     };

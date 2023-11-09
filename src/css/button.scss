@@ -90,15 +90,6 @@ $jOrange: #f3a444;
   }
 }
 
-.converse-oBtn {
-  @include converse-btnSet;
-  // @include btnSet(30px,50px);
-  &:active{
-    color: white;
-    border: 1px $jOrange solid;
-  }
-}
-
 .twentySize{
   @include sizeSet(20px, 20px)
 }

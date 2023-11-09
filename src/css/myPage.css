@@ -129,7 +129,7 @@
 .myPageBigContainer {
   margin-top: 2%;
   margin-left: 2%;
-  height: 1500px;
+  height: 800px;
 }
 
 .myPage-tagList-ul {
@@ -165,14 +165,15 @@
 .myPage-h1-title {
   margin: 2%;
   color: #f3a344;
+  text-align: center;
 }
 
 
 
 .myPage-Big-Image-ul {
-  display: grid;
+  /* display: grid; */
   grid-template-columns: repeat(8, 200px);
-  height: 1250px;
+  height: 800px;
   gap: 10px;
   overflow: scroll;
 }

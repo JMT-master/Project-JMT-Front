@@ -143,6 +143,15 @@ const JoinUser = (props) => {
   function dupliEmail(e) {
     e.preventDefault();
 
+    if(!member.email.includes('@') || member.email.indexOf('@') === 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: '이메일',
+        text: '이메일 형식으로 입력'
+      });
+      return;
+    }
+
     const chkUser = {
       email : member.email,
       socialYn : 'N'
@@ -226,6 +235,7 @@ const JoinUser = (props) => {
                      value = {member.email}
                      onChange={onChangeMember}
                      readOnly = {isUpdate ? true : false}
+                     required
                       className='brd-ipt-email' placeholder='아이디는 이메일 형식 입니다.' /> </div>
                     <div className='brd-txt'><span id='LoginIdMsg'></span></div>
                     <button className='email-check-btn btn btn-outline-warning btn-lg' onClick={dupliEmail} style={{display : isUpdate ? "none" : "block"}}><strong>중복확인</strong></button>

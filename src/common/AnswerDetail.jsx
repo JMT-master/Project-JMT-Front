@@ -1,11 +1,12 @@
 import React from 'react'
 import style from '../css/AnswerDetail.css'
-import { call } from './ApiService'
+import { call, getLocal } from './ApiService'
 import { useState } from 'react'
 // import moment from 'moment'
 import { useEffect } from 'react'
 import { BsHandThumbsUp } from 'react-icons/bs'
 import Swal from 'sweetalert2'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const AnswerDetail = (props) => {
   const [answerList, setAnswerList] = useState();
@@ -13,14 +14,23 @@ const AnswerDetail = (props) => {
   const [compareText, setCompareText] = useState('');
   const [modifyFlg, setModifyFlg] = useState(false);
   const [modifyKey, setModifyKey] = useState();
+  const [loginId, setLoginId] = useState();
+  const location = useLocation();
+  const nav = useNavigate();
 
   useEffect(() => {
-    call('/knowledgeDetail/answer/?num='+props.data.num,'GET')
+    call('/knowledgeDetail/answer/?num='+props.data.num+"&socialYn="+getLocal('social'),'GET')
     .then(response => {
       setAnswerList(response);
       setContentValue('');
+    }).then(() => {
+      call('/login/info?socialYn=' + getLocal('social'),'GET')
+      .then(result => setLoginId(result.data[0]));
     });
   },[]);
+
+  console.log('loginId : ',loginId);
+  console.log('location : ',location);
 
   // 답글 유효성 검사
   function answerCreate() {
@@ -38,7 +48,8 @@ const AnswerDetail = (props) => {
     const create = {
       knNum : props.data.num,
       content : content,
-      answerLike : 0
+      answerLike : 0,
+      socialYn : getLocal('social')
     }
 
     call('/knowledgeDetail/answer/create','POST',create)
@@ -75,6 +86,7 @@ const AnswerDetail = (props) => {
 
   // thumbs 클릭 시 좋아요 증가
   function thumbsAdd(data) {
+    console.log('data : ', data);
     call('/knowledgeDetail/answer/likeUp','POST', data)
     .then(response => {
       setAnswerList(response);
@@ -178,7 +190,7 @@ const AnswerDetail = (props) => {
     .then(response => {
       setAnswerList(response.data);
       setContentValue('');
-      window.location.href = "/knowledge"
+      nav(location);
     });
 
     setCompareText();
@@ -192,6 +204,8 @@ const AnswerDetail = (props) => {
     setModifyFlg(false);
     setModifyKey();
   }
+
+  console.log('answerList : ', answerList);
 
   return (
     <div className='answerDetail-Container'>
@@ -211,8 +225,15 @@ const AnswerDetail = (props) => {
               <div className='answerDetail-review-info'>
                 <div className='answerDetail-review-info-writer'>{answer.answerWriter}</div>
                 <div className='answerDetail-review-info-date'>{showDate}</div>
-                <button className='oBtn' id={answer.answerId} value={answer.content} onClick={onAnswerUpdate}>수정</button>
-                <button className='oBtn' onClick={() => onAnswerDelete(answer)}>삭제</button>
+                {
+                  answer.answerWriter === loginId ? 
+                  <>
+                    <button className='oBtn' id={answer.answerId} value={answer.content} onClick={onAnswerUpdate}>수정</button>
+                    <button className='oBtn' onClick={() => onAnswerDelete(answer)}>삭제</button>
+                  </> :
+                  <></>
+                }
+
               </div>
               <div className='answerDetail-review-content'>
                 <input className='answerDetail-review-content-text' id='' type='text'

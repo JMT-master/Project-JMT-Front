@@ -87,6 +87,12 @@ const Mypage = () => {
     console.log(e.target.value);
   }
 
+  function keyDownChkPwd(e) {
+    if(e.key === 'Enter') {
+      memberModify();
+    }
+  }
+
   // 회원 정보 확인
   function memberModify() {
     const url = API_BASE_URL + "/mypage/validate";
@@ -302,7 +308,9 @@ const Mypage = () => {
                     <input type="password" className="form-control pw" aria-label="Large"
                     value={checkPwd} onChange={onChnPwd}
                       placeholder='비밀번호를 입력해주세요'
-                      aria-describedby="inputGroup-sizing-default" />
+                      aria-describedby="inputGroup-sizing-default"
+                      onKeyDown={keyDownChkPwd}
+                    />
                   </div>
                 </Modal.Body>
                 <Modal.Footer style={{ borderTop: 'none' }}>
