@@ -140,7 +140,7 @@ export function loginInfo(loginDto, body, id, idSave) {
   }).then(resultInfo => resultInfo.json())
   .then(result => {          
     // 로그인 상태 유지 x
-    console.log('loginDto.loginState',loginDto.loginState)
+    console.log('loginDto.loginState',loginDto.loginState);
     sessionStorage.setItem("loginState", loginDto.loginState);
 
     const loginTime = moment(result);

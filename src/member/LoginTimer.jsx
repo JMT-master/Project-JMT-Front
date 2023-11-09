@@ -6,13 +6,14 @@ import { useEffect } from 'react';
 import { useState } from 'react'
 import Moment from 'react-moment';
 import { useInterval } from 'react-use';
-import { deleteCookie } from '../common/ApiService';
+import { call, deleteCookie, getCookie, getLocal } from '../common/ApiService';
 import Swal from 'sweetalert2';
 import { loginTimeUpdate } from './MemberFuc';
 
 
 const LoginTimer = (props) => {
   const [leftTimes, setLeftTimes] = useState(moment().hour(0).minute(0).second(0));
+  const [loginId, setLoginId] = useState();
   const intervalRef = useRef(); // useRef를 사용하여 interval을 저장
 
   useEffect(() => {
@@ -60,13 +61,21 @@ const LoginTimer = (props) => {
     };
   }, [props.chkTime]);
 
+  useEffect(() => {
+    if(getCookie('ACCESS_TOKEN') !== undefined && getCookie('ACCESS_TOKEN') !== null) {
+      call('/login/info?socialYn=' + getLocal('social'),'GET')
+      .then(response => setLoginId(response.data[0]));
+    }
+  }, [getCookie('ACCESS_TOKEN')]);
+
   function loginExtension() {
     loginTimeUpdate();
   }
 
   return (
     <>
-      <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} style={{cursor : 'default'}}>
+      <a href='#' className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} style={{cursor : 'default'}}>{loginId}</a>
+      <a href='#' className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} style={{cursor : 'default'}}>
         <Moment format='HH:mm:ss'>{leftTimes}</Moment>
       </a>
       <button type='button' className='oBtn' value='시간연장' onClick={loginExtension}>시간연장</button>
