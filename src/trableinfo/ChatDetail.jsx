@@ -36,7 +36,6 @@ const ChatDetail = () => {
         },
         debug: function (str) {
           console.log("str임 : " + str);
-          console.log("str.chatAt임 : " + str.charAt);
         },
         reconnectDelay: 5000, //자동 재 연결 값
         heartbeatIncoming: 4000,
@@ -64,9 +63,7 @@ const ChatDetail = () => {
   };
 
   const onMessageReceived = (message) => {
-    console.log("message가 들어오는가..." + message);
     var chat = JSON.parse(message.body);
-    console.log("chat이 지금 존재하는가? : " + chat);
     if (chat.type === "ENTER" || chat.type === "LEAVE") {
       // 화면에 입장 또는 퇴장 메시지를 보여줄 DOM 엘리먼트를 생성하고 추가
       const messageElement = document.createElement("div");
@@ -82,8 +79,6 @@ const ChatDetail = () => {
       chatMessages.appendChild(messageElement);
     } else if (chat.type === "TALK") {
       // 'TALK' 대화 메시지 처리
-      console.log("chat 한번만 보여줘 : {}", chat);
-      console.log(chat.sender + ": " + chat.message);
       // 대화를 화면에 보여줄 DOM 엘리먼트를 생성하고 추가
       const messageElement = document.createElement("div");
       // 대화를 감싸는 div 하나 더 추가
@@ -133,7 +128,6 @@ const ChatDetail = () => {
     if (message === "") {
       return;
     }
-    console.log("message 들어왔나..? : " + message);
 
     client.publish({
       destination: "/app/chat/message/" + roomId,
@@ -152,29 +146,37 @@ const ChatDetail = () => {
     connect();
 
     // return () => disConnect();
-  }, []);
+  }, [roomId, sender]);
 
   const handleSubmit = (e, message) => {
     e.preventDefault();
     sendChat(message);
-    console.log(
-      "메시지가 잘 div에 들어가나 확인.." +
-        document.getElementById("chat-messages").innerText
-    );
   };
 
   const onChangeMessage = (e) => {
-    // console.log("e.target.value : " + e.target.value);
     setMessage(e.target.value);
   };
   
   const outSocket = () => {
     disConnect();
+    localStorage.setItem("wschat.sender", "");
+    localStorage.setItem("wschat.roomId", "");
+    localStorage.setItem("wschat.roomName", "");
     navigate("/chat/room");
   };
 
+  window.onbeforeunload = function() {
+    localStorage.setItem("wschat.sender", "");
+    localStorage.setItem("wschat.roomId", "");
+    localStorage.setItem("wschat.roomName", "");
+    // 웹 소켓 연결을 닫습니다.
+    disConnect();
+  };
+  
   return (
-    <div className="chat-detail-container">
+    <div className="chat-detail-container"
+    
+    >
       {/* 나가기 버튼 */}
       <button
         type="button"

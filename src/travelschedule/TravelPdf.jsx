@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState } from "react";
 
 const TravelPdf = (props) => {
@@ -14,8 +13,7 @@ const TravelPdf = (props) => {
   };
 
   const generatePdf = () => {
-    console.log("travelplan.travelId : "+travelPdfDto.travelId);
-    console.log("travelplan.travelUserId : "+travelPdfDto.travelUserId);
+
     fetch("http://localhost:8888/travel/generate-pdf", {
       method: "POST",
       headers: {

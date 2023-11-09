@@ -47,6 +47,7 @@ import {useInterval} from 'react-use';
 import ChangePasswd from './member/ChangePasswd';
 import KakaoLogin from './member/KakaoLogin';
 import { API_BASE_URL } from './common/ApiConfig';
+import NoticeListMain from './notice/NoticeListMain';
 
 function App(factory, deps) {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -356,7 +357,7 @@ console.log('state',state);
              <div className='myTrableInfo-list'>
                <li><Link to="/traffic" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통
                  혼잡도</Link></li>
-               <li>
+               <li style={{cursor:"pointer"}}>
                  <a onClick={handleChatLinkClick} className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅
                    제주
                  </a>
@@ -483,10 +484,7 @@ function Header() {
        <div className='festival-send-content'>
          <div className='festival-send-title'><h2><span><MdFestival
             style={{width: '45px', height: '45px'}}></MdFestival></span>JMT의 최신 소식을 알아보세요</h2></div>
-         <ul onClick={() => navigate('/festival')} className='main-fest'>
-           <FesListNoImg data={data.data[0]}></FesListNoImg>
-           <FesListNoImg data={data.data[1]}></FesListNoImg>
-         </ul>
+         <NoticeListMain></NoticeListMain>
        </div>
        <div className='header-Youtube-container'>
          <div className='header-Youtube-title'>

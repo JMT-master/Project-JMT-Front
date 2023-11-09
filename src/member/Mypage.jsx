@@ -246,7 +246,6 @@ const Mypage = () => {
             </li>
           </ul>
         </div>
-        <hr></hr>
         {
           index === 4 ?
           <h1 className='myPage-h1-title'> {title}</h1> :

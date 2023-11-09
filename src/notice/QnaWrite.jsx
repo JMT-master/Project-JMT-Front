@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import style from '../css/KnowledgeWrite.css'
-import { VscSearch } from 'react-icons/vsc';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'react-icons/ai';
 import { call, getCookie } from '../common/ApiService';
@@ -34,8 +33,6 @@ const QnaWrite = (props) => {
         const files = e.target.files;
 
         const uploadFile = e.target.files[0];
-        console.log("files : ", files);
-        console.log("uploadFile : ", uploadFile);
 
         if (files.length === 1) {
             let value = e.target.value;
@@ -54,7 +51,6 @@ const QnaWrite = (props) => {
             // 브라우저 주소에서 읽어온 id 값이 있을 경우 API 호출
             call(`/qna/admin/${id}`, "GET")
                 .then((response) => {
-                    console.log("response.data : {}", response);
                     setItem(response);
                     setTitle(response.qnaTitle);
                     setCategory(response.qnaCategory);
@@ -67,8 +63,6 @@ const QnaWrite = (props) => {
 
     const addItem = (item) => {
         const formData = new FormData();
-
-        console.log("add item : {}", item);
 
         if (file !== undefined && file != null) {
             for (let i = 0; i < file.length; i++) {
@@ -91,7 +85,6 @@ const QnaWrite = (props) => {
             },
             data : formData
           }).then(response => {
-            console.log("/qna/admin/write :", response)
             if(response.status === 200) {
                 Swal.fire({
                     icon: 'info',
@@ -109,8 +102,6 @@ const QnaWrite = (props) => {
 
     const postEditItem = (item) => {
         const formData = new FormData();
-
-        console.log("post item : {}", item);
 
         if (file !== undefined && file != null) {
             for (let i = 0; i < file.length; i++) {
@@ -132,7 +123,6 @@ const QnaWrite = (props) => {
             },
             data : formData
           }).then(response => {
-            console.log("/qna/admin/id :", response)
             if(response.status === 200) {
                 Swal.fire({
                     icon: 'info',
@@ -149,7 +139,6 @@ const QnaWrite = (props) => {
     };
 
     const onButtonClick = () => {
-        console.log(index);
         const newItem = {
             qnaCategory: category,
             qnaTitle: document.getElementById('qna_title').value,
@@ -169,8 +158,6 @@ const QnaWrite = (props) => {
     }
 
     const cateSelect = (e) => {
-        console.log("items[0] : {}", items[0]);
-        console.log("index값 : {}", index);
         setCategory(e.target.value);
     }
     //타이틀 변경

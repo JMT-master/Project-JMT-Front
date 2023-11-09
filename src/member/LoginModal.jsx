@@ -45,7 +45,6 @@ const LoginModal = ({ setModalOpen, id, title, content, writer }) => {
         data: idFindDto
       })
         .then((response) => {
-          console.log("response : " + response.data);
           setUserId(response.data);
         })
     }
@@ -80,8 +79,6 @@ const LoginModal = ({ setModalOpen, id, title, content, writer }) => {
       setEmail(e.target.value);
     }
     const sendEmailCode = (e) => {
-      console.log("username : " + username);
-      console.log("email : " + email);
       e.preventDefault();
       const sendEmailDto = {
         username: username,
@@ -96,7 +93,11 @@ const LoginModal = ({ setModalOpen, id, title, content, writer }) => {
         data: sendEmailDto
       })
         .then((response) => {
-          console.log("response : " + response.data);
+          Swal.fire({
+            icon: "info",
+            title: "이메일 전송",
+            text: "이메일 전송 완료 되었습니다.",
+          });
           closeModal();
         })
     }

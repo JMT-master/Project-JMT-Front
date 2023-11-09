@@ -1,10 +1,8 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import Swal from "sweetalert2";
 import { API_BASE_URL } from "../common/ApiConfig";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { LoadCanvasTemplate } from 'react-simple-captcha';
 import Captcha from './Captcha';
 
 const ChangePasswd = () => {
@@ -50,15 +48,12 @@ const ChangePasswd = () => {
       data: sendData
     })
       .then((response) => {
-        console.log("response : " + response.data);
         window.location.href = "/login";
       })
   };
   return (
     <div className="container-sm">
-      <div class="row g-3">
-        <div class="col-sm"></div>
-
+      <div class="g-3">
         <div class="col-sm-4">
           <h3 className="mb-5">비밀번호 변경</h3>
           <div class="form-floating">
