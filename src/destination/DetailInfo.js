@@ -71,7 +71,9 @@ const DetailInfo = () => {
       reviewContent: content,
       reviewContentId: id,
     };
-    if(content === null || content === undefined || content === '') {
+
+    var blank_pattern = /^\s+|\s+$/g;
+    if(content === '' || content.replace( blank_pattern, '' ) === "") {
       Swal.fire({
         icon: 'warning',
         title: '내용',
