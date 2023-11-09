@@ -65,10 +65,23 @@ const DetailInfo = () => {
 
   //리뷰 작성 버튼용 핸들러
   const onSubmitClick = () => {
+    const content = document.getElementById('review-content').value;
+    console.log("content : " + content.length)
     const newItem = {
-      reviewContent: document.getElementById('review-content').value,
+      reviewContent: content,
       reviewContentId: id,
     };
+
+    var blank_pattern = /^\s+|\s+$/g;
+    if(content === '' || content.replace( blank_pattern, '' ) === "") {
+      Swal.fire({
+        icon: 'warning',
+        title: '내용',
+        text: '리뷰 내용이 없습니다.'
+      });
+      return;
+    }
+
     writeReview(newItem);
   };
 
