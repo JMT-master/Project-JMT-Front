@@ -75,7 +75,7 @@ const DetailInfo = () => {
       Swal.fire({
         icon: 'warning',
         title: '내용',
-        text: '제목 혹은 내용이 비었습니다.'
+        text: '리뷰 내용이 없습니다.'
       });
       return;
     }
