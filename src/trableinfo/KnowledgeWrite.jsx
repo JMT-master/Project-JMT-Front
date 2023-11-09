@@ -172,7 +172,7 @@ const KnowledgeWrite = () => {
   // 목록으로 돌아가기
   const onClickList = (e) => {
     e.preventDefault();
-    window.location.href = "/knowledge";
+    navigate("/knowledge", {replace:true});
   }
 
 
