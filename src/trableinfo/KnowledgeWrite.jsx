@@ -99,7 +99,7 @@ const KnowledgeWrite = () => {
         data : formData
       }).then(response => {
         if(response.status === 200) {
-          window.location.href="/knowledge";
+          navigate("/knowledge");
         }
       });
     } else { // 수정완료

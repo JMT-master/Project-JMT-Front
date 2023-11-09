@@ -330,7 +330,7 @@ const JoinUser = (props) => {
           </div>
           {
             isUpdate === true ? // Update
-            <div className='d-flex flex-row bd-highlight gap-3'>
+            <div className='d-flex flex-row bd-highlight gap-3 justify-content-end'>
               <div className='bd-highlight'>
                 <button className='btn btn-outline-warning' id='joinUser-Success' onClick={updateHandler}><strong>수정완료</strong></button>
               </div>

@@ -165,6 +165,9 @@ const NoticeWrite = () => {
              <option value="관광지">관광지</option>
              <option value="음식">음식</option>
              <option value="숙박">숙박</option>
+             <option value="여행일정">여행일정</option>
+             <option value="테마">테마</option>
+             <option value="숙박">숙박</option>
            </select>
          </div>
          <div className='ask-textarea'>
