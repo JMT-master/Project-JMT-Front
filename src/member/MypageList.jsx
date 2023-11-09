@@ -2,6 +2,7 @@ import React from "react";
 import "../css/myPage.css";
 import { useNavigate } from "react-router-dom";
 import TravelPdf from "../travelschedule/TravelPdf";
+import MypageButton from "./MypageButton";
 
 const MypageList = (props) => {
   console.log("props.gubun", props.gubun);
@@ -54,6 +55,7 @@ const MypageList = (props) => {
     )}
     <div>
       <TravelPdf data={props.data} />
+      <MypageButton data={props.data}/>
     </div>
   </li>
   );

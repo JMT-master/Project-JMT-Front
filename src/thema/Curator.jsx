@@ -117,7 +117,7 @@ const Curator = () => {
     if(selectTag.length === 0) {
       setList(copyVisit.items.map((item,i) => {
           return <ImageList key={i} number={i} className='curatorResult-img-li' 
-          data={item.repPhoto !== null ? item.repPhoto.photoid.imgpath : null} title={item.title}></ImageList>
+          data={item.repPhoto !== null ? item : null} title={item.title}></ImageList>
       }));
 
       return 0;
@@ -131,7 +131,7 @@ const Curator = () => {
 
       if(tagValue.length !== 0){
         return <ImageList key={i} number={i} className='curatorResult-img-li' 
-        data={item.repPhoto !== null ? item.repPhoto.photoid.imgpath : null} title={item.title}></ImageList>
+        data={item.repPhoto !== null ? item : null} title={item.title}></ImageList>
       }
     }));
   };
