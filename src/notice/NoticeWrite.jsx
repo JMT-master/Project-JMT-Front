@@ -119,7 +119,7 @@ const NoticeWrite = () => {
         console.log("chkidx : " + JSON.stringify(response))
         setBody({...body, idx: response.data.idx})
         if (response.status === 200) {
-          navigate("/notice/" + response.data.idx);
+          navigate("/notice/" + response.data.idx, {replace: true});
         }
       });
     } else { // 수정완료
