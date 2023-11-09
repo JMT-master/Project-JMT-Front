@@ -120,7 +120,7 @@ const DetailInfo = () => {
           reader.readAsDataURL(blob);
           reader.onloadend = () => {
             item = {...item, imgData: reader.result}
-            setReviewList((prevReviewList) => [...prevReviewList, item]);
+            setReviewList((prevReviewList) => [item, ...prevReviewList]);
           }
         }).catch((error) => {
           console.log(error);
@@ -138,7 +138,7 @@ const DetailInfo = () => {
         })
       }
     });
-    setFile();
+    setFile([])
   }
 
 
