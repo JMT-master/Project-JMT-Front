@@ -9,7 +9,9 @@ const KakaoLogin = () => {
   let params = new URL(document.URL).searchParams;
   let code = params.get("code");
 
-  tokenCall(code);
+  useEffect(()=>{
+    tokenCall(code);
+  },[])
 
   function tokenCall(code){
     const url = API_BASE_URL + "/login/auth?code=" + code;
@@ -18,9 +20,7 @@ const KakaoLogin = () => {
       return response.json()
     }).then(result => {
       signin(result);
-    }).then(
-      () => window.location.href = '/'
-    )    
+    })  
   }
 
   return (

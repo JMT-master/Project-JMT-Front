@@ -77,76 +77,85 @@ const QnaWrite = (props) => {
 
 
         axios({
-            method : 'post',
-            url : API_BASE_URL + '/qna/admin/write',
-            headers : {
-              "Content-Type" : "multipart/form-data",
-              "Authorization": 'Bearer ' + accessToken
+            method: 'post',
+            url: API_BASE_URL + '/qna/admin/write',
+            headers: {
+                "Content-Type": "multipart/form-data",
+                "Authorization": 'Bearer ' + accessToken
             },
-            data : formData
-          }).then(response => {
-            if(response.status === 200) {
+            data: formData
+        }).then(response => {
+            if (response.status === 200) {
                 Swal.fire({
                     icon: 'info',
                     title: '작성되었습니다!',
                     showCloseButton: true,
                     confirmButtonText: '확인',
-                  }).then(
-                     () => {
-                       navigate("/qna")
-                     }
-                  );
+                }).then(
+                    () => {
+                        navigate("/qna")
+                    }
+                );
             }
-          });
+        });
     }
 
     const postEditItem = (item) => {
         const formData = new FormData();
-
         if (file !== undefined && file != null) {
             for (let i = 0; i < file.length; i++) {
                 formData.append('file', file[i]);
             }
         }
-
         formData.append('data', new Blob([JSON.stringify(item)], {
             type: "application/json"
         }));
-
-
         axios({
-            method : 'post',
-            url : API_BASE_URL + '/qna/admin/'+id,
-            headers : {
-              "Content-Type" : "multipart/form-data",
-              "Authorization": 'Bearer ' + accessToken
+            method: 'post',
+            url: API_BASE_URL + '/qna/admin/' + id,
+            headers: {
+                "Content-Type": "multipart/form-data",
+                "Authorization": 'Bearer ' + accessToken
             },
-            data : formData
-          }).then(response => {
-            if(response.status === 200) {
+            data: formData
+        }).then(response => {
+            if (response.status === 200) {
                 Swal.fire({
                     icon: 'info',
-                    title: '작성되었습니다!',
+                    title: '수정되었습니다!',
                     showCloseButton: true,
                     confirmButtonText: '확인',
-                  }).then(
-                     () => {
-                       navigate("/qna/"+id)
-                     }
-                  );
+                }).then(
+                    () => {
+                        navigate("/qna/" + id)
+                    }
+                );
             }
-          });
+        });
     };
 
     const onButtonClick = () => {
-        const newItem = {
-            qnaCategory: category,
-            qnaTitle: document.getElementById('qna_title').value,
-            qnaContent: document.getElementById('qna_content').value,
-            qnaView: 0,
-        };
-        addItem(newItem);
+        const titleValue = document.getElementById('qna_title').value.trim();
+        const contentValue = document.getElementById('qna_content').value.trim();
+    
+        if (titleValue !== '' && contentValue !== '') {
+            const newItem = {
+                qnaCategory: category,
+                qnaTitle: titleValue,
+                qnaContent: contentValue,
+                qnaView: 0,
+            };
+            addItem(newItem);
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: '아직 작성되지 않은 부분이 있습니다.',
+                showCloseButton: true,
+                confirmButtonText: '확인',
+            });
+        }
     };
+    
 
     const onPostClick = () => {
         const newItem = {
@@ -161,11 +170,11 @@ const QnaWrite = (props) => {
         setCategory(e.target.value);
     }
     //타이틀 변경
-    const onChangeTitle =(e) =>{
+    const onChangeTitle = (e) => {
         setTitle(e.target.value);
     }
     //내용 변경
-    const onChangeContent=(e)=>{
+    const onChangeContent = (e) => {
         setContent(e.target.value);
     }
     //파일 변경도 추가되어야함

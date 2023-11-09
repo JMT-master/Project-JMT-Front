@@ -1,13 +1,20 @@
+.chat-list-container{
+    background-image: url("../images/jejucatdogorange.jpg");
+    min-height: 618px;
+    height: auto;
+    background-size: cover;
+}
 .chat-list-container > h1 {
     text-align: center;
     margin: 40px auto;
 }
 .chat-list-container > ul {
-    background-color: white;
-    width: 90%;
+    /* background-color: white; */
     color: #f3a344;
     margin: 0 auto;
     font-size: larger;
+    min-height: 500px;
+    height: auto;
 }
 .chat-list > li {
     height: 60px;

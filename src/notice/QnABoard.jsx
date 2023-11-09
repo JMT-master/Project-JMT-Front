@@ -6,6 +6,7 @@ import Paging from '../common/Paging';
 import { call, getCookie, setDateFormat } from './../common/ApiService';
 import { Button, Table } from 'react-bootstrap';
 import ListPaging from '../destination/ListPaging';
+import Swal from 'sweetalert2';
 
 export const Tr = (props) => {
   const navigate = useNavigate();
@@ -15,7 +16,26 @@ export const Tr = (props) => {
   const deleteItem = props.deleteItem;
 
   const deleteHandler = (e) => {
-    deleteItem(props.data.qnaNum);
+    Swal.fire({
+      icon : 'question',
+      title: '삭제하시겠습니까?',
+      showCloseButton: true,
+      showDenyButton: true,
+      confirmButtonText: '확인',
+      denyButtonText: '취소',
+    }).then(response => {
+      if(response.isConfirmed){
+        deleteItem(props.data.qnaNum);
+        Swal.fire({
+          icon : 'info',
+          title: '삭제되었습니다!',
+          showCloseButton: true,
+          confirmButtonText: '확인',        
+        })
+      }else {
+        return;
+      }
+    });
   }
 
   return (

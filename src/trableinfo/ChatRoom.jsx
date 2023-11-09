@@ -1,37 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { call } from "../common/ApiService";
 import style from "../css/chatRoom.css";
+import axios from "axios";
+import { API_BASE_URL } from "../common/ApiConfig";
 
 const ChatRoomComponent = () => {
   const [roomName, setRoomName] = useState("");
   const [chatRooms, setChatRooms] = useState([]);
 
   const fetchChatRooms = async () => {
-    call("/chat/room", "GET", null)
-      .then((response) => {
-        setChatRooms(response.data);
-        console.log("response.data : {}", response.data);
-        console.log("chatRooms");
-      })
-      .catch((error) => {
-        console.error("Error fetching chat rooms:", error);
-      });
+    try {
+      const response = await call("/chat/room", "GET", null);
+      setChatRooms(response.data);
+    } catch (error) {
+      console.error("채팅 방을 불러오는 중 오류 발생:", error);
+    }
   };
+  
 
   const createChatRoom = async () => {
-    call("/chat/room", "POST", {
-      roomName: roomName,
-    })
-      .then((response) => {
-        var newChro = [...chatRooms, response.data];
-        setChatRooms(newChro);
-        setRoomName("");
-        fetchChatRooms();
-      })
-      .catch((error) => {
-        console.error("Error creating chat room:", error);
+    try {
+      const response = await call("/chat/room", "POST", {
+        roomName: roomName,
       });
+      const newChro = [...chatRooms, response.data];
+      setChatRooms(newChro);
+      setRoomName("");
+      fetchChatRooms();
+    } catch (error) {
+      console.error("채팅 방을 생성하는 중 오류 발생:", error);
+    }
   };
+  
   const enterRoom = (roomId, roomName) => {
     const sender = prompt("대화명을 입력해 주세요.");
     if (sender !== null && sender.trim() !== "") {
@@ -50,10 +50,15 @@ const ChatRoomComponent = () => {
   };
   
   useEffect(() => {
-    
-    fetchChatRooms(); // 컴포넌트가 마운트될 때 방 목록을 불러옵니다.
-    
-  }, [chatRooms.length]); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 실행되도록 합니다.
+    fetchChatRooms();
+  }, []); // 빈 배열을 전달하여 컴포넌트가 처음 마운트될 때 한 번만 실행되도록 합니다.
+  
+  const deleteRoom = (room) => {
+    call("/chat/delete", "DELETE", room)
+      .then((response) => {
+        setChatRooms(response.data)
+      })
+  };
 
   return (
     <div className="chat-list-container">
@@ -63,14 +68,18 @@ const ChatRoomComponent = () => {
       >
         {chatRooms.map((room) => (
           <li key={room.roomId} 
-          class="list-group-item list-group-item-warning text-center"
+          class="
+
+          text-center"
           >
             <span
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer",
+                      backgroundColor:"" }}
               onClick={() => enterRoom(room.roomId, room.roomName)}
             >
               {room.roomName}
             </span>
+            <button type="button" className="oBtn" onClick={() => deleteRoom(room)} >삭제</button>
           </li>
         ))}
       </ul>

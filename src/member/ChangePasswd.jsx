@@ -4,6 +4,7 @@ import { useState } from "react";
 import { API_BASE_URL } from "../common/ApiConfig";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Captcha from './Captcha';
+import Swal from "sweetalert2";
 
 const ChangePasswd = () => {
   const [pwdPop, setPwdPop] = useState("새 비밀번호 확인");
@@ -24,6 +25,14 @@ const ChangePasswd = () => {
   };
 
   const changeNewPwd = () => {
+    if(!confirm) {
+      Swal.fire({
+        icon: 'warning',
+        title: '자동입력',
+        text: '자동입력방지 완료하세요'
+      })
+      return;
+    }
     if (email) {
       sendData = {
         preId: email,
@@ -52,9 +61,10 @@ const ChangePasswd = () => {
       })
   };
   return (
-    <div className="container-sm">
-      <div class="g-3">
-        <div class="col-sm-4">
+    <div className="container"
+    style={{height:"auto"}}>
+      <div class="row justify-content-center">
+        <div class="col-sm-4 text-center">
           <h3 className="mb-5">비밀번호 변경</h3>
           <div class="form-floating">
             <input
@@ -116,7 +126,6 @@ const ChangePasswd = () => {
             </button>
           </div>
         </div>
-        <div class="col-sm"></div>
       </div>
     </div>
   );

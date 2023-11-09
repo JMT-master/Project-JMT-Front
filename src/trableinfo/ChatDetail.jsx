@@ -146,7 +146,7 @@ const ChatDetail = () => {
     connect();
 
     // return () => disConnect();
-  }, [roomId, sender]);
+  }, [sender]);
 
   const handleSubmit = (e, message) => {
     e.preventDefault();

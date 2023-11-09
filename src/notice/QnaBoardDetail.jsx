@@ -6,6 +6,7 @@ import { call, getCookie, setDateFormat } from './../common/ApiService';
 import axios from 'axios';
 import { API_BASE_URL } from '../common/ApiConfig';
 import AttachFile from '../common/AttachFile';
+import Swal from 'sweetalert2';
 
 const QnaBoardDetail = () => {
   const [item, setItem] = useState();
@@ -45,6 +46,24 @@ const QnaBoardDetail = () => {
       });
   }, []); // qnaColNum이 변경될 때마다 useEffect가 실행됩니다.
 
+  const onQnAUpdate = () =>{
+    Swal.fire({
+      icon : 'question',
+      title: '수정하시겠습니까?',
+      showCloseButton: true,
+      showDenyButton: true,
+      confirmButtonText: '확인',
+      denyButtonText: '취소',
+
+    }).then(response => {
+      if(response.isConfirmed) {
+        navigate("/qna/admin/" + qnaColNum)
+      } else {
+        return;
+      }
+    });
+  }
+
   return (
     <div className='qnaDetail-content'>
       <div className='qnaDetail-title'>
@@ -78,7 +97,7 @@ const QnaBoardDetail = () => {
       <div className="detail-btnBox">
       <button className='oBtn'
         style={isAdmin.current == "Y" ? null : { display: "none" }}
-        onClick={() => navigate("/qna/admin/" + qnaColNum)} >수정하기</button>
+        onClick={onQnAUpdate} >수정하기</button>
       <button className='oBtn' onClick={() => navigate("/qna")}>목록으로 가기</button>
       </div>
     </div>
