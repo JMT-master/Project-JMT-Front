@@ -67,7 +67,9 @@ const TourItem = ({ spot, pageType, nav, setGps }) => {
         <h3>
           <span>{spot.title}</span>
           <button className='oBtn sf ra' onClick={()=>{onNav()}}><MdOutlineFindInPage/></button>
-          <button className='oBtn sf ra' onClick={()=>{wishTdnInsert()}}><AiOutlineStar/></button>
+          <button className='oBtn sf ra' onClick={(e)=>{
+            e.stopPropagation()
+            wishTdnInsert()}}><AiOutlineStar/></button>
         </h3>
         <div className={`${pageType}-itemGrid-contentText`}>
           <p className='sf'>{spot.region1cd.label} > {spot.region2cd.label}</p>

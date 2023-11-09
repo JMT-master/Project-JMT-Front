@@ -157,16 +157,16 @@ const QnABoard = () => {
           </tbody>
         </Table>
       </div>
+      <div className="writeBtnBox">
+        <Button type='button' className='oBtn writeBtn'
+                style={isAdmin.current == "Y" ? null : { display: "none" }}
+                onClick={addItemPage}>작성하기</Button>
+      </div>
       <div className='page'>
         <ListPaging page={pagingInfo.currentPage}
           lastPage={pagingInfo.totalPages}
           setPage={(page) => setCurrentPage(page)}>
         </ListPaging>
-      </div>
-      <div>
-        <Button type='button' className='oBtn'
-          style={isAdmin.current == "Y" ? null : { display: "none" }}
-          onClick={addItemPage}>Q&A 작성하기</Button>
       </div>
     </div>
   );

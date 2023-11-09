@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import {noticeData} from '../data/Data';
 import {call, getCookie, setDateFormat} from "../common/ApiService";
 import ListPaging from "../destination/ListPaging";
-import {Table} from 'react-bootstrap';
+import {Button, Table} from 'react-bootstrap';
 import Swal from "sweetalert2";
 
 
@@ -144,11 +144,11 @@ const NoticeBoard = () => {
            })}
            </tbody>
          </Table>
-         <div className='plus-notice' style={{display:"flex",justifyContent: "flex-end"}}>
-           <button className="oBtn"
-              style={{display: isAdmin.current === "Y" ? "flex" : "none", marginRight:"20px" }}
-                   onClick={() => navigate('/notice/admin/write')}>글쓰기
-           </button>
+         <div className='plus-notice writeBtnBox'>
+           <Button className="oBtn writeBtn"
+              style={{display: isAdmin.current === "Y" ? null : "none"}}
+                   onClick={() => navigate('/notice/admin/write')}>작성하기
+           </Button>
          </div>
        </div>
        <div className='page'>

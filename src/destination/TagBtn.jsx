@@ -6,7 +6,7 @@ const TagBtn = (tag) => {
   // console.log('tagFilter, setTagFilter, tagList: ', tagFilter, setTagFilter, tagList);
   
   const [btn, setBtn] = useState([]);
-
+  const [randomNum, setRandomNum] = useState(Math.random());
   //필터 버튼
   const clickFilter = (e) => {
     if (e.target.value !== tagFilter) setTagFilter(e.target.value);
@@ -34,13 +34,8 @@ const TagBtn = (tag) => {
     const btnList = []
     const num = 10;
     let tagSet = [...new Set(tagList)];
-    // console.log('tagSet: ', tagSet);
-    // console.log("전체 태그 갯수 : " + tagSet.length);
-    // console.log("전체 태그 갯수 : " + Math.floor(tagSet.length/10));
-    // console.log("전체 태그 갯수 : " + tagSet.length/(tagSet.length/10));
-    // console.log("전체 태그 갯수 : " + tagSet.length%(Math.floor(tagSet.length/10)));
-    let ranNum = Math.floor(Math.random() * (tagSet.length/10));
-    let ranNumMax = Math.floor(Math.random() * tagSet.length/(tagSet.length/10));
+    let ranNum = Math.floor(randomNum * (tagSet.length/10));
+    let ranNumMax = Math.floor(randomNum * tagSet.length/(tagSet.length/10));
 
     for (let i = ranNum; i < tagSet.length; i += Math.floor(tagSet.length/10)) {
       btnList.push(<button key={i / num} className={`oBtn ${btn.includes(i / num) ? 'Focused' : ''}`} value={tagSet[i-ranNumMax]}

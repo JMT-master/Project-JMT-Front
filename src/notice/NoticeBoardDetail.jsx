@@ -115,7 +115,7 @@ const NoticeBoardDetail = ({data}) => {
          <div className='noticeDetail-inside'>
            <textarea cols="30" rows="10" readOnly placeholder='공지사항 내용' value={item&&item[0].content}></textarea>
          </div>
-         <div className="noticeDetail-btnBox">
+         <div className="detail-btnBox">
            <button className='oBtn' style={isAdmin.current == "Y" ? null : {display: "none"}} onClick={() => {
              updateHandler();
            }}>수정</button>
