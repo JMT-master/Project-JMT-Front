@@ -75,7 +75,7 @@ const ReviewBox = ({item, modal, setFile, fileUpload, deleteHandler, updateHanld
           </div>
        }
        <div className='reviewBox-image' style={{display : modal ? "none" : "block"}}>
-         {item.reviewImg && <img id="imgData" src={item.imgData} alt="Image"/>}
+         {item.reviewImg ? <img id="imgData" src={item.imgData} alt="Image"/> : <img id="imgData" src={process.env.PUBLIC_URL + "/images/JMT.jpg"} alt="Image"/>}
        </div>
        <div className='reviewBox-footer' style={{display : sameWriter && !modal || getCookie("adminChk")=="Y"? "grid" : "none"}}>
          <button className="oBtn marginBottomBtn" onClick={updateToggle}>수정</button>

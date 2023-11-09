@@ -99,3 +99,13 @@ $jOrange: #f3a444;
   bottom: 5px;
   font-size: 22px;
 }
+
+.writeBtnBox {
+  display: flex;
+  justify-Content: flex-end;
+
+  .writeBtn {
+    margin-right: 40px;
+    font-size: 17px;
+  }
+}

@@ -323,7 +323,7 @@ console.log('state',state);
        </div>
        <div className="header-container">
          <Link to="/">
-           <div className="header-image"><img id="jeju-image" src="../images/JMT.jpg" alt=""/></div>
+           <div className="header-image"><img id="jeju-image" src={process.env.PUBLIC_URL + "/images/JMT.jpg"} alt=""/></div>
          </Link>
          <div className="headerSell">
            <ul id="destination" onMouseOver={handleMouseOverDes} onMouseOut={handleMouseOutDes}>
@@ -565,7 +565,7 @@ function Footer() {
      <>
        <div class={`footer-main`}>
          <div className='footer-container'>
-           <img id="jeju-image" src="../images/JMT.jpg" alt=""/>
+           <img id="jeju-image" src={process.env.PUBLIC_URL + "/images/JMT.jpg"} alt=""/>
            <ul className='footer-Grid1'>
              <li>개인정보 처리방침</li>
              <li>이용약관</li>

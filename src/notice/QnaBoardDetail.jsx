@@ -83,10 +83,12 @@ const QnaBoardDetail = () => {
       ) : (
         <p>파일이 없습니다.</p>
       )}
+      <div className="detail-btnBox">
       <button className='oBtn'
         style={isAdmin.current == "Y" ? null : { display: "none" }}
         onClick={() => navigate("/qna/admin/" + qnaColNum)} >수정하기</button>
       <button className='oBtn' onClick={() => navigate("/qna")}>목록으로 가기</button>
+      </div>
     </div>
   );
 };

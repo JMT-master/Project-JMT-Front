@@ -137,8 +137,6 @@ const KnowledgeDetail = () => {
       <div className='knowledgeDetail-content'>
         <div className='knowledgeDetail-title'>
           <h1 onClick={() => navigate('/info/knowledge')}>Jhat JPT 지식in</h1>
-          <button className='knowledgeDetail-title-btn' onClick={onKnowledgeUpdate}>수정</button>
-          <button className='knowledgeDetail-title-btn' onClick={onKnowledgeDelete}>삭제</button>
           {/* <span><AiFillPrinter style={{width:'50px', height:'30px'}}></AiFillPrinter> </span> */}
           {/* <span><AiFillFilePdf style={{width:'50px', height:'30px'}}></AiFillFilePdf> </span> */}
           {/* <span> <AiFillYoutube style={{width:'50px', height:'30px'}}></AiFillYoutube> </span> */}
@@ -166,9 +164,12 @@ const KnowledgeDetail = () => {
           </div>
         </div>
         <AttachFile data = {dbData !== null ? dbData : '' }></AttachFile>
+        <div className="detail-btnBox">
+          <button className='oBtn' onClick={onKnowledgeUpdate}>수정</button>
+          <button className='oBtn' onClick={onKnowledgeDelete}>삭제</button>
+          <button className='oBtn'  onClick={()=>navigate(-1)}>목록으로 가기</button>
+        </div>
         <AnswerDetail data = {dbData !== null ? dbData[0] : '' }></AnswerDetail>
-        <button className='back-to-knin'  onClick={()=>navigate(-1)}>목록으로 가기</button>
-  
       </div>
     );
   }
