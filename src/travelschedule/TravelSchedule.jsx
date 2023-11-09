@@ -79,9 +79,9 @@ const TravelSchedule = (props) => {
       setTableData1([...tableData1]);
       setTable1FontColor([...table1FontColor]);      
     })
-      .catch((error) => {
-        console.log(error);
-      })
+    .catch((error) => {
+      console.log(error);
+    })
   }
   function selectForm2(){
     call("/travel/dayFormatSelect2?id="+id, "GET",
@@ -109,7 +109,7 @@ const TravelSchedule = (props) => {
       console.log('tableData2 : ',tableData2);
       setTableData2([...tableData2]);
       setTable2FontColor([...table2FontColor]);      
-    })
+      })
       .catch((error) => {
         console.log(error);
       })
