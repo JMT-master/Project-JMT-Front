@@ -3,7 +3,7 @@
   grid-template-columns: 1fr 12fr;
   margin-top: 2%;
   margin-left: 2%;
-  height: 1200px;
+  height: auto;
 }
 
 .selectContainer-menu {
@@ -35,8 +35,7 @@
   height: 75px;
   color: #f3a344;
   cursor: pointer;
-  position: relative;
-  top: 350px;
+  top: 150px;
 }
 
 .selectDate {
@@ -150,13 +149,13 @@
 /* 1700px */
 @media screen and (max-width : 1700px) {
   .container, .selectContainer-menu {
-    height: 1200px;
+    height: auto;
   }
 
   .selectContainer-Form {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows   : 1fr 2fr;
-    height: 1200px;
+    grid-template-rows   : 1fr;
+    height: auto;
   }
 
   .SelectBtn {

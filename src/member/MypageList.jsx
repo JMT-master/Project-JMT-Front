@@ -2,6 +2,7 @@ import React from "react";
 import "../css/myPage.css";
 import { useNavigate } from "react-router-dom";
 import TravelPdf from "../travelschedule/TravelPdf";
+import MypageButton from "./MypageButton";
 
 const MypageList = (props) => {
   console.log("props.gubun", props.gubun);
@@ -55,17 +56,18 @@ const MypageList = (props) => {
     { props.gubun === 0 ? (
       <div>
       <TravelPdf data={props.data} />
+      <MypageButton data={props.data}></MypageButton>
       </div>
     ) : props.gubun === 1 ? (
       <div>
       <TravelPdf data={props.data} />
-      </div>
-    ) : (
+      <MypageButton data={props.data}></MypageButton>
+    </div>
+    ) :(
       <div>
-
+        <MypageButton data={props.data}></MypageButton>
       </div>
-    )
-    }
+    ) }
   </li>
   );
 };
