@@ -290,8 +290,8 @@ function HeaderTop(props) {
 
  //채팅 관련 새 창 띄우는 코드
   const handleChatLinkClick = () => {
-    const width = 800; // 원하는 너비
-    const height = 600; // 원하는 높이
+    const width = 500; // 원하는 너비
+    const height = 700; // 원하는 높이
     const left = (window.innerWidth - width) / 2;
     const top = (window.innerHeight - height) / 2;
 

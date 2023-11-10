@@ -172,7 +172,7 @@
 
 
 .myPage-Big-Image-ul {
-  /* display: grid; */
+  display: grid;
   grid-template-columns: repeat(8, 200px);
   height: 600px;
   gap: 10px;

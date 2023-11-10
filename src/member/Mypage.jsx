@@ -181,7 +181,7 @@ const Mypage = () => {
     if (myTravelItem != null) {
       setList(myTravelItem.map((item, i) => {
         count++;
-        return (<MypageList className='myPage-Big-Image-li' data={item} gubun={gubun}></MypageList>)
+        return (<MypageList className='myPage-Big-Image-li' data={item} gubun={gubun} setMyTravelItem = {setMyTravelItem}></MypageList>)
       }));
 
       setTotalCount(count);

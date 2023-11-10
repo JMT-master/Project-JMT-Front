@@ -65,7 +65,7 @@ const MypageList = (props) => {
     </div>
     ) :(
       <div>
-        <MypageButton data={props.data}></MypageButton>
+        <MypageButton data={props.data} setMyTravelItem = {props.setMyTravelItem}></MypageButton>
       </div>
     ) }
   </li>

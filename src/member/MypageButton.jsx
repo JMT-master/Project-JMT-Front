@@ -1,9 +1,9 @@
 import React from 'react'
 import { call } from '../common/ApiService';
+import { useNavigate } from 'react-router-dom';
 
 // 마이페이지의 모든 탭에 있는 데이터를 삭제할 수 있는 공통버튼
 const MypageButton = (props) => {
-
   function allDeleteButton(){
     //나의 일정 삭제
     const dto={
@@ -40,16 +40,16 @@ const MypageButton = (props) => {
     }
     //찜한 여행지 삭제
     else if(props.data.wishGubun === 'tdn'){
-      console.log("wishIddddddddddddddd",props.data.wishId);
+      
       const dto ={
         wishId : props.data.wishId
       }
       call("/wish/wishTdnDelete", "POST",
       dto
-      ).then((response) => {
+      ).then(() => {
         alert("삭제되었습니다.");
-        console.log("wishTpsSelect.response.data",response.data);
-        // window.location.href = '/';
+
+
       })
       .catch((error) => {
         console.log(error);
@@ -59,9 +59,9 @@ const MypageButton = (props) => {
 
 
   return (
-    <div>
+    <span>
         <button type="submit" className="oBtn" onClick={() => allDeleteButton()}>삭제</button>
-    </div>
+    </span>
   )
 }
 

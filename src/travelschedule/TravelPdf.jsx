@@ -42,13 +42,11 @@ const TravelPdf = (props) => {
   };
 
   return (
-    <div>
+    <>
       {/* 폼 제출 시 handleSubmit 함수 호출 */}
-      <form onSubmit={handleSubmit}>
         {/* 제출 버튼 */}
-        <button type="submit" className="oBtn">제출</button>
-      </form>
-    </div>
+        <button type="submit" className="oBtn" onSubmit={handleSubmit}>제출</button>
+    </>
   );
 };
 
