@@ -62,16 +62,15 @@ const ChatRoomComponent = () => {
 
   return (
     <div className="chat-list-container">
-      <h1 className="chat-list-title">전체 채팅방 목록</h1>
+      <div className="chat-list-title">
+        <div className="chat-list-title-text">전체 채팅방 목록</div>
+      </div>
       <ul 
-      className="list-group"
+      className="chat-list-group"
       >
         {chatRooms.map((room) => (
           <li key={room.roomId} 
-          class="
-
-          text-center"
-          >
+          class="chat-list-group-li">
             <span
               style={{ cursor: "pointer",
                       backgroundColor:"" }}
@@ -79,7 +78,7 @@ const ChatRoomComponent = () => {
             >
               {room.roomName}
             </span>
-            <button type="button" className="oBtn" onClick={() => deleteRoom(room)} >삭제</button>
+            <button type="button" className="oBtn chat-list-group-button" onClick={() => deleteRoom(room)} >삭제</button>
           </li>
         ))}
       </ul>

@@ -1,8 +1,11 @@
 .chat-detail-container {
     /* background-color: #f3a344; */
     background-image: url("../images/jejucat.jpg");
+    opacity: 0.7;
     background-size: cover;
     padding: 10px;
+    height: 100vh;
+    position: relative;
 }
 .chat-detail-container > h1 {
     text-align: center;
@@ -33,6 +36,8 @@
     cursor: pointer;
 }
 .chat-input-form > input{
+    position: absolute;
+    bottom: 15px;
     padding: 10px 20px;
     border: none;
     font-size: larger;
@@ -40,12 +45,15 @@
     border-radius: 10px;
     cursor: pointer;
     text-align: center;
-    width: 85%;
+    width: 82%;
 }
 .chat-submit{
+    position: absolute;
+    right: 3px;
+    bottom: 20px;
     padding: 10px 20px;
-    background-color: #f3a344;
-    color: white;
+    background-color: white;
+    color: #f3a344;
     font-size: larger;
     border: none;
     border-radius: 10px;

@@ -180,7 +180,7 @@ const Mypage = () => {
     if (myTravelItem != null) {
       setList(myTravelItem.map((item, i) => {
         count++;
-        return (<MypageList className='myPage-Big-Image-li' data={item} gubun={gubun}></MypageList>)
+        return (<MypageList className='myPage-Big-Image-li' data={item} gubun={gubun} setMyTravelItem = {setMyTravelItem}></MypageList>)
       }));
 
       setTotalCount(count);
@@ -300,28 +300,28 @@ const Mypage = () => {
               >회원정보수정</div>
             </li>
             <Modal show={show} onHide={handleClose}>
-                <Modal.Header style={{ borderBottom: 'none' }}>
-                  <Modal.Title>비밀번호 확인</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <div class="input-group input-group-lg mb-2">
-                    <input type="password" className="form-control pw" aria-label="Large"
+              <Modal.Header style={{ borderBottom: 'none' }}>
+                <Modal.Title>비밀번호 확인</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div class="input-group input-group-lg mb-2">
+                  <input type="password" className="form-control pw" aria-label="Large"
                     value={checkPwd} onChange={onChnPwd}
-                      placeholder='비밀번호를 입력해주세요'
-                      aria-describedby="inputGroup-sizing-default"
-                      onKeyDown={keyDownChkPwd}
-                    />
-                  </div>
-                </Modal.Body>
-                <Modal.Footer style={{ borderTop: 'none' }}>
-                  <Button className="btn_check" variant="outline-warning" onClick={memberModify}>
-                    확인
-                  </Button>
-                  <Button className="btn_close" variant="secondary" onClick={handleClose}>
-                    닫기
-                  </Button>
-                </Modal.Footer>
-              </Modal>
+                    placeholder='비밀번호를 입력해주세요'
+                    aria-describedby="inputGroup-sizing-default"
+                    onKeyDown={keyDownChkPwd}
+                  />
+                </div>
+              </Modal.Body>
+              <Modal.Footer style={{ borderTop: 'none' }}>
+                <Button className="btn_check" variant="outline-warning" onClick={memberModify}>
+                  확인
+                </Button>
+                <Button className="btn_close" variant="secondary" onClick={handleClose}>
+                  닫기
+                </Button>
+              </Modal.Footer>
+            </Modal>
             <li className='myPage-tagList-li' data-value='0' onClick={() => onChangeTitle(0)}>
               <AiOutlineSchedule className='myPage-tagList-li-icon'></AiOutlineSchedule>
               <div value='0' className='myPage-tagList-li-name'>나의 일정</div>
