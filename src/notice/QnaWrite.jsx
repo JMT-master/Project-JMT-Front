@@ -15,6 +15,7 @@ const QnaWrite = (props) => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [index, setIndex] = useState(parseInt(localStorage.getItem('qna.length')) + 1 || 0);
+    const [adminYn, setAdminYn] = useState();
     const [item, setItem] = useState({
         qnaCategory: category,
         qnaTitle: "",
@@ -47,6 +48,7 @@ const QnaWrite = (props) => {
 
     }
     useEffect(() => {
+
         if (id) {
             // 브라우저 주소에서 읽어온 id 값이 있을 경우 API 호출
             call(`/qna/admin/${id}`, "GET")
@@ -58,6 +60,7 @@ const QnaWrite = (props) => {
                 });
 
         }
+
     }, [id]); // id 값이 변경될 때마다 useEffect가 다시 실행됨
 
 

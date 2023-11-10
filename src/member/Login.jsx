@@ -85,48 +85,50 @@ const Login = (props) => {
 
   return (
     <div className='container' id='login-container'>
-      <div className='row g-3'>
-        <div className='col-sm'></div>
-        <div className='col-sm-4'>
-          <div className='text-center mb-5'>
-            {/* <p style={{ fontSize: '45px' }}>Login</p> */}
-            <p id='loginTitle'>Jeju Made Travel</p>
-          </div>
-          <div class="input-group mb-3">
-            <input type="id" className="form-control id" aria-label="Large"
-              placeholder='아이디를 입력해주세요'
-              value={id} onChange={saveId} onKeyDown={keyDownLogin}
-              aria-describedby="inputGroup-sizing-default" />
-          </div>
-          <div class="input-group mb-2">
-            <input type="password" className="form-control pw" aria-label="Large"
-              onChange={savePwd} onKeyDown={keyDownLogin}
-              placeholder='비밀번호를 입력해주세요'
-              aria-describedby="inputGroup-sizing-default" />
-          </div>
-          <div className='mb-3'>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" onChange={onChangeIdSave} />
-              <label class="form-check-label" for="inlineCheckbox1">아이디 저장</label>
-            </div><div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" onChange={onChangeLoginState} checked={loginState} />
-              <label class="form-check-label" for="inlineCheckbox1">로그인 상태 유지</label>
+      <div className='row' style={{height:"100%"}}>
+        <div className='col-sm-4 mb-3'></div>
+        <div className='col-sm-4 mb-3 loginBody'>
+          <div className='loginBodyC'>
+            <div className='text-center mb-5'>
+              {/* <p style={{ fontSize: '45px' }}>Login</p> */}
+              <p id='loginTitle'>Jeju Made Travel</p>
             </div>
-          </div>
-          <div className='mb-2'>
-            <div class="d-grid gap-2">
-              <button type="button" className="btn btn-outline-warning" onClick={logBtn}>로그인</button>
-              <button type="button" className="btn btn-outline-warning" onClick={() => navigate('/joinUser')}>회원가입</button>
+            <div class="input-group my-3">
+              <input type="id" className="form-control id" aria-label="Large"
+                placeholder='아이디를 입력해주세요'
+                value={id} onChange={saveId} onKeyDown={keyDownLogin}
+                aria-describedby="inputGroup-sizing-default" />
             </div>
-
-            <div className=''>
-              <button type="button" className="btn btn-outline-warning btn-sm" onClick={showModal}>아이디/비밀번호 찾기</button>
-              {modalOpen && <LoginModal setModalOpen={setModalOpen}></LoginModal>}
-              <button type="button" className="btn" onClick={openKakaoLogin}><img src="../images/kakao_login_small.png" alt="" /></button>
-            </div>            
+            <div class="input-group my-2">
+              <input type="password" className="form-control pw" aria-label="Large"
+                onChange={savePwd} onKeyDown={keyDownLogin}
+                placeholder='비밀번호를 입력해주세요'
+                aria-describedby="inputGroup-sizing-default" />
+            </div>
+            <div className='my-3'>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" onChange={onChangeIdSave} />
+                <label class="form-check-label" for="inlineCheckbox1">아이디 저장</label>
+              </div><div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" onChange={onChangeLoginState} checked={loginState} />
+                <label class="form-check-label" for="inlineCheckbox1">로그인 상태 유지</label>
+              </div>
+            </div>
+            <div className='my-2'>
+              <div class="d-grid gap-2">
+                <button type="button" className="btn btn-outline-warning" onClick={logBtn}>로그인</button>
+                <button type="button" className="btn btn-outline-warning" onClick={() => navigate('/joinUser')}>회원가입</button>
+              </div>
+  
+              <div className=''>
+                <button type="button" className="btn btn-outline-warning btn-sm" onClick={showModal}>아이디/비밀번호 찾기</button>
+                <button type="button" className="btn" onClick={openKakaoLogin}><img src="../images/kakao_login_small.png" alt="" /></button>
+              </div>            
+            </div>
           </div>
         </div>
-        <div className='col-sm'></div>
+        {modalOpen && <LoginModal setModalOpen={setModalOpen}></LoginModal>}
+        <div className='col-sm-4 mb-3'></div>
       </div>
     </div>
   );

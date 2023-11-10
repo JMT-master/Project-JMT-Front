@@ -10,7 +10,6 @@ const LoginModal = ({setModalOpen, id, title, content, writer}) => {
   const [moid, setMoid] = useState(false);
   const [mopwd, setMopwd] = useState(false);
   const [activeModal, setActiveModal] = useState("id");
-
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -73,6 +72,7 @@ const LoginModal = ({setModalOpen, id, title, content, writer}) => {
   const ModalPwd = () => {
     const [username, setUserName] = useState();
     const [email, setEmail] = useState();
+    const [social, setSocial] = useState(localStorage.getItem("social") || "N");
 
     const onChangeUserName = (e) => {
       setUserName(e.target.value);
@@ -84,7 +84,8 @@ const LoginModal = ({setModalOpen, id, title, content, writer}) => {
       e.preventDefault();
       const sendEmailDto = {
         username: username,
-        email: email
+        email: email,
+        social : social
       };
       const url = API_BASE_URL + "/sendEmailCode";
       fetch(url,{
@@ -124,25 +125,28 @@ const LoginModal = ({setModalOpen, id, title, content, writer}) => {
     )
   }
   return (
-     <div className='modal-container'>
-       <AiOutlineArrowLeft className='modal-close' onClick={closeModal}>X</AiOutlineArrowLeft>
-       <h2 className='modal-title'>아이디 / 비밀번호 찾기</h2>
-       <div className='modal-btn'>
-         <div>
-           <button className={`modal-btn-id ${activeModal === 'id' ? 'modal-btn-click' : ''}`} style={{styledButton}}
-                   onClick={() => openModalIdPwd('id')}>아이디 찾기
-           </button>
+    <div className='modal-containerBox' onClick={closeModal}>
+       <div className='modal-container' onClick={(e)=>{e.stopPropagation()}}>
+         <AiOutlineArrowLeft className='modal-close' onClick={closeModal}>X</AiOutlineArrowLeft>
+         <h2 className='modal-title'>아이디 / 비밀번호 찾기</h2>
+         <div className='modal-btn'>
+           <div>
+             <button className={`modal-btn-id ${activeModal === 'id' ? 'modal-btn-click' : ''}`} style={{styledButton}}
+                     onClick={() => openModalIdPwd('id')}>아이디 찾기
+             </button>
+           </div>
+           <div>
+             <button className={`modal-btn-pwd ${activeModal === 'pwd' ? 'modal-btn-click' : ''}`} style={{styledButton}}
+                     onClick={() => openModalIdPwd('pwd')}>비밀번호 찾기
+             </button>
+           </div>
          </div>
-         <div>
-           <button className={`modal-btn-pwd ${activeModal === 'pwd' ? 'modal-btn-click' : ''}`} style={{styledButton}}
-                   onClick={() => openModalIdPwd('pwd')}>비밀번호 찾기
-           </button>
-         </div>
+         <div className='modal-container-etc'></div>
+         {activeModal === 'id' && <ModalId/>}
+         {activeModal === 'pwd' && <ModalPwd/>}
        </div>
-       <div className='modal-container-etc'></div>
-       {activeModal === 'id' && <ModalId/>}
-       {activeModal === 'pwd' && <ModalPwd/>}
-     </div>
+       
+    </div>
   );
 };
 

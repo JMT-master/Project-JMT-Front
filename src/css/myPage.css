@@ -129,7 +129,8 @@
 .myPageBigContainer {
   margin-top: 2%;
   margin-left: 2%;
-  height: 800px;
+  min-height: 600px;
+  height: auto;
 }
 
 .myPage-tagList-ul {
@@ -173,7 +174,7 @@
 .myPage-Big-Image-ul {
   /* display: grid; */
   grid-template-columns: repeat(8, 200px);
-  height: 800px;
+  height: 600px;
   gap: 10px;
   overflow: scroll;
 }

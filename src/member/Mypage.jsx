@@ -16,6 +16,7 @@ import JoinUser from './JoinUser'
 import { Button, Modal } from 'react-bootstrap'
 import { API_BASE_URL } from '../common/ApiConfig'
 import Swal from 'sweetalert2'
+import MypageJoin from './MypageJoin'
 
 
 
@@ -29,56 +30,56 @@ const Mypage = () => {
   const [totalCount, setTotalCount] = useState(0);
   const navigate = useNavigate();
   const [member, setMember] = useState();
-  const [myTravelItem,setMyTravelItem] = useState(null);
-  const [gubun,setGubun] = useState(0);
+  const [myTravelItem, setMyTravelItem] = useState(null);
+  const [gubun, setGubun] = useState(0);
   const [show, setShow] = useState(false);
   const [checkPwd, setCheckPwd] = useState();
 
   const handleClose = () => setShow(false);
-  const handleShow  = () => setShow(true);
+  const handleShow = () => setShow(true);
 
 
   //나의 일정
-  function selectMyTravelScehdule(){
+  function selectMyTravelScehdule() {
     setGubun(0);
     call("/travel/selectMyTravelScehdule", "GET",
-    null
+      null
     ).then((response) => {
-      console.log("selectTravelScehdule.response.data",response.data);
+      console.log("selectTravelScehdule.response.data", response.data);
       setMyTravelItem(response.data);
       // window.location.href = '/';
     })
-    .catch((error) => {
-      console.log(error);
-    })
+      .catch((error) => {
+        console.log(error);
+      })
   }
   //찜한 일정
-  function selectWishTravelScehdule(){
+  function selectWishTravelScehdule() {
     setGubun(1);
     call("/wish/wishTpsSelect", "GET",
-    null
+      null
     ).then((response) => {
-      console.log("wishTpsSelect.response.data",response.data);
+      console.log("wishTpsSelect.response.data", response.data);
       setMyTravelItem(response.data);
       // window.location.href = '/';
     })
-    .catch((error) => {
-      console.log(error);
-    })
+      .catch((error) => {
+        console.log(error);
+      })
   }
   //찜한 여행지
-  function selectTravelDes(){
+  function selectTravelDes() {
     setGubun(2);
     call("/wish/wishTdnSelect", "GET",
-    null
+      null
     ).then((response) => {
-      console.log("wishTdnSelect.response.data",response.data);
+      console.log("wishTdnSelect.response.data", response.data);
       setMyTravelItem(response.data);
       // window.location.href = '/';
     })
-    .catch((error) => {
-      console.log(error);
-    })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
   // 비밀번호 확인시 넘길 비밀번호 값
@@ -88,7 +89,7 @@ const Mypage = () => {
   }
 
   function keyDownChkPwd(e) {
-    if(e.key === 'Enter') {
+    if (e.key === 'Enter') {
       memberModify();
     }
   }
@@ -103,31 +104,31 @@ const Mypage = () => {
 
     // password, socialYn
     const sendData = {
-      password :  checkPwd,
-      socialYn : getLocal('social')
+      password: checkPwd,
+      socialYn: getLocal('social')
     }
 
     const body = JSON.stringify(sendData);
 
     console.log('body : ', body);
-  
+
     fetch(url, {
       method: 'POST',
       body: body,
-      headers : headers
+      headers: headers
     }).then(response => {
       console.log('MyPage response : ', response);
-      if(response.status === 200) {
+      if (response.status === 200) {
         console.log('성공');
         Swal.fire({
-          icon : 'info',
+          icon: 'info',
           title: '회원수정',
           showCloseButton: true,
           confirmButtonText: '성공',
         }).then(() => memberUpdate());
       } else {
         Swal.fire({
-          icon : 'warning',
+          icon: 'warning',
           title: '회원수정',
           showCloseButton: true,
           confirmButtonText: '비밀번호가 일치하지 않습니다.',
@@ -140,10 +141,10 @@ const Mypage = () => {
   //member의 정보 가져와서 화면에 보여줘야함
   const getMember = () => {
     call("/mypage", "GET")
-    .then((response) => {
-      setMember(response);
-      console.log("response : {}", response);
-    })
+      .then((response) => {
+        setMember(response);
+        console.log("response : {}", response);
+      })
   }
 
   // 회원 정보 수정
@@ -151,17 +152,17 @@ const Mypage = () => {
     setTitle('회원 정보 수정');
     setTotalCount('');
     setIndex(4);
-    setList(<JoinUser isUpdate = {true}></JoinUser>);
+    setList(<JoinUser isUpdate={true}></JoinUser>);
     setShow(false);
   }
 
   // Big page에서 Title 클릭시
   const onChangeTitle = (index) => {
-    if(index === 0){
+    if (index === 0) {
       selectMyTravelScehdule();
-    }else if(index === 1){
+    } else if (index === 1) {
       selectWishTravelScehdule();
-    }else{
+    } else {
       selectTravelDes();
     }
     setIndex(index);
@@ -169,14 +170,14 @@ const Mypage = () => {
   }
 
   useEffect(() => {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
     let count = 0;
     getMember();
-    console.log('myTravelItem',myTravelItem);
-    console.log("gubun의 값:",gubun);
+    console.log('myTravelItem', myTravelItem);
+    console.log("gubun의 값:", gubun);
     if (myTravelItem != null) {
       setList(myTravelItem.map((item, i) => {
         count++;
@@ -288,7 +289,7 @@ const Mypage = () => {
   //     </div>
   //   )
   // }
-   else {
+  else {
     return (
       <div className='myPageBigContainer'>
         <div className='myPage-tagList'>
@@ -300,28 +301,28 @@ const Mypage = () => {
               >회원정보수정</div>
             </li>
             <Modal show={show} onHide={handleClose}>
-                <Modal.Header style={{ borderBottom: 'none' }}>
-                  <Modal.Title>비밀번호 확인</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <div class="input-group input-group-lg mb-2">
-                    <input type="password" className="form-control pw" aria-label="Large"
+              <Modal.Header style={{ borderBottom: 'none' }}>
+                <Modal.Title>비밀번호 확인</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div class="input-group input-group-lg mb-2">
+                  <input type="password" className="form-control pw" aria-label="Large"
                     value={checkPwd} onChange={onChnPwd}
-                      placeholder='비밀번호를 입력해주세요'
-                      aria-describedby="inputGroup-sizing-default"
-                      onKeyDown={keyDownChkPwd}
-                    />
-                  </div>
-                </Modal.Body>
-                <Modal.Footer style={{ borderTop: 'none' }}>
-                  <Button className="btn_check" variant="outline-warning" onClick={memberModify}>
-                    확인
-                  </Button>
-                  <Button className="btn_close" variant="secondary" onClick={handleClose}>
-                    닫기
-                  </Button>
-                </Modal.Footer>
-              </Modal>
+                    placeholder='비밀번호를 입력해주세요'
+                    aria-describedby="inputGroup-sizing-default"
+                    onKeyDown={keyDownChkPwd}
+                  />
+                </div>
+              </Modal.Body>
+              <Modal.Footer style={{ borderTop: 'none' }}>
+                <Button className="btn_check" variant="outline-warning" onClick={memberModify}>
+                  확인
+                </Button>
+                <Button className="btn_close" variant="secondary" onClick={handleClose}>
+                  닫기
+                </Button>
+              </Modal.Footer>
+            </Modal>
             <li className='myPage-tagList-li' data-value='0' onClick={() => onChangeTitle(0)}>
               <AiOutlineSchedule className='myPage-tagList-li-icon'></AiOutlineSchedule>
               <div value='0' className='myPage-tagList-li-name'>나의 일정</div>
@@ -338,12 +339,22 @@ const Mypage = () => {
         </div>
         {
           index === 4 ?
-          <h1 className='myPage-h1-title'> {title}</h1> :
-          <h1 className='myPage-h1-title'>{title}({totalCount})</h1>
+            <h1 className='myPage-h1-title'>
+              {/* {title} */}
+            </h1> :
+            <h1 className='myPage-h1-title'>
+              {/* {title}({totalCount}) */}
+            </h1>
         }
-        
+
         <ul className='myPage-Big-Image-ul'>
-          {list}
+          {list ? (
+            // list가 존재하는 경우
+            list
+          ) : (
+            // list가 존재하지 않는 경우, 내가 만든 다른 컴포넌트
+            <MypageJoin />
+          )}
         </ul>
 
       </div>

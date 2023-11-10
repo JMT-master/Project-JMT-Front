@@ -325,7 +325,9 @@ function HeaderTop(props) {
            <div className="header-image"><img id="jeju-image" src={process.env.PUBLIC_URL + "/images/JMT.jpg"} alt=""/></div>
          </Link>
          <div className="headerSell">
-           <ul id="destination" onMouseOver={handleMouseOverDes} onMouseOut={handleMouseOutDes}>
+           <ul id="destination" onMouseOver={handleMouseOverDes} onMouseOut={handleMouseOutDes}
+           style={{cursor:"default"}}
+           >
              <div>
                <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행지</a>
              </div>
@@ -349,7 +351,9 @@ function HeaderTop(props) {
                            className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행일정</Link></span>
              </div>
            </ul>
-           <ul id="myTrableInfo" onMouseOver={handleMouseOverInfo} onMouseOut={handleMouseOutInfo}>
+           <ul id="myTrableInfo" onMouseOver={handleMouseOverInfo} onMouseOut={handleMouseOutInfo}
+           style={{cursor:"default"}}
+           >
              <div>
               <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행정보</a></div>
              <div className='myTrableInfo-list'>
@@ -364,7 +368,9 @@ function HeaderTop(props) {
                  지식in</Link></li>
              </div>
            </ul>
-           <ul id="notice" onMouseOver={handleMouseOverNoti} onMouseOut={handleMouseOutNoti}>
+           <ul id="notice" onMouseOver={handleMouseOverNoti} onMouseOut={handleMouseOutNoti}
+           style={{cursor:"default"}}
+           >
              <div>
                <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</a></div>
              <div className='notice-list'>

@@ -10,6 +10,7 @@ const ChangePasswd = () => {
   const [pwdPop, setPwdPop] = useState("새 비밀번호 확인");
   const { email } = useParams();
   const [confirm, setConfirm] = useState(false);
+  const [social, setSocial] = useState(localStorage.getItem("social") || "N");
   const navigate = useNavigate();
   const data = useLocation();
   let sendData = {};
@@ -38,14 +39,16 @@ const ChangePasswd = () => {
         preId: email,
         prePwd: document.getElementById("sendingPassword").value,
         newPwd: document.getElementById("floatingPassword").value,
-        newPwdChk: document.getElementById("floatingPasswordCK").value
+        newPwdChk: document.getElementById("floatingPasswordCK").value,
+        social : social
       }
     } else {
       sendData = {
         preId: data.state.data,
         prePwd: document.getElementById("sendingPassword").value,
         newPwd: document.getElementById("floatingPassword").value,
-        newPwdChk: document.getElementById("floatingPasswordCK").value
+        newPwdChk: document.getElementById("floatingPasswordCK").value,
+        social : social
       }
     }
     axios({
