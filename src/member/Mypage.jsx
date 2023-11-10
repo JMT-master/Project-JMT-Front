@@ -120,6 +120,10 @@ const Mypage = () => {
 
       setTotalCount(count);
       setLoading(false);
+    }else{
+      setList('');
+      setTotalCount(0);
+      setLoading(false);
     }
 
   }, [myTravelItem]);

@@ -558,17 +558,15 @@ const TravelSchedule = (props) => {
                 <div className='searchSchedule-btns'>
                   <button className={`searchSchedule-btns-travel${scheduleBtn === "0" ? ' searchSchedule-btns-select' : ''}`}
                     onClick={searchScheduleChange}
-                    value='0'>찜한여행지</button>
-                  <button className={`searchSchedule-btns-search${scheduleBtn === "1" ? ' searchSchedule-btns-select' : ''}`}
+                    value='0'>전체</button>
+                  {/* <button className={`searchSchedule-btns-search${scheduleBtn === "1" ? ' searchSchedule-btns-select' : ''}`}
                     onClick={searchScheduleChange}
                     value='1'>검색</button>
                   <button className={`searchSchedule-btns-thema${scheduleBtn === "2" ? ' searchSchedule-btns-select' : ''}`}
                     onClick={searchScheduleChange}
-                    value='2'>테마</button>
+                    value='2'>테마</button> */}
                 </div>
                 <div className='searchSchedule-input'>
-                  <input type='text' placeholder='내용을 입력하세요.'></input>
-                  <button className='searchSchedule-input-btn'>검색</button>
                 </div>
                 {/* Img List */}
                 <Droppable droppableId='Lists' key="Lists">
