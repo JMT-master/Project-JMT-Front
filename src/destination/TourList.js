@@ -88,7 +88,7 @@ const TourList = () => {
   }, [page]);
   const callApi = async () => {
     let rawDatas = [];
-    for (let i = dataNum.current; i < (dataNum.current + 1); i++) {
+    for (let i = 0; i < 3; i++) {
       console.log("call category : " + category)
       const res = await axios.get(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=${category}&page=${i}`)
       console.log("Res : " + res.data.pageCount);
