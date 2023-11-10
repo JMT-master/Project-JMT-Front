@@ -66,7 +66,7 @@ const ImageList = (props) => {
         },
       });
     }else if(index == 1){
-      nav(`/travelSchedule/?id=${id}`)
+      nav(`/travelSchedule/?id=${id}`,{state:{auth:'nop'}})
     }
   }
 

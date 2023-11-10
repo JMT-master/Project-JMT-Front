@@ -128,7 +128,7 @@ function App(factory, deps) {
          <Route path="/joinUser/email/validateCheck/:email?"
                 element={<JoinUserValidateChk></JoinUserValidateChk>}></Route>
          <Route path="/curator" element={<Curator></Curator>}></Route>
-         <Route path="/travelSchedule/:id?" element={<TravelSchedule></TravelSchedule>}></Route>
+         <Route path="/travelSchedule/:id?" element={<TravelSchedule data="1"></TravelSchedule>}></Route>
          <Route path="/mypage" element={<Mypage></Mypage>}></Route>
          <Route path="/login" element={<Login></Login>}></Route>
          <Route path="/notice" element={<NoticeBoard send={send}></NoticeBoard>}></Route>
