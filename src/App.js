@@ -206,25 +206,35 @@ function HeaderTop(props) {
   }
 
   const handleMouseOverDes = () => {
-    $(".destination-list").show();
+    $(".destination-list").stop().fadeIn(400);
   };
   const handleMouseOutDes = () => {
-    $(".destination-list").hide();
+    $(".destination-list").stop().fadeOut(400);
   };
   const handleMouseOverInfo = () => {
-    $(".myTrableInfo-list").show();
+    $(".myTrableInfo-list").stop().fadeIn(400);
 
   };
   const handleMouseOutInfo = () => {
-    $(".myTrableInfo-list").hide();
+    $(".myTrableInfo-list").stop().fadeOut(400);
   };
   const handleMouseOverNoti = () => {
-    $(".notice-list").show();
+    $(".notice-list").stop().fadeIn(400);
 
   };
   const handleMouseOutNoti = () => {
-    $(".notice-list").hide();
+    $(".notice-list").stop().fadeOut(400);
   };
+
+  const handleMouseOver = () => {
+    $(".header-main-position").stop().fadeIn(300);
+
+  };
+  const handleMouseOut = () => {
+    $(".header-main-position").stop().fadeOut(300);
+  };
+
+
 
   console.log('시간 : ', chkTime);
 

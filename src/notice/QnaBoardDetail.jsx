@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import style from '../css/QnaBoardDetail.css'
 import { AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube } from 'react-icons/ai';
-import { call, getCookie, setDateFormat } from './../common/ApiService';
+import {call, getCookie, getLocal, setDateFormat} from './../common/ApiService';
 import axios from 'axios';
 import { API_BASE_URL } from '../common/ApiConfig';
 import AttachFile from '../common/AttachFile';
@@ -13,10 +13,14 @@ const QnaBoardDetail = () => {
   const params = useParams();
   const navigate = useNavigate();
   const qnaColNum = params.id;
-  const isAdmin = useRef(getCookie("adminChk"));
+  const [isAdmin,setIsAdmin] = useState(false);
 
   useEffect(() => {
     // qnaColNum을 사용하여 API를 호출하고 데이터를 가져옵니다.
+    call("/adminchk", "POST", {socialYn:getLocal("social")})
+       .then(response =>{
+         setIsAdmin(response)
+       })
     let details = null;
     call("/qna/" + qnaColNum, "GET", null)
       .then((response) => {
@@ -96,7 +100,7 @@ const QnaBoardDetail = () => {
       )}
       <div className="detail-btnBox writeBtnBox">
       <button className='oBtn writeBtn'
-        style={isAdmin.current == "Y" ? null : { display: "none" }}
+        style={isAdmin ? null : { display: "none" }}
         onClick={onQnAUpdate} >수정하기</button>
       <button className='oBtn writeBtn' onClick={() => navigate("/qna")}>목록으로 가기</button>
       </div>

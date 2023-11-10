@@ -3,7 +3,7 @@ import {useLocation, useParams} from 'react-router-dom'
 import '../css/DetailInfo.scss'
 import ReviewBox from './ReviewBox'
 import ListPaging from './ListPaging'
-import {call, getCookie} from "../common/ApiService";
+import {call, getCookie, getLocal} from "../common/ApiService";
 import axios from "axios";
 import {API_BASE_URL} from "../common/ApiConfig";
 import Swal from "sweetalert2";
@@ -70,9 +70,10 @@ const DetailInfo = () => {
     const newItem = {
       reviewContent: content,
       reviewContentId: id,
+      socialYn : getLocal("social")
     };
 
-    var blank_pattern = /^\s+|\s+$/g;
+    let blank_pattern = /^\s+|\s+$/g;
     if (content === '' || content.replace(blank_pattern, '') === "") {
       Swal.fire({
         icon: 'warning',
@@ -394,13 +395,13 @@ const DetailInfo = () => {
             </div>
           </div>
        }
-       {imgModal &&
-          <div className="modalBox" onClick={closeModal}>
-            <div className="modalBody">
-              <img src={selectedItem.imgData} alt="Selected"/>
-            </div>
-          </div>
-       }
+       {/*{imgModal &&*/}
+       {/*   <div className="modalBox" onClick={closeModal}>*/}
+       {/*     <div className="modalBody">*/}
+       {/*       <img src={selectedItem.imgData} alt="Selected"/>*/}
+       {/*     </div>*/}
+       {/*   </div>*/}
+       {/*}*/}
      </div>
   )
 }
