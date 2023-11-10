@@ -12,9 +12,9 @@ const MypageList = (props) => {
     const id = props.data.travelId;
     const wishTravelId = props.data.wishTravelId;
     if(index == 0){
-      nav(`/travelSchedule/?id=${id}`)
+      nav(`/travelSchedule/?id=${id}`,{state:{auth:1}})
     }else if(index == 1){
-      nav(`/travelSchedule/?id=${wishTravelId}`)
+      nav(`/travelSchedule/?id=${wishTravelId}`,{state:{auth:1}})
     }else{
       nav(`/destination/detail/${props.data.wishApiId}`, {
         state: {

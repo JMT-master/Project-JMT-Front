@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "../css/travelSchedule.css";
 import Tables from './Tables';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import TravelForm from './TravelForm';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import ListPaging from '../destination/ListPaging'
@@ -30,7 +30,7 @@ const TravelSchedule = (props) => {
   const location = window.location;
   const params = new URLSearchParams(location.search);
   const id = params.get("id");
-  console.log("id값:",id);
+  const auth = useLocation();
   
   function castingTravel() {
     let tableDataes = [];
@@ -538,6 +538,18 @@ const TravelSchedule = (props) => {
                 <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>확대</p>
                 {mapModal && <TravelScheduleModal mapModalsend={mapModal} setMapModalsend={setMapModal} markers={markers}></TravelScheduleModal>}
               </div>
+              {auth.state && auth.state.auth == 'nop' ? (
+                <div></div>
+              // <div onClick={onScheduleReset} className='travelSchedule-icon'>
+              //   {/* <BiTrash className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>삭제</BiTrash> */}
+              //   <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>삭제</p>
+              // </div>
+              // <div className='travelSchedule-icon'>
+              //   {/* <BiSolidSave className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>저장</BiSolidSave> */}
+              //   <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`} onClick={travelSave}>저장</p>
+              // </div>
+              ) : (
+                <>
               <div onClick={onScheduleReset} className='travelSchedule-icon'>
                 {/* <BiTrash className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>삭제</BiTrash> */}
                 <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>삭제</p>
@@ -546,6 +558,8 @@ const TravelSchedule = (props) => {
                 {/* <BiSolidSave className={`travelBtn ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`}>저장</BiSolidSave> */}
                 <p className={`travelSchedule-icons-title ${theme.body === "#FFF" ? 'blackText' : 'whiteText'}`} onClick={travelSave}>저장</p>
               </div>
+              </>
+              )}
             </div>
           </div>
 
