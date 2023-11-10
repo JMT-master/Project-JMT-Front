@@ -115,6 +115,42 @@ export const getCookie = (name) => {
   }
 }
 
+export function logoutAndClearStorage() {
+  // 서버에 로그아웃 요청 보내기
+  fetch('/logout', {
+      method: 'POST',
+      credentials: 'include', // 쿠키를 서버로 전송하기 위해 필요
+  })
+  .then(response => response.json())
+  .then(data => {
+      // 서버 응답 후 클라이언트 로직 추가 (예: 리다이렉션 등)
+
+      // 쿠키 및 로컬 스토리지 삭제
+      clearCookies();
+      clearWebStorage();
+
+      // 추가적인 클라이언트 로직 수행
+  })
+  .catch(error => console.error('Error during logout:', error));
+}
+
+
+export const clearCookies = () => {
+  var cookies = document.cookie.split(";");
+
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i];
+    var eqPos = cookie.indexOf("=");
+    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  }
+}
+
+export function clearWebStorage() {
+  localStorage.clear(); // 로컬 스토리지
+  sessionStorage.clear(); // 세션 스토리지
+}
+
 export const deleteCookie = (name) => {
   const cookies = new Cookies();
   const sessionValue = sessionStorage.getItem(name);

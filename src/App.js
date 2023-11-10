@@ -37,7 +37,7 @@ import ChatDetail from './trableinfo/ChatDetail';
 import JoinUserValidateChk from './member/JoinUserValidateChk';
 import NotificationList from "./common/Notification";
 import axios from "axios";
-import {deleteCookie, getCookie, sseSource} from "./common/ApiService";
+import {clearCookies, clearWebStorage, deleteCookie, getCookie, logoutAndClearStorage, sseSource} from "./common/ApiService";
 import NoticeWrite from './notice/NoticeWrite';
 import TravelPdf from './travelschedule/TravelPdf';
 import LoginTimer from './member/LoginTimer';
@@ -253,13 +253,14 @@ function HeaderTop(props) {
           }).then(() => {
             sessionStorage.removeItem('loginTime');
             sessionStorage.removeItem('social');
-            deleteCookie('ACCESS_TOKEN');
+            deleteCookie("ACCESS_TOKEN");
             window.location.href = '/';
+            
           });
         } else {
           sessionStorage.removeItem('loginTime');
           sessionStorage.removeItem('social');
-          deleteCookie('ACCESS_TOKEN');
+          deleteCookie("ACCESS_TOKEN");
           window.location.href = '/';
         }
       } else {
@@ -274,13 +275,13 @@ function HeaderTop(props) {
           }).then(() => {
             localStorage.removeItem("loginTime");
             localStorage.removeItem('social');
-            deleteCookie('ACCESS_TOKEN');
+            deleteCookie("ACCESS_TOKEN");
             window.location.href = '/';
           });
         } else{
           localStorage.removeItem("loginTime");
           localStorage.removeItem('social');
-          deleteCookie('ACCESS_TOKEN');
+          deleteCookie("ACCESS_TOKEN");
           window.location.href = '/';
         }
       }
