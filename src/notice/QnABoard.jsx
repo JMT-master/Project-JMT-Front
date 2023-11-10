@@ -121,7 +121,7 @@ const QnABoard = () => {
   }
 
   function onClickSearch() {
-    
+
     call("/qna/search?select=" + searchSelect + "&result=" + searchResult,"GET")
     .then(response => {
       setItems(response.data);
@@ -178,9 +178,9 @@ const QnABoard = () => {
         </Table>
       </div>
       <div className="writeBtnBox">
-        <Button type='button' className='oBtn writeBtn'
+        <button type='button' className='oBtn writeBtn'
                 style={isAdmin.current == "Y" ? null : { display: "none" }}
-                onClick={addItemPage}>작성하기</Button>
+                onClick={addItemPage}>작성하기</button>
       </div>
       <div className='page'>
         <ListPaging page={pagingInfo.currentPage}

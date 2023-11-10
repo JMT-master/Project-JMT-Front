@@ -156,13 +156,13 @@ const KnowledgeDetail = () => {
         <AttachFile data = {dbData !== null ? dbData : '' }></AttachFile>
         {
           dbData[0].userChk === true ?
-          <div className="detail-btnBox">
-            <button className='oBtn' onClick={onKnowledgeUpdate}>수정</button>
-            <button className='oBtn' onClick={onKnowledgeDelete}>삭제</button>
-            <button className='oBtn'  onClick={()=>navigate(-1)}>목록으로 가기</button>
+          <div className="detail-btnBox writeBtnBox">
+            <button className='oBtn writeBtn' onClick={onKnowledgeUpdate}>수정</button>
+            <button className='oBtn writeBtn' onClick={onKnowledgeDelete}>삭제</button>
+            <button className='oBtn writeBtn'  onClick={()=>navigate(-1)}>목록으로 가기</button>
           </div> :
-          <div className="detail-btnBox">
-            <button className='oBtn'  onClick={()=>navigate(-1)}>목록으로 가기</button>
+          <div className="detail-btnBox writeBtnBox">
+            <button className='oBtn writeBtn'  onClick={()=>navigate(-1)}>목록으로 가기</button>
           </div>
         }
         <AnswerDetail data = {dbData !== null ? dbData[0] : '' }></AnswerDetail>

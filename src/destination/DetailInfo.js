@@ -21,7 +21,7 @@ const DetailInfo = () => {
   const {img, tag, address, phoneno, title, content} = location.state;
   const {id} = useParams();
   const [reviewList, setReviewList] = useState([]);
-  const [reviewLength, setReviewLength] = useState(0)
+  const [toggleData, setToggleData] = useState(false)
   // const modal
 
   const toggleTab = (tab) => {
@@ -73,7 +73,7 @@ const DetailInfo = () => {
     };
 
     var blank_pattern = /^\s+|\s+$/g;
-    if(content === '' || content.replace( blank_pattern, '' ) === "") {
+    if (content === '' || content.replace(blank_pattern, '') === "") {
       Swal.fire({
         icon: 'warning',
         title: '내용',
@@ -86,7 +86,7 @@ const DetailInfo = () => {
   };
 
   //리뷰 작성
-  const writeReview = (item) => {
+  const writeReview = async (item) => {
     const formData = new FormData();
 
     file && formData.append('file', file);
@@ -94,33 +94,39 @@ const DetailInfo = () => {
       type: "application/json"
     }));
 
-    axios({
+    await axios({
       method: 'POST',
       url: API_BASE_URL + '/review',
       headers: {
         "Content-Type": "multipart/form-data",
         "Authorization": 'Bearer ' + accessToken
       },
-      data: formData
+      data: formData,
+      params: {page: page - 1, size: 5}
     }).then(response => {
+      setLastPage(response.data.totalPages)
       setReviewList([]);
       let data = []
       data = response.data.content
       data.forEach((item) => {
-        console.log("image item : " + item)
         axios({
           method: 'POST',
           url: API_BASE_URL + "/review/viewFile",
           data: item,
           responseType: 'blob',
+
         }).then(responseFile => {
           const blob = new Blob([responseFile.data]);
-          console.log("blob : " + blob)
           const reader = new FileReader();
           reader.readAsDataURL(blob);
           reader.onloadend = () => {
-            item = {...item, imgData: reader.result}
-            setReviewList((prevReviewList) => [...prevReviewList, item]);
+            item = {...item, imgData: reader.result ? reader.result : ""}
+            setReviewList((prevReviewList) => {
+              const updatedList = [...prevReviewList, item];
+              // regDate를 기준으로 내림차순으로 정렬
+              updatedList.sort((a, b) => new Date(b.reviewIdx) - new Date(a.reviewIdx));
+              return updatedList;
+            });
           }
         }).catch((error) => {
           console.log(error);
@@ -138,17 +144,32 @@ const DetailInfo = () => {
         })
       }
     });
-    setFile();
+
+    setFile([])
   }
 
 
   const deleteHandler = (idx) => {
-    call("/review", "Delete", {reviewIdx: idx})
-       .then(response => {
-         console.log("delete response : " + JSON.stringify(response))
-         let tmpList = reviewList.filter(review => (review.reviewIdx !== response.reviewIdx))
-         setReviewList([...tmpList])
-       })
+    Swal.fire({
+      icon: 'question',
+      title: '삭제하시겠습니까?',
+      showCloseButton: true,
+      showDenyButton: true,
+      confirmButtonText: '확인',
+      denyButtonText: '취소',
+
+    }).then(response => {
+      if (response.isConfirmed) {
+        call("/review", "Delete", {reviewIdx: idx})
+           .then(response => {
+             console.log("delete response : " + JSON.stringify(response))
+             let tmpList = reviewList.filter(review => (review.reviewIdx !== response.reviewIdx))
+             setReviewList([...tmpList])
+             console.log("change toggle")
+             setToggleData((prevToggleData) => !prevToggleData);
+           })
+      }
+    })
   }
 
   // const updateHanlder = (reviewForm) => {
@@ -229,7 +250,7 @@ const DetailInfo = () => {
 
   //ㅣ전체 글 읽어오기
   useEffect(() => {
-    call("/review/read", "POST", {reviewContentId: id}, page - 1, 10)
+    call("/review/read", "POST", {reviewContentId: id}, page - 1, 5)
        .then((response) => {
          // console.log("페이징 response : "+JSON.stringify(response))
          setReviewList([]);
@@ -248,22 +269,25 @@ const DetailInfo = () => {
              reader.readAsDataURL(blob);
              reader.onloadend = () => {
                item = {...item, imgData: reader.result}
-               setReviewList((prevReviewList) => [...prevReviewList, item]);
+               setReviewList((prevReviewList) => {
+                 const updatedList = [...prevReviewList, item];
+                 // regDate를 기준으로 내림차순으로 정렬
+                 updatedList.sort((a, b) => new Date(b.reviewIdx) - new Date(a.reviewIdx));
+                 return updatedList;
+               });
              }
              // console.log("페이징 List : "+JSON.stringify(reviewList))
            }).catch((error) => {
              console.log(error);
            });
          });
+
        })
        .catch((error) => {
          console.log(error);
        });
-  }, [page]);
+  }, [page, toggleData]);
 
-  useEffect(() => {
-    setReviewLength(reviewList.length);
-  }, [reviewList.length]);
 
   // console.log(modal)
   reviewList.forEach(item => {
@@ -314,11 +338,10 @@ const DetailInfo = () => {
              {reviewList && reviewList.map(item => {
                   if (item.imgData != "data:application/octet-stream;base64,") {
                     return (
-                       <div className="review-imgBox" key={item.id}>
-                         <img onClick={() => {
-                           openModal(item);
-                         }
-                         } src={item.imgData} alt={item.id}/>
+                       <div className="review-imgBox" key={item.id} onClick={() => {
+                         openModal(item)
+                       }}>
+                         <img src={item.imgData} alt={item.id}/>
                        </div>
                     )
                   }

@@ -5,7 +5,7 @@
 
 .attachfile-icon-box {
   margin: 0;
-  height: 90px;
+  height: auto;
   width: 100%;
   display: grid;
   grid-template-columns: 100px 400px 1fr;
@@ -19,7 +19,7 @@
 .attachfile-data-ul {
   /* width: 100%; */
   overflow: scroll;
-  height: 180px;
+  height: auto;
 }
 
 .attachfile-data-li {

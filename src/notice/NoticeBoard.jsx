@@ -25,7 +25,6 @@ const NoticeBoard = () => {
   const [searchSelect, setSearchSelect] = useState('title');
 
 
-
   const handleSelect = (e) => {
     setItemsPerPage(e.target.value);
   }
@@ -40,13 +39,13 @@ const NoticeBoard = () => {
   }
 
   function handleOnKeyDown(e) {
-    if(e.key === 'Enter') {
+    if (e.key === 'Enter') {
       onClickSearch();
     }
   }
 
   function onClickSearch() {
-    call("/notice/search?select=" + searchSelect + "&result=" + searchResult,"GET")
+    call("/notice/search?select=" + searchSelect + "&result=" + searchResult, "GET")
        .then(response => {
          console.log(JSON.stringify(response))
          setCurrentItems(response.content)
@@ -97,7 +96,7 @@ const NoticeBoard = () => {
        .catch((error) => {
          console.log(error);
        })
-  }, [page,itemsPerPage]);
+  }, [page, itemsPerPage]);
 
 
   return (
@@ -112,7 +111,8 @@ const NoticeBoard = () => {
              <option value='title'>제목</option>
              <option value='content'>내용</option>
            </select>
-           <input type="text" placeholder='검색어를 입력하세요' value={searchResult} onChange={onChangeSearchResult} onKeyDown={handleOnKeyDown} />
+           <input type="text" placeholder='검색어를 입력하세요' value={searchResult} onChange={onChangeSearchResult}
+                  onKeyDown={handleOnKeyDown}/>
            <button onClick={onClickSearch}><VscSearch/></button>
          </div>
        </div>
@@ -145,10 +145,10 @@ const NoticeBoard = () => {
            </tbody>
          </Table>
          <div className='plus-notice writeBtnBox'>
-           <Button className="oBtn writeBtn"
-              style={{display: isAdmin.current === "Y" ? null : "none"}}
+           <button className="oBtn writeBtn"
+                   style={{display: isAdmin.current === "Y" ? null : "none"}}
                    onClick={() => navigate('/notice/admin/write')}>작성하기
-           </Button>
+           </button>
          </div>
        </div>
        <div className='page'>
@@ -169,8 +169,20 @@ const NoticeRead = (props) => {
   const isAdmin = useRef(getCookie("adminChk"))
   const {deleteHandler} = props;
   const deleteNotice = (idx) => {
-    deleteHandler(idx);
-    console.log("마사카!")
+    Swal.fire({
+      icon: 'question',
+      title: '삭제하시겠습니까?',
+      showCloseButton: true,
+      showDenyButton: true,
+      confirmButtonText: '확인',
+      denyButtonText: '취소',
+
+    }).then(response => {
+      if (response.isConfirmed) {
+        deleteHandler(idx);
+      }
+    })
+
   }
 
   return (

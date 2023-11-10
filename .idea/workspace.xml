@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/destination/DetailInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/DetailInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/attachFile.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/attachFile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/member/JoinUser.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/member/JoinUser.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeWrite.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trableinfo/KnowledgeWrite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/trableinfo/KnowledgeWrite.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="park" />
+        <entry key="$PROJECT_DIR$" value="Deb" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -51,7 +54,7 @@
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "WebServerToolWindowFactoryState": "false",
     "android.gradle.sync.needed": "true",
-    "git-widget-placeholder": "Deb",
+    "git-widget-placeholder": "park",
     "jdk.selected.JAVA_MODULE": "11",
     "last_opened_file_path": "D:/workspace/PJ/Project-JMT-Front",
     "node.js.detected.package.eslint": "true",
@@ -63,7 +66,7 @@
     "project.structure.proportion": "0.15039062",
     "project.structure.side.proportion": "0.50747985",
     "settings.editor.selected.configurable": "terminal",
-    "ts.external.directory.path": "D:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -260,7 +263,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699495671095</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="버튼, ui 통합">
+      <option name="closed" value="true" />
+      <created>1699518858663</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1699518858663</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -326,7 +337,8 @@
     <MESSAGE value="기능끝" />
     <MESSAGE value="파일삭제" />
     <MESSAGE value="리뷰 널 검출" />
-    <option name="LAST_COMMIT_MESSAGE" value="리뷰 널 검출" />
+    <MESSAGE value="버튼, ui 통합" />
+    <option name="LAST_COMMIT_MESSAGE" value="버튼, ui 통합" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -94,11 +94,11 @@ const QnaBoardDetail = () => {
       ) : (
         <p>파일이 없습니다.</p>
       )}
-      <div className="detail-btnBox">
-      <button className='oBtn'
+      <div className="detail-btnBox writeBtnBox">
+      <button className='oBtn writeBtn'
         style={isAdmin.current == "Y" ? null : { display: "none" }}
         onClick={onQnAUpdate} >수정하기</button>
-      <button className='oBtn' onClick={() => navigate("/qna")}>목록으로 가기</button>
+      <button className='oBtn writeBtn' onClick={() => navigate("/qna")}>목록으로 가기</button>
       </div>
     </div>
   );

@@ -1,117 +1,142 @@
-.modal-container{
-  width: 450px;
-  height: 550px;
-  z-index: 999;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -60%);
-  background-color: white;
-  /* border: 1px solid black; */
-  border-radius: 25px;
+.modal-container {
+    width: 450px;
+    height: 550px;
+    z-index: 999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    background-color: white;
+    /* border: 1px solid black; */
+    border-radius: 25px;
 }
 
-.modal-container input:focus{
-  outline: none;
+.modal-container input:focus {
+    outline: none;
 }
 
-.modal-close {  
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  width: 20px; height: 20px;
-  cursor: pointer;
+.modal-close {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }
 
 .modal-title {
-  text-align: center;
+    text-align: center;
 }
 
 .modal-btn {
-  display: grid;
-  margin-top: 10%;
-  width: 100%; height: 35px;
-  grid-template-columns: 1fr 1fr;
+    display: grid;
+    margin-top: 10%;
+    width: 100%;
+    height: 35px;
+    grid-template-columns: 1fr 1fr;
 }
 
 .modal-btn-id, .modal-btn-pwd {
-  width: 100%; height: 100%;
-  text-align: center;
-  background-color: white;
-  border: none;
-  font-size: 15px; font-weight: bold;
-  border-bottom: 2.5px solid #999;
-  color: #999;
-  cursor: pointer;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background-color: white;
+    border: none;
+    font-size: 15px;
+    font-weight: bold;
+    border-bottom: 2.5px solid #999;
+    color: #999;
+    cursor: pointer;
 }
 
 .modal-btn-click {
-  border-bottom: 2.5px solid #f3a344;
-  color: #f3a344;
+    border-bottom: 2.5px solid #f3a344;
+    color: #f3a344;
 }
 
 .modal-container-etc {
-  position: relative;
+    position: relative;
 }
 
 .modal-container-click {
-  position: absolute;
-  width: 600px; height: 400px;
+    position: absolute;
+    width: 100%;
+    height: 400px;
 }
 
-.moid-name{
-  margin-top: 100px;
-  width: 70%;
-  height: 45px;
-  border: none;
-  border-bottom: 2px solid #bbb;
+.moid-name {
+    margin-top: 100px;
+    width: 90%;
+    height: 45px;
+    border: none;
+    border-bottom: 2px solid #bbb;
 }
-.moid-tel{
-  margin-top: 30px;
-  width: 70%;
-  height: 45px;
-  border: none;
-  border-bottom: 2px solid #bbb;
+
+.moid-tel {
+    margin-top: 30px;
+    width: 90%;
+    height: 45px;
+    border: none;
+    border-bottom: 2px solid #bbb;
 }
+
 .moid-result {
-  margin-top: 50px;
-  height: 30px;
-  border: none;
-  cursor: pointer;
-  text-align: center;
+    margin-top: 50px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
 }
+
 .moid-submit {
-  margin: 0 auto;
-  margin-top: 20px;
-  width: 70%; height: 30px;
-  background-color: #f3a344;
-  color: black; font-weight: bold; font-size: large;
-  opacity: 0.8;
-  border: none;
-  border-radius: 15px;
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 70%;
+    height: 30px;
+    background-color: #f3a344;
+    color: black;
+    font-weight: bold;
+    font-size: large;
+    opacity: 0.8;
+    border: none;
+    border-radius: 15px;
 }
 
 .mopwd-id {
-  margin-top: 100px;
-  width: 70%;
-  height: 45px;
-  border: none;
-  border-bottom: 2px solid #bbb;
+    margin-top: 100px;
+    width: 90%;
+    height: 45px;
+    border: none;
+    border-bottom: 2px solid #bbb;
 }
+
 .mopwd-email {
-  margin-top: 30px;
-  width: 70%;
-  height: 45px;
-  border: none;
-  border-bottom: 2px solid #bbb;
+    margin-top: 30px;
+    width: 90%;
+    height: 45px;
+    border: none;
+    border-bottom: 2px solid #bbb;
 }
+
 .mopwd-submit {
-  margin: 0 auto;
-  margin-top: 100px;
-  width: 70%; height: 30px;
-  background-color: #f3a344;
-  color: black; font-weight: bold; font-size: large;
-  opacity: 0.8;
-  border: none;
-  border-radius: 15px;
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 70%;
+    height: 30px;
+    background-color: #f3a344;
+    color: black;
+    font-weight: bold;
+    font-size: large;
+    opacity: 0.8;
+    border: none;
+    border-radius: 15px;
+}
+.findBtnBox{
+    display: flex;
+    justify-content: center;
+}
+
+.findBtnBox .findBtn {
+    width: 80%;
+    height: 40px;
 }

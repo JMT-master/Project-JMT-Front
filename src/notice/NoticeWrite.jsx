@@ -133,7 +133,7 @@ const NoticeWrite = () => {
 
       console.log('sendData', sendData);
 
-  
+
       call('/notice/admin', "PUT", sendData)
          .then(response => {
           console.log("response !!! " + response);
@@ -164,6 +164,9 @@ const NoticeWrite = () => {
            <select name="category" className='category' onChange={setBodyTab}>
              <option value="관광지">관광지</option>
              <option value="음식">음식</option>
+             <option value="숙박">숙박</option>
+             <option value="여행일정">여행일정</option>
+             <option value="테마">테마</option>
              <option value="숙박">숙박</option>
            </select>
          </div>
@@ -210,9 +213,9 @@ const NoticeWrite = () => {
              }
            </div>
          </div>
-         <div className='button-box'>
-           <button className='submit-knowledge' type='submit'>{updateData === null ? "작성 완료" : "수정 완료"}</button>
-           <button className='back-to-knlist' onClick={() => navigate("/notice")}>목록으로 돌아가기</button>
+         <div className='button-box writeBtnBox'>
+           <button className='submit-knowledge oBtn writeBtn' type='submit'>{updateData === null ? "작성 완료" : "수정 완료"}</button>
+           <button className='back-to-knlist  oBtn writeBtn' onClick={() => navigate("/notice")}>목록으로 돌아가기</button>
          </div>
        </form>
      </div>

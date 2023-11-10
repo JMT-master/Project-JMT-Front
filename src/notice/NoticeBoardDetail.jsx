@@ -70,27 +70,39 @@ const NoticeBoardDetail = ({data}) => {
   }
   console.log("item :::::: " + JSON.stringify(item))
   const deleteNotice = () => {
-    call("/notice/admin", "DELETE", {idx: item[0].idx})
-       .then(response => {
-         if(response === undefined) {
-           Swal.fire({
-             icon : 'warning',
-             title: '삭제 중 에러 발생!',
-             showCloseButton: true,
-             confirmButtonText: '확인',
-           });
-           return;
-         } else {
-           Swal.fire({
-             icon : 'info',
-             title: '삭제되었습니다!',
-             showCloseButton: true,
-             confirmButtonText: '확인',
-           }).then(
-              () => {navigate("/notice")}
-           );
-         }
-       })
+    Swal.fire({
+      icon: 'question',
+      title: '삭제하시겠습니까?',
+      showCloseButton: true,
+      showDenyButton: true,
+      confirmButtonText: '확인',
+      denyButtonText: '취소',
+
+    }).then(response => {
+      if (response.isConfirmed) {
+        call("/notice/admin", "DELETE", {idx: item[0].idx})
+           .then(response => {
+             if(response === undefined) {
+               Swal.fire({
+                 icon : 'warning',
+                 title: '삭제 중 에러 발생!',
+                 showCloseButton: true,
+                 confirmButtonText: '확인',
+               });
+               return;
+             } else {
+               Swal.fire({
+                 icon : 'info',
+                 title: '삭제되었습니다!',
+                 showCloseButton: true,
+                 confirmButtonText: '확인',
+               }).then(
+                  () => {navigate("/notice")}
+               );
+             }
+           })
+      }
+    })
   }
 
   return (
@@ -115,14 +127,14 @@ const NoticeBoardDetail = ({data}) => {
          <div className='noticeDetail-inside'>
            <textarea cols="30" rows="10" readOnly placeholder='공지사항 내용' value={item&&item[0].content}></textarea>
          </div>
-         <div className="detail-btnBox">
-           <button className='oBtn' style={isAdmin.current == "Y" ? null : {display: "none"}} onClick={() => {
+         <div className="detail-btnBox writeBtnBox">
+           <button className='oBtn writeBtn' style={isAdmin.current == "Y" ? null : {display: "none"}} onClick={() => {
              updateHandler();
            }}>수정</button>
-           <button className='oBtn' style={isAdmin.current == "Y" ? null : {display: "none"}} onClick={() =>{
+           <button className='oBtn writeBtn' style={isAdmin.current == "Y" ? null : {display: "none"}} onClick={() =>{
              deleteNotice();
            }}>삭제</button>
-           <button className='oBtn' onClick={() => navigate("/notice")}>목록으로 가기</button>
+           <button className='oBtn writeBtn' onClick={() => navigate("/notice")}>목록으로 가기</button>
          </div>
          <AttachFile data={item !== null ? item : '' }></AttachFile>
        </div>

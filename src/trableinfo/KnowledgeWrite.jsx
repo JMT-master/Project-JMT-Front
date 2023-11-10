@@ -99,7 +99,7 @@ const KnowledgeWrite = () => {
         data : formData
       }).then(response => {
         if(response.status === 200) {
-          window.location.href="/knowledge";
+          navigate("/knowledge");
         }
       });
     } else { // 수정완료
@@ -248,12 +248,12 @@ const KnowledgeWrite = () => {
              </div>
           </div>
         </div>
-        <div className='button-box'>
+        <div className='button-box writeBtnBox'>
           {
-            revData === null ? <button className='submit-knowledge'>작성완료</button>
-                             : <button className='submit-knowledge'>수정완료</button>
+            revData === null ? <button className='submit-knowledge oBtn writeBtn'>작성완료</button>
+                             : <button className='submit-knowledge oBtn writeBtn'>수정완료</button>
           }
-          <button className='back-to-knlist' onClick={onClickList}>목록으로 돌아가기</button>
+          <button className='back-to-knlist oBtn writeBtn' onClick={onClickList}>목록으로 돌아가기</button>
         </div>
       </form>
     </div>
