@@ -14,7 +14,7 @@ const MypageList = (props) => {
     if(index == 0){
       nav(`/travelSchedule/?id=${id}`,{state:{auth:1}})
     }else if(index == 1){
-      nav(`/travelSchedule/?id=${wishTravelId}`,{state:{auth:1}})
+      nav(`/travelSchedule/?id=${wishTravelId}`,{state:{auth:'nop'}})
     }else{
       nav(`/destination/detail/${props.data.wishApiId}`, {
         state: {
