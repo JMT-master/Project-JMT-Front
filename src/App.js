@@ -329,11 +329,11 @@ function HeaderTop(props) {
              </div>
              <div className='destination-list'>
                <li><Link to='/destination/tour'
-                         className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광지</Link></li>
+                         className={`main-smallTitle ${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광지</Link></li>
                <li><Link to='/destination/restaurant'
-                         className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>음식</Link></li>
+                         className={`main-smallTitle ${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>음식</Link></li>
                <li><Link to='/destination/lodge'
-                         className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>숙박</Link></li>
+                         className={`main-smallTitle ${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>숙박</Link></li>
              </div>
            </ul>
            <ul id="tema">
@@ -351,14 +351,14 @@ function HeaderTop(props) {
              <div>
               <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행정보</a></div>
              <div className='myTrableInfo-list'>
-               <li><Link to="/traffic" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통
+               <li><Link to="/traffic" className={`main-smallTitle ${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통
                  혼잡도</Link></li>
                <li style={{cursor:"pointer"}}>
-                 <a onClick={handleChatLinkClick} className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅
+                 <a onClick={handleChatLinkClick} className={`main-smallTitle ${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅
                    제주
                  </a>
                </li>
-               <li><Link to="/knowledge" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광
+               <li><Link to="/knowledge" className={`main-smallTitle ${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광
                  지식in</Link></li>
              </div>
            </ul>
@@ -367,8 +367,8 @@ function HeaderTop(props) {
                <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</a></div>
              <div className='notice-list'>
                <li><Link to="/notice"
-                         className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</Link></li>
-               <li><Link to="/qna" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>Q&A</Link>
+                         className={`main-smallTitle ${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</Link></li>
+               <li><Link to="/qna" className={`main-smallTitle ${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>Q&A</Link>
                </li>
              </div>
            </ul>

@@ -151,13 +151,13 @@
 }
 
 .myPage-tagList-li-icon {
-  width: 65px; height: 65px;
+  width: 30px; height: 30px;
   color: #f3a344;
   margin-bottom: 15px;
 }
 
 .myPage-tagList-li-name {
-  font-size: large;
+  font-size: medium;
   font-weight: bold;
   color: #f3a344;
 }

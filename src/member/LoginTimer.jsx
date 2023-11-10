@@ -67,8 +67,8 @@ const LoginTimer = (props) => {
 
   return (
     <>
-      <a href='#' className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} style={{cursor : 'default'}}>{loginId}</a>
-      <a href='#' className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`} style={{cursor : 'default'}}>
+      <a href='#' className={`localTimer-a ${props.theme === 'light' ? 'blackText' : 'whiteText'}`} style={{cursor : 'default'}}>{loginId}</a>
+      <a href='#' className={`localTimer-a ${props.theme === 'light' ? 'blackText' : 'whiteText'}`} style={{cursor : 'default'}}>
         <Moment format='HH:mm:ss'>{leftTimes}</Moment>
       </a>
       <button type='button' className='oBtn' value='시간연장' onClick={loginExtension}>시간연장</button>
