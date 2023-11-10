@@ -56,12 +56,12 @@ const MypageList = (props) => {
     { props.gubun === 0 ? (
       <div>
       <TravelPdf data={props.data} />
-      <MypageButton data={props.data}></MypageButton>
+      <MypageButton data={props.data} setMyTravelItem={props.setMyTravelItem}></MypageButton>
       </div>
     ) : props.gubun === 1 ? (
       <div>
       <TravelPdf data={props.data} />
-      <MypageButton data={props.data}></MypageButton>
+      <MypageButton data={props.data} setMyTravelItem={props.setMyTravelItem}/>
     </div>
     ) :(
       <div>
