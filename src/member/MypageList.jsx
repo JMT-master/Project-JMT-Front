@@ -55,7 +55,7 @@ const MypageList = (props) => {
     )}
     <div>
       <TravelPdf data={props.data} />
-      <MypageButton data={props.data}/>
+      <MypageButton data={props.data} setMyTravelItem={props.setMyTravelItem}/>
     </div>
   </li>
   );

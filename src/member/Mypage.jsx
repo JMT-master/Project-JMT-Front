@@ -8,11 +8,10 @@ import { GiCommercialAirplane } from 'react-icons/gi'
 import { useState } from 'react'
 import MypageList from './MypageList'
 import { useEffect } from 'react'
-import axios from 'axios'
-import TravelPdf from '../travelschedule/TravelPdf'
 import { useNavigate } from 'react-router'
 import { call } from '../common/ApiService'
 import JoinUser from './JoinUser'
+import { selectMyTravelScehdule, selectTravelDes, selectWishTravelScehdule } from './MypageApi'
 
 
 
@@ -31,42 +30,33 @@ const Mypage = () => {
 
 
   //나의 일정
-  function selectMyTravelScehdule(){
+  function fetchSelectMyTravelScehdule(){
     setGubun(0);
-    call("/travel/selectMyTravelScehdule", "GET",
-    null
-    ).then((response) => {
-      console.log("selectTravelScehdule.response.data",response.data);
-      setMyTravelItem(response.data);
-      // window.location.href = '/';
+    selectMyTravelScehdule().
+    then((data) => {
+      setMyTravelItem(data);
     })
     .catch((error) => {
       console.log(error);
     })
   }
   //찜한 일정
-  function selectWishTravelScehdule(){
+  function fetchSelectWishTravelScehdule(){
     setGubun(1);
-    call("/wish/wishTpsSelect", "GET",
-    null
-    ).then((response) => {
-      console.log("wishTpsSelect.response.data",response.data);
-      setMyTravelItem(response.data);
-      // window.location.href = '/';
+    selectWishTravelScehdule()
+    .then((data) => {
+      setMyTravelItem(data);
     })
     .catch((error) => {
       console.log(error);
     })
   }
   //찜한 여행지
-  function selectTravelDes(){
+  function fetchSelectTravelDes(){
     setGubun(2);
-    call("/wish/wishTdnSelect", "GET",
-    null
-    ).then((response) => {
-      console.log("wishTdnSelect.response.data",response.data);
-      setMyTravelItem(response.data);
-      // window.location.href = '/';
+    selectTravelDes()
+    .then((data) => {
+      setMyTravelItem(data);
     })
     .catch((error) => {
       console.log(error);
@@ -93,11 +83,11 @@ const Mypage = () => {
   // Big page에서 Title 클릭시
   const onChangeTitle = (index) => {
     if(index === 0){
-      selectMyTravelScehdule();
+      fetchSelectMyTravelScehdule();
     }else if(index === 1){
-      selectWishTravelScehdule();
+      fetchSelectWishTravelScehdule();
     }else{
-      selectTravelDes();
+      fetchSelectTravelDes();
     }
     setIndex(index);
     setTitle(titleArray[index]);
@@ -115,7 +105,7 @@ const Mypage = () => {
     if (myTravelItem != null) {
       setList(myTravelItem.map((item, i) => {
         count++;
-        return (<MypageList className='myPage-Big-Image-li' data={item} gubun={gubun}></MypageList>)
+        return (<MypageList className='myPage-Big-Image-li' data={item} gubun={gubun} setMyTravelItem = {setMyTravelItem}></MypageList>)
       }));
 
       setTotalCount(count);
@@ -125,6 +115,7 @@ const Mypage = () => {
       setTotalCount(0);
       setLoading(false);
     }
+
 
   }, [myTravelItem]);
 
