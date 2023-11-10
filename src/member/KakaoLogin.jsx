@@ -20,7 +20,7 @@ const KakaoLogin = () => {
       return response.json()
     }).then(result => {
       signin(result);
-    })  
+    });
   }
 
   return (

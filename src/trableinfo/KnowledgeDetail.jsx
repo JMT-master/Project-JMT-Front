@@ -20,18 +20,14 @@ const KnowledgeDetail = () => {
   const showModal = () => {
     setModalOpen(true);
   }
-  // const {state} = useLocation();
-  // const detail = state;
-  // const detail = data[params.id - 1]
-  console.log('params.id : ',params.id);
 
   useEffect(() => {
     let revData = null;
     setLoading(true);
-    call("/knowledgeDetail?id="+params.id,"POST", null)
+    call("/knowledgeDetail?id="+params.id+"&socialYn="+getLocal('social'),"POST")
     .then(response => {
       revData = response;
-
+      console.log('revData : ',revData);
       
       if(revData !== undefined && revData !== null && revData[0].originalName !== null && revData[0].originalName !== undefined) {
           revData.map((data,i) => {
@@ -51,9 +47,6 @@ const KnowledgeDetail = () => {
             }
           });
         })
-
-        console.log(revData);
-
 
         setDbdata(revData);
         
@@ -101,6 +94,7 @@ const KnowledgeDetail = () => {
     }).then(response => {
       // 확인
       if(response.isConfirmed) {
+        dbData[0].socialYn = getLocal('social');
         call("/knowledgeDetail/delete","POST",dbData[0])
         .then(response => {
           if(response === undefined) {
@@ -137,10 +131,6 @@ const KnowledgeDetail = () => {
       <div className='knowledgeDetail-content'>
         <div className='knowledgeDetail-title'>
           <h1 onClick={() => navigate('/info/knowledge')}>Jhat JPT 지식in</h1>
-          {/* <span><AiFillPrinter style={{width:'50px', height:'30px'}}></AiFillPrinter> </span> */}
-          {/* <span><AiFillFilePdf style={{width:'50px', height:'30px'}}></AiFillFilePdf> </span> */}
-          {/* <span> <AiFillYoutube style={{width:'50px', height:'30px'}}></AiFillYoutube> </span> */}
-          {/* <span><AiFillFacebook style={{width:'50px', height:'30px'}}></AiFillFacebook> </span> */}
         </div>
         <p className='knowledgeDetail-title-view'>조회수 {dbData[0].view}</p>
         <div className='knowledgeDetail-box'>
@@ -164,11 +154,17 @@ const KnowledgeDetail = () => {
           </div>
         </div>
         <AttachFile data = {dbData !== null ? dbData : '' }></AttachFile>
-        <div className="detail-btnBox">
-          <button className='oBtn' onClick={onKnowledgeUpdate}>수정</button>
-          <button className='oBtn' onClick={onKnowledgeDelete}>삭제</button>
-          <button className='oBtn'  onClick={()=>navigate(-1)}>목록으로 가기</button>
-        </div>
+        {
+          dbData[0].userChk === true ?
+          <div className="detail-btnBox">
+            <button className='oBtn' onClick={onKnowledgeUpdate}>수정</button>
+            <button className='oBtn' onClick={onKnowledgeDelete}>삭제</button>
+            <button className='oBtn'  onClick={()=>navigate(-1)}>목록으로 가기</button>
+          </div> :
+          <div className="detail-btnBox">
+            <button className='oBtn'  onClick={()=>navigate(-1)}>목록으로 가기</button>
+          </div>
+        }
         <AnswerDetail data = {dbData !== null ? dbData[0] : '' }></AnswerDetail>
       </div>
     );

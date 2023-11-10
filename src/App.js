@@ -1,7 +1,7 @@
 import './css/App.scss';
 import $ from 'jquery';
 import Slider from 'react-slick';
-import {Link, Route, Routes, useLocation, useNavigate} from 'react-router-dom';
+import {Link, Route, Router, Routes, useLocation, useNavigate} from 'react-router-dom';
 import JoinUser from './member/JoinUser';
 import Curator from './thema/Curator';
 import Mypage from './member/Mypage';
@@ -48,6 +48,7 @@ import ChangePasswd from './member/ChangePasswd';
 import KakaoLogin from './member/KakaoLogin';
 import { API_BASE_URL } from './common/ApiConfig';
 import NoticeListMain from './notice/NoticeListMain';
+import { Button, Modal } from 'react-bootstrap';
 
 function App(factory, deps) {
   const [newNoticedata, setNewNoticeData] = useState(noticeData);
@@ -105,12 +106,12 @@ function App(factory, deps) {
          console.log('error', error);
        });
   };
-  useEffect(() => {
-    // 231103, 추후 수정
-    if (getCookie("ACCESS_TOKEN") !== undefined && getCookie("ACCESS_TOKEN") !== null && isSub.current)
-     sseSource("sub", setNotifications, notifyCount);
-    isSub.current = false;
-  }, [getCookie("ACCESS_TOKEN")]);
+  // useEffect(() => {
+  //   // 231103, 추후 수정
+  //   if (getCookie("ACCESS_TOKEN") !== undefined && getCookie("ACCESS_TOKEN") !== null && isSub.current)
+  //    sseSource("sub", setNotifications, notifyCount);
+  //   isSub.current = false;
+  // }, [getCookie("ACCESS_TOKEN")]);
 
   if (loading === true) {
     return (
@@ -185,12 +186,12 @@ function HeaderTop(props) {
      ? moment(sessionStorage.getItem("loginTime"))
      : moment(localStorage.getItem("loginTime")));
 
-  // useEffect(() => {
-  //   if(accessToken !== undefined && accessToken !== null) {
-  //     // 231103, 추후 수정
-  //     sseSource("sub", setNotifications);
-  //   }
-  // }, [accessToken]);
+  useEffect(() => {
+    if(accessToken !== undefined && accessToken !== null) {
+      // 231103, 추후 수정
+      sseSource("sub", setNotifications);
+    }
+  }, [accessToken]);
 
   //알람 모달 관련
 
@@ -238,10 +239,6 @@ function HeaderTop(props) {
     if (state === undefined || state === null) { // login
       navigate("/login");
     } else { // logout
-      console.log('pathname : ', pathname);
-      const value = sessionStorage.getItem('loginState');
-      console.log('value', value);
-
       if(sessionStorage.getItem('loginState') === false){
          // 카카오 로그아웃 처리
         if(sessionStorage.getItem('social') === 'Y') {
@@ -292,16 +289,16 @@ function HeaderTop(props) {
 
 
  //채팅 관련 새 창 띄우는 코드
- const handleChatLinkClick = () => {
-  const width = 800; // 원하는 너비
-  const height = 600; // 원하는 높이
-  const left = (window.innerWidth - width) / 2;
-  const top = (window.innerHeight - height) / 2;
+  const handleChatLinkClick = () => {
+    const width = 800; // 원하는 너비
+    const height = 600; // 원하는 높이
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - height) / 2;
 
-  window.open('/chat/room', '_blank', `width=${width},height=${height},left=${left},top=${top}, status=no,toolbar=no,scrollbars=no`);
-};
+    window.open('/chat/room', '_blank', `width=${width},height=${height},left=${left},top=${top}, 
+                location=no,status=no,toolbar=no,scrollbars=no`);
 
-console.log('state',state);
+  };
 
   return (
      <div className={`header-main-position ${pathname === '/' ? 'headernoCh' : 'headerCh'}`}>
@@ -334,11 +331,11 @@ console.log('state',state);
              </div>
              <div className='destination-list'>
                <li><Link to='/destination/tour'
-                         className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광지</Link></li>
+                         className={`main-smallTitle ${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광지</Link></li>
                <li><Link to='/destination/restaurant'
-                         className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>음식</Link></li>
+                         className={`main-smallTitle ${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>음식</Link></li>
                <li><Link to='/destination/lodge'
-                         className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>숙박</Link></li>
+                         className={`main-smallTitle ${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>숙박</Link></li>
              </div>
            </ul>
            <ul id="tema">
@@ -356,16 +353,14 @@ console.log('state',state);
              <div>
               <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>여행정보</a></div>
              <div className='myTrableInfo-list'>
-               <li><Link to="/traffic" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통
+               <li><Link to="/traffic" className={`main-smallTitle ${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>교통
                  혼잡도</Link></li>
                <li style={{cursor:"pointer"}}>
-                 <a onClick={handleChatLinkClick} className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅
+                 <a onClick={handleChatLinkClick} className={`main-smallTitle ${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅
                    제주
                  </a>
-                 {/* <Link to="/chat/room" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>채팅 제주
-                 </Link> */}
                </li>
-               <li><Link to="/knowledge" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광
+               <li><Link to="/knowledge" className={`main-smallTitle ${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>관광
                  지식in</Link></li>
              </div>
            </ul>
@@ -374,8 +369,8 @@ console.log('state',state);
                <a className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</a></div>
              <div className='notice-list'>
                <li><Link to="/notice"
-                         className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</Link></li>
-               <li><Link to="/qna" className={`${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>Q&A</Link>
+                         className={`main-smallTitle ${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>공지사항</Link></li>
+               <li><Link to="/qna" className={`main-smallTitle ${props.theme === 'light' ? 'blackText' : 'whiteText'}`}>Q&A</Link>
                </li>
              </div>
            </ul>
