@@ -214,7 +214,12 @@ const DetailInfo = () => {
           reader.readAsDataURL(blob);
           reader.onloadend = () => {
             item = {...item, file: file, imgData: reader.result}
-            setReviewList((prevReviewList) => [...prevReviewList, item]);
+            setReviewList((prevReviewList) => {
+              const updatedList = [...prevReviewList, item];
+              // regDate를 기준으로 내림차순으로 정렬
+              updatedList.sort((a, b) => new Date(b.reviewIdx) - new Date(a.reviewIdx));
+              return updatedList;
+            });
           }
 
         }).catch((error) => {

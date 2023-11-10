@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const TravelPdf = (props) => {
+  console.log("pros : {}",props.data);
   // props로 전달받은 데이터에서 travelId, userId, travelTitle을 추출하여 travelPdfDto 객체 생성
   const travelPdfDto = {
     travelId: props.data.travelId,
@@ -45,7 +46,7 @@ const TravelPdf = (props) => {
     <>
       {/* 폼 제출 시 handleSubmit 함수 호출 */}
         {/* 제출 버튼 */}
-        <button type="submit" className="oBtn" onSubmit={handleSubmit}>제출</button>
+        <button type="button" className="oBtn" onClick={handleSubmit}>제출</button>
     </>
   );
 };

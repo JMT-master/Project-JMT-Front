@@ -11,7 +11,7 @@ const ReviewBox = ({item, modal, setFile, fileUpload, deleteHandler, updateHanld
   let content = item.reviewContent;
   const [sameWriter, setSameWriter] = useState(false)
   const [isAdmin,setIsAdmin] = useState(false);
-  const title = item.reviewWriter.includes("@") ? item.reviewWriter.substring(0, item.reviewWriter.indexOf('@')) : item.reviewWriter
+  const writer = item.reviewWriter.includes("@") ? item.reviewWriter.substring(0, item.reviewWriter.indexOf('@')) : item.reviewWriter
   useEffect(() => {
     call("/adminchk", "POST", {socialYn:getLocal("social")})
        .then(response =>{
@@ -66,7 +66,7 @@ const ReviewBox = ({item, modal, setFile, fileUpload, deleteHandler, updateHanld
        <div className='reviewBox'>
          <div className="reviewBox-body">
            <div className='reviewBox-header'>
-             <div>{title} | <span className="reviewDate">{regDate}</span></div>
+             <div><span className='reviewWriter'>{writer}</span> | <span className="reviewDate">{regDate}</span></div>
 
              {/*<div>{"수정일 : " + modDate}</div>*/}
            </div>
@@ -78,7 +78,7 @@ const ReviewBox = ({item, modal, setFile, fileUpload, deleteHandler, updateHanld
               <div className='reviewBox-content'>
             <textarea onChange={(e) => {
               content = e.target.value
-            }} name="update" id="update" cols="70" rows="5">{content}</textarea>
+            }} name="update" id="update" cols="70" rows="3">{content}</textarea>
                 <div style={{justifySelf: "start"}} className='file-attach-review reviewUpload'>
                   <input placeholder='첨부파일' id='review-file-text1' readOnly></input>
                   <label htmlFor='review-file1' className='btn-upload'>파일 업로드</label>

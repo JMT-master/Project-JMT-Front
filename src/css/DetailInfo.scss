@@ -177,6 +177,10 @@ $jOrange: #f3a444;
               justify-items: center;
               /* 수평 중앙 정렬 */
               // grid-template-rows: 100px 10% 10%;
+              .reviewWriter{
+                font-size : 18px;
+                font-weight: 500;
+              }
             .reviewDate{
               color: gray;
               font-size: 13px;

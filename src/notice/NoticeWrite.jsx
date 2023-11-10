@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube} from 'react-icons/ai';
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
-import {call, getCookie} from "../common/ApiService";
+import {call, getCookie, getLocal} from "../common/ApiService";
 import Swal from "sweetalert2";
 import axios from "axios";
 import {API_BASE_URL} from "../common/ApiConfig";
@@ -77,7 +77,8 @@ const NoticeWrite = () => {
       "category": category,
       "title": title,
       "content": content,
-      "view": "0"
+      "view": "0",
+      "socialYn" : getLocal("social")
     }
 
     if (title === null || title === undefined ||
@@ -127,7 +128,8 @@ const NoticeWrite = () => {
       const sendData = {
         ...data,
         idx: idx,
-        files: contentFiles.map(data => data.name != null ? data.name : "")
+        files: contentFiles.map(data => data.name != null ? data.name : ""),
+        socialYn : getLocal("social")
       };
       console.log("sendData.files" + sendData.files)
 

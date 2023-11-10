@@ -15,6 +15,11 @@ export const Tr = (props) => {
   const [isAdmin,setIsAdmin] = useState(false);
   const deleteItem = props.deleteItem;
 
+  console.log("admin? " + isAdmin.current)
+    call("/adminchk", "POST", {socialYn:getLocal("social")}).then(response=> {
+      setIsAdmin(response)
+    })
+
   const deleteHandler = (e) => {
     Swal.fire({
       icon : 'question',
