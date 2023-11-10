@@ -19,7 +19,7 @@ const ReviewBox = ({item, modal, setFile, fileUpload, deleteHandler, updateHanld
        .then(response => {
          setSameWriter(response)
        })
-  }, []);
+  }, [item]);
   const deleteReview = () => {
     deleteHandler(item.reviewIdx);
   }
@@ -37,7 +37,6 @@ const ReviewBox = ({item, modal, setFile, fileUpload, deleteHandler, updateHanld
     document.getElementById('review-file-text1').value = result;
     setFile(uploadFile);
   }
-
 
   const updateReview = () => {
     Swal.fire({
