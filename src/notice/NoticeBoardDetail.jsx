@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {AiFillFacebook, AiFillFilePdf, AiFillPrinter, AiFillYoutube} from "react-icons/ai";
-import {call, getCookie, setDateTimeFormat} from "../common/ApiService";
+import {call, getCookie, getLocal, setDateTimeFormat} from "../common/ApiService";
 import '../css/NoticeBoardDetail.scss'
 import Swal from "sweetalert2";
 import AttachFile from "../common/AttachFile";
@@ -12,44 +12,47 @@ const NoticeBoardDetail = ({data}) => {
   const navigate = useNavigate();
   const params = useParams();
   const [item, setItem] = useState();
-  const isAdmin = useRef(getCookie("adminChk"));
+  const [isAdmin,setIsAdmin] = useState(false);
 
 
 
   useEffect(() => {
     let revData = null;
-    call("/notice/" + params.id, "GET", null)
-       .then(response => {
-         revData = response;
-         console.log(JSON.stringify("revddd : " + response))
-         if(revData && revData[0].originalName && revData[0].originalName) {
-           revData.map((data,i) => {
-             axios({
-               method: 'POST',
-               url: API_BASE_URL + '/notice/viewFile',
-               data: data,
-               responseType : 'blob',
-             }).then(responseFile => {
-               const blob = new Blob([responseFile.data]);
-
-               const reader = new FileReader();
-               reader.readAsDataURL(blob);
-               reader.onloadend = () => {
-                 revData[i] = {...revData[i], data : reader.result};
-               }
-             });
-           })
-
-
-           setItem(revData);
-           console.log("item : " + item)
-
-         } else {
-
-           setItem(revData);
-         }
+    call("/adminchk", "POST", {socialYn:getLocal("social")})
+       .then(response =>{
+         setIsAdmin(response)
        })
-    window.scrollTo(0,0);
+         call("/notice/" + params.id, "GET", null)
+            .then(response => {
+              revData = response;
+              console.log(JSON.stringify("revddd : " + response))
+              if(revData && revData[0].originalName && revData[0].originalName) {
+                revData.map((data,i) => {
+                  axios({
+                    method: 'POST',
+                    url: API_BASE_URL + '/notice/viewFile',
+                    data: data,
+                    responseType : 'blob',
+                  }).then(responseFile => {
+                    const blob = new Blob([responseFile.data]);
+
+                    const reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = () => {
+                      revData[i] = {...revData[i], data : reader.result};
+                    }
+                  });
+                })
+
+
+                setItem(revData);
+                console.log("item : " + item)
+
+              } else {
+
+                setItem(revData);
+              }
+            })
   },[params.id]);
 
   const updateHandler = () =>{
@@ -128,10 +131,10 @@ const NoticeBoardDetail = ({data}) => {
            <textarea cols="30" rows="10" readOnly placeholder='공지사항 내용' value={item&&item[0].content}></textarea>
          </div>
          <div className="detail-btnBox writeBtnBox">
-           <button className='oBtn writeBtn' style={isAdmin.current == "Y" ? null : {display: "none"}} onClick={() => {
+           <button className='oBtn writeBtn' style={isAdmin ? null : {display: "none"}} onClick={() => {
              updateHandler();
            }}>수정</button>
-           <button className='oBtn writeBtn' style={isAdmin.current == "Y" ? null : {display: "none"}} onClick={() =>{
+           <button className='oBtn writeBtn' style={isAdmin ? null : {display: "none"}} onClick={() =>{
              deleteNotice();
            }}>삭제</button>
            <button className='oBtn writeBtn' onClick={() => navigate("/notice")}>목록으로 가기</button>

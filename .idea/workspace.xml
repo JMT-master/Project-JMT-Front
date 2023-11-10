@@ -6,6 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="3e3bb21c-9e39-4f76-ac42-5d47663d5aa8" name="변경" comment="버튼, ui 통합">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/App.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/css/DetailInfo.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/DetailInfo.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/destination/DetailInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/DetailInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/destination/ReviewBox.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/ReviewBox.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/destination/TourList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/destination/TourList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/NoticeBoardDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/NoticeBoardDetail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/QnABoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/QnABoard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/notice/QnaBoardDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/notice/QnaBoardDetail.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

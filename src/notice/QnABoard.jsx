@@ -3,7 +3,7 @@ import { VscSearch } from 'react-icons/vsc';
 import style from '../css/QnABoard.css';
 import { useNavigate } from 'react-router-dom';
 import Paging from '../common/Paging';
-import { call, getCookie, setDateFormat } from './../common/ApiService';
+import {call, getCookie, getLocal, setDateFormat} from './../common/ApiService';
 import { Button, Table } from 'react-bootstrap';
 import ListPaging from '../destination/ListPaging';
 import Swal from 'sweetalert2';
@@ -12,7 +12,7 @@ export const Tr = (props) => {
   const navigate = useNavigate();
   const modDate = setDateFormat(props.data.modDate);
 
-  const isAdmin = useRef(getCookie("adminChk"));
+  const [isAdmin,setIsAdmin] = useState(false);
   const deleteItem = props.deleteItem;
 
   const deleteHandler = (e) => {
@@ -45,7 +45,7 @@ export const Tr = (props) => {
       <td onClick={() => navigate('/qna/' + props.data.qnaNum)}>{props.data.qnaTitle}</td>
       <td>{modDate}</td>
       <td>{props.data.qnaView}</td>
-      <td style={isAdmin.current == "Y" ? null : { display: "none" }}>
+      <td style={isAdmin ? null : { display: "none" }}>
         <button type='button'
           className='oBtn'
           onClick={deleteHandler}
@@ -62,13 +62,16 @@ const QnABoard = () => {
   const [pagingInfo, setPagingInfo] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const isAdmin = useRef(getCookie("adminChk"));
+  const [isAdmin,setIsAdmin] = useState(false);
   const theme = localStorage.getItem("theme");
   const [searchResult, setSearchResult] = useState('');
   const [searchSelect, setSearchSelect] = useState('title');
   useEffect(() => {
-
     fetchData({ currentPage, pageSize });
+    call("/adminchk", "POST", {socialYn:getLocal("social")})
+       .then(response =>{
+         setIsAdmin(response)
+       })
   }, [currentPage, pageSize]);
 
   useEffect(() => {
@@ -166,7 +169,7 @@ const QnABoard = () => {
               <th>작성일자</th>
               <th>조회수</th>
               <th
-                style={isAdmin.current == "Y" ? null : { display: "none" }}
+                style={isAdmin ? null : { display: "none" }}
               >삭제 여부</th>
             </tr>
           </thead>
@@ -179,7 +182,7 @@ const QnABoard = () => {
       </div>
       <div className="writeBtnBox">
         <button type='button' className='oBtn writeBtn'
-                style={isAdmin.current == "Y" ? null : { display: "none" }}
+                style={isAdmin ? null : { display: "none" }}
                 onClick={addItemPage}>작성하기</button>
       </div>
       <div className='page'>

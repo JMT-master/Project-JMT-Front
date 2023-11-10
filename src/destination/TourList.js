@@ -79,6 +79,7 @@ const TourList = () => {
 
   const category = checkCategory(pageId);
 //데이터 받아오기
+  console.log("category : " + category)
 
   useEffect(() => {
     if (page >= (lastPage.current - 2) && dataNum.current < apiPageCount.current) {
@@ -86,8 +87,9 @@ const TourList = () => {
     }
   }, [page]);
   const callApi = async () => {
-    let rawDatas = rawData && [...rawData];
+    let rawDatas = [];
     for (let i = dataNum.current; i < (dataNum.current + 1); i++) {
+      console.log("call category : " + category)
       const res = await axios.get(`https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=uimh6133t6toeyub&locale=kr&category=${category}&page=${i}`)
       console.log("Res : " + res.data.pageCount);
       rawDatas = rawDatas.concat(res.data.items);
@@ -110,6 +112,8 @@ const TourList = () => {
 
 //카테고리 변경으로 데이터 변경시 사용할 데이터 리스트 새로 셋
   useEffect(() => {
+    setDataList([]);
+    console.log("call data set??")
     setDataList(rawData.filter(item => item.tag.includes(tagFilter)));
     lastPage.current = Math.floor(dataList.length % offset > 0 ? (dataList.length / offset) + 1 : dataList.length / offset)
     console.log("useEffect : " + lastPage.current)

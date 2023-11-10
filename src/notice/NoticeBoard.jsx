@@ -3,7 +3,7 @@ import '../css/NoticeBoard.css'
 import {VscSearch} from 'react-icons/vsc';
 import {useNavigate} from 'react-router-dom';
 import {noticeData} from '../data/Data';
-import {call, getCookie, setDateFormat} from "../common/ApiService";
+import {call, getCookie, getLocal, setDateFormat} from "../common/ApiService";
 import ListPaging from "../destination/ListPaging";
 import {Button, Table} from 'react-bootstrap';
 import Swal from "sweetalert2";
@@ -19,7 +19,7 @@ const NoticeBoard = () => {
   const [currentItems, setCurrentItems] = useState([])
   const [lastPage, setLastPage] = useState(0);
   const idxNum = useRef(0);
-  const isAdmin = useRef(getCookie("adminChk"));
+  const [isAdmin,setIsAdmin] = useState(false);
   const theme = localStorage.getItem("theme");
   const [searchResult, setSearchResult] = useState('');
   const [searchSelect, setSearchSelect] = useState('title');
@@ -82,7 +82,10 @@ const NoticeBoard = () => {
   }
   useEffect(() => {
     console.log("admin? " + isAdmin.current)
-
+    call("/adminchk", "POST", {socialYn:getLocal("social")}).then(response=> {
+      setIsAdmin(response)
+    })
+    console.log("chkchkchkc : " + isAdmin)
     call("/notice",
        "GET",
        null, page - 1, itemsPerPage
@@ -134,19 +137,20 @@ const NoticeBoard = () => {
              <th>제목</th>
              <th>작성일자</th>
              <th>조회수</th>
+             <th style={isAdmin ? null : {display: "none"}}>삭제</th>
            </tr>
            </thead>
            <tbody>
            {currentItems && currentItems.map((item) => {
              return (
-                <NoticeRead data={item} key={item.id} deleteHandler={deleteHandler}></NoticeRead>
+                <NoticeRead data={item} key={item.id} deleteHandler={deleteHandler} isAdmin={isAdmin}></NoticeRead>
              )
            })}
            </tbody>
          </Table>
          <div className='plus-notice writeBtnBox'>
            <button className="oBtn writeBtn"
-                   style={{display: isAdmin.current === "Y" ? null : "none"}}
+                   style={{display: isAdmin ? null : "none"}}
                    onClick={() => navigate('/notice/admin/write')}>작성하기
            </button>
          </div>
@@ -166,7 +170,7 @@ const NoticeRead = (props) => {
   const navigate = useNavigate();
   const {idx, category, title, regDate, view} = props.data;
   const dataForm = setDateFormat(props.data.modDate);
-  const isAdmin = useRef(getCookie("adminChk"))
+  const {isAdmin} = props;
   const {deleteHandler} = props;
   const deleteNotice = (idx) => {
     Swal.fire({
@@ -200,7 +204,7 @@ const NoticeRead = (props) => {
                  onClick={() => {
                    deleteNotice(idx)
                  }}
-                 style={isAdmin.current == "Y" ? null : {display: "none"}}
+                 style={isAdmin ? null : {display: "none"}}
          >삭제
          </button>
        </td>
