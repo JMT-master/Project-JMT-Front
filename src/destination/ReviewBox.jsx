@@ -6,12 +6,10 @@ import Swal from "sweetalert2";
 const ReviewBox = ({item, modal, setFile, fileUpload, deleteHandler, updateHanlder}) => {
   const regDate = setDateFormat(item.regDate);
   const modDate = setDateFormat(item.modDate);
-
   const [isUpdate, setIsUpdate] = useState(false);
   let content = item.reviewContent;
   const [sameWriter, setSameWriter] = useState(false)
   const [isAdmin,setIsAdmin] = useState(false);
-  const writer = item.reviewWriter.includes("@") ? item.reviewWriter.substring(0, item.reviewWriter.indexOf('@')) : item.reviewWriter
   useEffect(() => {
     call("/adminchk", "POST", {socialYn:getLocal("social")})
        .then(response =>{
@@ -21,7 +19,7 @@ const ReviewBox = ({item, modal, setFile, fileUpload, deleteHandler, updateHanld
        .then(response => {
          setSameWriter(response)
        })
-  }, []);
+  }, [item]);
   const deleteReview = () => {
     deleteHandler(item.reviewIdx);
   }
@@ -39,7 +37,6 @@ const ReviewBox = ({item, modal, setFile, fileUpload, deleteHandler, updateHanld
     document.getElementById('review-file-text1').value = result;
     setFile(uploadFile);
   }
-
 
   const updateReview = () => {
     Swal.fire({
@@ -66,7 +63,7 @@ const ReviewBox = ({item, modal, setFile, fileUpload, deleteHandler, updateHanld
        <div className='reviewBox'>
          <div className="reviewBox-body">
            <div className='reviewBox-header'>
-             <div><span className='reviewWriter'>{writer}</span> | <span className="reviewDate">{regDate}</span></div>
+             <div><span className='reviewWriter'>{item.reviewWriter}</span> | <span className="reviewDate">{regDate}</span></div>
 
              {/*<div>{"수정일 : " + modDate}</div>*/}
            </div>
