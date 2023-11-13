@@ -128,7 +128,9 @@ const NoticeBoardDetail = ({data}) => {
            <p className='date'>{setDateTimeFormat(item&&item[0].regDate)}</p>
          </div>
          <div className='noticeDetail-inside'>
-           <textarea cols="30" rows="10" readOnly placeholder='공지사항 내용' value={item&&item[0].content}></textarea>
+           <div placeholder='공지사항 내용' 
+           style={{minHeight:"400px", height:"auto", whiteSpace:"pre", padding:"15px"}}
+           >{item&&item[0].content}</div>
          </div>
          <div className="detail-btnBox writeBtnBox">
            <button className='oBtn writeBtn' style={isAdmin ? null : {display: "none"}} onClick={() => {

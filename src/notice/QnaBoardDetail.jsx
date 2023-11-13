@@ -89,7 +89,11 @@ const QnaBoardDetail = () => {
             <p className='date'>{setDateFormat(item[0] ? item[0].modDate : item.modDate)}</p>
           </div>
           <div className='qnaDetail-inside'>
-            <textarea cols="30" rows="10" readOnly placeholder='qna 내용' value={item[0] ? item[0].qnaContent : item.qnaContent}></textarea>
+            <div placeholder='qna 내용' 
+            style={{minHeight:"400px", height:"auto", whiteSpace:"pre", padding:"15px"}}
+            >
+            {item[0] ? item[0].qnaContent : item.qnaContent}
+            </div>
           </div>
         </div>
       }
